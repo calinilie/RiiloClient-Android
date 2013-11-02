@@ -41,7 +41,7 @@ public class MyMapActivity extends Fragment implements OnMapClickListener{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(false);
-        view = inflater.inflate(R.layout.my_map_activity, container, false);
+        view = inflater.inflate(R.layout.z_dep_my_map_activity, container, false);
 //        setContentView(R.layout.my_map_activity);
         setUpMapIfNeeded();
 //        mMap.setMyLocationEnabled(true);

@@ -122,7 +122,7 @@ public class TakePhotoActivity extends BaseActivity implements OnClickListener,
 
 		this.savedInstanceState = savedInstanceState;
 
-		setContentView(R.layout.activity_take_photo_action);
+		setContentView(R.layout.z_dep_activity_take_photo_action);
 
 		deviceId = Secure.getString(this.getContentResolver(),
 				Secure.ANDROID_ID);

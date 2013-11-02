@@ -36,7 +36,7 @@ public class UserAtLocationPostActivity extends BaseActivity
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_at_location_post);
+        setContentView(R.layout.z_dep_user_at_location_post);
         initLocationClient(LocationRequest.PRIORITY_HIGH_ACCURACY, 2000, 1000);
         currentPost = new Post();
     }
