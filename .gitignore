@@ -18,11 +18,12 @@ build/
 local.properties
 
 # Eclipse project files
+#.properties
+#.project
 .classpath
-.project
 .metadata/
 .metadata
-.properties
+
 
 # Windows thumbnail db
 .DS_Store
