@@ -1,8 +1,0 @@
-1382192026121	Rename type 'PostsNearbyActivity'
-1382268382171	Rename field 'layout'
-1382268405206	Rename field 'layout'
-1382268593275	Rename field 'mMap'
-1382269090845	Rename type 'ToLocationPostActivity'
-1382273997117	Rename type 'PostsFeedActivity'
-1382288793110	Rename method 'hasNewerPostFromConversation'
-1382289038247	Rename local variable 'nearbyPosts'
