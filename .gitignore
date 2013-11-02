@@ -22,6 +22,7 @@ local.properties
 .project
 .metadata/
 .metadata
+.properties
 
 # Windows thumbnail db
 .DS_Store
