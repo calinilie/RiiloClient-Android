@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    android:orientation="horizontal"
+    android:weightSum="1">
+	
+    <ImageView
+        android:id="@+id/postListItem_picture"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/common_signin_btn_icon_disabled_focus_dark" />
+    
+    <LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_margin="6dp"
+	    android:orientation="vertical">
+	    
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginBottom="5dp"
+	        android:orientation="horizontal">
+	
+	        <TextView
+	            android:id="@+id/postListItem_userId"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="UserId" />
+	
+	        <TextView
+	            android:id="@+id/postListItem_userAction"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="5dp"
+	            android:text="posted/replyed" />
+	        
+	    </LinearLayout>
+		
+	    <TextView
+	        android:id="@+id/postListItem_distance_date"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginBottom="5dp"
+	        android:layout_marginLeft="15dp"
+	        android:text="aprox 420 meters away"
+	        android:textColor="@color/grey" />
+	    
+	    <TextView
+	        android:id="@+id/postListItem_message"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginBottom="5dp"
+	        android:text="Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. " />
+	
+ 	    <TextView
+	        android:id="@+id/postListItem_postId"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:text="Large Text"
+	        android:textAppearance="?android:attr/textAppearanceLarge"
+	        android:textColor="@color/red"
+	        android:textStyle="bold" /> 
+	</LinearLayout>
+</LinearLayout>

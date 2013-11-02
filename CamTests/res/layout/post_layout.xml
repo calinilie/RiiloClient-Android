@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="1"
+    android:orientation="vertical">
+	
+    
+    <LinearLayout
+	    android:id="@+id/reply_to_post_pannel"
+	    android:layout_width="fill_parent"
+	    android:layout_height="0dp"
+	    android:layout_weight="0.60"
+	    android:orientation="vertical"
+	    android:visibility="gone"
+	    android:weightSum="1" >
+
+	    <EditText
+	        android:id="@+id/editor_message"
+	        android:layout_width="match_parent"
+	        android:layout_height="0dp"
+	        android:layout_weight="0.40"
+	        android:background="@color/white"
+	        android:ems="10"
+	        android:inputType="textMultiLine"
+	        android:visibility="visible" >
+	    </EditText>
+
+	    <LinearLayout 
+        	android:id="@+id/create_post_buttons"
+        	android:orientation="horizontal"
+        	android:layout_width="fill_parent"
+        	android:layout_weight="0.30"
+        	android:layout_height="0dp"
+        	android:weightSum="1"
+        	android:visibility="visible">
+	        
+  	   	    <Button
+	   	        android:id="@+id/button_cancel"
+	   	        android:layout_width="0dp"
+	   	        android:layout_height="fill_parent"
+	   	        android:layout_weight="0.30"
+	   	        android:text="Cancel"
+	   	        android:visibility="visible" />
+	        
+		    <Button
+		        android:id="@+id/button_post"
+		        android:layout_width="0dp"
+		        android:layout_height="fill_parent"
+		        android:layout_weight="0.70"
+		        android:text="Post"
+		        android:visibility="visible" />
+	    </LinearLayout>
+
+	</LinearLayout>
+    
+	<ListView
+	    android:id="@+id/posts_list_view"
+	    android:layout_width="fill_parent"
+	    android:layout_height="0dp"
+	    android:layout_weight="0.60">
+	</ListView>
+	
+    <!--  xmlns:android="http://schemas.android.com/apk/res/android" -->
+	<fragment
+	  android:id="@+id/map"
+	  android:layout_width="match_parent"
+	  android:layout_height="0dp"
+	  android:layout_weight="0.40"
+	  class="com.google.android.gms.maps.SupportMapFragment"/>
+	
+</LinearLayout>

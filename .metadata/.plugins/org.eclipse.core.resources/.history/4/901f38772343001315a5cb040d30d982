@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">CamTests</string>
+    <string name="error_sd_card_not_mounted">SD card not found</string>
+    <string name="error_could_not_take_photo">Something went wrong (could not take photo)</string>
+    <string name="warning_dialog_heading">Warning</string>
+    <string name="my_map_activity">MyFirstGoogleMapsApp</string>
+    <string name="error_cannot_connect_to_location_services">Unable to connect to GooglePlay services. Please update GooglePlay services. The app will now terminate.</string>
+    <string name="user_at_location_activity_label">Leave a note, here</string>
+    <string name="photos_folder_name">prototype</string>
+    <string name="photo_name_base">prototype</string>
+    <color name="mediumGps">#F2FF00</color>
+    <color name="goodGps">#00FF00</color>
+    <color name="badGps">#FF0000</color>
+    <color name="grey">#A3A3A3</color>
+    <color name="white">#FFFFFF</color>
+    <color name="red">#FF0000</color>
+    
+    <string name="endpoint_posts_upload">http://default-environment-kynpkc8map.elasticbeanstalk.com/posts/upload/</string>
+    <string name="endpoint_latest_posts">http://default-environment-kynpkc8map.elasticbeanstalk.com/posts/latest/</string>
+    <string name="endpoint_conversation">http://default-environment-kynpkc8map.elasticbeanstalk.com/posts/conversation/</string>
+    <string name="endpoint_notifications">http://default-environment-kynpkc8map.elasticbeanstalk.com/posts/new/</string>
+    <string name="endpoint_silence_notifications">http://default-environment-kynpkc8map.elasticbeanstalk.com/posts/silence/</string>
+    <string name="endpoint_nearby_posts">http://default-environment-kynpkc8map.elasticbeanstalk.com/posts/nearby/</string>
+    
+    <string name="local_test_posts_upload">http://192.168.1.22:8888/web/posts/upload/</string>
+    <string name="local_test_latest_posts">http://192.168.1.22:8888/web/posts/latest/</string>
+    <string name="local_test_conversation">http://192.168.1.22:8888/web/posts/conversation/</string>
+    <string name="local_test_notifications">http://192.168.1.22:8888/web/posts/new/</string>
+    <string name="local_test_silence_notifications">http://192.168.1.22:8888/web/posts/silence/</string>
+    <string name="local_test_nearby_posts">http://192.168.1.22:8888/web/posts/nearby/</string>
+    
+    <string name="to_location_post_activity_label">Post something, anywhere...</string>
+    <string name="feed_activity_label">Feed</string>
+    <string name="nearby_activity_label">Nearby Posts</string>
+    <string name="post_view_activity_label">View and Reply to post</string>
+    <string name="connection_error_last_attempt">Elephants are blocking the connection, retrying...</string>
+    <string name="connection_error_no_attempt">There are too many elephants, the server cannot be reached...</string>
+    
+</resources>
