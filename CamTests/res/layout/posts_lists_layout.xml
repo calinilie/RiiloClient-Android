@@ -5,7 +5,7 @@
     android:orientation="vertical" >
 
     <ListView
-        android:id="@+id/own_feed_posts_list_view"
+        android:id="@+id/posts_listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </ListView>

@@ -8,9 +8,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class MainActivity extends BaseActivity implements ActionBar.TabListener{
 
@@ -27,6 +26,8 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
      * time.
      */
     ViewPager mViewPager;
+    
+    PullToRefreshAttacher pullToRefreshAttacher;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +43,7 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
         // Specify that the Home/Up button should not be enabled, since there is no hierarchical
         // parent.
         actionBar.setHomeButtonEnabled(false);
-
+        
         // Specify that we will be displaying tabs in the action bar.
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         // Set up the ViewPager, attaching the adapter and setting up a listener for when the
@@ -55,12 +56,6 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
                 // When swiping between different app sections, select the corresponding tab.
                 // We can also use ActionBar.Tab#select() to do this if we have a reference to the
                 // Tab.
-//            	if (position>0)
-//            		actionBar.setSelectedNavigationItem(position-1);
-//            	else 
-//            		actionBar.setSelectedNavigationItem(0);
-            	
-//            	Log.d("<<<<<<<<<<<<Postition>>>>>>>>>>>>", position+"");
             	actionBar.setSelectedNavigationItem(position);
             }
         });
@@ -75,6 +70,9 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
                             .setText(mAppSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+        
+        //create pullToRefreshAttacher
+        pullToRefreshAttacher = PullToRefreshAttacher.get(this);
     }
     
     @Override
@@ -147,4 +145,7 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
 		// TODO Auto-generated method stub
 	}
 
+	public PullToRefreshAttacher getPullToRefreshAttacher(){
+		return this.pullToRefreshAttacher;
+	}
 }

@@ -3,6 +3,9 @@ package com.example.camtests;
 import java.util.ArrayList;
 import java.util.List;
 
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher.OnRefreshListener;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
@@ -18,7 +21,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class PostsLatestFragment 
 		extends Fragment 
-		implements OnItemClickListener, ILocationListener{
+		implements OnItemClickListener, ILocationListener, OnRefreshListener{
 	
 	private boolean distancesComputed;
 	
@@ -33,9 +36,11 @@ public class PostsLatestFragment
     
 	PostListItemAdapter adapter;
  	List<Post> adapterData = new ArrayList<Post>();
- 	ListView postsList;
+ 	ListView postsListView;
  	
  	private LocationHistory lastKnownLocation;
+ 	
+ 	private PullToRefreshAttacher pullToRefreshAttacher;
 
  	public void onAttach(Activity activity){
  		this.activity = (BaseActivity)activity;
@@ -59,18 +64,27 @@ public class PostsLatestFragment
  	@Override
  	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInsatnceState){
  		view = inflater.inflate(R.layout.posts_lists_layout, container, false); 
+ 		setupWidgetsViewElements();
+
+        // Now get the PullToRefresh attacher from the Activity. An exercise to the reader
+        // is to create an implicit interface instead of casting to the concrete Activity
+        pullToRefreshAttacher = ((MainActivity) getActivity())
+                .getPullToRefreshAttacher();
+
+        // Now set the ScrollView as the refreshable view, and the refresh listener (this)
+        pullToRefreshAttacher.addRefreshableView(postsListView, this);
+ 		
  		return view;
  	}
  	
  	@Override
 	public void onStart(){
 		super.onStart();
-		setupWidgetsViewElements();
 		
 		if (adapter==null){
 			adapter = new PostListItemAdapter(activity, R.layout.post_list_view_item_layout, adapterData, activity.deviceId, true);
 		}		
-		postsList.setAdapter(adapter);
+		postsListView.setAdapter(adapter);
 		
 		List<Post> latestPosts = PostsCache.getInstance(activity).getLatestPosts(adapter, adapterData);
 		if (Helpers.renewList(adapterData, latestPosts)){
@@ -79,8 +93,8 @@ public class PostsLatestFragment
  	}
  	
  	protected void setupWidgetsViewElements() {
-		postsList = (ListView)view.findViewById(R.id.own_feed_posts_list_view);
-		postsList.setOnItemClickListener(this);
+		postsListView = (ListView)view.findViewById(R.id.posts_listView);
+		postsListView.setOnItemClickListener(this);
 	}
  	
  	@Override
@@ -118,6 +132,11 @@ public class PostsLatestFragment
 			}
 			adapter.notifyDataSetChanged();
 		}
+	}
+
+	@Override
+	public void onRefreshStarted(View view) {
+		
 	}
 	
 

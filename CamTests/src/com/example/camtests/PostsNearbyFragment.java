@@ -99,7 +99,7 @@ public class PostsNearbyFragment
  	}*/
  	
 	protected void setupWidgetsViewElements() {
-		postsList = (ListView)view.findViewById(R.id.own_feed_posts_list_view);
+		postsList = (ListView)view.findViewById(R.id.posts_listView);
 		postsList.setOnItemClickListener(this);
 	}
 
