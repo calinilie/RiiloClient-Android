@@ -136,7 +136,7 @@ public class PostsNearbyFragment
 				//TODO change logic in method above
 			}
 			double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, lastKnownLocation);
-			adapterData = PostsCache.getInstance(activity).getNearbyPosts(latLong[0], latLong[1], adapter, adapterData, null, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
+			adapterData = PostsCache.getInstance(activity).getNearbyPosts(latLong[0], latLong[1], adapter, adapterData, null, null, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
 			adapter.notifyDataSetChanged();
 		}
 	}

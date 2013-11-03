@@ -151,10 +151,10 @@ public class Z_Dep_TakePhotoActivity extends BaseActivity implements OnClickList
 				LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY,
 				UPDATE_INTERVAL, FASTEST_INTERVAL);
 
-		PostsCache.getInstance(this).getLatestPosts(itemsAdapter, items);
-		PostsCache.getInstance(this).getNotifications(deviceId, null, null,
-				buttonTakePicture, false,
-				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);
+//		PostsCache.getInstance(this).getLatestPosts(itemsAdapter, items);
+//		PostsCache.getInstance(this).getNotifications(deviceId, null, null,
+//				buttonTakePicture, false,
+//				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);
 
 	}
 
@@ -291,9 +291,9 @@ public class Z_Dep_TakePhotoActivity extends BaseActivity implements OnClickList
 			}
 			latLong = Helpers.setReqFrom_Latitude_and_Longitude(location,
 					lastKnownLocation);
-			PostsCache.getInstance(this).getNearbyPosts(latLong[0], latLong[1],
-					null, null, buttonGetLocation, false,
-					StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);
+//			PostsCache.getInstance(this).getNearbyPosts(latLong[0], latLong[1],
+//					null, null, buttonGetLocation, false,
+//					StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);
 			itemsAdapter.notifyDataSetChanged();
 		}/*
 		 * else{ latLong = Helpers.setReqFrom_Latitude_and_Longitude(location,

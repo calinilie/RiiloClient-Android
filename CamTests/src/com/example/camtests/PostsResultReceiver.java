@@ -2,6 +2,9 @@ package com.example.camtests;
 
 import java.util.List;
 
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
+
+import android.app.ActionBar.Tab;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -13,7 +16,8 @@ public class PostsResultReceiver extends ResultReceiver{
 
 	private PostListItemAdapter adapter;
 	private List<Post> adapterData;
-	private View view;
+	private Tab tab;
+	private PullToRefreshAttacher pullToRefreshAttacher;
 	
 	private Handler handler;
 	
@@ -30,8 +34,12 @@ public class PostsResultReceiver extends ResultReceiver{
 		this.adapterData = adapterData;
 	}
 
-	public void setView(View view) {
-		this.view = view;
+	public void setTab(Tab tab) {
+		this.tab = tab;
+	}
+	
+	public void setPullToRefreshAttacher(PullToRefreshAttacher pullToRefreshAttacher){
+		this.pullToRefreshAttacher = pullToRefreshAttacher;
 	}
 	
 	@Override
@@ -39,10 +47,10 @@ public class PostsResultReceiver extends ResultReceiver{
 		switch (resultCode){
 			case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW:
 				int notifications = resultData.getInt(StringKeys.POST_RESULT_RECEIVER_NOTIFICATION_NUMBER, 0);
-				if (view==null)
+				if (tab==null)
 					throw new RuntimeException("VIEW should NOT be null! Maybe you forgot to set it??");
 				if (notifications>0){
-					updateButton(notifications);
+					updateTabText(notifications);
 				}
 				break;
 			case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC:
@@ -66,6 +74,9 @@ public class PostsResultReceiver extends ResultReceiver{
 //				refreshAdapter(posts);
 //				break;
 		}
+		if (pullToRefreshAttacher!=null && pullToRefreshAttacher.isRefreshing()){
+			pullToRefreshAttacher.setRefreshComplete();
+		}
 	}
 	
 	private void refreshAdapter(List<Post> newPosts){
@@ -80,14 +91,19 @@ public class PostsResultReceiver extends ResultReceiver{
 		}
 	}
 	
-	private void updateButton(final int notifications){
-		if ((view!=null) && (view instanceof Button)){
+	private void updateTabText(final int notifications){
+		if (tab!=null){
 			this.handler.post(new Runnable() {
-				
 				@Override
 				public void run() {
-					Button button = (Button) view;
-					button.setText("Feed" + String.format(" (%s)", notifications));
+					switch(tab.getPosition()){
+					case 2:
+						tab.setText("Nearby: "+notifications);
+						break;
+					case 3:
+						tab.setText("Notifications: "+notifications);
+						break;
+					}
 				}
 			});
 		}

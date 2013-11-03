@@ -75,7 +75,7 @@ public class PostsFeedFragment
 		}		
 		postsList.setAdapter(adapter);
 		
-		List<Post> newNotifications = PostsCache.getInstance(activity).getNotifications(activity.deviceId, adapter, adapterData, null, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
+		List<Post> newNotifications = PostsCache.getInstance(activity).getNotifications(activity.deviceId, adapter, adapterData, null, null, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
 		if (Helpers.renewList(adapterData, newNotifications)){
 			adapter.notifyDataSetChanged();
 		}

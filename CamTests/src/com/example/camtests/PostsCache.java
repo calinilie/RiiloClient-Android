@@ -6,6 +6,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
+
+import android.app.ActionBar.Tab;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -80,20 +83,20 @@ public class PostsCache {
 		return this.latestPosts;
 	}
 	
- 	public synchronized List<Post> getLatestPosts(PostListItemAdapter adapter, List<Post> adapterData){
+ 	public synchronized List<Post> getLatestPosts(PostListItemAdapter adapter, List<Post> adapterData, PullToRefreshAttacher pullToRefreshAttacher){
 		Log.d("PostsCache", latestPosts.size()+"");
-		return this.getLatestPosts(adapter, adapterData, false);
+		return this.getLatestPosts(adapter, adapterData, pullToRefreshAttacher, false);
 	}
 	
-	public synchronized List<Post> getLatestPosts(PostListItemAdapter adapter, List<Post> adapterData, boolean forcedUpdate){
-		startService_getLatest(adapter, adapterData, forcedUpdate);
+	public synchronized List<Post> getLatestPosts(PostListItemAdapter adapter, List<Post> adapterData, PullToRefreshAttacher pullToRefreshAttacher, boolean forcedUpdate){
+		startService_getLatest(adapter, adapterData, pullToRefreshAttacher, forcedUpdate);
 		return latestPosts;
 	}
 	
-	public synchronized List<Post> getPostsByConversationId(long conversationId, PostListItemAdapter adapter, List<Post> adapterData){
+	public synchronized List<Post> getPostsByConversationId(long conversationId, PostListItemAdapter adapter, List<Post> adapterData, PullToRefreshAttacher pullToRefreshAttacher){
 		List<Post> retVal = getPostsByConversationId(conversationId);
 //		Log.d("WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID", "postsCache "+conversationId);
-		startService_getConversationByPostId(conversationId, adapter, adapterData);
+		startService_getConversationByPostId(conversationId, adapter, adapterData, pullToRefreshAttacher);
 //		Log.d("PostsCache.getPostsByConversationId()", retVal.size()+"");
 		return retVal;
 	}
@@ -110,13 +113,19 @@ public class PostsCache {
 		return retVal;
 	}
 	
-	public synchronized List<Post> getNotifications(String userId, PostListItemAdapter adapter, List<Post> adapterData, Button button, boolean forcedUpdate, int postResultReceiverType){
+	public synchronized List<Post> getNotifications(
+			String userId, 
+			PostListItemAdapter adapter, 
+			List<Post> adapterData, 
+			Tab tab, 
+			PullToRefreshAttacher pullToRefreshAttacher, 
+			boolean forcedUpdate, 
+			int postResultReceiverType){
 		if (isRequestAllowed(timestamp_NotificationsCall, forcedUpdate)){
-			startService_getNotifications(userId, adapter, adapterData, button, postResultReceiverType);
+			startService_getNotifications(userId, adapter, adapterData, tab, pullToRefreshAttacher, postResultReceiverType);
 		}
 		return this.notifications;
 	}
-	
 	
 	public synchronized List<Post> getNotifications(){
 		return this.notifications;
@@ -147,8 +156,16 @@ public class PostsCache {
 		return false;
 	}
 	
-	public synchronized List<Post> getNearbyPosts(double latitude, double longitude, PostListItemAdapter adapter, List<Post> adapterData, Button button, boolean forcedUpdate, int postResultReceiverType){
-		startService_getNearby(latitude, longitude, adapter, adapterData, button, postResultReceiverType);
+	public synchronized List<Post> getNearbyPosts(
+			double latitude, 
+			double longitude, 
+			PostListItemAdapter adapter, 
+			List<Post> adapterData, 
+			Tab tab,
+			PullToRefreshAttacher pullToRefreshAttacher,
+			boolean forcedUpdate, 
+			int postResultReceiverType){
+		startService_getNearby(latitude, longitude, adapter, adapterData, tab, pullToRefreshAttacher, postResultReceiverType);
 		return nearbyPosts;
 	}
 	
@@ -209,7 +226,7 @@ public class PostsCache {
 		return targetPosts;
 	}
 	
-	private void startService_getConversationByPostId(long conversationId, PostListItemAdapter adapter, List<Post> adapterData){
+	private void startService_getConversationByPostId(long conversationId, PostListItemAdapter adapter, List<Post> adapterData, PullToRefreshAttacher pullToRefreshAttacher){
 		Intent intent = new Intent(this.context, WorkerService.class);
         intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID);
         intent.putExtra(StringKeys.CONVERSATION_FROM_CONVERSATION_ID, conversationId);
@@ -223,7 +240,7 @@ public class PostsCache {
         this.context.startService(intent);
 	}
 	
-	private void startService_getNotifications(String userId, PostListItemAdapter adapter, List<Post> adapterData, Button button, int postResultReceiverType){
+	private void startService_getNotifications(String userId, PostListItemAdapter adapter, List<Post> adapterData, Tab tab, PullToRefreshAttacher pullToRefreshAttacher, int postResultReceiverType){
 		Intent intent = new Intent(this.context, WorkerService.class);
 		intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_NOTIFICATIONS);
 		intent.putExtra(StringKeys.NOTIFICATIONS_USER_ID, userId);
@@ -232,13 +249,13 @@ public class PostsCache {
 		PostsResultReceiver resultReceiver = new PostsResultReceiver(new Handler());
 		resultReceiver.setAdapter(adapter);
 		resultReceiver.setAdapterData(adapterData);
-		resultReceiver.setView(button);
+		resultReceiver.setTab(tab);
 		intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
 
 		this.context.startService(intent);
 	}
 	
-	private void startService_getNearby(double latitude, double longitude, PostListItemAdapter adapter, List<Post> adapterData, Button button, int postResultReceiverType){
+	private void startService_getNearby(double latitude, double longitude, PostListItemAdapter adapter, List<Post> adapterData, Tab tab, PullToRefreshAttacher pullToRefreshAttacher, int postResultReceiverType){
 		Intent intent = new Intent(this.context, WorkerService.class);
 		intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_NEARBY_POSTS);
 		intent.putExtra(StringKeys.NEARBY_POSTS_LATITUDE, latitude);
@@ -248,24 +265,29 @@ public class PostsCache {
 		PostsResultReceiver resultReceiver = new PostsResultReceiver(new Handler());
 		resultReceiver.setAdapter(adapter);
 		resultReceiver.setAdapterData(adapterData);
-		resultReceiver.setView(button);
+		resultReceiver.setTab(tab);
 		intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
 		
 		this.context.startService(intent);
 	}
 	
-	private void startService_getLatest(PostListItemAdapter adapter, List<Post> adapterData, boolean forcedUpdate){
+	private void startService_getLatest(PostListItemAdapter adapter, List<Post> adapterData, PullToRefreshAttacher pullToRefreshAttacher, boolean forcedUpdate){
 		if (isRequestAllowed(this.timestamp_PostsCall, forcedUpdate)){
+			
 			Intent intent = new Intent(context, WorkerService.class);
 	        intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_LATEST_POSTS);
 	        
 	        intent.putExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
-	        PostsResultReceiver resultReceiver = new PostsResultReceiver(new Handler());
+	        Handler handler = new Handler();
+	        PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);
 	        resultReceiver.setAdapter(adapter);
 	        resultReceiver.setAdapterData(adapterData);
+	        resultReceiver.setPullToRefreshAttacher(pullToRefreshAttacher);
 	        intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
 	        
 	        context.startService(intent);
+	        
+	        startRereshAniamtion(handler, pullToRefreshAttacher);
 		}
 	}
 	
@@ -290,6 +312,19 @@ public class PostsCache {
 		}
 		return false;
 	}
+	
+	private void startRereshAniamtion(Handler handler, final PullToRefreshAttacher pullToRefreshAttacher){
+		if (!pullToRefreshAttacher.isRefreshing()){
+			handler.post(new Runnable() {
+				
+				@Override
+				public void run() {
+					pullToRefreshAttacher.setRefreshing(true);
+				}
+			});
+		}
+	}
+	
 	
 	public class RequestTimestamp{
 		

@@ -73,7 +73,6 @@ public class PostsLatestFragment
 
         // Now set the ScrollView as the refreshable view, and the refresh listener (this)
         pullToRefreshAttacher.addRefreshableView(postsListView, this);
- 		
  		return view;
  	}
  	
@@ -86,7 +85,7 @@ public class PostsLatestFragment
 		}		
 		postsListView.setAdapter(adapter);
 		
-		List<Post> latestPosts = PostsCache.getInstance(activity).getLatestPosts(adapter, adapterData);
+		List<Post> latestPosts = PostsCache.getInstance(activity).getLatestPosts(adapter, adapterData, pullToRefreshAttacher);
 		if (Helpers.renewList(adapterData, latestPosts)){
 			adapter.notifyDataSetChanged();
 		}

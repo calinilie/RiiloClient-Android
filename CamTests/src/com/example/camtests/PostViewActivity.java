@@ -70,7 +70,7 @@ public class PostViewActivity extends BaseActivity
 		}		
 		postsList.setAdapter(adapter);
 		
-		List<Post> postsInConversation = PostsCache.getInstance(this).getPostsByConversationId(currentPost.getConversationId(), adapter, adapterData);
+		List<Post> postsInConversation = PostsCache.getInstance(this).getPostsByConversationId(currentPost.getConversationId(), adapter, adapterData, null);
 		if (Helpers.renewList(adapterData, postsInConversation, false)){
 			adapter.notifyDataSetChanged();
 		}
