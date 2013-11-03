@@ -15,7 +15,7 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Environment;
 
-public class BitmapHelper {
+public class Z_Dep_BitmapHelper {
 
     public static byte[] bitmapToByteArray(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();

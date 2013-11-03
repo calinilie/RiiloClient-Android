@@ -51,7 +51,7 @@ public class PostsNearbyFragment
 	
  	@Override
  	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInsatnceState){
- 		view = inflater.inflate(R.layout.posts_own_feed, container, false); 
+ 		view = inflater.inflate(R.layout.posts_lists_layout, container, false); 
  		return view;
  	}
  	
@@ -82,7 +82,7 @@ public class PostsNearbyFragment
 		setupWidgetsViewElements();
 		
 		if (adapter==null){
-			adapter = new PostListItemAdapter(activity, R.layout.post_list_view_item, adapterData, activity.deviceId, true);
+			adapter = new PostListItemAdapter(activity, R.layout.post_list_view_item_layout, adapterData, activity.deviceId, true);
 		}		
 		postsList.setAdapter(adapter);
 		

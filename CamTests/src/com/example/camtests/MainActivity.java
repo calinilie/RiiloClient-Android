@@ -30,7 +30,7 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_layout);
 
         // Create the adapter that will return a fragment for each of the three primary sections
         // of the app.

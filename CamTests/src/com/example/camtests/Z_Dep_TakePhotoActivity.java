@@ -84,10 +84,10 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class TakePhotoActivity extends BaseActivity implements OnClickListener,
+public class Z_Dep_TakePhotoActivity extends BaseActivity implements OnClickListener,
 		OnItemClickListener {
 
-	public final static String TAG = TakePhotoActivity.class.getName();
+	public final static String TAG = Z_Dep_TakePhotoActivity.class.getName();
 
 	public static final String CURRENT_LOCATION_LAT_KEY = "org.calin.camtests.CurrentLocationLatitude";
 	public static final String CURRENT_LOCATION_LONG_KEY = "org.calin.camtests.CurrentLocationLongitude";
@@ -143,7 +143,7 @@ public class TakePhotoActivity extends BaseActivity implements OnClickListener,
 
 		items = PostsCache.getInstance(this).getPostsAsList();
 		itemsAdapter = new PostListItemAdapter(this,
-				R.layout.post_list_view_item, items, deviceId, true);
+				R.layout.post_list_view_item_layout, items, deviceId, true);
 		postsListView.setAdapter(itemsAdapter);
 
 		lastKnownLocation = Facade.getInstance(this).getLastKnownLocation();

@@ -68,7 +68,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //    	setRetainInstance(false);
-    	view = inflater.inflate(R.layout.to_location_post, container, false);
+    	view = inflater.inflate(R.layout.write_post_layout, container, false);
     	
     	mapView =(MapView)view.findViewById(R.id.map);
     	mapView.onCreate(savedInstanceState);

@@ -21,7 +21,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
-public class UserAtLocationPostActivity extends BaseActivity
+public class Z_Dep_UserAtLocationPostActivity extends BaseActivity
 	implements OnClickListener{
 
 	private GoogleMap mMap;

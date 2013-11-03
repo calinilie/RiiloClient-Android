@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-public class MyMapActivity extends Fragment implements OnMapClickListener{
+public class Z_Dep_MyMapActivity extends Fragment implements OnMapClickListener{
 
 	List<Post> posts;
 	

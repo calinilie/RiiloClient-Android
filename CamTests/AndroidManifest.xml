@@ -37,32 +37,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-	      android:name=".MyMapActivity"
-	      android:label="@string/my_map_activity"
-	      android:screenOrientation="portrait">
-            <meta-data
-	            android:name="android.support.PARENT_ACTIVITY"
-	            android:value="com.example.camtests.TakePhotoActivity" />
-        </activity>
-        
-        <activity
-	      android:name="com.example.camtests.UserAtLocationPostActivity"
-	      android:label="@string/user_at_location_activity_label"
-	      android:screenOrientation="portrait">
-            <meta-data
-	            android:name="android.support.PARENT_ACTIVITY"
-	            android:value="com.example.camtests.TakePhotoActivity" />
-        </activity>
-        
-        <activity
-	      android:name="com.example.camtests.ToLocationPostFragment"
-	      android:label="@string/to_location_post_activity_label"
-	      android:screenOrientation="portrait">
-            <meta-data
-	            android:name="android.support.PARENT_ACTIVITY"
-	            android:value="com.example.camtests.TakePhotoActivity" />
-        </activity>
         
         <activity
 	      android:name="com.example.camtests.PostViewActivity"
@@ -71,30 +45,6 @@
             <meta-data
 	            android:name="android.support.PARENT_ACTIVITY"
 	            android:value="com.example.camtests.TakePhotoActivity" />
-        </activity>
-        
-        <activity
-	      android:name="com.example.camtests.PostsFeedFragment"
-	      android:label="@string/feed_activity_label"
-	      android:screenOrientation="portrait">
-            <meta-data
-	            android:name="android.support.PARENT_ACTIVITY"
-	            android:value="com.example.camtests.TakePhotoActivity" />
-        </activity>
-        
-        <!-- <activity
-	      android:name="com.example.camtests.PostsNearbyFragment"
-	      android:label="@string/nearby_activity_label"
-	      android:screenOrientation="portrait">
-            <meta-data
-	            android:name="android.support.PARENT_ACTIVITY"
-	            android:value="com.example.camtests.TakePhotoActivity" />
-        </activity> -->
-        
-        <activity
-            android:name="com.example.camtests.UploadPhotoActivity"
-            android:label="@string/app_name"
-            android:noHistory="true" >
         </activity>
 		
         <service android:enabled="true"
