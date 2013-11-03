@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher.OnRefreshListener;
+
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 
@@ -25,7 +28,7 @@ import android.widget.ListView;
 
 public class PostsNearbyFragment 
 				extends Fragment 
-				implements OnItemClickListener, ILocationListener{
+				implements OnItemClickListener, ILocationListener, OnRefreshListener{
 
 	private boolean distancesComputed;
 	
@@ -40,9 +43,11 @@ public class PostsNearbyFragment
     
 	PostListItemAdapter adapter;
  	List<Post> adapterData = new ArrayList<Post>();
- 	ListView postsList;
+ 	ListView postsListView;
  	
  	private LocationHistory lastKnownLocation;
+ 	
+ 	private PullToRefreshAttacher pullToRefreshAttacher;
  	
  	public void onAttach(Activity activity){
  		this.activity = (BaseActivity)activity;
@@ -52,6 +57,12 @@ public class PostsNearbyFragment
  	@Override
  	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInsatnceState){
  		view = inflater.inflate(R.layout.posts_lists_layout, container, false); 
+ 		setupWidgetsViewElements();
+ 		
+        pullToRefreshAttacher = ((MainActivity) getActivity())
+                .getPullToRefreshAttacher();
+        pullToRefreshAttacher.addRefreshableView(postsListView, this);
+ 		
  		return view;
  	}
  	
@@ -69,22 +80,14 @@ public class PostsNearbyFragment
 		}
  	}
  	
-	/*@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.list_view_layout_menu, menu);
-		return super.onCreateOptionsMenu(menu);
-	}*/
- 	
  	@Override
 	public void onStart(){
 		super.onStart();
-		setupWidgetsViewElements();
 		
 		if (adapter==null){
 			adapter = new PostListItemAdapter(activity, R.layout.post_list_view_item_layout, adapterData, activity.deviceId, true);
 		}		
-		postsList.setAdapter(adapter);
+		postsListView.setAdapter(adapter);
 		
 		List<Post> nearbyPosts = PostsCache.getInstance(activity).getNearbyPosts();
 		if (Helpers.renewList(adapterData, nearbyPosts)){
@@ -99,8 +102,8 @@ public class PostsNearbyFragment
  	}*/
  	
 	protected void setupWidgetsViewElements() {
-		postsList = (ListView)view.findViewById(R.id.posts_listView);
-		postsList.setOnItemClickListener(this);
+		postsListView = (ListView)view.findViewById(R.id.posts_listView);
+		postsListView.setOnItemClickListener(this);
 	}
 
 	@Override
@@ -136,8 +139,14 @@ public class PostsNearbyFragment
 				//TODO change logic in method above
 			}
 			double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, lastKnownLocation);
-			adapterData = PostsCache.getInstance(activity).getNearbyPosts(latLong[0], latLong[1], adapter, adapterData, null, null, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
+			adapterData = PostsCache.getInstance(activity).getNearbyPosts(latLong[0], latLong[1], adapter, adapterData, null, pullToRefreshAttacher, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
 			adapter.notifyDataSetChanged();
 		}
+	}
+
+	@Override
+	public void onRefreshStarted(View view) {
+		// TODO Auto-generated method stub
+		
 	}
 }

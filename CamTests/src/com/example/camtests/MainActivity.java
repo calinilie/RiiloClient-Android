@@ -113,7 +113,7 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
                     return nearbyPostsFragment;
                 case 3:
                 default:
-                	PostsFeedFragment notificationsPostsFragment = new PostsFeedFragment();
+                	PostsNotificationsFragment notificationsPostsFragment = new PostsNotificationsFragment();
                 	return notificationsPostsFragment;
                 	
             }

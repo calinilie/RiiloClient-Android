@@ -82,7 +82,7 @@ public class PostsLatestFragment
 		
 		if (adapter==null){
 			adapter = new PostListItemAdapter(activity, R.layout.post_list_view_item_layout, adapterData, activity.deviceId, true);
-		}		
+		}
 		postsListView.setAdapter(adapter);
 		
 		List<Post> latestPosts = PostsCache.getInstance(activity).getLatestPosts(adapter, adapterData, pullToRefreshAttacher);

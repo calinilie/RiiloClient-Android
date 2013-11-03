@@ -208,7 +208,7 @@ public class Z_Dep_TakePhotoActivity extends BaseActivity implements OnClickList
 			 * super.showWarningDialog(getString(R.string
 			 * .error_sd_card_not_mounted)); } }
 			 */
-			intent = new Intent(this, PostsFeedFragment.class);
+			intent = new Intent(this, PostsNotificationsFragment.class);
 			startActivity(intent);
 			break;
 		case R.id.button_get_location:

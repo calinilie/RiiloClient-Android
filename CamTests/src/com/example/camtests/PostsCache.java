@@ -83,17 +83,28 @@ public class PostsCache {
 		return this.latestPosts;
 	}
 	
- 	public synchronized List<Post> getLatestPosts(PostListItemAdapter adapter, List<Post> adapterData, PullToRefreshAttacher pullToRefreshAttacher){
+ 	public synchronized List<Post> getLatestPosts(
+ 				PostListItemAdapter adapter, 
+ 				List<Post> adapterData, 
+ 				PullToRefreshAttacher pullToRefreshAttacher){
 		Log.d("PostsCache", latestPosts.size()+"");
 		return this.getLatestPosts(adapter, adapterData, pullToRefreshAttacher, false);
 	}
 	
-	public synchronized List<Post> getLatestPosts(PostListItemAdapter adapter, List<Post> adapterData, PullToRefreshAttacher pullToRefreshAttacher, boolean forcedUpdate){
+	public synchronized List<Post> getLatestPosts(
+			PostListItemAdapter adapter, 
+			List<Post> adapterData, 
+			PullToRefreshAttacher pullToRefreshAttacher, 
+			boolean forcedUpdate){
 		startService_getLatest(adapter, adapterData, pullToRefreshAttacher, forcedUpdate);
 		return latestPosts;
 	}
 	
-	public synchronized List<Post> getPostsByConversationId(long conversationId, PostListItemAdapter adapter, List<Post> adapterData, PullToRefreshAttacher pullToRefreshAttacher){
+	public synchronized List<Post> getPostsByConversationId(
+			long conversationId, 
+			PostListItemAdapter adapter, 
+			List<Post> adapterData, 
+			PullToRefreshAttacher pullToRefreshAttacher){
 		List<Post> retVal = getPostsByConversationId(conversationId);
 //		Log.d("WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID", "postsCache "+conversationId);
 		startService_getConversationByPostId(conversationId, adapter, adapterData, pullToRefreshAttacher);
@@ -226,52 +237,85 @@ public class PostsCache {
 		return targetPosts;
 	}
 	
-	private void startService_getConversationByPostId(long conversationId, PostListItemAdapter adapter, List<Post> adapterData, PullToRefreshAttacher pullToRefreshAttacher){
+	private void startService_getConversationByPostId(
+			long conversationId, 
+			PostListItemAdapter adapter, 
+			List<Post> adapterData, 
+			PullToRefreshAttacher pullToRefreshAttacher){
 		Intent intent = new Intent(this.context, WorkerService.class);
         intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID);
         intent.putExtra(StringKeys.CONVERSATION_FROM_CONVERSATION_ID, conversationId);
         
+        Handler handler = new Handler();
         intent.putExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER);
-        PostsResultReceiver resultReceiver = new PostsResultReceiver(new Handler());
+        PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);
         resultReceiver.setAdapter(adapter);
         resultReceiver.setAdapterData(adapterData);
+        resultReceiver.setPullToRefreshAttacher(pullToRefreshAttacher);
         intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
         
         this.context.startService(intent);
+        
+        startRereshAniamtion(handler, pullToRefreshAttacher);
 	}
 	
-	private void startService_getNotifications(String userId, PostListItemAdapter adapter, List<Post> adapterData, Tab tab, PullToRefreshAttacher pullToRefreshAttacher, int postResultReceiverType){
+	private void startService_getNotifications(
+			String userId, 
+			PostListItemAdapter adapter, 
+			List<Post> adapterData, 
+			Tab tab, 
+			PullToRefreshAttacher pullToRefreshAttacher, 
+			int postResultReceiverType){
 		Intent intent = new Intent(this.context, WorkerService.class);
 		intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_NOTIFICATIONS);
 		intent.putExtra(StringKeys.NOTIFICATIONS_USER_ID, userId);
 		
+		Handler handler = new Handler();
 		intent.putExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, postResultReceiverType);
-		PostsResultReceiver resultReceiver = new PostsResultReceiver(new Handler());
+		PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);
 		resultReceiver.setAdapter(adapter);
 		resultReceiver.setAdapterData(adapterData);
 		resultReceiver.setTab(tab);
+		resultReceiver.setPullToRefreshAttacher(pullToRefreshAttacher);
 		intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
 
 		this.context.startService(intent);
+		
+		startRereshAniamtion(handler, pullToRefreshAttacher);
 	}
 	
-	private void startService_getNearby(double latitude, double longitude, PostListItemAdapter adapter, List<Post> adapterData, Tab tab, PullToRefreshAttacher pullToRefreshAttacher, int postResultReceiverType){
+	private void startService_getNearby(
+			double latitude, 
+			double longitude, 
+			PostListItemAdapter adapter, 
+			List<Post> adapterData, 
+			Tab tab, 
+			PullToRefreshAttacher pullToRefreshAttacher, 
+			int postResultReceiverType){
 		Intent intent = new Intent(this.context, WorkerService.class);
 		intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_NEARBY_POSTS);
 		intent.putExtra(StringKeys.NEARBY_POSTS_LATITUDE, latitude);
 		intent.putExtra(StringKeys.NEARBY_POSTS_LONGITUDE, longitude);
 		
+		Handler handler = new Handler();
 		intent.putExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, postResultReceiverType);
-		PostsResultReceiver resultReceiver = new PostsResultReceiver(new Handler());
+		PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);
 		resultReceiver.setAdapter(adapter);
 		resultReceiver.setAdapterData(adapterData);
 		resultReceiver.setTab(tab);
+		resultReceiver.setPullToRefreshAttacher(pullToRefreshAttacher);
 		intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
 		
 		this.context.startService(intent);
+		
+		startRereshAniamtion(handler, pullToRefreshAttacher);
 	}
 	
-	private void startService_getLatest(PostListItemAdapter adapter, List<Post> adapterData, PullToRefreshAttacher pullToRefreshAttacher, boolean forcedUpdate){
+	private void startService_getLatest(
+			PostListItemAdapter adapter, 
+			List<Post> adapterData, 
+			PullToRefreshAttacher pullToRefreshAttacher, 
+			boolean forcedUpdate){
 		if (isRequestAllowed(this.timestamp_PostsCall, forcedUpdate)){
 			
 			Intent intent = new Intent(context, WorkerService.class);
@@ -287,7 +331,7 @@ public class PostsCache {
 	        
 	        context.startService(intent);
 	        
-	        startRereshAniamtion(handler, pullToRefreshAttacher);
+//	        startRereshAniamtion(handler, pullToRefreshAttacher);
 		}
 	}
 	
@@ -314,7 +358,7 @@ public class PostsCache {
 	}
 	
 	private void startRereshAniamtion(Handler handler, final PullToRefreshAttacher pullToRefreshAttacher){
-		if (!pullToRefreshAttacher.isRefreshing()){
+		if (pullToRefreshAttacher!=null && !pullToRefreshAttacher.isRefreshing()){
 			handler.post(new Runnable() {
 				
 				@Override

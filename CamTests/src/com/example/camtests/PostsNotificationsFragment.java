@@ -3,6 +3,9 @@ package com.example.camtests;
 import java.util.ArrayList;
 import java.util.List;
 
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher.OnRefreshListener;
+
 import com.google.android.gms.location.LocationRequest;
 
 import android.app.Activity;
@@ -18,9 +21,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class PostsFeedFragment 
+public class PostsNotificationsFragment 
 				extends Fragment 
-				implements OnItemClickListener{
+				implements OnItemClickListener, OnRefreshListener{
 
     // Update frequency in milliseconds
     private static final int UPDATE_INTERVAL = 10000;
@@ -29,10 +32,12 @@ public class PostsFeedFragment
 	
 	PostListItemAdapter adapter;
  	List<Post> adapterData = new ArrayList<Post>();
- 	ListView postsList;
+ 	ListView postsListView;
     
  	private View view;
  	private BaseActivity activity;
+ 	
+ 	private PullToRefreshAttacher pullToRefreshAttacher;
  	
  	public void onAttach(Activity activity){
  		this.activity = (BaseActivity)activity;
@@ -55,6 +60,13 @@ public class PostsFeedFragment
  	@Override
  	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInsatnceState){
  		view = inflater.inflate(R.layout.posts_lists_layout, container, false);
+ 		
+ 		setupWidgetsViewElements();
+ 		
+ 		pullToRefreshAttacher = ((MainActivity) getActivity())
+                .getPullToRefreshAttacher();
+        pullToRefreshAttacher.addRefreshableView(postsListView, this);
+        
  		return view;
  	}
  	
@@ -68,14 +80,13 @@ public class PostsFeedFragment
  	@Override
 	public void onStart(){
 		super.onStart();
-		setupWidgetsViewElements();
 		
 		if (adapter==null){
 			adapter = new PostListItemAdapter(activity, R.layout.post_list_view_item_layout, adapterData, activity.deviceId, false);
 		}		
-		postsList.setAdapter(adapter);
+		postsListView.setAdapter(adapter);
 		
-		List<Post> newNotifications = PostsCache.getInstance(activity).getNotifications(activity.deviceId, adapter, adapterData, null, null, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
+		List<Post> newNotifications = PostsCache.getInstance(activity).getNotifications(activity.deviceId, adapter, adapterData, null, pullToRefreshAttacher, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
 		if (Helpers.renewList(adapterData, newNotifications)){
 			adapter.notifyDataSetChanged();
 		}
@@ -87,8 +98,8 @@ public class PostsFeedFragment
 	}
  	
 	protected void setupWidgetsViewElements() {
-		postsList = (ListView)view.findViewById(R.id.posts_listView);
-		postsList.setOnItemClickListener(this);
+		postsListView = (ListView)view.findViewById(R.id.posts_listView);
+		postsListView.setOnItemClickListener(this);
 	}
 
 	@Override
@@ -109,6 +120,11 @@ public class PostsFeedFragment
 		Intent postViewIntent = new Intent(activity, PostViewActivity.class);
 		postViewIntent.putExtra(StringKeys.POST_BUNDLE, post.toBundle());
 		startActivity(postViewIntent);
+	}
+
+	@Override
+	public void onRefreshStarted(View view) {
+		// TODO Auto-generated method stub
 	}
 
 }

@@ -74,7 +74,7 @@ public class PostsResultReceiver extends ResultReceiver{
 //				refreshAdapter(posts);
 //				break;
 		}
-		if (pullToRefreshAttacher!=null && pullToRefreshAttacher.isRefreshing()){
+		if (pullToRefreshAttacher!=null /*&& pullToRefreshAttacher.isRefreshing()*/){
 			pullToRefreshAttacher.setRefreshComplete();
 		}
 	}
