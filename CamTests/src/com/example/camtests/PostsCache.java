@@ -331,7 +331,7 @@ public class PostsCache {
 	        
 	        context.startService(intent);
 	        
-//	        startRereshAniamtion(handler, pullToRefreshAttacher);
+	        startRereshAniamtion(handler, pullToRefreshAttacher);
 		}
 	}
 	
