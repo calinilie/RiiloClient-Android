@@ -42,6 +42,14 @@ public class PostsResultReceiver extends ResultReceiver{
 		this.pullToRefreshAttacher = pullToRefreshAttacher;
 	}
 	
+	public PullToRefreshAttacher getPullToRefreshAttacher() {
+		return pullToRefreshAttacher;
+	}
+
+	public Handler getHandler() {
+		return handler;
+	}
+
 	@Override
 	protected void onReceiveResult(int resultCode, Bundle resultData){
 		switch (resultCode){
@@ -74,20 +82,30 @@ public class PostsResultReceiver extends ResultReceiver{
 //				refreshAdapter(posts);
 //				break;
 		}
+		Log.d("###################################", "OnReceive Called");
 		if (pullToRefreshAttacher!=null /*&& pullToRefreshAttacher.isRefreshing()*/){
-			pullToRefreshAttacher.setRefreshComplete();
+			Log.d("###################################", "pullToRefreshAttacher NOT null");
+			handler.post(new Runnable() {
+				
+				@Override
+				public void run() {
+					pullToRefreshAttacher.setRefreshComplete();
+				}
+			});
 		}
 	}
 	
 	private void refreshAdapter(List<Post> newPosts){
-		if (Helpers.renewList(adapterData, newPosts)){
-			this.handler.post(new Runnable() {
-				
-				@Override
-				public void run() {
-					adapter.notifyDataSetChanged();
-				}
-			});
+		if (newPosts!=null && newPosts.size()>0){
+			if (Helpers.renewList(adapterData, newPosts)){
+				this.handler.post(new Runnable() {
+					
+					@Override
+					public void run() {
+						adapter.notifyDataSetChanged();
+					}
+				});
+			}
 		}
 	}
 	

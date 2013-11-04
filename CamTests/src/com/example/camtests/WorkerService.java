@@ -142,7 +142,7 @@ public class WorkerService extends IntentService{
 			userId = intent.getStringExtra(StringKeys.NOTIFICATIONS_USER_ID);
 			if (userId!=null){
 				List<Post> notifications = getNotificationsForUser(userId);
-				if (resultReceiver!=null && notifications!=null && notifications.size()>0){
+				if (resultReceiver!=null){
 					resultData = new Bundle();
 					resultData.putParcelable(StringKeys.POST_LIST_PARCELABLE, new PostsListParcelable(notifications));
 					resultData.putInt(StringKeys.POST_RESULT_RECEIVER_NOTIFICATION_NUMBER, postsCache.getNotifications().size());
@@ -171,7 +171,7 @@ public class WorkerService extends IntentService{
 			resultReceiverType = intent.getIntExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);
 			if (latitude != 0 && longitude != 0){
 				List<Post> nearbyPosts = getNearbyPosts(latitude, longitude);
-				if (resultReceiver!=null && nearbyPosts!=null && nearbyPosts.size()>0){
+				if (resultReceiver!=null){
 					resultData = new Bundle();
 					resultData.putParcelable(StringKeys.POST_LIST_PARCELABLE, new PostsListParcelable(nearbyPosts));
 					resultData.putInt(StringKeys.POST_RESULT_RECEIVER_NOTIFICATION_NUMBER, postsCache.getNearbyPosts().size());//TODO change to NEARBY_POSTS_NUMBER
