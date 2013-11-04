@@ -146,7 +146,12 @@ public class PostsNearbyFragment
 
 	@Override
 	public void onRefreshStarted(View view) {
-		// TODO Auto-generated method stub
+		Location location = ((BaseActivity) getActivity()).getLocation();
+		if (distancesComputed && location!=null){
+			double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, lastKnownLocation);
+			adapterData = PostsCache.getInstance(activity).getNearbyPosts(latLong[0], latLong[1], adapter, adapterData, null, pullToRefreshAttacher, true, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
+			adapter.notifyDataSetChanged();
+		}
 		
 	}
 }

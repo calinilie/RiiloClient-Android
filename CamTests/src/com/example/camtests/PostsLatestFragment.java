@@ -135,7 +135,12 @@ public class PostsLatestFragment
 
 	@Override
 	public void onRefreshStarted(View view) {
-		
+		PostsCache.getInstance(getActivity())
+			.getLatestPosts(
+				adapter, 
+				adapterData, 
+				pullToRefreshAttacher, 
+				true);
 	}
 	
 

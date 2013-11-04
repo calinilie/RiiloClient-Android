@@ -124,7 +124,7 @@ public class PostsNotificationsFragment
 
 	@Override
 	public void onRefreshStarted(View view) {
-		// TODO Auto-generated method stub
+		PostsCache.getInstance(activity).getNotifications(activity.deviceId, adapter, adapterData, null, pullToRefreshAttacher, true, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
 	}
 
 }

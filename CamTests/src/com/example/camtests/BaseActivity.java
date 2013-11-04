@@ -60,6 +60,8 @@ public abstract class BaseActivity extends FragmentActivity
     
     private List<ILocationListener> locationListeners;
     
+    
+    
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
@@ -331,7 +333,11 @@ public abstract class BaseActivity extends FragmentActivity
                 Toast.LENGTH_SHORT).show();
 		
 	}
-	
+
+	public Location getLocation() {
+		return location;
+	}
+
 	//===================================helper/utility methods and classes=======================
 	protected abstract void setupWidgetsViewElements();
 	

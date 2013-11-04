@@ -91,6 +91,7 @@ public class PostsCache {
 		return this.getLatestPosts(adapter, adapterData, pullToRefreshAttacher, false);
 	}
 	
+ 	//TODO
 	public synchronized List<Post> getLatestPosts(
 			PostListItemAdapter adapter, 
 			List<Post> adapterData, 
@@ -124,6 +125,7 @@ public class PostsCache {
 		return retVal;
 	}
 	
+	//TODO
 	public synchronized List<Post> getNotifications(
 			String userId, 
 			PostListItemAdapter adapter, 
@@ -167,6 +169,7 @@ public class PostsCache {
 		return false;
 	}
 	
+	//TODO
 	public synchronized List<Post> getNearbyPosts(
 			double latitude, 
 			double longitude, 
