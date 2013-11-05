@@ -18,8 +18,8 @@ build/
 local.properties
 
 # Eclipse project files
-#.properties
-#.project
+# .properties
+# .project
 .classpath
 .metadata/
 .metadata
