@@ -53,13 +53,6 @@
 	    </LinearLayout>
 
 	</LinearLayout>
-    
-	<ListView
-	    android:id="@+id/posts_list_view"
-	    android:layout_width="fill_parent"
-	    android:layout_height="0dp"
-	    android:layout_weight="0.60">
-	</ListView>
 	
     <!--  xmlns:android="http://schemas.android.com/apk/res/android" -->
 	<fragment
@@ -68,5 +61,12 @@
 	  android:layout_height="0dp"
 	  android:layout_weight="0.40"
 	  class="com.google.android.gms.maps.SupportMapFragment"/>
+	
+	<ListView
+	    android:id="@+id/posts_list_view"
+	    android:layout_width="fill_parent"
+	    android:layout_height="0dp"
+	    android:layout_weight="0.60">
+	</ListView>
 	
 </LinearLayout>

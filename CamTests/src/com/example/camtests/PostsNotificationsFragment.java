@@ -35,12 +35,12 @@ public class PostsNotificationsFragment
  	ListView postsListView;
     
  	private View view;
- 	private BaseActivity activity;
+ 	private MainActivity activity;
  	
  	private PullToRefreshAttacher pullToRefreshAttacher;
  	
  	public void onAttach(Activity activity){
- 		this.activity = (BaseActivity)activity;
+ 		this.activity = (MainActivity)activity;
  		super.onAttach(activity);
  	}
  	
@@ -63,7 +63,7 @@ public class PostsNotificationsFragment
  		
  		setupWidgetsViewElements();
  		
- 		pullToRefreshAttacher = ((MainActivity) getActivity())
+ 		pullToRefreshAttacher = activity
                 .getPullToRefreshAttacher();
         pullToRefreshAttacher.addRefreshableView(postsListView, this);
         
@@ -86,7 +86,7 @@ public class PostsNotificationsFragment
 		}		
 		postsListView.setAdapter(adapter);
 		
-		List<Post> newNotifications = PostsCache.getInstance(activity).getNotifications(activity.deviceId, adapter, adapterData, null, pullToRefreshAttacher, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
+		List<Post> newNotifications = PostsCache.getInstance(activity).getNotifications(activity.deviceId, adapter, adapterData, activity.getSelectedTab(), pullToRefreshAttacher, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
 		if (Helpers.renewList(adapterData, newNotifications)){
 			adapter.notifyDataSetChanged();
 		}
@@ -109,6 +109,8 @@ public class PostsNotificationsFragment
 		PostsCache.getInstance(activity).removeNotification(post);
 		adapterData.remove(post);
 		
+		//TODO desc tab count
+		
 		long conversationId = post.getConversationId();
 		
 		Intent invalidateConversation = new Intent(activity, WorkerService.class);
@@ -124,7 +126,7 @@ public class PostsNotificationsFragment
 
 	@Override
 	public void onRefreshStarted(View view) {
-		PostsCache.getInstance(activity).getNotifications(activity.deviceId, adapter, adapterData, null, pullToRefreshAttacher, true, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
+		PostsCache.getInstance(activity).getNotifications(activity.deviceId, adapter, adapterData, activity.getSelectedTab(), pullToRefreshAttacher, true, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
 	}
 
 }

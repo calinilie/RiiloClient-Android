@@ -1,6 +1,7 @@
 package com.example.camtests;
 
 import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,6 +29,8 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
     ViewPager mViewPager;
     
     PullToRefreshAttacher pullToRefreshAttacher;
+    
+    private Tab selectedTab;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +86,11 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in the ViewPager.
         mViewPager.setCurrentItem(tab.getPosition());
-        
+        selectedTab = tab;
+    }
+    
+    public Tab getSelectedTab(){
+    	return selectedTab;
     }
 
     @Override

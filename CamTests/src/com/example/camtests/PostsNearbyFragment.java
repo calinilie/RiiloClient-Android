@@ -37,7 +37,7 @@ public class PostsNearbyFragment
     // A fast frequency ceiling in milliseconds
     private static final long FASTEST_INTERVAL = 1000;
 	
-    private BaseActivity activity;
+    private MainActivity activity;
     private View view;
     
     
@@ -50,7 +50,7 @@ public class PostsNearbyFragment
  	private PullToRefreshAttacher pullToRefreshAttacher;
  	
  	public void onAttach(Activity activity){
- 		this.activity = (BaseActivity)activity;
+ 		this.activity = (MainActivity)activity;
  		super.onAttach(activity);
  	}
 	
@@ -59,7 +59,7 @@ public class PostsNearbyFragment
  		view = inflater.inflate(R.layout.posts_lists_layout, container, false); 
  		setupWidgetsViewElements();
  		
-        pullToRefreshAttacher = ((MainActivity) getActivity())
+        pullToRefreshAttacher = activity
                 .getPullToRefreshAttacher();
         pullToRefreshAttacher.addRefreshableView(postsListView, this);
  		
@@ -139,7 +139,7 @@ public class PostsNearbyFragment
 				//TODO change logic in method above
 			}
 			double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, lastKnownLocation);
-			adapterData = PostsCache.getInstance(activity).getNearbyPosts(latLong[0], latLong[1], adapter, adapterData, null, pullToRefreshAttacher, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
+			adapterData = PostsCache.getInstance(activity).getNearbyPosts(latLong[0], latLong[1], adapter, adapterData, activity.getSelectedTab() , pullToRefreshAttacher, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
 			adapter.notifyDataSetChanged();
 		}
 	}
@@ -149,7 +149,7 @@ public class PostsNearbyFragment
 		Location location = ((BaseActivity) getActivity()).getLocation();
 		if (distancesComputed && location!=null){
 			double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, lastKnownLocation);
-			adapterData = PostsCache.getInstance(activity).getNearbyPosts(latLong[0], latLong[1], adapter, adapterData, null, pullToRefreshAttacher, true, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
+			adapterData = PostsCache.getInstance(activity).getNearbyPosts(latLong[0], latLong[1], adapter, adapterData, activity.getSelectedTab(), pullToRefreshAttacher, true, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
 			adapter.notifyDataSetChanged();
 		}
 		
