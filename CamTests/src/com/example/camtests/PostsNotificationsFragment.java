@@ -86,7 +86,7 @@ public class PostsNotificationsFragment
 		}		
 		postsListView.setAdapter(adapter);
 		
-		List<Post> newNotifications = PostsCache.getInstance(activity).getNotifications(activity.deviceId, adapter, adapterData, activity.getSelectedTab(), pullToRefreshAttacher, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
+		List<Post> newNotifications = PostsCache.getInstance(activity).getNotifications(activity.deviceId, adapter, adapterData, activity.getTabs().get(3), pullToRefreshAttacher, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
 		if (Helpers.renewList(adapterData, newNotifications)){
 			adapter.notifyDataSetChanged();
 		}
@@ -126,7 +126,7 @@ public class PostsNotificationsFragment
 
 	@Override
 	public void onRefreshStarted(View view) {
-		PostsCache.getInstance(activity).getNotifications(activity.deviceId, adapter, adapterData, activity.getSelectedTab(), pullToRefreshAttacher, true, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
+		PostsCache.getInstance(activity).getNotifications(activity.deviceId, adapter, adapterData, activity.getTabs().get(3), pullToRefreshAttacher, true, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
 	}
 
 }

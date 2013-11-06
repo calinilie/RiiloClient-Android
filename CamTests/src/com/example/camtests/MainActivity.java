@@ -1,5 +1,8 @@
 package com.example.camtests;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
@@ -30,7 +33,7 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
     
     PullToRefreshAttacher pullToRefreshAttacher;
     
-    private Tab selectedTab;
+    private List<Tab> tabs;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,16 +65,17 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
             	actionBar.setSelectedNavigationItem(position);
             }
         });
-
+        tabs = new ArrayList<ActionBar.Tab>();
         // For each of the sections in the app, add a tab to the action bar.
         for (int i = 0; i < mAppSectionsPagerAdapter.getCount(); i++) {
             // Create a tab with text corresponding to the page title defined by the adapter.
             // Also specify this Activity object, which implements the TabListener interface, as the
             // listener for when this tab is selected.
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText(mAppSectionsPagerAdapter.getPageTitle(i))
-                            .setTabListener(this));
+        	Tab tab =  actionBar.newTab()
+                    .setText(mAppSectionsPagerAdapter.getPageTitle(i))
+                    .setTabListener(this);
+            actionBar.addTab(tab);
+            tabs.add(tab);
         }
         
         //create pullToRefreshAttacher
@@ -86,11 +90,10 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in the ViewPager.
         mViewPager.setCurrentItem(tab.getPosition());
-        selectedTab = tab;
     }
     
-    public Tab getSelectedTab(){
-    	return selectedTab;
+    public List<Tab> getTabs(){
+    	return tabs;
     }
 
     @Override
@@ -142,7 +145,7 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
             	return "Nearby";
             case 3:
             default:
-            	return "Notifications";
+            	return "Notifications: 0";
         	}
         }
     }

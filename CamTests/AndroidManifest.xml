@@ -53,8 +53,9 @@
         
         <meta-data
    			android:name="com.google.android.maps.v2.API_KEY"
-   			android:value="AIzaSyDUByW0WOvqncYicU638IJhro0noZr9l4M">
+   			android:value="AIzaSyD8Ho7Sbyn90GDs1MCu0SJw5YJJotcrkH4"> <!-- CALIN -->
         </meta-data>
     </application>
 
+    <!-- android:value="AIzaSyDUByW0WOvqncYicU638IJhro0noZr9l4M"> --><!-- MIHAI -->
 </manifest>

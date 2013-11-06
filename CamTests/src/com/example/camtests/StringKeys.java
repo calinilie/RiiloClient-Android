@@ -11,7 +11,7 @@ public class StringKeys {
 	public static final int POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC = 123;
 	public static final int POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER = 122;
 	public static final int POST_RESULT_RECEIVER_CODE_UPDATE_VIEW  = 121;
-//	public static final int POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER = 120;
+	public static final int POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER = 120;
 	public static final String CONVERSATION_FROM_CONVERSATION_ID = "org.calin.camtests.StringKeys.CONVERSATION_FROM_CONVERSATION_ID";
 	public static final String NOTIFICATIONS_USER_ID="org.calin.camtests.StringKeys.NOTIFICATIONS_USER_ID";
 	public static final String NOTIFICATION_SILENCE_CONVERSATION_ID = "org.calin.camtests.StringKeys.NOTIFICATION_SILENCE_CONVERSATION_ID";

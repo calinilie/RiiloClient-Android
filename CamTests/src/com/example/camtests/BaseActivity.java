@@ -60,6 +60,7 @@ public abstract class BaseActivity extends FragmentActivity
     
     private List<ILocationListener> locationListeners;
     
+    protected PostsCache postsCache;
     
     
 	public void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,7 @@ public abstract class BaseActivity extends FragmentActivity
         	fileName = savedInstanceState.getString(StringKeys.TAKE_PICTURE_FILE_NAME_AND_PATH);
         
         initLocationClient(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY, 2000, 1000);
+        postsCache = PostsCache.getInstance(this);
     }
 	
 	@Override

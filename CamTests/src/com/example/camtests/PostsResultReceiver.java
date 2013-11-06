@@ -52,9 +52,15 @@ public class PostsResultReceiver extends ResultReceiver{
 
 	@Override
 	protected void onReceiveResult(int resultCode, Bundle resultData){
+		int notifications= 0;
+		PostsListParcelable postsListParcelable =  resultData.getParcelable(StringKeys.POST_LIST_PARCELABLE);
+		List<Post> posts = null;
+		if (postsListParcelable!=null)
+			postsListParcelable.getPostsList();
+		
 		switch (resultCode){
 			case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW:
-				int notifications = resultData.getInt(StringKeys.POST_RESULT_RECEIVER_NOTIFICATION_NUMBER, 0);
+				notifications = resultData.getInt(StringKeys.POST_RESULT_RECEIVER_NOTIFICATION_NUMBER, 0);
 				if (tab==null)
 					throw new RuntimeException("VIEW should NOT be null! Maybe you forgot to set it??");
 				if (notifications>0){
@@ -66,21 +72,29 @@ public class PostsResultReceiver extends ResultReceiver{
 					throw new RuntimeException("adapter should NOT be null! Maybe you forgot to set it??");
 				if (adapterData==null)
 					throw new RuntimeException("adapterDATA should NOT be null! Maybe you forgot to set it??");
-				PostsListParcelable postsListParcelable =  resultData.getParcelable(StringKeys.POST_LIST_PARCELABLE);
-				List<Post> posts = postsListParcelable.getPostsList();
+				postsListParcelable =  resultData.getParcelable(StringKeys.POST_LIST_PARCELABLE);
+				posts = postsListParcelable.getPostsList();
 				refreshAdapter(posts);
 //				Log.d("<<<<<<<<<<<<<<<PostsResultReceiver.onReceiveResult>>>>>>>>>>>>>>>", "Posts: "+posts.size());
 				break;
-//			case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER:
-//				if (view==null)
-//					throw new RuntimeException("VIEW should NOT be null! Maybe you forgot to set it??");
-//				if (adapter==null)
-//					throw new RuntimeException("adapter should NOT be null! Maybe you forgot to set it??");
-//				if (adapterData==null)
-//					throw new RuntimeException("adapterDATA should NOT be null! Maybe you forgot to set it??");
-//				updateButton(posts);
-//				refreshAdapter(posts);
-//				break;
+			/*case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER:
+				throw new RuntimeException("NOT implemented YET");*/
+			case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER:
+				if (tab==null)
+					throw new RuntimeException("VIEW should NOT be null! Maybe you forgot to set it??");
+				if (adapter==null)
+					throw new RuntimeException("adapter should NOT be null! Maybe you forgot to set it??");
+				if (adapterData==null)
+					throw new RuntimeException("adapterDATA should NOT be null! Maybe you forgot to set it??");
+				
+				notifications = resultData.getInt(StringKeys.POST_RESULT_RECEIVER_NOTIFICATION_NUMBER, 0);
+				postsListParcelable =  resultData.getParcelable(StringKeys.POST_LIST_PARCELABLE);
+				posts = postsListParcelable.getPostsList();
+				
+				updateTabText(notifications);
+				Log.d("¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤", notifications+"");
+				refreshAdapter(posts);
+				break;
 		}
 		Log.d("###################################", "OnReceive Called");
 		if (pullToRefreshAttacher!=null /*&& pullToRefreshAttacher.isRefreshing()*/){
