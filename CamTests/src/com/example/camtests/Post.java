@@ -327,6 +327,10 @@ public class Post implements Comparable<Post>, Serializable{
 		}
 	}
 	
+	public void setDistanceFromLocation(double lat, double log, boolean inMiles){
+		distanceFromCurLoc = distanceFrom(lat, log, this.latitude, this.longitude, inMiles);
+	}
+	
 	private double distanceFrom(double lat1, double lng1, double lat2, double lng2, boolean inMiles) {
 		return Helpers.distanceFrom(lat1, lng1, lat2, lng2, inMiles);
 	}

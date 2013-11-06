@@ -124,6 +124,8 @@ public class PostsNearbyFragment
 			lastKnownLocation = Facade.getInstance(activity).getLastKnownLocation();
 			//compute distance to currentLocation
 			if (location!=null){
+				double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, lastKnownLocation);
+				adapterData = PostsCache.getInstance(activity).getNearbyPosts(latLong[0], latLong[1], adapter, adapterData, activity.getTabs().get(2) , pullToRefreshAttacher, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
 				for(Post p : adapterData){
 					p.setDistanceFromCurLoc(location, false);
 				}
@@ -138,8 +140,6 @@ public class PostsNearbyFragment
 			if (Facade.getInstance(activity).insertLocationToHistoryIfNeeded(location, lastKnownLocation)){
 				//TODO change logic in method above
 			}
-			double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, lastKnownLocation);
-			adapterData = PostsCache.getInstance(activity).getNearbyPosts(latLong[0], latLong[1], adapter, adapterData, activity.getTabs().get(2) , pullToRefreshAttacher, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
 			adapter.notifyDataSetChanged();
 		}
 	}
@@ -151,6 +151,9 @@ public class PostsNearbyFragment
 			double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, lastKnownLocation);
 			adapterData = PostsCache.getInstance(activity).getNearbyPosts(latLong[0], latLong[1], adapter, adapterData, activity.getTabs().get(2), pullToRefreshAttacher, true, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
 			adapter.notifyDataSetChanged();
+		}
+		else{
+			pullToRefreshAttacher.setRefreshComplete();
 		}
 		
 	}
