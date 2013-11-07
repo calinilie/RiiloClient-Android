@@ -58,7 +58,6 @@ public class WorkerService extends IntentService{
 	
 	public WorkerService() {
 		super("WorkerIntentService");
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
@@ -204,7 +203,7 @@ public class WorkerService extends IntentService{
 	}
 	
 	private PostInsertedDTO uploadPost(Post model){
-		String postEndpoint = getResources().getString(R.string.endpoint_posts_upload);
+		String postEndpoint = getResources().getString(R.string.local_test_posts_upload);
 		try{
 			String jsonString = tryPostWithRetry(postEndpoint, model.toJson().toString());
 			PostInsertedDTO retVal = jsonToPostInsertedDTO(jsonString);
@@ -217,16 +216,14 @@ public class WorkerService extends IntentService{
 	}
 
 	private String silenceNotifications(List<Long> postIds, String userId){
-		String endpoint = getResources().getString(R.string.endpoint_silence_notifications);
-		MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+		String endpoint = getResources().getString(R.string.local_test_silence_notifications);
+		JSONObject jsonObject = new JSONObject();
 		try{
-			multipartEntity.addPart("userId", new StringBody(userId));
-			
-			for(Long i:postIds){
-				multipartEntity.addPart("postIds[]", new StringBody(i+""));
-			}
-			
-//			return tryPostWithRetry(endpoint, multipartEntity);
+			jsonObject.put("userId", userId);
+			JSONArray array = new JSONArray(postIds);
+			return tryPostWithRetry(endpoint,
+									"{"+String.format("\"userId\":\"%s\"", userId)+ ","+
+									String.format("\"postIds\":%s", array.toString())+"}");
 		}
 		catch (Exception e) {
 	        Log.e("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&", e.getLocalizedMessage(), e);
@@ -236,7 +233,7 @@ public class WorkerService extends IntentService{
 	
 	private List<Post> getLatestPosts(int start, int limit){
 		//build endpoint
-		String endpoint = getString(R.string.endpoint_latest_posts);
+		String endpoint = getString(R.string.local_test_latest_posts);
 	    endpoint += String.format("%s/%s/", start, limit);
 		
 	    List<Post> retVal = getPostsWithRetry(endpoint);
@@ -257,7 +254,7 @@ public class WorkerService extends IntentService{
 	}
 	
 	private List<Post> getNearbyPosts(double latitude, double longitude){
-		String endpoint = getString(R.string.endpoint_nearby_posts);
+		String endpoint = getString(R.string.local_test_nearby_posts);
 		int distance = 0;//server side controlled distance
 		endpoint = String.format("%s%s/%s/%s/", endpoint, latitude+"", longitude+"", distance+"");
 		
@@ -279,7 +276,7 @@ public class WorkerService extends IntentService{
 	}
 	
 	private List<Post> getConverstionByConversationId(long conversationId){
-		String endpoint = getString(R.string.endpoint_conversation);
+		String endpoint = getString(R.string.local_test_conversation);
 		endpoint += conversationId;
 		
 		List<Post> retVal = getPostsWithRetry(endpoint);
@@ -295,7 +292,7 @@ public class WorkerService extends IntentService{
 	
 	private List<Post> getNotificationsForUser(String userId){
 		List<Post> retVal = null;
-		String endpoint = getString(R.string.endpoint_notifications);
+		String endpoint = getString(R.string.local_test_notifications);
 		endpoint += userId;
 		
 		retVal = getPostsWithRetry(endpoint);
@@ -427,16 +424,13 @@ public class WorkerService extends IntentService{
 		HttpConnectionParams.setConnectionTimeout(params, 3000);
 		HttpConnectionParams.setSoTimeout(params, 10000);
 		params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
-	    // Create a new HttpClient and Post Header
 	    HttpClient httpclient = new DefaultHttpClient(params);
-	    HttpPost httppost = new HttpPost(getString(R.string.endpoint_posts_upload));
+	    HttpPost httppost = new HttpPost(endpoint);
 
 	    try {
-	        // Add your data
 	        httppost.setEntity(new StringEntity(jsonPost, "UTF-8"));
 	        Log.d("posting post:>>>>>>>>>>>>>>>>", jsonPost);
 	        httppost.setHeader("Content-Type", "application/json; charset=utf-8");
-	        // Execute HTTP Post Request
 	        HttpResponse response = httpclient.execute(httppost);
 	        int responseCode = response.getStatusLine().getStatusCode();
 	        if (responseCode == 200){
@@ -455,46 +449,7 @@ public class WorkerService extends IntentService{
 			// TODO: handle exception
 		}
 	    return StringKeys.POST_REQUEST_FAILED;
-	} 
-	
-	/*private String post1(String endpoint, MultipartEntity multipartEntity){
-		HttpParams params = new BasicHttpParams();
-		HttpConnectionParams.setConnectionTimeout(params, 3000);
-		HttpConnectionParams.setSoTimeout(params, 10000);
-	    params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
-	    DefaultHttpClient mHttpClient = new DefaultHttpClient(params);
-		try {
-	        HttpPost httppost = new HttpPost(endpoint);
-	        httppost.setHeader("Content-Type",
-                    "multipart/form-data; boundary=HereGoes; charset=UTF-8");
-	        httppost.setEntity(multipartEntity);
-	        HttpResponse response = mHttpClient.execute(httppost);
-	        int responseCode = response.getStatusLine().getStatusCode();
-	        if (responseCode ==200){
-	        	HttpEntity entity = response.getEntity();
-		        InputStream content = entity.getContent();
-		        BufferedReader reader = new BufferedReader(new InputStreamReader(content));
-		        String line = reader.readLine();
-		        return line;//(int) Long.parseLong(line);
-	        }
-		} catch (UnsupportedEncodingException e) {
-		    Log.d("<<<<<<<<<Workerservice.getJson>>>>>>>>>", "UnsupportedEncodingException");
-		} catch (ClientProtocolException e) {
-//		    Log.d("<<<<<<<<<Workerservice.getJson>>>>>>>>>", "ClientProtocolException");
-		    Log.e("<<<<<<<<<Workerservice.getJson>>>>>>>>>", e.getLocalizedMessage(), e);
-		 }catch(SocketTimeoutException e){
-			 	Log.d("<<<<<<<<<Workerservice.getJson>>>>>>>>>", "SocketTimeoutException");
-//		    	Log.e("<<<<<<<<<Workerservice.getJson>>>>>>>>>", e.getLocalizedMessage(), e);
-//		    	return StringKeys.CONNECTION_TIMEDOUT;
-		 }catch(ConnectTimeoutException e){
-			 Log.d("<<<<<<<<<Workerservice.getJson>>>>>>>>>", "ConnectTimeoutException");
-//			 Log.e("<<<<<<<<<Workerservice.getJson>>>>>>>>>", e.getLocalizedMessage(), e);
-//	    	return StringKeys.CONNECTION_TIMEDOUT;
-	    } catch (Exception e) {
-	        Log.e("<<<<<<<<<Workerservice.getJson>>>>>>>>>", e.getLocalizedMessage(), e);
-	    }
-		return StringKeys.POST_REQUEST_FAILED;
-	}*/
+	}
 	
 	private boolean isValidJsonResponse(String jsonString){
 		if (jsonString==null || jsonString.isEmpty()){

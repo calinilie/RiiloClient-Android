@@ -119,7 +119,6 @@ public class PostsNearbyFragment
 	
 	@Override
 	public void onLocationChanged(Location location) {
-		Log.d("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "location Changed!" + distancesComputed);
 		if (!distancesComputed){
 			lastKnownLocation = Facade.getInstance(activity).getLastKnownLocation();
 			//compute distance to currentLocation

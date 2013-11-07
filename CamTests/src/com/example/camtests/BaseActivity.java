@@ -276,7 +276,6 @@ public abstract class BaseActivity extends FragmentActivity
 	//===================================location and play services===============================
 	@Override
 	public void onLocationChanged(Location location) {
-		Log.d("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "location Changed!");
 		this.location = location;
 		if (locationListeners!=null && locationListeners.size()>0)
 		for(ILocationListener listener: locationListeners){
