@@ -124,7 +124,7 @@ public class WorkerService extends IntentService{
 			break;
 		case StringKeys.WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID:
 			resultReceiver = intent.getParcelableExtra(StringKeys.POST_LIST_RESULT_RECEIVER);
-			resultReceiverType = intent.getIntExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER);
+			resultReceiverType = intent.getIntExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_ASC);
 			conversationId = intent.getLongExtra(StringKeys.CONVERSATION_FROM_CONVERSATION_ID, 0);
 //			Log.d("WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID", conversationId +"");
 			if (conversationId!=0){

@@ -250,7 +250,7 @@ public class PostsCache {
         intent.putExtra(StringKeys.CONVERSATION_FROM_CONVERSATION_ID, conversationId);
         
         Handler handler = new Handler();
-        intent.putExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER);
+        intent.putExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_ASC);
         PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);
         resultReceiver.setAdapter(adapter);
         resultReceiver.setAdapterData(adapterData);

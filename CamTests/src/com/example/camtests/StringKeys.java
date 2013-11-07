@@ -9,7 +9,7 @@ public class StringKeys {
 	public static final String POST_RESULT_RECEIVER_NOTIFICATION_NUMBER = "org.calin.camtests.StringKeys.POST_RESULT_RECEIVER_NOTIFICATION_NUMBER";
 	public static final String POST_RESULT_RECEIVER_NEARBY_POSTS_NUMBER = "org.calin.camtests.StringKeys.POST_RESULT_RECEIVER_NEARBY_POSTS_NUMBER";
 	public static final int POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC = 123;
-	public static final int POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER = 122;
+	public static final int POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_ASC = 122;
 	public static final int POST_RESULT_RECEIVER_CODE_UPDATE_VIEW  = 121;
 	public static final int POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER = 120;
 	public static final String CONVERSATION_FROM_CONVERSATION_ID = "org.calin.camtests.StringKeys.CONVERSATION_FROM_CONVERSATION_ID";

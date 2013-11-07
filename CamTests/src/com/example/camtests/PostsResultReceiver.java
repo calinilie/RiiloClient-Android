@@ -74,11 +74,19 @@ public class PostsResultReceiver extends ResultReceiver{
 					throw new RuntimeException("adapterDATA should NOT be null! Maybe you forgot to set it??");
 				postsListParcelable =  resultData.getParcelable(StringKeys.POST_LIST_PARCELABLE);
 				posts = postsListParcelable.getPostsList();
-				refreshAdapter(posts);
+				refreshAdapter(posts, true);
 //				Log.d("<<<<<<<<<<<<<<<PostsResultReceiver.onReceiveResult>>>>>>>>>>>>>>>", "Posts: "+posts.size());
 				break;
-			/*case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER:
-				throw new RuntimeException("NOT implemented YET");*/
+			case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_ASC:
+				if (adapter==null)
+					throw new RuntimeException("adapter should NOT be null! Maybe you forgot to set it??");
+				if (adapterData==null)
+					throw new RuntimeException("adapterDATA should NOT be null! Maybe you forgot to set it??");
+				postsListParcelable =  resultData.getParcelable(StringKeys.POST_LIST_PARCELABLE);
+				posts = postsListParcelable.getPostsList();
+				refreshAdapter(posts, false);
+//				Log.d("<<<<<<<<<<<<<<<PostsResultReceiver.onReceiveResult>>>>>>>>>>>>>>>", "Posts: "+posts.size());
+				break;
 			case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER:
 				if (tab==null)
 					throw new RuntimeException("VIEW should NOT be null! Maybe you forgot to set it??");
@@ -93,7 +101,7 @@ public class PostsResultReceiver extends ResultReceiver{
 				
 				updateTabText(notifications);
 				Log.d("¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤", notifications+"");
-				refreshAdapter(posts);
+				refreshAdapter(posts, true);
 				break;
 		}
 		Log.d("###################################", "OnReceive Called");
@@ -109,9 +117,9 @@ public class PostsResultReceiver extends ResultReceiver{
 		}
 	}
 	
-	private void refreshAdapter(List<Post> newPosts){
+	private void refreshAdapter(List<Post> newPosts, boolean desc){
 		if (newPosts!=null && newPosts.size()>0){
-			if (Helpers.renewList(adapterData, newPosts)){
+			if (Helpers.renewList(adapterData, newPosts, desc)){
 				this.handler.post(new Runnable() {
 					
 					@Override
