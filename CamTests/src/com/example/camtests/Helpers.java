@@ -20,7 +20,10 @@ public class Helpers {
 	
 
 	public static double distanceFrom(double lat1, double lng1, double lat2, double lng2, boolean inMiles) {
-	    double earthRadius = 6371;//in km
+		double earthRadius = 6371;//in km 
+		if (inMiles()){
+			earthRadius = 3959;
+		}
 	    double dLat = Math.toRadians(lat2-lat1);
 	    double dLng = Math.toRadians(lng2-lng1);
 	    double a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.sin(dLng/2) * Math.sin(dLng/2);
@@ -31,6 +34,13 @@ public class Helpers {
     		return Double.valueOf(dist * mileConversion).doubleValue();
 	    else
 	    	return Double.valueOf(dist).doubleValue();
+	}
+	
+	public static boolean inMiles(){
+		if (Locale.getDefault().getCountry().equals("GB") || Locale.getDefault().getCountry().equals("US"))
+			return true;
+//		return false;//TODO
+		return true;
 	}
 	
 	public static String dateToString(Date date){

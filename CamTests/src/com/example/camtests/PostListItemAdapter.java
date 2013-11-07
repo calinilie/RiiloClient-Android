@@ -16,7 +16,7 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 
 	private int layoutId;
 	private List<Post> items;
-	DecimalFormat df;
+	DecimalFormat df10, df1;
 	private String currentUserId;
 	private boolean showDistance;
 	
@@ -24,7 +24,8 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 		super(context, resource, items);
 		this.layoutId = resource;
 		this.items = items;
-		df = new DecimalFormat("#.#");
+		df10 = new DecimalFormat("#.#");
+		df1 = new DecimalFormat("#.##");
 		this.currentUserId = currentUserId;
 		this.showDistance = showDistance;
 	}
@@ -70,13 +71,16 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 			else{
 				double dist = post.getDistanceFromCurLoc();
 				String distanceAsString = "";
-				if (dist<10){
-					distanceAsString = df.format(dist);
+				if (dist<1){
+					distanceAsString = df1.format(dist);
+				}
+				else if (dist<10){
+					distanceAsString = df10.format(dist);
 				}
 				else {
 					distanceAsString = ((int)dist)+"";
 				}
-				postedOnDistance = String.format("~ %s km away, posted on %s", distanceAsString, post.getDateAsString());
+				postedOnDistance = String.format("~ %s %s away, posted on %s", distanceAsString, Helpers.inMiles() ? "mi" : "km",post.getDateAsString());
 			}
 		}
 		else{
