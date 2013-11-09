@@ -162,17 +162,17 @@ public class PostViewActivity extends BaseActivity
      }
      
      private void hideList_showReplyToPostPannel(){
-    	 Animation slideOut = AnimationUtils.loadAnimation(getApplicationContext(),
-                 R.anim.slide_out_top);
+    	 /*Animation slideOut = AnimationUtils.loadAnimation(getApplicationContext(),
+                 R.anim.slide_out_top);*/
     	 Animation slideIn = AnimationUtils.loadAnimation(getApplicationContext(), 
     			 R.anim.slide_in_top);
-    	 View list = findViewById(R.id.posts_list_view);
+    	 //View list = findViewById(R.id.posts_list_view);
     	 View replyView = findViewById(R.id.reply_to_post_pannel);
-    	 if (list.getVisibility()==View.VISIBLE){
+    	 /*if (list.getVisibility()==View.VISIBLE){
     		 list.setVisibility(View.GONE);
     		 list.requestLayout();
     		 list.startAnimation(slideOut);
-    	 }
+    	 }*/
     	 if (replyView.getVisibility() == View.GONE){
     		 replyView.setVisibility(View.VISIBLE);
     		 replyView.requestLayout();
