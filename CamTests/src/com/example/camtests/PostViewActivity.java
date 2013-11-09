@@ -22,6 +22,7 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.google.android.gms.location.LocationRequest;
@@ -45,8 +46,8 @@ public class PostViewActivity extends BaseActivity
  	List<Post> adapterData = new ArrayList<Post>();
  	ListView postsList;
  	
- 	Button cancelButton;
- 	Button postButton;
+ 	ImageButton cancelButton;
+ 	ImageButton postButton;
  	EditText inputText; 	
  	
 	@Override
@@ -108,8 +109,8 @@ public class PostViewActivity extends BaseActivity
 	@Override
 	protected void setupWidgetsViewElements() {
 		postsList = (ListView)findViewById(R.id.posts_list_view);
-		cancelButton = (Button)findViewById(R.id.button_cancel);
-		postButton = (Button)findViewById(R.id.button_post);
+		cancelButton = (ImageButton)findViewById(R.id.button_cancel);
+		postButton = (ImageButton)findViewById(R.id.button_post);
 		inputText = (EditText)findViewById(R.id.editor_message);
 	}
 	
