@@ -4,11 +4,13 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import android.content.Context;
 import android.location.Location;
@@ -18,7 +20,10 @@ import android.util.Log;
 
 public class Helpers {
 	
-
+	/*=========================================================================================================*/
+	
+	
+	/*===================DISTANCES======================================================================================*/
 	public static double distanceFrom(double lat1, double lng1, double lat2, double lng2, boolean inMiles) {
 		double earthRadius = 6371;//in km 
 		if (inMiles()){
@@ -43,9 +48,12 @@ public class Helpers {
 		return true;
 	}
 	
+	
+	/*===================DATES======================================================================================*/
 	public static String dateToString(Date date){
     	DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH);
-    	return df.format(date);
+    	Date dateInLocalTimeZone = shiftTimeZone(date, TimeZone.getDefault());
+    	return df.format(dateInLocalTimeZone);
     }
     
     public static Date stringToDate(String string){
@@ -57,6 +65,25 @@ public class Helpers {
     	return null;
     }
 
+    public static Date shiftTimeZone(Date date, TimeZone targetTimeZone){
+    	return shiftTimeZone(date, TimeZone.getTimeZone("UTC"), targetTimeZone);
+    }
+    
+    public static Date shiftTimeZone(Date date, TimeZone sourceTimeZone, TimeZone targetTimeZone) {
+        Calendar sourceCalendar = Calendar.getInstance();
+        sourceCalendar.setTime(date);
+        sourceCalendar.setTimeZone(sourceTimeZone);
+
+        Calendar targetCalendar = Calendar.getInstance();
+        for (int field : new int[] {Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, Calendar.HOUR, Calendar.MINUTE, Calendar.SECOND, Calendar.MILLISECOND}) {
+            targetCalendar.set(field, sourceCalendar.get(field));
+        }
+        targetCalendar.setTimeZone(targetTimeZone);
+
+        return targetCalendar.getTime();
+    }
+    
+	/*=========================================================================================================*/
     public static boolean hasPostFromConversation(List<Post> targetList, Post post){
     	boolean found = false;
     	for(Post p : targetList){

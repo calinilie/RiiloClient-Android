@@ -155,8 +155,6 @@ public class Post implements Comparable<Post>, Serializable{
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
-	
-	
 
 	public String getMessage() {
 		return message;
@@ -185,8 +183,6 @@ public class Post implements Comparable<Post>, Serializable{
 	public void setUserAtLocation(boolean userAtLocation) {
 		this.userAtLocation = userAtLocation;
 	}
-
-	
 	
 	public long getId() {
 		return id;
@@ -239,11 +235,7 @@ public class Post implements Comparable<Post>, Serializable{
 		 id+"", message, uri, latitude+"", longitude+"", accuracy+"", userAtLocation+"",
 		 Helpers.dateToString(dateCreated), repliesToPostId+"", conversationId+"");
 	}
-	
-//	public String displayInList(){
-//		return String.format("id: %s, userId: %s, message: %s, date: %s", id+"", userId, message, Helpers.dateToString(dateCreated));
-//	}
-	
+
 	public String displayInList(){
 		return String.format("id: %s", id+"");
 	}
