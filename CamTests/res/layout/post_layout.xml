@@ -4,7 +4,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
- 	
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+     	
+	 	<fragment
+	 	    android:id="@+id/map"
+	 	    android:layout_width="match_parent"
+	 	    android:layout_height="0dp"
+	 	    android:layout_weight="0.30"
+	 	    class="com.google.android.gms.maps.SupportMapFragment" />
+	 	
+	   	<ListView
+		    android:id="@+id/posts_list_view"
+		    android:layout_width="fill_parent"
+		    android:layout_height="0dp"
+		    android:layout_weight="0.70">
+		</ListView>
+		
+	</LinearLayout>
+		
     <RelativeLayout
         android:id="@+id/reply_to_post_pannel"
         android:layout_width="match_parent"
@@ -12,7 +34,6 @@
         android:layout_alignParentBottom="true"
         android:background="#F5F5F5"
         android:gravity="bottom"
-        android:layout_alignParentTop="true"
         android:visibility="gone" >
 
         <ImageButton
@@ -47,27 +68,5 @@
             android:background="@drawable/ic_launcher" />
   
     </RelativeLayout>
-    
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="1">
-     	
-	 	<fragment
-	 	    android:id="@+id/map"
-	 	    android:layout_width="match_parent"
-	 	    android:layout_height="0dp"
-	 	    android:layout_weight="0.30"
-	 	    class="com.google.android.gms.maps.SupportMapFragment" />
-	 	
-	   	<ListView
-		    android:id="@+id/posts_list_view"
-		    android:layout_width="fill_parent"
-		    android:layout_height="0dp"
-		    android:layout_weight="0.70">
-		</ListView>
-		
-	</LinearLayout>
 	
 </RelativeLayout>
