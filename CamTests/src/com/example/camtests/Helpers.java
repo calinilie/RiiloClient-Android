@@ -51,35 +51,44 @@ public class Helpers {
 	
 	/*===================DATES======================================================================================*/
 	public static String dateToString(Date date){
-    	DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH);
-    	Date dateInLocalTimeZone = shiftTimeZone(date, TimeZone.getDefault());
-    	return df.format(dateInLocalTimeZone);
+    	DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
+    	df.setTimeZone(TimeZone.getDefault());
+    	if (date == null) return "date is null!";
+    	return df.format(date);
     }
     
     public static Date stringToDate(String string){
     	try {
-			return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH).parse(string);
+    		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH);
+    		df.setTimeZone(TimeZone.getTimeZone("UTC"));
+			return df.parse(string);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
     	return null;
     }
 
-    public static Date shiftTimeZone(Date date, TimeZone targetTimeZone){
+    @SuppressWarnings("unused")
+	private static Date shiftTimeZone(Date date, TimeZone targetTimeZone){
     	return shiftTimeZone(date, TimeZone.getTimeZone("UTC"), targetTimeZone);
     }
     
-    public static Date shiftTimeZone(Date date, TimeZone sourceTimeZone, TimeZone targetTimeZone) {
+    private static Date shiftTimeZone(Date date, TimeZone sourceTimeZone, TimeZone targetTimeZone) {
+//    	Log.d("default timezone::::::::::::::::::::::::::::::", sourceTimeZone.getDisplayName() + " " + targetTimeZone.getDisplayName());
         Calendar sourceCalendar = Calendar.getInstance();
         sourceCalendar.setTime(date);
         sourceCalendar.setTimeZone(sourceTimeZone);
 
         Calendar targetCalendar = Calendar.getInstance();
+        targetCalendar.setTimeZone(targetTimeZone);
         for (int field : new int[] {Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, Calendar.HOUR, Calendar.MINUTE, Calendar.SECOND, Calendar.MILLISECOND}) {
+        	if (field == Calendar.HOUR)
+        		Log.d("source calendar hour field" , sourceCalendar.get(field)+"");
             targetCalendar.set(field, sourceCalendar.get(field));
         }
         targetCalendar.setTimeZone(targetTimeZone);
-
+        Log.d("default timezone::::::::::::::::::::::::::::::",date.getHours() + "  "+ sourceCalendar.getTimeZone().getDisplayName() + sourceCalendar.get(Calendar.HOUR) +" & "+ targetCalendar.getTimeZone().getDisplayName()+targetCalendar.get(Calendar.HOUR));
+        
         return targetCalendar.getTime();
     }
     
