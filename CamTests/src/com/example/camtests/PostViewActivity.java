@@ -165,7 +165,7 @@ public class PostViewActivity extends BaseActivity
     	 /*Animation slideOut = AnimationUtils.loadAnimation(getApplicationContext(),
                  R.anim.slide_out_top);*/
     	 Animation slideIn = AnimationUtils.loadAnimation(getApplicationContext(), 
-    			 R.anim.slide_in_top);
+    			 R.anim.slide_in_bottom);
     	 //View list = findViewById(R.id.posts_list_view);
     	 View replyView = findViewById(R.id.reply_to_post_pannel);
     	 /*if (list.getVisibility()==View.VISIBLE){
