@@ -217,6 +217,7 @@ public class Post implements Comparable<Post>, Serializable{
 	}
 	
 	public String getDateAsString(){
+		if (dateCreated == null) return "no date available, tell us about this in the comments";
 		return Helpers.dateToString(dateCreated);
 	}
 
