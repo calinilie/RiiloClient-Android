@@ -119,7 +119,22 @@ public class PostsNearbyFragment
 	
 	@Override
 	public void onLocationChanged(Location location) {
-		if (!distancesComputed){
+		if (location!=null){
+			boolean refreshAdapter = false;
+			double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, null);
+			adapterData = PostsCache.getInstance(activity).getNearbyPosts(latLong[0], latLong[1], adapter, adapterData, activity.getTabs().get(2) , pullToRefreshAttacher, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
+			for(Post p : adapterData){
+				if (p.getDistanceFromCurLoc()==-1){
+					refreshAdapter = true;
+					p.setDistanceFromCurLoc(location, false);
+				}
+			}
+			if (refreshAdapter){
+				adapter.notifyDataSetChanged();
+			}
+		}		
+			//TODO change logic in method above
+		/*if (!distancesComputed){
 			lastKnownLocation = Facade.getInstance(activity).getLastKnownLocation();
 			//compute distance to currentLocation
 			if (location!=null){
@@ -140,7 +155,7 @@ public class PostsNearbyFragment
 				//TODO change logic in method above
 			}
 			adapter.notifyDataSetChanged();
-		}
+		}*/
 	}
 
 	@Override

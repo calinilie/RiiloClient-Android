@@ -183,8 +183,8 @@ public class Facade {
 			retVal.setAccuracy(cursor.getFloat(2));
 			retVal.setDate(new Date(cursor.getLong(3)));
 		}
-		if (retVal.getDate()!=null)
-			Log.d(">>>>>>>>>>>>>>>>>>>LAST LOCATION<<<<<<<<<<<<<<<<<<<<<<<", Helpers.dateToString(retVal.getDate()));
+//		if (retVal.getDate()!=null)
+//			Log.d(">>>>>>>>>>>>>>>>>>>LAST LOCATION<<<<<<<<<<<<<<<<<<<<<<<", Helpers.dateToString(retVal.getDate()));
 		close();
 		return retVal;
 		

@@ -21,6 +21,7 @@ public class PostsCache {
 	private Context context;
 	private RequestTimestamp timestamp_PostsCall;	
 	private RequestTimestamp timestamp_NotificationsCall;
+	private RequestTimestamp timestamp_Nearby;
 	
 	//START: singleton=========================================
 	private static PostsCache instance;
@@ -35,6 +36,7 @@ public class PostsCache {
 		
 		this.timestamp_PostsCall = new RequestTimestamp();
 		this.timestamp_NotificationsCall = new RequestTimestamp();
+		this.timestamp_Nearby = new RequestTimestamp();
 	}
 	public static PostsCache getInstance(Context context){
 		if (instance==null)
@@ -179,7 +181,7 @@ public class PostsCache {
 			PullToRefreshAttacher pullToRefreshAttacher,
 			boolean forcedUpdate, 
 			int postResultReceiverType){
-		startService_getNearby(latitude, longitude, adapter, adapterData, tab, pullToRefreshAttacher, postResultReceiverType);
+		startService_getNearby(latitude, longitude, adapter, adapterData, tab, pullToRefreshAttacher, postResultReceiverType, forcedUpdate);
 		return nearbyPosts;
 	}
 	
@@ -294,24 +296,27 @@ public class PostsCache {
 			List<Post> adapterData, 
 			Tab tab, 
 			PullToRefreshAttacher pullToRefreshAttacher, 
-			int postResultReceiverType){
-		Intent intent = new Intent(this.context, WorkerService.class);
-		intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_NEARBY_POSTS);
-		intent.putExtra(StringKeys.NEARBY_POSTS_LATITUDE, latitude);
-		intent.putExtra(StringKeys.NEARBY_POSTS_LONGITUDE, longitude);
-		
-		Handler handler = new Handler();
-		intent.putExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, postResultReceiverType);
-		PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);
-		resultReceiver.setAdapter(adapter);
-		resultReceiver.setAdapterData(adapterData);
-		resultReceiver.setTab(tab);
-		resultReceiver.setPullToRefreshAttacher(pullToRefreshAttacher);
-		intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
-		
-		this.context.startService(intent);
-		
-		startRereshAniamtion(handler, pullToRefreshAttacher);
+			int postResultReceiverType,
+			boolean forceUpdate){
+		if (isRequestAllowed(this.timestamp_Nearby, forceUpdate)){
+			Intent intent = new Intent(this.context, WorkerService.class);
+			intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_NEARBY_POSTS);
+			intent.putExtra(StringKeys.NEARBY_POSTS_LATITUDE, latitude);
+			intent.putExtra(StringKeys.NEARBY_POSTS_LONGITUDE, longitude);
+			
+			Handler handler = new Handler();
+			intent.putExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, postResultReceiverType);
+			PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);
+			resultReceiver.setAdapter(adapter);
+			resultReceiver.setAdapterData(adapterData);
+			resultReceiver.setTab(tab);
+			resultReceiver.setPullToRefreshAttacher(pullToRefreshAttacher);
+			intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
+			
+			this.context.startService(intent);
+			
+			startRereshAniamtion(handler, pullToRefreshAttacher);
+		}
 	}
 	
 	private void startService_getLatest(

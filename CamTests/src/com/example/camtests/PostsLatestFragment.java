@@ -110,7 +110,20 @@ public class PostsLatestFragment
  	
  	@Override
 	public void onLocationChanged(Location location) {
-		Log.d("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "location Changed!" + distancesComputed);
+		if (location!=null){
+			boolean refreshAdapter = false;
+			for(Post p : adapterData){
+				if (p.getDistanceFromCurLoc()==-1){
+					refreshAdapter = true;
+					p.setDistanceFromCurLoc(location, false);
+				}
+			}
+			if (refreshAdapter){
+				adapter.notifyDataSetChanged();
+			}
+		}
+		
+		/*Log.d("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "location Changed!" + distancesComputed);
 		if (!distancesComputed){
 			lastKnownLocation = Facade.getInstance(activity).getLastKnownLocation();
 			//compute distance to currentLocation
@@ -130,7 +143,7 @@ public class PostsLatestFragment
 				//TODO change logic in method above
 			}
 			adapter.notifyDataSetChanged();
-		}
+		}*/
 	}
 
 	@Override

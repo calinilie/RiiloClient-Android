@@ -277,10 +277,13 @@ public abstract class BaseActivity extends FragmentActivity
 	@Override
 	public void onLocationChanged(Location location) {
 		this.location = location;
-		if (locationListeners!=null && locationListeners.size()>0)
-		for(ILocationListener listener: locationListeners){
-			listener.onLocationChanged(location);
+		if (locationListeners!=null && locationListeners.size()>0){
+			for(ILocationListener listener: locationListeners){
+				listener.onLocationChanged(location);
+			}
 		}
+		LocationHistory lastKnownLocation = Facade.getInstance(this).getLastKnownLocation();
+		Facade.getInstance(this).insertLocationToHistoryIfNeeded(location, lastKnownLocation);
 	}
 	
 	public void addLocationListener(ILocationListener locationListener){
