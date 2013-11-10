@@ -15,12 +15,12 @@
     <color name="white">#FFFFFF</color>
     <color name="red">#FF0000</color>
     
-    <string name="endpoint_posts_upload">http://default-environment-kynpkc8map.elasticbeanstalk.com/posts/upload/</string>
-    <string name="endpoint_latest_posts">http://default-environment-kynpkc8map.elasticbeanstalk.com/posts/latest/</string>
-    <string name="endpoint_conversation">http://default-environment-kynpkc8map.elasticbeanstalk.com/posts/conversation/</string>
-    <string name="endpoint_notifications">http://default-environment-kynpkc8map.elasticbeanstalk.com/posts/new/</string>
-    <string name="endpoint_silence_notifications">http://default-environment-kynpkc8map.elasticbeanstalk.com/posts/silence/</string>
-    <string name="endpoint_nearby_posts">http://default-environment-kynpkc8map.elasticbeanstalk.com/posts/nearby/</string>
+    <string name="endpoint_posts_upload">http://riilo-prod.elasticbeanstalk.com/posts/upload/</string>
+    <string name="endpoint_latest_posts">http://d19vwjdwjmit8v.cloudfront.net/posts/latest/</string>
+    <string name="endpoint_conversation">http://d19vwjdwjmit8v.cloudfront.net/posts/conversation/</string>
+    <string name="endpoint_notifications">http://riilo-prod.elasticbeanstalk.com/posts/new/</string>
+    <string name="endpoint_silence_notifications">http://riilo-prod.elasticbeanstalk.com/posts/silence/</string>
+    <string name="endpoint_nearby_posts">http://riilo-prod.elasticbeanstalk.com/posts/nearby/</string>
     
     <string name="local_test_posts_upload">http://192.168.0.197:8080/web/posts/upload/</string>
     <string name="local_test_latest_posts">http://192.168.0.197:8080/web/posts/latest/</string>
