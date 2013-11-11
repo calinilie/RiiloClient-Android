@@ -266,9 +266,6 @@ public class WorkerService extends IntentService{
 				if (!postsCache.addPostAsNearbyPost(p)){
 					postsToRemove.add(p);
 				}
-				else{
-					p.setDistanceFromLocation(latitude, longitude, false);
-				}
 	    	}
 			retVal.removeAll(postsToRemove);
 		}

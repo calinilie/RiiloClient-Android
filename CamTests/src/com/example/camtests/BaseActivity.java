@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -84,11 +85,13 @@ public abstract class BaseActivity extends FragmentActivity
 	protected void onStart(){
 		super.onStart();
 		connectLocationClient();
+		EasyTracker.getInstance(this).activityStart(this);
 	}
 	
 	@Override
 	protected void onStop(){
 		disconnectLocationClient();
+		 EasyTracker.getInstance(this).activityStop(this);
 		super.onStop();
 	}
 	

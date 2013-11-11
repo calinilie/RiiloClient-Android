@@ -122,7 +122,17 @@ public class PostsNearbyFragment
 		if (location!=null){
 			boolean refreshAdapter = false;
 			double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, null);
-			adapterData = PostsCache.getInstance(activity).getNearbyPosts(latLong[0], latLong[1], adapter, adapterData, activity.getTabs().get(2) , pullToRefreshAttacher, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
+			adapterData = PostsCache
+					.getInstance(activity)
+					.getNearbyPosts(
+							latLong[0],
+							latLong[1],
+							adapter,
+							adapterData,
+							activity.getTabs().get(2),
+							pullToRefreshAttacher,
+							false,
+							StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
 			for(Post p : adapterData){
 				if (p.getDistanceFromCurLoc()==-1){
 					refreshAdapter = true;
