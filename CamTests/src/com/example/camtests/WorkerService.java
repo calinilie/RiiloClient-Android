@@ -12,6 +12,7 @@ import java.nio.charset.spi.CharsetProvider;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
@@ -329,6 +330,9 @@ public class WorkerService extends IntentService{
 	    try {
 	      HttpResponse response = client.execute(httpGet);
 	      StatusLine statusLine = response.getStatusLine();
+//	      Header[] headers = response.getHeaders("X-Cache");
+//	      if (headers.length>0)
+//	    	  Log.d("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH", headers[0].getValue());
 	      int statusCode = statusLine.getStatusCode();
 	      if (statusCode == 200) {
 	        HttpEntity entity = response.getEntity();
