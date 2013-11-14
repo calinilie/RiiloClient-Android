@@ -62,6 +62,7 @@ public abstract class BaseActivity extends FragmentActivity
     private List<ILocationListener> locationListeners;
     
     protected PostsCache postsCache;
+    protected AnalyticsWrapper analytics;
     
     
 	public void onCreate(Bundle savedInstanceState) {
@@ -79,19 +80,20 @@ public abstract class BaseActivity extends FragmentActivity
         
         initLocationClient(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY, 2000, 1000);
         postsCache = PostsCache.getInstance(this);
+        analytics = AnalyticsWrapper.getInstance(this);
     }
 	
 	@Override
 	protected void onStart(){
 		super.onStart();
 		connectLocationClient();
-		EasyTracker.getInstance(this).activityStart(this);
+		analytics.startTracker(this);
 	}
 	
 	@Override
 	protected void onStop(){
 		disconnectLocationClient();
-		 EasyTracker.getInstance(this).activityStop(this);
+		analytics.startTracker(this);
 		super.onStop();
 	}
 	

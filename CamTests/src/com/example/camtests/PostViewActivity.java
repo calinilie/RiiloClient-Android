@@ -80,6 +80,8 @@ public class PostViewActivity extends BaseActivity
 		
 		cancelButton.setOnClickListener(this);
 		postButton.setOnClickListener(this);
+		
+		analytics.record_Conversation_ScreenHit();
 	}
 	
 	@Override
