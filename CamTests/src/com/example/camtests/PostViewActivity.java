@@ -71,7 +71,7 @@ public class PostViewActivity extends BaseActivity
 		setupWidgetsViewElements();
 		if (adapter==null){
 			adapter = new PostListItemAdapter(this, R.layout.post_list_view_item_layout, adapterData, deviceId, false);
-		}		
+		}
 		postsList.setAdapter(adapter);
 		
 		List<Post> postsInConversation = PostsCache.getInstance(this).getPostsByConversationId(currentPost.getConversationId(), adapter, adapterData, null);
@@ -172,17 +172,9 @@ public class PostViewActivity extends BaseActivity
      }
      
      private void hideList_showReplyToPostPannel(){
-    	 /*Animation slideOut = AnimationUtils.loadAnimation(getApplicationContext(),
-                 R.anim.slide_out_top);*/
     	 Animation slideIn = AnimationUtils.loadAnimation(getApplicationContext(), 
     			 R.anim.slide_in_bottom);
-    	 //View list = findViewById(R.id.posts_list_view);
     	 View replyView = findViewById(R.id.reply_to_post_pannel);
-    	 /*if (list.getVisibility()==View.VISIBLE){
-    		 list.setVisibility(View.GONE);
-    		 list.requestLayout();
-    		 list.startAnimation(slideOut);
-    	 }*/
     	 if (replyView.getVisibility() == View.GONE){
     		 replyView.setVisibility(View.VISIBLE);
     		 replyView.requestLayout();
@@ -200,21 +192,13 @@ public class PostViewActivity extends BaseActivity
     	 
     	 Animation slideOut = AnimationUtils.loadAnimation(getApplicationContext(),
                  R.anim.slide_out_bottom);
-    	 /*Animation slideIn = AnimationUtils.loadAnimation(getApplicationContext(), 
-    			 R.anim.slide_out_bottom);*/
-    	 /*View list = findViewById(R.id.posts_list_view);*/
     	 View replyView = findViewById(R.id.reply_to_post_pannel);
     	 
     	 if (replyView.getVisibility()==View.VISIBLE){
-    		 replyView.setVisibility(View.GONE);
-    		 replyView.requestLayout();
     		 replyView.startAnimation(slideOut);
+    		 replyView.requestLayout();
+    		 replyView.setVisibility(View.GONE);
     	 }
-    	 /*if (list.getVisibility() == View.GONE){
-    		 list.setVisibility(View.VISIBLE);
-    		 list.requestLayout();
-    		 list.startAnimation(slideIn);
-    	 }*/
      }
      
      private void postButtonPressed(){
@@ -232,21 +216,6 @@ public class PostViewActivity extends BaseActivity
 			hideReplyToPostPannel_showList();
 			adapterData.add(replyPost);
 			adapter.notifyDataSetChanged();
-			
-			/*double r = 0.0005;
-			int numberOfMarkers = 30;
-			double angle = 360/numberOfMarkers;
-			double angleSum = 0;
-			int counter=0;
-			while (angleSum<360){
-				angleSum+=angle;
-				double newLatitude = currentPost.getLatitude() + r*Math.cos(angleSum*Math.PI/180);
-				double newLongitude = currentPost.getLongitude() + r*Math.sin(angleSum*Math.PI/180);
-				mMap.addMarker(new MarkerOptions()
-								.position(new LatLng(newLatitude, newLongitude))
-								.icon(BitmapDescriptorFactory.defaultMarker((float) (((counter % 2 == 0) ? counter : numberOfMarkers-counter)*359 / numberOfMarkers))));
-				counter++;
-			}*/
 
     		Intent intentPost= new Intent(this, WorkerService.class);
     		intentPost.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_POST);
