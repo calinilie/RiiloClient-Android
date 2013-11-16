@@ -123,7 +123,7 @@ public class PostsNearbyFragment
 	
 	@Override
 	public void onLocationChanged(Location location) {
-		Toast.makeText(activity, "Location Changed "+(location==null), Toast.LENGTH_SHORT).show();
+//		Toast.makeText(activity, "Location Changed "+(location==null), Toast.LENGTH_SHORT).show();
 		if (location!=null){
 			boolean refreshAdapter = false;
 			double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, null);
