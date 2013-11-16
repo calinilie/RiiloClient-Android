@@ -3,6 +3,8 @@ package com.example.camtests;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.camtests.AnalyticsWrapper.EventLabel;
+
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher.OnRefreshListener;
 
@@ -102,6 +104,8 @@ public class PostsLatestFragment
 		
 //		long conversationId = post.getConversationId();
 		
+		activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_latest, post.getConversationId());
+		
 		Intent postViewIntent = new Intent(activity, PostViewActivity.class);
 		postViewIntent.putExtra(StringKeys.POST_BUNDLE, post.toBundle());
 		startActivity(postViewIntent);
@@ -148,6 +152,7 @@ public class PostsLatestFragment
 
 	@Override
 	public void onRefreshStarted(View view) {
+		activity.analytics.recordEvent_General_PullToRefresh(EventLabel.tab_latest);
 		PostsCache.getInstance(getActivity())
 			.getLatestPosts(
 				adapter, 

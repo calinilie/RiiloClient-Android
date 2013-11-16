@@ -185,7 +185,7 @@ public class Z_Dep_TakePhotoActivity extends BaseActivity implements OnClickList
 	}
 
 	@Override
-	protected void onStart() {
+	public void onStart() {
 		super.onStart();
 		setupWidgetsViewElements();
 		Helpers.renewList(items, PostsCache.getInstance(this).getPostsAsList());
