@@ -104,6 +104,10 @@ public class AnalyticsWrapper {
 		recordEvent(EventCategory.use_conversation, EventAction.button_click, label);
 	}
 	
+	public void recordEvent_Conversation_ItemClick(Long value){
+		recordEvent(EventCategory.use_conversation, EventAction.post_item_click, null, value);
+	}
+	
 	public void recordEvent_General_ItemClick(EventLabel label, Long value){
 		recordEvent(EventCategory.use_general, EventAction.post_item_click, label, value);
 	}

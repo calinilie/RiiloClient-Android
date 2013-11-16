@@ -20,6 +20,8 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -40,7 +42,8 @@ import com.google.android.gms.plus.model.people.Person.Collection;
 
 public class PostViewActivity extends BaseActivity
 	implements android.view.View.OnClickListener,
-	OnMapClickListener{
+	OnMapClickListener,
+	OnItemClickListener{
 	
 	private GoogleMap mMap;
 	
@@ -87,6 +90,7 @@ public class PostViewActivity extends BaseActivity
 		analytics.startTracker(this);
 		analytics.recordScreenHit_Conversation();
 		mMap.setOnMapClickListener(this);
+		postsList.setOnItemClickListener(this);
 	}
 	
 	@Override
@@ -226,5 +230,17 @@ public class PostViewActivity extends BaseActivity
 	@Override
 	public void onMapClick(LatLng arg0) {
 		analytics.recordEvent_Conversation_MapClick(EventLabel.map);
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parentView, View view, int position, long index) {
+		Post post = adapterData.get((int) index);
+		analytics.recordEvent_Conversation_ItemClick(post.getConversationId());
+		
+		//TODO
+		if (post.isUserAtLocation()){
+			showInfoDialog(getString(R.string.user_at_location_dialog_message));
+		}
+		
 	}
 }

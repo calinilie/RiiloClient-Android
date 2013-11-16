@@ -3,6 +3,7 @@
     <string name="error_sd_card_not_mounted">SD card not found</string>
     <string name="error_could_not_take_photo">Something went wrong (could not take photo)</string>
     <string name="warning_dialog_heading">Warning</string>
+    <string name="info_dialog_heading">The more you know&#8230;</string>
     <string name="my_map_activity">MyFirstGoogleMapsApp</string>
     <string name="error_cannot_connect_to_location_services">Unable to connect to GooglePlay services. Please update GooglePlay services. The app will now terminate.</string>
     <string name="user_at_location_activity_label">Leave a note, here</string>
@@ -30,12 +31,13 @@
     <string name="local_test_silence_notifications">http://192.168.0.197:8080/web/posts/silence/</string>
     <string name="local_test_nearby_posts">http://192.168.0.197:8080/web/posts/nearby/</string>
     
-    <string name="to_location_post_activity_label">Post something, anywhere...</string>
+    <string name="to_location_post_activity_label">Post something, anywhere&#8230;</string>
     <string name="feed_activity_label">Feed</string>
     <string name="nearby_activity_label">Nearby Posts</string>
     <string name="post_view_activity_label">View and Reply to post</string>
     <!-- <string name="connection_error_last_attempt">Elephants are blocking the connection, retrying...</string> -->
     <string name="connection_error_no_attempt">There are too many elephants blocking our server, it cannot be reached.</string>
     <string name="upload_post_error">On its way to the server your post was kidnapped by dragons (or witches). Please try again.</string>
+    <string name="user_at_location_dialog_message">The user who posted this message was nearby the location shown on the map.</string>
     
 </resources>

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -57,6 +58,7 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 		TextView distanceAndDate_textView = (TextView) postView.findViewById(R.id.postListItem_distance_date);
 		TextView message_textView = (TextView) postView.findViewById(R.id.postListItem_message);
 		TextView postId_textView = (TextView) postView.findViewById(R.id.postListItem_postId);
+		ImageView userAtLocation_ImageView = (ImageView)postView.findViewById(R.id.postListItem_userAtLocation);
 		
 		
 		userId_textView.setText(post.getUserId().equalsIgnoreCase(this.currentUserId)? "You" : "User "+post.getUserId());
@@ -89,6 +91,8 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 		distanceAndDate_textView.setText(postedOnDistance);
 		message_textView.setText(String.format("\"%s\"", post.getMessage()));
 		postId_textView.setText("Post "+post.getId() + " " + post.getConversationId());
+		if (post.isUserAtLocation())
+			userAtLocation_ImageView.setVisibility(View.VISIBLE);
 		
 		
 		return postView;

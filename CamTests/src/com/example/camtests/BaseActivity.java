@@ -371,6 +371,21 @@ public abstract class BaseActivity extends FragmentActivity
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();     
     }
+ 	
+ 	protected void showInfoDialog(String message){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle(getResources().getString(R.string.info_dialog_heading));
+        alertDialogBuilder
+            .setMessage(message)
+            .setCancelable(false)
+            .setPositiveButton("Ok, got that.",new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog,int id) {
+                    dialog.cancel();
+                }
+              });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();   
+ 	}
     
 	private void showErrorDialog(ConnectionResult connectionResult){
 		// Get the error code
