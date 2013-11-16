@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#F5F5F5"
+        android:background="@color/white"
         android:gravity="bottom"
         android:visibility="gone" >
 
@@ -43,7 +43,8 @@
             android:layout_margin="8dp"
             android:layout_alignParentLeft="true"
             android:layout_alignBottom="@+id/editor_message"
-            android:background="@android:drawable/ic_menu_close_clear_cancel"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:background="@drawable/selector"
             android:contentDescription="Cancel action" />
         
         <EditText
@@ -66,13 +67,14 @@
 
         <ImageButton
             android:id="@+id/button_post"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_margin="8dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="8dp"
             android:layout_alignBottom="@+id/editor_message"
             android:layout_alignParentRight="true"
-            android:background="@android:drawable/ic_menu_send"
-            android:contentDescription="Send message" />
+            android:src="@android:drawable/ic_menu_send"
+            android:background="@drawable/selector" 
+            android:contentDescription="Send message"/>
   
     </RelativeLayout>
 	

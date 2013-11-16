@@ -8,13 +8,6 @@
     <string name="user_at_location_activity_label">Leave a note, here</string>
     <string name="photos_folder_name">prototype</string>
     <string name="photo_name_base">prototype</string>
-    <color name="mediumGps">#F2FF00</color>
-    <color name="goodGps">#00FF00</color>
-    <color name="badGps">#FF0000</color>
-    <color name="grey">#A3A3A3</color>
-    <color name="white">#FFFFFF</color>
-    <color name="red">#FF0000</color>
-   	<color name="orange">#FF9912</color>
     
     <string name="endpoint_posts_upload">http://riilo-prod.elasticbeanstalk.com/posts/upload/</string>
     <string name="endpoint_latest_posts">http://d19vwjdwjmit8v.cloudfront.net/posts/latest/</string>
