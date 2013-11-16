@@ -83,6 +83,12 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
     }
     
     @Override
+    public void onStart(){
+    	super.onStart();
+    	analytics.startTracker(this);
+    }
+    
+    @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
@@ -90,7 +96,7 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in the ViewPager.
         mViewPager.setCurrentItem(tab.getPosition());
-        analytics.record_TabSelect_AsScreenHit(tab.getPosition());
+        analytics.recordScreenHit_TabSelect(tab.getPosition());
     }
     
     public List<Tab> getTabs(){

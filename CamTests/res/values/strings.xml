@@ -34,7 +34,8 @@
     <string name="feed_activity_label">Feed</string>
     <string name="nearby_activity_label">Nearby Posts</string>
     <string name="post_view_activity_label">View and Reply to post</string>
-    <string name="connection_error_last_attempt">Elephants are blocking the connection, retrying...</string>
-    <string name="connection_error_no_attempt">There are too many elephants, the server cannot be reached...</string>
+    <!-- <string name="connection_error_last_attempt">Elephants are blocking the connection, retrying...</string> -->
+    <string name="connection_error_no_attempt">There are too many elephants blocking our server, it cannot be reached.</string>
+    <string name="upload_post_error">On its way to the server your post was kidnapped by dragons (or witches). Please try again.</string>
     
 </resources>

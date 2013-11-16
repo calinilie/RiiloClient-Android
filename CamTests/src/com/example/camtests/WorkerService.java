@@ -377,7 +377,7 @@ public class WorkerService extends IntentService{
 		} catch (JSONException e) {
 			Log.e("<<<<<<<<<Workerservice.jsonStringToPostsList>>>>>>>>>", e.getLocalizedMessage(), e);
 			e.printStackTrace();
-			Toast.makeText(this, getString(R.string.connection_error_last_attempt), Toast.LENGTH_LONG).show();
+			Toast.makeText(this, getString(R.string.connection_error_no_attempt), Toast.LENGTH_LONG).show();
 			return null;
 		}
 	    return retVal;
@@ -388,7 +388,7 @@ public class WorkerService extends IntentService{
 		
 		if (jsonString==null || jsonString.equals(StringKeys.POST_REQUEST_FAILED)){
 			retVal.setSuccess(false);
-			Toast.makeText(this, "Pfff! Couldn't upload post, please try again.", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, getString(R.string.upload_post_error), Toast.LENGTH_LONG).show();
 			return retVal;
 		}
 		

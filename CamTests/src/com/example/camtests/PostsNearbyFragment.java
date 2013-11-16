@@ -7,6 +7,7 @@ import java.util.List;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher.OnRefreshListener;
 
+import com.example.camtests.AnalyticsWrapper.EventLabel;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 
@@ -23,6 +24,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
@@ -112,6 +114,8 @@ public class PostsNearbyFragment
 		
 //		long conversationId = post.getConversationId();
 		
+		activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_nearby, post.getConversationId());
+		
 		Intent postViewIntent = new Intent(activity, PostViewActivity.class);
 		postViewIntent.putExtra(StringKeys.POST_BUNDLE, post.toBundle());
 		startActivity(postViewIntent);
@@ -119,6 +123,7 @@ public class PostsNearbyFragment
 	
 	@Override
 	public void onLocationChanged(Location location) {
+//		Toast.makeText(activity, "Location Changed "+(location==null), Toast.LENGTH_SHORT).show();
 		if (location!=null){
 			boolean refreshAdapter = false;
 			double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, null);
@@ -170,6 +175,7 @@ public class PostsNearbyFragment
 
 	@Override
 	public void onRefreshStarted(View view) {
+		activity.analytics.recordEvent_General_PullToRefresh(EventLabel.tab_nearby);
 		Location location = ((BaseActivity) getActivity()).getLocation();
 		if (location!=null){
 			double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, lastKnownLocation);

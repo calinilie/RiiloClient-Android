@@ -25,10 +25,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.example.camtests.AnalyticsWrapper.EventLabel;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -37,7 +39,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.plus.model.people.Person.Collection;
 
 public class PostViewActivity extends BaseActivity
-	implements android.view.View.OnClickListener{
+	implements android.view.View.OnClickListener,
+	OnMapClickListener{
 	
 	private GoogleMap mMap;
 	
@@ -62,7 +65,7 @@ public class PostViewActivity extends BaseActivity
     }
 	
 	@Override
-	protected void onStart(){
+	public void onStart(){
 		super.onStart();
 		setUpMapIfNeeded();
 		setupWidgetsViewElements();
@@ -81,7 +84,9 @@ public class PostViewActivity extends BaseActivity
 		cancelButton.setOnClickListener(this);
 		postButton.setOnClickListener(this);
 		
-		analytics.record_Conversation_ScreenHit();
+		analytics.startTracker(this);
+		analytics.recordScreenHit_Conversation();
+		mMap.setOnMapClickListener(this);
 	}
 	
 	@Override
@@ -120,9 +125,11 @@ public class PostViewActivity extends BaseActivity
 	public void onClick(View v) {
 		switch (v.getId()){
 		case (R.id.button_cancel):
+			analytics.recordEvent_Conversation_ButtonClick(EventLabel.button_cancel);
 			hideReplyToPostPannel_showList();
 			break;
 		case(R.id.button_post):
+			analytics.recordEvent_Conversation_ButtonClick(EventLabel.button_post);
 			postButtonPressed();
 			break;
 		}
@@ -133,6 +140,7 @@ public class PostViewActivity extends BaseActivity
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()){
 		case R.id.action_reply:
+			analytics.recordEvent_Conversation_ButtonClick(EventLabel.reply_button);
 			hideList_showReplyToPostPannel();
 			return true;
 		default:
@@ -245,4 +253,9 @@ public class PostViewActivity extends BaseActivity
     		intentPost.putExtra(StringKeys.POST_BUNDLE, replyPost.toBundle());
         	startService(intentPost);
      }
+
+	@Override
+	public void onMapClick(LatLng arg0) {
+		analytics.recordEvent_Conversation_MapClick(EventLabel.map);
+	}
 }

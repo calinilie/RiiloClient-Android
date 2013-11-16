@@ -19,6 +19,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.camtests.AnalyticsWrapper.EventLabel;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdate;
@@ -141,6 +142,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
    	public void onClick(View v) {
    		switch (v.getId()){
    		case R.id.button_post:
+   			activity.analytics.recordEvent_WritePost_ButtonClick(EventLabel.button_post);
    			String message = inputMessage.getText().toString();
    			currentPost.setMessage(message);
    			currentPost.setUserAtLocation(activity.location, currentPost.getLatitude(), currentPost.getLongitude());
@@ -171,6 +173,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 
 	@Override
 	public void onMapClick(LatLng location) {
+		activity.analytics.recordEvent_WritePost_MapClick();
 		animatePanelCreatePosts();
 		animateMapCamera(location, 15);
 		currentPost.setLatitude(location.latitude);

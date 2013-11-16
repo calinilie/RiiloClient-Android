@@ -42,7 +42,7 @@ public class Z_Dep_UserAtLocationPostActivity extends BaseActivity
     }
 	
 	@Override
-    protected void onStart() {
+	public void onStart() {
     	super.onStart();
     	setUpMapIfNeeded();
     	setupWidgetsViewElements();

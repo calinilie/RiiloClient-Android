@@ -84,10 +84,10 @@ public abstract class BaseActivity extends FragmentActivity
     }
 	
 	@Override
-	protected void onStart(){
+	public void onStart(){
 		super.onStart();
 		connectLocationClient();
-		analytics.startTracker(this);
+//		analytics.startTracker(this);
 	}
 	
 	@Override

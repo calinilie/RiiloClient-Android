@@ -6,6 +6,7 @@ import java.util.List;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher.OnRefreshListener;
 
+import com.example.camtests.AnalyticsWrapper.EventLabel;
 import com.google.android.gms.location.LocationRequest;
 
 import android.app.Activity;
@@ -106,6 +107,8 @@ public class PostsNotificationsFragment
 	public void onItemClick(AdapterView<?> parentView, View view, int position, long index) {
 		Post post = adapterData.get((int) index);
 		
+		activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_notifications, post.getConversationId());
+		
 		PostsCache.getInstance(activity).removeNotification(post);
 		adapterData.remove(post);
 		
@@ -126,6 +129,7 @@ public class PostsNotificationsFragment
 
 	@Override
 	public void onRefreshStarted(View view) {
+		activity.analytics.recordEvent_General_PullToRefresh(EventLabel.tab_notifications);
 		PostsCache.getInstance(activity).getNotifications(activity.deviceId, adapter, adapterData, activity.getTabs().get(3), pullToRefreshAttacher, true, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
 	}
 
