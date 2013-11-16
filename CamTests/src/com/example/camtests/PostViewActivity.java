@@ -199,10 +199,10 @@ public class PostViewActivity extends BaseActivity
 		                    InputMethodManager.HIDE_NOT_ALWAYS);
     	 
     	 Animation slideOut = AnimationUtils.loadAnimation(getApplicationContext(),
-                 R.anim.slide_out_top);
-    	 Animation slideIn = AnimationUtils.loadAnimation(getApplicationContext(), 
-    			 R.anim.slide_in_top);
-    	 View list = findViewById(R.id.posts_list_view);
+                 R.anim.slide_out_bottom);
+    	 /*Animation slideIn = AnimationUtils.loadAnimation(getApplicationContext(), 
+    			 R.anim.slide_out_bottom);*/
+    	 /*View list = findViewById(R.id.posts_list_view);*/
     	 View replyView = findViewById(R.id.reply_to_post_pannel);
     	 
     	 if (replyView.getVisibility()==View.VISIBLE){
@@ -210,11 +210,11 @@ public class PostViewActivity extends BaseActivity
     		 replyView.requestLayout();
     		 replyView.startAnimation(slideOut);
     	 }
-    	 if (list.getVisibility() == View.GONE){
+    	 /*if (list.getVisibility() == View.GONE){
     		 list.setVisibility(View.VISIBLE);
     		 list.requestLayout();
     		 list.startAnimation(slideIn);
-    	 }
+    	 }*/
      }
      
      private void postButtonPressed(){
