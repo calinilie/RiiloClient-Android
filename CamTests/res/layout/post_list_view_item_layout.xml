@@ -7,11 +7,12 @@
     android:weightSum="1">
 	
     <ImageView
-        android:id="@+id/postListItem_picture"
+        android:id="@+id/postListItem_userAtLocation"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="5dp"
-        android:src="@drawable/common_signin_btn_icon_disabled_focus_dark" />
+        android:src="@drawable/common_signin_btn_icon_disabled_focus_dark"
+        android:visibility="gone" />
     
     <LinearLayout 
 	    android:layout_width="match_parent"
