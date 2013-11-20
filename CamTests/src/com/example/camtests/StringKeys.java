@@ -30,6 +30,8 @@ public class StringKeys {
 	public static final String POST_ID = "org.calin.camtests.StringKeys.POST_ID";
 	public static final String POST_REPLIES_TO_POSTID = "org.calin.camtests.StringKeys.POST_REPLIES_TO_POSTID";
 	public static final String POST_CONVERSATION_ID = "org.calin.camtests.StringKeys.POST_CONVERSATION_ID";
+	public static final String POST_ORIGIN_LATITUDE = "org.calin.camtests.StringKeys.POST_ORIGIN_LATITUDE";
+	public static final String POST_ORIGIN_LONGITUDE = "org.calin.camtests.StringKeys.POST_ORIGIN_LONGITUDE";
 	
 	public static final String WS_INTENT_TYPE = "org.calin.camtests.StringKeys.WORKER_SERVICE_INTENT_TYPE";
 	public static final int WS_INTENT_POST = 1;
