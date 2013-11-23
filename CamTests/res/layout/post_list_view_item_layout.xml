@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="6dp"
-    android:orientation="horizontal"
-    android:weightSum="1">
-	
-    <ImageView
-        android:id="@+id/postListItem_userAtLocation"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="5dp"
-        android:src="@drawable/common_signin_btn_icon_disabled_focus_dark"
-        android:visibility="gone" />
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent" 
+		android:layout_marginLeft="6dp"
+		android:layout_marginRight="6dp"
+		android:layout_marginTop="4dp"
+		android:layout_marginBottom="4dp"
+		android:background="@drawable/card_background">
+
+		<!-- Card Contents -->
     
     <LinearLayout 
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:layout_margin="6dp"
+	    android:layout_margin="8dp"
 	    android:orientation="vertical">
 	    
 	    <LinearLayout
@@ -36,7 +36,7 @@
 	            android:id="@+id/postListItem_userAction"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="5dp"
+	            android:layout_marginLeft="16dp"
 	            android:text="posted/replyed" />
 	        
 	    </LinearLayout>
@@ -46,7 +46,7 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_marginBottom="5dp"
-	        android:layout_marginLeft="15dp"
+	        android:layout_marginLeft="8dp"
 	        android:text="aprox 420 meters away"
 	        android:textColor="@color/grey" />
 	    
@@ -67,4 +67,17 @@
 	        android:textColor="@color/red"
 	        android:textStyle="bold" /> 
 	</LinearLayout>
-</LinearLayout>
+	
+   </LinearLayout>
+
+	<ImageView
+	    android:id="@+id/postListItem_userAtLocation"
+	    android:layout_width="32dp"
+	    android:layout_height="32dp"
+	    android:src="@drawable/ic_user_at_location"
+	    android:background="@color/background_holo_light"
+	    android:layout_marginLeft="6dp"
+	    android:layout_marginTop="4dp"
+	    android:visibility="gone" />
+
+</FrameLayout>

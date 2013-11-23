@@ -10,5 +10,6 @@
     <color name="white">#FFFFFF</color>
     <color name="red">#FF0000</color>
     <color name="darkGrey">#CCCCCC</color>
+    <color name="background_holo_light">#fff3f3f3</color>
 
 </resources>
