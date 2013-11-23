@@ -7,6 +7,8 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.android.gms.internal.cu;
+
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -27,6 +29,8 @@ public class Post implements Comparable<Post>, Serializable{
 	private String uri;
 	private double latitude;
 	private double longitude;
+	private double originLatitude;
+	private double originLongitude;
 	private float accuracy;
 	private Date dateCreated;
 	private String message;
@@ -63,6 +67,8 @@ public class Post implements Comparable<Post>, Serializable{
 		this.id = bundle.getLong(StringKeys.POST_ID);
 		this.repliesToPostId = bundle.getLong(StringKeys.POST_REPLIES_TO_POSTID);
 		this.conversationId = bundle.getLong(StringKeys.POST_CONVERSATION_ID);
+		this.originLatitude = bundle.getDouble(StringKeys.POST_ORIGIN_LATITUDE);
+		this.originLongitude = bundle.getDouble(StringKeys.POST_ORIGIN_LONGITUDE);
 //		Log.d("POST BUNDLE CONSTRUCTOR", toString());
 	}
 	
@@ -87,6 +93,8 @@ public class Post implements Comparable<Post>, Serializable{
     	bundle.putString(StringKeys.POST_PIC_URI, uri);
     	bundle.putDouble(StringKeys.POST_LATITUDE, latitude);
     	bundle.putDouble(StringKeys.POST_LONGITUDE, longitude);
+    	bundle.putDouble(StringKeys.POST_ORIGIN_LATITUDE, originLatitude);
+    	bundle.putDouble(StringKeys.POST_ORIGIN_LONGITUDE, originLongitude);
     	bundle.putFloat(StringKeys.POST_ACCURACY, accuracy);
     	bundle.putBoolean(StringKeys.POST_USER_AT_LOCATION, userAtLocation);
     	bundle.putString(StringKeys.POST_DATE_CREATED, Helpers.dateToString(dateCreated));
@@ -104,6 +112,8 @@ public class Post implements Comparable<Post>, Serializable{
 		retVal.put("latitude", this.latitude);
 		retVal.put("longitude", this.longitude);
 		retVal.put("accuracy", this.accuracy);
+		retVal.put("originLatitude", this.originLatitude);
+		retVal.put("originLongitude", this.originLongitude);
 		retVal.put("isUserAtLocation", this.userAtLocation);
 		retVal.put("userId", this.userId);
 		retVal.put("postId", this.id);
@@ -112,6 +122,8 @@ public class Post implements Comparable<Post>, Serializable{
 		
 //		retVal.put("createdDateAsString", Helpers.dateToString(dateCreated));//TODO review!
 //		retVal.put("pictureUri", this.uri);//TODO
+		
+		Log.d("originLoc", "toJson: "+this.originLatitude + " "+this.originLongitude);
 		
 		return retVal;
 	}
@@ -170,6 +182,9 @@ public class Post implements Comparable<Post>, Serializable{
 
 	public void setUserAtLocation(Location currentLocation, double lat, double longitude){
 		if (currentLocation!=null && lat!=0 && longitude!=0){
+			this.originLatitude = currentLocation.getLatitude();
+			this.originLongitude = currentLocation.getLongitude();
+			Log.d("originLoc", "setUserAtLocation: "+this.originLatitude + " "+this.originLongitude);
 			double distanceFromCurrentLocation = Helpers.distanceFrom(lat, longitude, currentLocation.getLatitude(), currentLocation.getLongitude(), false); 
 			if (distanceFromCurrentLocation<2){
 				setUserAtLocation(true);

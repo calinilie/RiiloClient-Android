@@ -206,6 +206,7 @@ public class WorkerService extends IntentService{
 	private PostInsertedDTO uploadPost(Post model){
 		String postEndpoint = getResources().getString(R.string.endpoint_posts_upload);
 		try{
+			Log.d("originLoc", "posting json: "+model.toJson().toString());
 			String jsonString = tryPostWithRetry(postEndpoint, model.toJson().toString());
 			PostInsertedDTO retVal = jsonToPostInsertedDTO(jsonString);
 			return retVal;
