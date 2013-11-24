@@ -89,8 +89,9 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 			postedOnDistance = String.format("posted on %s", post.getDateAsString());
 		}
 		distanceAndDate_textView.setText(postedOnDistance);
-		message_textView.setText(String.format("\"%s\"", post.getMessage()));
-		postId_textView.setText("Post "+post.getId() + " " + post.getConversationId());
+		message_textView.setText(post.getMessage());
+		//postId_textView.setText("Post "+post.getId() + " " + post.getConversationId());
+		postId_textView.setVisibility(View.GONE);
 		if (post.isUserAtLocation())
 			userAtLocation_ImageView.setVisibility(View.VISIBLE);
 		
