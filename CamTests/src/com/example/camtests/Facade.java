@@ -63,8 +63,9 @@ public class Facade {
 	
 	public synchronized void insertPost(Post post){
 		open();
-		inserPost(post);
-//		Log.d("******************************", post.toString());
+		if (!doesPostExist(post.getId())){
+			inserPost(post);
+		}
 		close();
 	}
 	
@@ -92,6 +93,7 @@ public class Facade {
 		}
 //		if (retVal.size()>=1)
 //			Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>", retVal.get(retVal.size()-1).toString());
+		deleteOldPosts(retVal.size());
 		close();
 		Log.d("<<<<<<<<<<<<Facade.getAllPosts()>>>>>>>>>>>>", "posts in db: "+retVal.size());
 		return retVal;
@@ -106,6 +108,15 @@ public class Facade {
 		return false;
 	}
 	
+	private void deleteOldPosts(int totalCount){
+		int oldPostsCount = totalCount - 300;
+		if (oldPostsCount>0){
+			String whereClause = String.format(" %s in (select %s from %s order by %s limit %s)", Adapter.POSTS_POST_ID, Adapter.POSTS_POST_ID, Adapter.POSTS_TABLE, Adapter.POSTS_POST_ID, oldPostsCount+"");
+			database.delete(Adapter.POSTS_TABLE, whereClause, null);
+		}
+	}
+	
+	@Deprecated
 	public synchronized void insertForeignPost(Post post, String deviceId){
 		open();
 		if (!deviceId.equalsIgnoreCase(post.getUserId())){
@@ -143,8 +154,7 @@ public class Facade {
 				double distanceBetweenlocations = Helpers.distanceFrom(location.getLatitude(), 
 																		location.getLongitude(), 
 																		lastKnownLocation.getLatitude(), 
-																		lastKnownLocation.getLongitude(), 
-																		false);
+																		lastKnownLocation.getLongitude());
 				float accuracyDifference = Math.abs(location.getAccuracy()-lastKnownLocation.getAccuracy());
 				if (distanceBetweenlocations>1){
 					insertLocationToHistory(location);
@@ -216,74 +226,5 @@ public class Facade {
 		close();
 		return retVal;
 	}*/
-
-//	public int getCurrentHighScore(int levelId) {
-//		Cursor cursor = database.query(Adapter.LEVELS_TABLE, level_cols, Adapter.LEVELS_ID + " = ?",
-//				new String[]{levelId+""}, null, null, null);
-//		int result = 0;
-//		if (cursor.moveToFirst()) {
-//			result = cursor.getInt(2);
-//		}
-//		cursor.close();
-//		return result;
-//	}
-//
-//	public DragonStats getDragonStats() {
-//		Cursor cursor = database.query(Adapter.DRAGON_STATS_TABLE, stats_cols,
-//				null, null, null, null, null);
-//		DragonStats ds = null;
-//		if (cursor.moveToFirst()) {
-//			float MAX_HP = cursor.getFloat(0);
-//			float hp = cursor.getFloat(1);
-////			float hp = MAX_HP;
-//			float MAX_STAMINA = cursor.getFloat(2);
-//			 float stamina=cursor.getFloat(3);
-////			float stamina = MAX_STAMINA;
-//			float dmg = cursor.getFloat(4);
-//			int XP = cursor.getInt(5);
-//			int lvl = cursor.getInt(6);
-//			int unusedSkillPoints = cursor.getInt(7);
-//			float staminDropRate = cursor.getFloat(8);
-//			// maxhp hp max_stamina stamin_drop| sta dmg XP lvl -
-//			ds = new DragonStats(MAX_HP, hp, MAX_STAMINA, staminDropRate,
-//					stamina, dmg, XP, lvl, unusedSkillPoints);
-//		}
-//		cursor.close();
-//		return ds;
-//	}
-//
-//	public boolean getLevelPreviouslyPassed(int levelId) {
-//		String selection = Adapter.LEVELS_ID + " = ?";
-//		String[] selectionArgs = new String[] { levelId + "" };
-//		Cursor cursor = database.query(
-//				Adapter.LEVELS_TABLE, 
-//				level_cols,
-//				selection, 
-//				selectionArgs, 
-//				null, null, null);
-//		if (cursor.moveToFirst()) {
-//			if (cursor.getInt(1) == 1)
-//				return true;
-//		}
-//		return false;
-//	}
-//
-//	public DragonBag getBag() {
-//		Cursor cursor = database.query(Adapter.BAG_TABLE, bag_col, null, null,
-//				null, null, null);
-//		cursor.moveToFirst();
-//		int spq = cursor.getInt(1);
-//		cursor.moveToNext();
-//		int hpq = cursor.getInt(1);
-//		cursor.moveToNext();
-//		int dpq = cursor.getInt(1);
-//		cursor.moveToNext();
-//		int gcq = cursor.getInt(1);
-//		cursor.moveToNext();
-//		int scq = cursor.getInt(1);
-//		DragonBag dragonBag=new DragonBag(spq, hpq, dpq, gcq, scq);
-//		
-//		return dragonBag;
-//	}
 
 }

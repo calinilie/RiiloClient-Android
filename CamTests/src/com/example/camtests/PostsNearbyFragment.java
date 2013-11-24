@@ -154,7 +154,7 @@ public class PostsNearbyFragment
 			for(Post p : adapterData){
 				if (p.getDistanceFromCurLoc()==-1){
 					refreshAdapter = true;
-					p.setDistanceFromCurLoc(location, false);
+					p.setDistanceFromCurLoc(location);
 				}
 			}
 			if (refreshAdapter){

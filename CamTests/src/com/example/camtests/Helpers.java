@@ -24,9 +24,17 @@ public class Helpers {
 	
 	
 	/*===================DISTANCES======================================================================================*/
-	public static double distanceFrom(double lat1, double lng1, double lat2, double lng2, boolean inMiles) {
+	public static double distanceFrom(double lat1, double lng1, double lat2, double lng2) {
+		return distanceFrom(lat1, lng1, lat2, lng2, false);
+	}
+	
+	public static double distanceInKmFrom(double lat1, double lng1, double lat2, double lng2) {
+		return distanceFrom(lat1, lng1, lat2, lng2, true);
+	}
+	
+	private static double distanceFrom(double lat1, double lng1, double lat2, double lng2, boolean ignoreUserPref) {
 		double earthRadius = 6371;//in km 
-		if (inMiles()){
+		if (inMiles() && (!ignoreUserPref)){
 			earthRadius = 3959;
 		}
 	    double dLat = Math.toRadians(lat2-lat1);
@@ -34,18 +42,14 @@ public class Helpers {
 	    double a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.sin(dLng/2) * Math.sin(dLng/2);
 	    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 	    double dist = earthRadius * c;
-	    double mileConversion = 0.621371192;
-	    if (inMiles)
-    		return Double.valueOf(dist * mileConversion).doubleValue();
-	    else
-	    	return Double.valueOf(dist).doubleValue();
+	    
+	    return Double.valueOf(dist).doubleValue();
 	}
 	
 	public static boolean inMiles(){
 		if (Locale.getDefault().getCountry().equals("GB") || Locale.getDefault().getCountry().equals("US"))
 			return true;
-//		return false;//TODO
-		return true;
+		return false;
 	}
 	
 	

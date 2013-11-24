@@ -185,7 +185,7 @@ public class Post implements Comparable<Post>, Serializable{
 			this.originLatitude = currentLocation.getLatitude();
 			this.originLongitude = currentLocation.getLongitude();
 			Log.d("originLoc", "setUserAtLocation: "+this.originLatitude + " "+this.originLongitude);
-			double distanceFromCurrentLocation = Helpers.distanceFrom(lat, longitude, currentLocation.getLatitude(), currentLocation.getLongitude(), false); 
+			double distanceFromCurrentLocation = Helpers.distanceInKmFrom(lat, longitude, currentLocation.getLatitude(), currentLocation.getLongitude()); 
 			if (distanceFromCurrentLocation<2){
 				setUserAtLocation(true);
 			}
@@ -299,48 +299,45 @@ public class Post implements Comparable<Post>, Serializable{
 		return distanceFromCurLoc;
 	}
 
-	public double getDistanceFromCurLoc(Location location, boolean inMiles) {
+	public double getDistanceFromCurLoc(Location location) {
 		if (location!=null){
 			if (distanceFromCurLoc==-1)
 				distanceFromCurLoc = distanceFrom(
 											this.latitude, 
 											this.longitude, 
 											location.getLatitude(), 
-											location.getLongitude(), 
-											inMiles);
+											location.getLongitude());
 			return distanceFromCurLoc;
 		}
 		return -1;
 	}
 	
-	public void setDistanceFromCurLoc(Location location, boolean inMiles){
+	public void setDistanceFromCurLoc(Location location){
 		if (location!=null){
 			distanceFromCurLoc = distanceFrom(
 					this.latitude, 
 					this.longitude, 
 					location.getLatitude(), 
-					location.getLongitude(), 
-					inMiles);
+					location.getLongitude());
 		}
 	}
 	
-	public void setDistanceFromLastKnownLocation(LocationHistory location, boolean inMiles){
+	public void setDistanceFromLastKnownLocation(LocationHistory location){
 		if (location!=null){
 			distanceFromCurLoc = distanceFrom(
 										this.latitude, 
 										this.longitude, 
 										location.getLatitude(), 
-										location.getLongitude(), 
-										inMiles);
+										location.getLongitude());
 		}
 	}
 	
-	public void setDistanceFromLocation(double lat, double log, boolean inMiles){
-		distanceFromCurLoc = distanceFrom(lat, log, this.latitude, this.longitude, inMiles);
+	public void setDistanceFromLocation(double lat, double log){
+		distanceFromCurLoc = distanceFrom(lat, log, this.latitude, this.longitude);
 	}
 	
-	private double distanceFrom(double lat1, double lng1, double lat2, double lng2, boolean inMiles) {
-		return Helpers.distanceFrom(lat1, lng1, lat2, lng2, inMiles);
+	private double distanceFrom(double lat1, double lng1, double lat2, double lng2) {
+		return Helpers.distanceFrom(lat1, lng1, lat2, lng2);
 	}
 	
 	

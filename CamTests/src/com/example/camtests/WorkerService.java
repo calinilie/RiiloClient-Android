@@ -90,7 +90,6 @@ public class WorkerService extends IntentService{
 		switch (intentType){
 		case StringKeys.WS_INTENT_POST:
 			Post post = new Post(intent.getBundleExtra(StringKeys.POST_BUNDLE));
-//			Log.d(">>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<", post.getConversationId()+"");
 			PostInsertedDTO result = uploadPost(post);
 			long newPostId = result.getPostId();
 			conversationId = result.getConversationId();
@@ -99,11 +98,7 @@ public class WorkerService extends IntentService{
 				post.setConversationId(conversationId);
 				savePostLocally(post);
 			}
-			
-//			Log.d("<<<<<<<<<Workerservice.uploadPost 1111 >>>>>>>>>", "No of posts in cahce: "+postsCache.getPostsAsList().size());
 			postsCache.addPost(post);
-//			Log.d("<<<<<<<<<Workerservice.uploadPost 2222 >>>>>>>>>", "No of posts in cahce: "+postsCache.getPostsAsList().size());
-//			Log.d("************************************", post.toString());
 			Log.d("************************************", "WS_INTENT_POST");
 			break;
 		case StringKeys.WS_INTENT_GET_LATEST_POSTS:
@@ -189,17 +184,6 @@ public class WorkerService extends IntentService{
 	}
 	
 	private void savePostLocally(Post post){
-		/*if (post.getUri()!=null){
-			String originalUri = post.getUri();
-			try{
-				Uri resizedUri = BitmapHelper.resizeAndSaveImage(getResources(), post.getUri());
-				post.setUri(resizedUri.toString());
-			}
-			catch(OutOfMemoryError err){
-				Log.e("<<<<<<<<<Workerservice.savePostLocally>>>>>>>>>", err.getLocalizedMessage(), err);
-				post.setUri(originalUri);
-			}
-		}*/
 		Facade.getInstance(this).insertPost(post);
 	}
 	

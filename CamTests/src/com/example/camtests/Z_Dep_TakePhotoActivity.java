@@ -277,12 +277,12 @@ public class Z_Dep_TakePhotoActivity extends BaseActivity implements OnClickList
 			// location = null;
 			if (location != null) {
 				for (Post p : items) {
-					p.setDistanceFromCurLoc(location, false);
+					p.setDistanceFromCurLoc(location);
 				}
 				distancesComputed = true;
 			} else {
 				for (Post p : items) {
-					p.setDistanceFromLastKnownLocation(lastKnownLocation, false);
+					p.setDistanceFromLastKnownLocation(lastKnownLocation);
 				}
 			}
 			if (Facade.getInstance(this).insertLocationToHistoryIfNeeded(
