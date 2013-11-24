@@ -18,6 +18,7 @@ public class PostsResultReceiver extends ResultReceiver{
 	private List<Post> adapterData;
 	private Tab tab;
 	private PullToRefreshAttacher pullToRefreshAttacher;
+	private Button button;
 	
 	private Handler handler;
 	
@@ -48,6 +49,10 @@ public class PostsResultReceiver extends ResultReceiver{
 
 	public Handler getHandler() {
 		return handler;
+	}
+	
+	public void setButton(Button button){
+		this.button = button;
 	}
 
 	@Override
@@ -105,16 +110,20 @@ public class PostsResultReceiver extends ResultReceiver{
 				break;
 		}
 		Log.d("###################################", "OnReceive Called");
-		if (pullToRefreshAttacher!=null /*&& pullToRefreshAttacher.isRefreshing()*/){
-			Log.d("###################################", "pullToRefreshAttacher NOT null");
-			handler.post(new Runnable() {
-				
-				@Override
-				public void run() {
+		handler.post(new Runnable() {
+			
+			@Override
+			public void run() {
+				if (pullToRefreshAttacher!=null){
+					Log.d("###################################", "pullToRefreshAttacher NOT null");
 					pullToRefreshAttacher.setRefreshComplete();
 				}
-			});
-		}
+				if (button!=null){
+					button.setVisibility(View.GONE);
+				}
+					
+			}
+		});
 	}
 	
 	private void refreshAdapter(List<Post> newPosts, boolean desc){

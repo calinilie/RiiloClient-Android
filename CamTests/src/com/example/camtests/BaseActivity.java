@@ -289,6 +289,7 @@ public abstract class BaseActivity extends FragmentActivity
 		}
 		LocationHistory lastKnownLocation = Facade.getInstance(this).getLastKnownLocation();
 		Facade.getInstance(this).insertLocationToHistoryIfNeeded(location, lastKnownLocation);
+		//TODO change logic in method above
 	}
 	
 	public void addLocationListener(ILocationListener locationListener){

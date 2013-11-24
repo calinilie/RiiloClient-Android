@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -22,15 +23,20 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 public class PostsNearbyFragment 
 				extends Fragment 
-				implements OnItemClickListener, ILocationListener, OnRefreshListener{
+				implements OnItemClickListener, 
+							ILocationListener, 
+							OnRefreshListener,
+							OnClickListener{
 
 	private boolean distancesComputed;
 	
@@ -41,6 +47,7 @@ public class PostsNearbyFragment
 	
     private MainActivity activity;
     private View view;
+    private Button buttonRefresh;
     
     
 	PostListItemAdapter adapter;
@@ -95,6 +102,10 @@ public class PostsNearbyFragment
 		if (Helpers.renewList(adapterData, nearbyPosts)){
 			adapter.notifyDataSetChanged();
 		}
+		
+		if (adapterData==null || adapterData.size()==0){
+			buttonRefresh.setVisibility(View.VISIBLE);
+		}
  	}
  	
  	/*@Override
@@ -106,6 +117,7 @@ public class PostsNearbyFragment
 	protected void setupWidgetsViewElements() {
 		postsListView = (ListView)view.findViewById(R.id.posts_listView);
 		postsListView.setOnItemClickListener(this);
+		buttonRefresh = (Button)view.findViewById(R.id.button_refresh);
 	}
 
 	@Override
@@ -136,6 +148,7 @@ public class PostsNearbyFragment
 							adapterData,
 							activity.getTabs().get(2),
 							pullToRefreshAttacher,
+							buttonRefresh,
 							false,
 							StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
 			for(Post p : adapterData){
@@ -147,30 +160,7 @@ public class PostsNearbyFragment
 			if (refreshAdapter){
 				adapter.notifyDataSetChanged();
 			}
-		}		
-			//TODO change logic in method above
-		/*if (!distancesComputed){
-			lastKnownLocation = Facade.getInstance(activity).getLastKnownLocation();
-			//compute distance to currentLocation
-			if (location!=null){
-				double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, lastKnownLocation);
-				adapterData = PostsCache.getInstance(activity).getNearbyPosts(latLong[0], latLong[1], adapter, adapterData, activity.getTabs().get(2) , pullToRefreshAttacher, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
-				for(Post p : adapterData){
-					p.setDistanceFromCurLoc(location, false);
-				}
-				distancesComputed = true;
-			}
-			//if no currentlocation, get location fromHistory
-			else{
-				for(Post p : adapterData){
-					p.setDistanceFromLastKnownLocation(lastKnownLocation, false);
-				}
-			}
-			if (Facade.getInstance(activity).insertLocationToHistoryIfNeeded(location, lastKnownLocation)){
-				//TODO change logic in method above
-			}
-			adapter.notifyDataSetChanged();
-		}*/
+		}
 	}
 
 	@Override
@@ -188,12 +178,37 @@ public class PostsNearbyFragment
 							adapterData,
 							activity.getTabs().get(2),
 							pullToRefreshAttacher,
+							buttonRefresh,
 							true,
 							StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
 			adapter.notifyDataSetChanged();
 		}
 		else{
 			pullToRefreshAttacher.setRefreshComplete();
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()){
+		case R.id.button_refresh:
+			buttonRefresh.setVisibility(View.GONE);
+			Location location = ((BaseActivity) getActivity()).getLocation();
+			double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, lastKnownLocation);
+			adapterData = PostsCache
+					.getInstance(activity)
+					.getNearbyPosts(
+							latLong[0],
+							latLong[1],
+							adapter,
+							adapterData,
+							activity.getTabs().get(2),
+							pullToRefreshAttacher,
+							buttonRefresh,
+							true,
+							StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
+			adapter.notifyDataSetChanged();
+			break;
 		}
 		
 	}

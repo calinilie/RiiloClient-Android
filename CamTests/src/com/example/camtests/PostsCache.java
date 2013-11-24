@@ -179,9 +179,10 @@ public class PostsCache {
 			List<Post> adapterData, 
 			Tab tab,
 			PullToRefreshAttacher pullToRefreshAttacher,
+			Button button,
 			boolean forcedUpdate, 
 			int postResultReceiverType){
-		startService_getNearby(latitude, longitude, adapter, adapterData, tab, pullToRefreshAttacher, postResultReceiverType, forcedUpdate);
+		startService_getNearby(latitude, longitude, adapter, adapterData, tab, pullToRefreshAttacher, button, postResultReceiverType, forcedUpdate);
 		return nearbyPosts;
 	}
 	
@@ -295,7 +296,8 @@ public class PostsCache {
 			PostListItemAdapter adapter, 
 			List<Post> adapterData, 
 			Tab tab, 
-			PullToRefreshAttacher pullToRefreshAttacher, 
+			PullToRefreshAttacher pullToRefreshAttacher,
+			Button button,
 			int postResultReceiverType,
 			boolean forceUpdate){
 		if (isRequestAllowed(this.timestamp_Nearby, forceUpdate)){
@@ -311,6 +313,7 @@ public class PostsCache {
 			resultReceiver.setAdapterData(adapterData);
 			resultReceiver.setTab(tab);
 			resultReceiver.setPullToRefreshAttacher(pullToRefreshAttacher);
+			resultReceiver.setButton(button);
 			intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
 			
 			this.context.startService(intent);
