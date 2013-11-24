@@ -3,9 +3,12 @@ package com.example.camtests;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.riilo.tutorial.TutorialActivity;
+
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -39,6 +42,13 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        boolean showTutorial = true;
+        if (showTutorial){
+        	Intent intent = new Intent(this, TutorialActivity.class);
+        	startActivity(intent);
+        }
+        
         setContentView(R.layout.activity_main_layout);
 
         // Create the adapter that will return a fragment for each of the three primary sections
