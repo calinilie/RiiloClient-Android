@@ -10,6 +10,7 @@
 		android:layout_marginRight="16dp"
 		android:layout_marginTop="4dp"
 		android:layout_marginBottom="4dp"
+		android:padding="8dp"
 		android:background="@drawable/card_background">
 
 		<!-- Card Contents -->
@@ -69,15 +70,15 @@
 	</LinearLayout>
 	
    </LinearLayout>
-
+   
 	<ImageView
-	    android:id="@+id/postListItem_userAtLocation"
-	    android:layout_width="32dp"
-	    android:layout_height="32dp"
-	    android:src="@drawable/ic_user_at_location"
-	    android:background="@color/background_holo_light"
-	    android:layout_marginLeft="16dp"
-	    android:layout_marginTop="4dp"
-	    android:visibility="gone" />
+	   android:id="@+id/postListItem_userAtLocation"
+	   android:layout_width="32dp"
+	   android:layout_height="32dp"
+	   android:src="@drawable/ic_user_at_location"
+	   android:background="@color/background_holo_light"
+	   android:layout_marginLeft="16dp"
+	   android:layout_marginTop="4dp"
+	   android:visibility="gone"/>
 
 </FrameLayout>
