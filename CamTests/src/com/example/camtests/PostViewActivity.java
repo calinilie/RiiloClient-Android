@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.camtests.AnalyticsWrapper.EventLabel;
 import com.google.android.gms.location.LocationRequest;
@@ -208,24 +209,31 @@ public class PostViewActivity extends BaseActivity
      
     private void postButtonPressed(){
 			String message = inputText.getText().toString();
-			Post replyPost = new Post();
-			replyPost.setMessage(message);
-			replyPost.setUserAtLocation(location, currentPost.getLatitude(), currentPost.getLongitude());
-			replyPost.setDateCreated(Calendar.getInstance().getTime());
-			replyPost.setUserId(deviceId);
-			replyPost.setLatitude(currentPost.getLatitude());
-			replyPost.setLongitude(currentPost.getLongitude());
-			replyPost.setRepliesToPostId(currentPost.getId());
-			replyPost.setConversationId(currentPost.getConversationId());
-			
-			hideReplyToPostPannel_showList();
-			adapterData.add(replyPost);
-			adapter.notifyDataSetChanged();
-
-    		Intent intentPost= new Intent(this, WorkerService.class);
-    		intentPost.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_POST);
-    		intentPost.putExtra(StringKeys.POST_BUNDLE, replyPost.toBundle());
-        	startService(intentPost);
+			if (message!=null && !message.isEmpty()){
+				Post replyPost = new Post();
+				replyPost.setMessage(message);
+				replyPost.setUserAtLocation(location, currentPost.getLatitude(), currentPost.getLongitude());
+				replyPost.setDateCreated(Calendar.getInstance().getTime());
+				replyPost.setUserId(deviceId);
+				replyPost.setLatitude(currentPost.getLatitude());
+				replyPost.setLongitude(currentPost.getLongitude());
+				replyPost.setRepliesToPostId(currentPost.getId());
+				replyPost.setConversationId(currentPost.getConversationId());
+				
+				hideReplyToPostPannel_showList();
+				adapterData.add(replyPost);
+				adapter.notifyDataSetChanged();
+	
+	    		Intent intentPost= new Intent(this, WorkerService.class);
+	    		intentPost.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_POST);
+	    		intentPost.putExtra(StringKeys.POST_BUNDLE, replyPost.toBundle());
+	        	startService(intentPost);
+	        	
+	        	inputText.setText("");
+			}
+			else{
+				Toast.makeText(this, getString(R.string.invalid_post_empty), Toast.LENGTH_LONG).show();
+			}
      }
 
 	@Override

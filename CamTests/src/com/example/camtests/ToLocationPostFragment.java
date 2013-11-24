@@ -18,6 +18,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.camtests.AnalyticsWrapper.EventLabel;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -144,20 +145,26 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
    		case R.id.button_post:
    			activity.analytics.recordEvent_WritePost_ButtonClick(EventLabel.button_post);
    			String message = inputMessage.getText().toString();
-   			currentPost.setMessage(message);
-   			currentPost.setUserAtLocation(activity.location, currentPost.getLatitude(), currentPost.getLongitude());
-   			currentPost.setDateCreated(Calendar.getInstance().getTime());
-   			currentPost.setUserId(activity.deviceId);
-
-       		Intent intentPost= new Intent(activity, WorkerService.class);
-       		intentPost.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_POST);
-       		intentPost.putExtra(StringKeys.POST_BUNDLE, currentPost.toBundle());
-           	activity.startService(intentPost);
-           	
-    		Intent postViewIntent = new Intent(activity, PostViewActivity.class);
-    		postViewIntent.putExtra(StringKeys.POST_BUNDLE, currentPost.toBundle());
-    		startActivity(postViewIntent);
-           	
+   			if (message!=null && !message.isEmpty()){
+	   			currentPost.setMessage(message);
+	   			currentPost.setUserAtLocation(activity.location, currentPost.getLatitude(), currentPost.getLongitude());
+	   			currentPost.setDateCreated(Calendar.getInstance().getTime());
+	   			currentPost.setUserId(activity.deviceId);
+	
+	       		Intent intentPost= new Intent(activity, WorkerService.class);
+	       		intentPost.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_POST);
+	       		intentPost.putExtra(StringKeys.POST_BUNDLE, currentPost.toBundle());
+	           	activity.startService(intentPost);
+	           	
+	    		Intent postViewIntent = new Intent(activity, PostViewActivity.class);
+	    		postViewIntent.putExtra(StringKeys.POST_BUNDLE, currentPost.toBundle());
+	    		startActivity(postViewIntent);
+	    		
+	    		inputMessage.setText("");
+   			}
+   			else{
+   				Toast.makeText(activity, getString(R.string.invalid_post_empty), Toast.LENGTH_LONG).show();
+   			}
    			break;
    		}
    	}
@@ -197,7 +204,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	private void animatePanelCreatePosts(){
 		Animation slideIn = AnimationUtils.loadAnimation(activity,
                 R.anim.slide_in_top);
-		if (panelCreatePosts.getVisibility()==View.INVISIBLE){
+		if (panelCreatePosts.getVisibility()==View.INVISIBLE || panelCreatePosts.getVisibility()==View.GONE){
 			panelCreatePosts.setVisibility(View.VISIBLE);
 			panelCreatePosts.requestLayout();
 			panelCreatePosts.startAnimation(slideIn);
