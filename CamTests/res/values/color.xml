@@ -6,9 +6,11 @@
     <color name="mediumGps">#F2FF00</color>
     <color name="goodGps">#00FF00</color>
     <color name="badGps">#FF0000</color>
-    <color name="grey">#A3A3A3</color>
     <color name="white">#FFFFFF</color>
     <color name="red">#FF0000</color>
     <color name="darkGrey">#CCCCCC</color>
+    <color name="grey">#A3A3A3</color>
+    <color name="lightGrey">#E6E6E6</color>
+    <color name="background_holo_light">#fff3f3f3</color>
 
 </resources>
