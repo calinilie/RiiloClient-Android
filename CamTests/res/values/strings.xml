@@ -28,6 +28,7 @@
     <string name="feed_activity_label">Feed</string>
     <string name="nearby_activity_label">Nearby Posts</string>
     <string name="post_view_activity_label">View and Reply to post</string>
+    <string name="tutorial_activity_label">The more you know</string>
     <string name="button_refresh_label">Refresh</string>
     <!-- <string name="connection_error_last_attempt">Elephants are blocking the connection, retrying...</string> -->
     <string name="connection_error_no_attempt">There are too many elephants blocking our server, it cannot be reached.</string>
