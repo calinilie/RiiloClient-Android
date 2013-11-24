@@ -60,6 +60,7 @@ public class PostViewActivity extends BaseActivity
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.post_layout);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         initLocationClient(LocationRequest.PRIORITY_HIGH_ACCURACY, 2000, 1000);
         
         Bundle bundle = getIntent().getBundleExtra(StringKeys.POST_BUNDLE);        
