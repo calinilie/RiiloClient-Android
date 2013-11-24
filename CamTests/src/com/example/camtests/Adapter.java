@@ -7,7 +7,7 @@ import android.util.Log;
 
 public class Adapter extends SQLiteOpenHelper{
 
-	private static final String DB_NAME="Prototypes32.db";
+	private static final String DB_NAME="Prototypes39.db";
 	private static final int DB_VERSION=1;
 	
 	public static final String PICTURES_TABLE="CamTestsPictures";
@@ -44,6 +44,19 @@ public class Adapter extends SQLiteOpenHelper{
 									POSTS_USER_AT_LOCATION,
 									POSTS_LOCATION_ACCURACY);
 	
+	public static final String APP_STORAGE_TABLE = "AppStorage";
+	public static final String APP_STORAGE_KEY_COLUMN = "Key";
+	public static final String APP_STORAGE_KEY_TUTORIAL_RUN = "TutorialRun";
+	public static final String APP_STORAGE_VALUE_COLUMN = "Value";
+	
+	private static final String CREATE_APP_STORAGE_TABLE = String.format("CREATE TABLE %s (%s TEXT, %s TEXT)", APP_STORAGE_TABLE, APP_STORAGE_KEY_COLUMN, APP_STORAGE_VALUE_COLUMN);
+	private static final String INSERT_APPSTORAGE_TUTORIAL_RUN = String.format("INSERT INTO %s (%s, %s) VALUES('%s', %s)", 
+																	APP_STORAGE_TABLE, 
+																	APP_STORAGE_KEY_COLUMN, 
+																	APP_STORAGE_VALUE_COLUMN, 
+																	APP_STORAGE_KEY_TUTORIAL_RUN, 
+																	0);
+	
 	public static final String LOCATION_HISTORY_TABLE = "LocationHistory";
 	public static final String LOCATION_HISTORY_DATE = "DateCreated";
 	public static final String LOCATION_HISTORY_LATITUDE = "Latitutde";
@@ -65,7 +78,7 @@ public class Adapter extends SQLiteOpenHelper{
 	//======================V7=======================================
 	public static final String UPDATE_POST_USER_AT_LOCATION = String.format("UPDATE %s SET %s=1", POSTS_TABLE, POSTS_USER_AT_LOCATION);
 	//===============================================================
-	private final String[] createQueries = new String[] { CREATE_POSTS_TABLE, CREATE_LOCATION_HISTORY_TABLE };
+	private final String[] createQueries = new String[] { CREATE_POSTS_TABLE, CREATE_LOCATION_HISTORY_TABLE, CREATE_APP_STORAGE_TABLE, INSERT_APPSTORAGE_TUTORIAL_RUN };
 //	private final String[] queiresV5 = new String[] {ALTER_PICTURES_TO_POSTS_TABLE, ALTER_POSTS_ADD_MESSAGE_COLUMN};
 //	private final String[] queriesV6 = new String[] {ALTER_POSTS_ADD_USER_AT_LOCATION_COLUMN};
 //	private final String[] queriesV7 = new String[] {UPDATE_POST_USER_AT_LOCATION};
@@ -120,8 +133,10 @@ public class Adapter extends SQLiteOpenHelper{
 	}
 	
 	private void runSqlQueries(SQLiteDatabase db, String[] queries){
-		for (String s:queries)
+		for (String s:queries){
+			Log.d("sqlite_db", queries.length +" "+ s);
 			db.execSQL(s);
+		}
 	}
 
 }

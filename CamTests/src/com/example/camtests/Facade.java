@@ -38,6 +38,8 @@ public class Facade {
 									Adapter.LOCATION_HISTORY_DATE
 								};
 	
+	private static final String[] appStorageColumns = {Adapter.APP_STORAGE_KEY_COLUMN, Adapter.APP_STORAGE_VALUE_COLUMN};
+	
 	private ContentValues values;
 
 	private static Facade instance;
@@ -198,6 +200,22 @@ public class Facade {
 		close();
 		return retVal;
 		
+	}
+	
+	public synchronized boolean wasTutorialRun(){
+		Log.d("tutorial", "wasTutorialRun");
+		open();
+		boolean retVal = false;
+		String selection = String.format("%s = ?", Adapter.APP_STORAGE_KEY_COLUMN);
+		String[] selectionArgs = {Adapter.APP_STORAGE_KEY_TUTORIAL_RUN}; 
+		Cursor cursor = database.query(Adapter.APP_STORAGE_TABLE, appStorageColumns, selection, selectionArgs, null, null, null);
+		if (cursor.moveToNext()){
+			int value = cursor.getInt(1);
+			Log.d("tutorial", value+"");
+			retVal = value == 1;
+		}
+		close();
+		return retVal;
 	}
 	
 	/*public List<Post> getOwnPosts(String deviceId){
