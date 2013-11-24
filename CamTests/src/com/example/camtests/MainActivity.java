@@ -32,6 +32,8 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
     ViewPager mViewPager;
     
     PullToRefreshAttacher pullToRefreshAttacher;
+    private ToLocationPostFragment toLocationPostFragment;
+    
     
     private List<Tab> tabs;
 
@@ -99,6 +101,19 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
         analytics.recordScreenHit_TabSelect(tab.getPosition());
     }
     
+    @Override
+    public void onBackPressed(){
+    	if (mViewPager.getCurrentItem()==0){
+    		if(toLocationPostFragment!=null)
+    			if (toLocationPostFragment.onBackPressed()) 
+    				super.onBackPressed();
+    	}
+    	else {
+    		super.onBackPressed();
+    	}
+    		
+    }
+    
     public List<Tab> getTabs(){
     	return tabs;
     }
@@ -117,7 +132,7 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
         public Fragment getItem(int i) {
             switch (i) {
                 case 0:
-                	ToLocationPostFragment toLocationPostFragment = new ToLocationPostFragment();
+                	toLocationPostFragment = new ToLocationPostFragment();
                 	addLocationListener(toLocationPostFragment);
                 	return toLocationPostFragment;
                 case 1:

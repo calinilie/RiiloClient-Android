@@ -206,7 +206,7 @@ public class PostViewActivity extends BaseActivity
     	 }
      }
      
-     private void postButtonPressed(){
+    private void postButtonPressed(){
 			String message = inputText.getText().toString();
 			Post replyPost = new Post();
 			replyPost.setMessage(message);
@@ -231,6 +231,17 @@ public class PostViewActivity extends BaseActivity
 	@Override
 	public void onMapClick(LatLng arg0) {
 		analytics.recordEvent_Conversation_MapClick(EventLabel.map);
+	}
+	
+	@Override
+	public void onBackPressed(){
+		View replyView = findViewById(R.id.reply_to_post_pannel);
+		if (replyView.getVisibility()==View.VISIBLE){
+			hideReplyToPostPannel_showList();
+		}
+		else{
+			super.onBackPressed();
+		}
 	}
 
 	@Override

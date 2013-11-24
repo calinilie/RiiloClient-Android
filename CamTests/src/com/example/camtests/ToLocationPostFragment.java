@@ -217,6 +217,14 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
         }
     }*/
 	
+	public boolean onBackPressed(){
+		if (panelCreatePosts.getVisibility()==View.VISIBLE){
+			panelCreatePosts.setVisibility(View.GONE);
+			return false;
+		}
+		return true;
+	}
+	
 	private void newPostIfNeeded(){
 		if (currentPost==null){
 			currentPost = new Post();
