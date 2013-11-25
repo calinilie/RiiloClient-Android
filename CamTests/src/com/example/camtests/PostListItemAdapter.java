@@ -90,11 +90,18 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 		}
 		distanceAndDate_textView.setText(postedOnDistance);
 		message_textView.setText(post.getMessage());
-		//postId_textView.setText("Post "+post.getId() + " " + post.getConversationId());
-		postId_textView.setVisibility(View.GONE);
-		if (post.isUserAtLocation())
-			userAtLocation_ImageView.setVisibility(View.VISIBLE);
+		postId_textView.setText("Post "+post.getId() + " " + post.getConversationId());
+//		postId_textView.setVisibility(View.GONE);
+		if (!post.isUserAtLocation()){
+			if (post.getId()==244){
+				Log.d("post_at_location", "++++ "+ post.toString());
+			}
+			userAtLocation_ImageView.setVisibility(View.GONE);
+		}
 		
+		if (post.getId()==244){
+			Log.d("post_at_location", post.toString());
+		}
 		
 		return postView;
 	}

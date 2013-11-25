@@ -247,8 +247,8 @@ public class Post implements Comparable<Post>, Serializable{
 	@Override
 	public String toString() {
 		 return
-		 String.format("id: %s, message: %s, uri: %s, lat: %s, long: %s, accuracy: %s, userAtLocation: %s, date: %s, repliesToPostId: %s, conversationId: %s",
-		 id+"", message, uri, latitude+"", longitude+"", accuracy+"", userAtLocation+"",
+		 String.format("ID: %s, message: %s, lat: %s, long: %s, accuracy: %s, USER AT LOC: %s, date: %s, repliesToPostId: %s, conversationId: %s",
+		 id+"", message, latitude+"", longitude+"", accuracy+"", userAtLocation+"",
 		 Helpers.dateToString(dateCreated), repliesToPostId+"", conversationId+"");
 	}
 
