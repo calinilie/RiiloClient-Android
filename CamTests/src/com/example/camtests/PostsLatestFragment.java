@@ -41,7 +41,6 @@ public class PostsLatestFragment
  	List<Post> adapterData = new ArrayList<Post>();
  	ListView postsListView;
  	
- 	private LocationHistory lastKnownLocation;
  	
  	private PullToRefreshAttacher pullToRefreshAttacher;
 
@@ -53,7 +52,6 @@ public class PostsLatestFragment
  	@Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        lastKnownLocation = Facade.getInstance(activity).getLastKnownLocation();
 //        activity.initLocationClient(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY, UPDATE_INTERVAL, FASTEST_INTERVAL);//TODO
 		
 		if (savedInstanceState!=null && savedInstanceState.containsKey(StringKeys.POST_LIST_PARCELABLE)){
@@ -127,28 +125,6 @@ public class PostsLatestFragment
 				adapter.notifyDataSetChanged();
 			}
 		}
-		
-		/*Log.d("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "location Changed!" + distancesComputed);
-		if (!distancesComputed){
-			lastKnownLocation = Facade.getInstance(activity).getLastKnownLocation();
-			//compute distance to currentLocation
-			if (location!=null){
-				for(Post p : adapterData){
-					p.setDistanceFromCurLoc(location, false);
-				}
-				distancesComputed = true;
-			}
-			//if no currentlocation, get location fromHistory
-			else{
-				for(Post p : adapterData){
-					p.setDistanceFromLastKnownLocation(lastKnownLocation, false);
-				}
-			}
-			if (Facade.getInstance(activity).insertLocationToHistoryIfNeeded(location, lastKnownLocation)){
-				//TODO change logic in method above
-			}
-			adapter.notifyDataSetChanged();
-		}*/
 	}
 
 	@Override

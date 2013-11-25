@@ -47,11 +47,10 @@ public class Helpers {
 	}
 	
 	public static boolean inMiles(){
-		if (Locale.getDefault().getCountry().equals("GB") || Locale.getDefault().getCountry().equals("US"))
+		if (Locale.getDefault().getCountry().equalsIgnoreCase("GB") || Locale.getDefault().getCountry().equalsIgnoreCase("US"))
 			return true;
 		return false;
 	}
-	
 	
 	/*===================DATES======================================================================================*/
 	public static String dateToString(Date date){

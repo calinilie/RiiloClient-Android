@@ -68,7 +68,7 @@
 		        android:paddingLeft="16dp"
 		        android:text="Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. " />
 		
-	 	    <TextView
+	 	    <!-- <TextView
 		        android:id="@+id/postListItem_postId"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
 		        android:text="Large Text"
 		        android:textAppearance="?android:attr/textAppearanceLarge"
 		        android:textColor="@color/red"
-		        android:textStyle="bold" /> 
+		        android:textStyle="bold" />  -->
 	        
 	</LinearLayout>
 	

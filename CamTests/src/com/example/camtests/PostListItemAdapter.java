@@ -20,6 +20,7 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 	DecimalFormat decimalFormat10, decimalFormat1;
 	private String currentUserId;
 	private boolean showDistance;
+	public String unitOfMeasure = "km";
 	
 	public PostListItemAdapter(Context context, int resource, List<Post> items, String currentUserId, boolean showDistance) {
 		super(context, resource, items);
@@ -29,6 +30,8 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 		decimalFormat1 = new DecimalFormat("#.##");
 		this.currentUserId = currentUserId;
 		this.showDistance = showDistance;
+		if (Helpers.inMiles())
+			unitOfMeasure = "mi";
 	}
 	
 	@Override
@@ -43,21 +46,21 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 	public View getView(int position, View convertView, ViewGroup parent){
 		LinearLayout postView;
 		Post post = getItem(position);
-		if (convertView == null) {
+//		if (convertView == null) {
 			postView = new LinearLayout(getContext());
 			String inflater = Context.LAYOUT_INFLATER_SERVICE;
 			LayoutInflater li;
 			li = (LayoutInflater)getContext().getSystemService(inflater);
 			li.inflate(layoutId, postView, true);
-	    } else {
-	    	postView = (LinearLayout) convertView;
-	    }
+//	    } else {
+//	    	postView = (LinearLayout) convertView;
+//	    }
 		
 		TextView userId_textView = (TextView) postView.findViewById(R.id.postListItem_userId);
 		TextView userAction_textView = (TextView) postView.findViewById(R.id.postListItem_userAction);
 		TextView distanceAndDate_textView = (TextView) postView.findViewById(R.id.postListItem_distance_date);
 		TextView message_textView = (TextView) postView.findViewById(R.id.postListItem_message);
-		TextView postId_textView = (TextView) postView.findViewById(R.id.postListItem_postId);
+//		TextView postId_textView = (TextView) postView.findViewById(R.id.postListItem_postId);
 		ImageView userAtLocation_ImageView = (ImageView)postView.findViewById(R.id.postListItem_userAtLocation);
 		
 		
@@ -82,7 +85,7 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 				else {
 					distanceAsString = ((int)dist)+"";
 				}
-				postedOnDistance = String.format("~ %s %s away, posted on %s", distanceAsString, Helpers.inMiles() ? "mi" : "km", post.getDateAsString());
+				postedOnDistance = String.format("~ %s %s away, posted on %s", distanceAsString, unitOfMeasure, post.getDateAsString());
 			}
 		}
 		else{
@@ -90,17 +93,10 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 		}
 		distanceAndDate_textView.setText(postedOnDistance);
 		message_textView.setText(post.getMessage());
-		postId_textView.setText("Post "+post.getId() + " " + post.getConversationId());
+//		postId_textView.setText("Post "+post.getId() + " " + post.getConversationId());
 //		postId_textView.setVisibility(View.GONE);
 		if (!post.isUserAtLocation()){
-			if (post.getId()==244){
-				Log.d("post_at_location", "++++ "+ post.toString());
-			}
 			userAtLocation_ImageView.setVisibility(View.GONE);
-		}
-		
-		if (post.getId()==244){
-			Log.d("post_at_location", post.toString());
 		}
 		
 		return postView;

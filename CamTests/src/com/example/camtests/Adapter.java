@@ -7,7 +7,7 @@ import android.util.Log;
 
 public class Adapter extends SQLiteOpenHelper{
 
-	private static final String DB_NAME="Prototypes40.db";
+	private static final String DB_NAME="Prototypes41.db";
 	private static final int DB_VERSION=1;
 	
 	public static final String PICTURES_TABLE="CamTestsPictures";
