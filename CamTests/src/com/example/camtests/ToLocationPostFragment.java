@@ -46,7 +46,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	private EditText inputMessage;
 	private View panelCreatePosts;
 	
-	private boolean mapCameraAnimationRun = false; 
+//	private boolean mapCameraAnimationRun = false; 
 	private Post currentPost;
 	private Marker marker;
 	
@@ -92,12 +92,15 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
     	super.onStart();
     	
     	map = mapView.getMap();
-    	map.setOnMapClickListener(this);
+    	if (map!=null){
+    		map.setOnMapClickListener(this);
+    		map.setMyLocationEnabled(true);
+    	}
+    	else activity.showWarningDialog("Ouch, something went terribly wrong. Please keep calm and try again; if you still get this error your phone might not support Google Maps, and this app relies heavily on Google Maps.");
     	
     	setupWidgetsViewElements();
     	newPostIfNeeded();
-    	mapCameraAnimationRun = false;
-    	Log.d(">>>>>>>>>mapFragment<<<<<<<<<<", "onStart()");
+//    	mapCameraAnimationRun = false;
     }
     
     /*@Override
@@ -173,11 +176,11 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
     
    	@Override
     public void onLocationChanged(Location location) {
-    	if (!mapCameraAnimationRun){
-    		if (location.getAccuracy()<2000){
-	    		animateMapCamera(new LatLng(location.getLatitude(), location.getLongitude()));
-    		}
-    	}
+//    	if (!mapCameraAnimationRun){
+//    		if (location.getAccuracy()<2000){
+//	    		animateMapCamera(new LatLng(location.getLatitude(), location.getLongitude()));
+//    		}
+//    	}
     }
 
 	@Override
@@ -192,15 +195,15 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 		marker = map.addMarker(new MarkerOptions().position(location));
 	}
 	
-	private void animateMapCamera(LatLng location){
+	/*private void animateMapCamera(LatLng location){
 		animateMapCamera(location, 10);
-	}
+	}*/
 	
 	private void animateMapCamera(LatLng location, int zoom){
 		CameraPosition cPos = CameraPosition.fromLatLngZoom(new LatLng(location.latitude, location.longitude), zoom);
 		CameraUpdate update = CameraUpdateFactory.newCameraPosition(cPos);
 		map.animateCamera(update);
-		mapCameraAnimationRun = true;
+//		mapCameraAnimationRun = true;
 	}
 	
 	private void animatePanelCreatePosts(){

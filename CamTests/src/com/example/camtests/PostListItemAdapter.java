@@ -65,7 +65,7 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 		
 		
 		userId_textView.setText(post.getUserId().equalsIgnoreCase(this.currentUserId)? "You" : "Somebody");//"User "+post.getUserId());
-		String userAction = post.getRepliesToPostId() == 0 ? "posted:" : "replyed:";
+		String userAction = post.getRepliesToPostId() == 0 ? "posted:" : "replied:";
 		userAction_textView.setText(userAction);
 		String postedOnDistance = "";
 		
