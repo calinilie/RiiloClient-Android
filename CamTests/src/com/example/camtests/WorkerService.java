@@ -104,7 +104,7 @@ public class WorkerService extends IntentService{
 		case StringKeys.WS_INTENT_GET_LATEST_POSTS:
 			Log.d("************************************", "WS_INTENT_GET_LATEST_POSTS");
 			resultReceiver = intent.getParcelableExtra(StringKeys.POST_LIST_RESULT_RECEIVER);
-			List<Post> latestPosts = getLatestPosts(0, 50);
+			List<Post> latestPosts = getLatestPosts(0, 150);
 			if (latestPosts==null){
 				Log.d("<<<<<<<#####<<<<<"+WorkerService.class.toString()+">>>>>########>>>>>>>", "getLatestposts(start, limit) FAILED");
 			}
