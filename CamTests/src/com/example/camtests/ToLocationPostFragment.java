@@ -34,8 +34,10 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.riilo.interfaces.IBackButtonListener;
+import com.riilo.interfaces.ILocationListener;
 
-public class ToLocationPostFragment extends Fragment implements OnMapClickListener, OnClickListener, ILocationListener{
+public class ToLocationPostFragment extends Fragment implements OnMapClickListener, OnClickListener, ILocationListener, IBackButtonListener{
 	
 	private GoogleMap map;
 	private Button buttonPost;
@@ -224,7 +226,9 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
         }
     }*/
 	
+	@Override
 	public boolean onBackPressed(){
+		Log.d(">>>>>>>>>>>>>>>>>>>>>>>>", "fragment.onBackPressed");
 		if (panelCreatePosts.getVisibility()==View.VISIBLE){
 			panelCreatePosts.setVisibility(View.GONE);
 			return false;

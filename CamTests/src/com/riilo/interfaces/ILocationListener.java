@@ -1,4 +1,4 @@
-package com.example.camtests;
+package com.riilo.interfaces;
 
 import android.location.Location;
 

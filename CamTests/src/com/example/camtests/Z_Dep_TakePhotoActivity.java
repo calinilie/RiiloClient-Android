@@ -169,7 +169,7 @@ public class Z_Dep_TakePhotoActivity extends BaseActivity implements OnClickList
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
-		switch (requestCode) {
+		/*switch (requestCode) {
 		case StringKeys.TAKE_PICTURE_REQUEST_CODE: {
 			Uri uri = super.onTakePhotoActivityResult(requestCode, resultCode,
 					intent);
@@ -181,7 +181,7 @@ public class Z_Dep_TakePhotoActivity extends BaseActivity implements OnClickList
 			}
 			break;
 		}
-		}
+		}*/
 	}
 
 	@Override

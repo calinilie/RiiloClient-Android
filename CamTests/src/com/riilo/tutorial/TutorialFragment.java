@@ -1,9 +1,11 @@
 package com.riilo.tutorial;
 
+import com.example.camtests.Facade;
 import com.example.camtests.MainActivity;
 import com.example.camtests.R;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -50,6 +52,7 @@ public class TutorialFragment extends Fragment implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.button_end_tutorial){
+			Facade.getInstance(activity).updateTutorialRun();
 			activity.finish();
 		}
 	}

@@ -3,12 +3,15 @@ package com.example.camtests;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.riilo.interfaces.IBackButtonListener;
+import com.riilo.interfaces.ILocationListener;
 import com.riilo.tutorial.TutorialActivity;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.location.GpsStatus.Listener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -35,7 +38,9 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
     ViewPager mViewPager;
     
     PullToRefreshAttacher pullToRefreshAttacher;
-    private ToLocationPostFragment toLocationPostFragment;
+//    private ToLocationPostFragment toLocationPostFragment;
+    private boolean wasTutorialRunThisSession = false;
+    private IBackButtonListener backButtonListener;
     
     
     private List<Tab> tabs;
@@ -43,10 +48,13 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        boolean showTutorial = false;//!Facade.getInstance(this).wasTutorialRun();
+        wasTutorialRunThisSession = savedInstanceState!=null && savedInstanceState.getBoolean(StringKeys.WAS_TUTORIAL_RUN);
+        boolean showTutorial = !Facade.getInstance(this).wasTutorialRun() && !wasTutorialRunThisSession;
         if (showTutorial){
+        	wasTutorialRunThisSession = true;
         	Intent intent = new Intent(this, TutorialActivity.class);
         	startActivity(intent);
+        	return;
         }
         
         setContentView(R.layout.activity_main_layout);
@@ -62,10 +70,8 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
         // parent.
         actionBar.setHomeButtonEnabled(false);
         
-        // Specify that we will be displaying tabs in the action bar.
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        // Set up the ViewPager, attaching the adapter and setting up a listener for when the
-        // user swipes between sections.
+        
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mAppSectionsPagerAdapter);
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -101,6 +107,12 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
     }
     
     @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+    	savedInstanceState.putBoolean(StringKeys.WAS_TUTORIAL_RUN, wasTutorialRunThisSession);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+    
+    @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
@@ -113,15 +125,13 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
     
     @Override
     public void onBackPressed(){
-    	if (mViewPager.getCurrentItem()==0){
-    		if(toLocationPostFragment!=null)
-    			if (toLocationPostFragment.onBackPressed()) 
-    				super.onBackPressed();
+    	if (backButtonListener!=null){
+    		if (backButtonListener.onBackPressed())
+    			super.onBackPressed();
     	}
     	else {
     		super.onBackPressed();
     	}
-    		
     }
     
     public List<Tab> getTabs(){
@@ -140,10 +150,12 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
 
         @Override
         public Fragment getItem(int i) {
+        	Log.d(">>>>>>>>getItem", "getItem "+i);
             switch (i) {
                 case 0:
-                	toLocationPostFragment = new ToLocationPostFragment();
+                	ToLocationPostFragment toLocationPostFragment = new ToLocationPostFragment();
                 	addLocationListener(toLocationPostFragment);
+                	backButtonListener = toLocationPostFragment;
                 	return toLocationPostFragment;
                 case 1:
                 	PostsLatestFragment latestPostsFragment = new PostsLatestFragment();

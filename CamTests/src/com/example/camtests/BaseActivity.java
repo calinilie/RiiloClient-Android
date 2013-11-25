@@ -14,6 +14,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.riilo.interfaces.ILocationListener;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -48,9 +49,9 @@ public abstract class BaseActivity extends FragmentActivity
     protected String model = android.os.Build.MODEL.toLowerCase(Locale.ENGLISH);
     protected String deviceId="";
     
-    private static String fileName;
+    /*private static String fileName;
     private static Uri cameraPicUri = null;
-    private static Date dateCameraIntentStarted = null;
+    private static Date dateCameraIntentStarted = null;*/
     
     protected Bundle savedInstanceState;
     
@@ -68,15 +69,12 @@ public abstract class BaseActivity extends FragmentActivity
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        this.savedInstanceState = savedInstanceState;
-        
-//        setContentView(R.layout.activity_take_photo_action);
-        
+        this.savedInstanceState = savedInstanceState;     
         deviceId = Secure.getString(this.getContentResolver(),
                 Secure.ANDROID_ID);        
         
-        if (savedInstanceState!=null)
-        	fileName = savedInstanceState.getString(StringKeys.TAKE_PICTURE_FILE_NAME_AND_PATH);
+        /*if (savedInstanceState!=null)
+        	fileName = savedInstanceState.getString(StringKeys.TAKE_PICTURE_FILE_NAME_AND_PATH);*/
         
         initLocationClient(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY, 2000, 1000);
         postsCache = PostsCache.getInstance(this);
@@ -100,7 +98,7 @@ public abstract class BaseActivity extends FragmentActivity
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        if (fileName!=null){
+        /*if (fileName!=null){
 	        if (!fileName.isEmpty()){
 	        	savedInstanceState.putString(StringKeys.TAKE_PICTURE_FILE_NAME_AND_PATH, fileName);
 	        }
@@ -112,18 +110,18 @@ public abstract class BaseActivity extends FragmentActivity
         
         if (cameraPicUri != null) {
             savedInstanceState.putString(StringKeys.TAKE_PICTURE_PIC_URI, cameraPicUri.toString());
-        }
+        }*/
     }
 	
     @Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        if (savedInstanceState.containsKey(StringKeys.TAKE_PICTURE_INTENT_START_DATETIME)) {
+        /*if (savedInstanceState.containsKey(StringKeys.TAKE_PICTURE_INTENT_START_DATETIME)) {
             dateCameraIntentStarted = Helpers.stringToDate(savedInstanceState.getString(StringKeys.TAKE_PICTURE_INTENT_START_DATETIME));
         }
         if (savedInstanceState.containsKey(StringKeys.TAKE_PICTURE_PIC_URI)) {
             cameraPicUri = Uri.parse(savedInstanceState.getString(StringKeys.TAKE_PICTURE_PIC_URI));
-        }
+        }*/
     }
     
     @Override
@@ -143,7 +141,7 @@ public abstract class BaseActivity extends FragmentActivity
     }
     
     //====================================Take photo============================================== 
-	protected void startCameraIntent() {
+	/*protected void startCameraIntent() {
 	    try {
 	        dateCameraIntentStarted = new Date();
 	        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -183,9 +181,9 @@ public abstract class BaseActivity extends FragmentActivity
 	     } catch (ActivityNotFoundException e) {
 	         showWarningDialog(getString(R.string.error_could_not_take_photo));
 	     }      
-	}
+	}*/
 	 
-	protected Uri onTakePhotoActivityResult(int requestCode, int resultCode, Intent intent) {
+	/*protected Uri onTakePhotoActivityResult(int requestCode, int resultCode, Intent intent) {
         if (resultCode == RESULT_OK) {
             if (cameraPicUri == null){
             	File f = new File(fileName);
@@ -276,7 +274,7 @@ public abstract class BaseActivity extends FragmentActivity
 		//TODO exception handling in analytics
 //        Log.d("onTakePhotoActivityResult<<<<<<<<<<<<<<<", "SHOULD Have showWarningDialog");
         return null;
-    }
+    }*/
 	
 	//===================================location and play services===============================
 	@Override

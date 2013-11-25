@@ -10,6 +10,7 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher.OnRefres
 import com.example.camtests.AnalyticsWrapper.EventLabel;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.riilo.interfaces.ILocationListener;
 
 import android.app.Activity;
 import android.content.Context;
@@ -118,6 +119,7 @@ public class PostsNearbyFragment
 		postsListView = (ListView)view.findViewById(R.id.posts_listView);
 		postsListView.setOnItemClickListener(this);
 		buttonRefresh = (Button)view.findViewById(R.id.button_refresh);
+		buttonRefresh.setOnClickListener(this);
 	}
 
 	@Override

@@ -18,6 +18,7 @@ public class StringKeys {
 	public static final String NOTIFICATION_SILENCE_USER_ID = "org.calin.camtests.StringKeys.NOTIFICATION_SILENCE_USER_ID";
 	public static final String NEARBY_POSTS_LATITUDE = "org.calin.camtests.StringKeys.NEARBY_POSTS_LATITUDE";
 	public static final String NEARBY_POSTS_LONGITUDE = "org.calin.camtests.StringKeys.NEARBY_POSTS_LONGITUDE";
+	public static final String WAS_TUTORIAL_RUN = "org.calin.camtests.StringKeys.WAS_TUTORIAL_RUN";
 	
 	public static final String POST_PIC_URI ="org.calin.camtests.StringKeys.POST_PIC_URI";
 	public static final String POST_LATITUDE = "org.calin.camtests.StringKeys.POST_LATITUDE";

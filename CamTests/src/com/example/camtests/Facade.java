@@ -218,6 +218,15 @@ public class Facade {
 		return retVal;
 	}
 	
+	public synchronized void updateTutorialRun(){
+		open();
+		values.clear();
+		values.put(Adapter.APP_STORAGE_VALUE_COLUMN, 1);
+		String[] whereArgs = {Adapter.APP_STORAGE_KEY_TUTORIAL_RUN};
+		database.update(Adapter.APP_STORAGE_TABLE, values, Adapter.APP_STORAGE_KEY_COLUMN+" = ?", whereArgs);
+		close();
+	}
+	
 	/*public List<Post> getOwnPosts(String deviceId){
 		open();
 		List<Post> retVal = new ArrayList<Post>();

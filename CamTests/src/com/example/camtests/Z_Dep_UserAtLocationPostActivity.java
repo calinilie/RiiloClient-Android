@@ -57,18 +57,18 @@ public class Z_Dep_UserAtLocationPostActivity extends BaseActivity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
     	super.onActivityResult(requestCode, resultCode, intent);
-    	switch(requestCode){
+    	/*switch(requestCode){
 	    	case StringKeys.TAKE_PICTURE_REQUEST_CODE:
 	    		Uri uri = super.onTakePhotoActivityResult(requestCode, resultCode, intent);
 	    		if (uri!=null)
 	    			currentPost.setUri(uri.toString());
 	    		break;
-    	}
+    	}*/
     }
     
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()){
+		/*switch (v.getId()){
 		case R.id.button_post:
 			String message = inputMessage.getText().toString();
 			currentPost.setAccuracy(location.getAccuracy());
@@ -91,7 +91,7 @@ public class Z_Dep_UserAtLocationPostActivity extends BaseActivity
 			break;
 		case R.id.button_choose_from_gallery:
 			break;
-		}
+		}*/
 	}
 	
 	@Override
