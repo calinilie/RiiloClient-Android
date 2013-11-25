@@ -61,7 +61,7 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 		ImageView userAtLocation_ImageView = (ImageView)postView.findViewById(R.id.postListItem_userAtLocation);
 		
 		
-		userId_textView.setText(post.getUserId().equalsIgnoreCase(this.currentUserId)? "You" : "User "+post.getUserId());
+		userId_textView.setText(post.getUserId().equalsIgnoreCase(this.currentUserId)? "You" : "Somebody");//"User "+post.getUserId());
 		String userAction = post.getRepliesToPostId() == 0 ? "posted:" : "replyed:";
 		userAction_textView.setText(userAction);
 		String postedOnDistance = "";
