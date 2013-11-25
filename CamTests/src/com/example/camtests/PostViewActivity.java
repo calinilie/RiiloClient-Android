@@ -132,7 +132,7 @@ public class PostViewActivity extends BaseActivity
 		switch (v.getId()){
 		case (R.id.button_cancel):
 			analytics.recordEvent_Conversation_ButtonClick(EventLabel.button_cancel);
-			hideReplyToPostPannel_showList();
+			hideReplyToPostPannel();
 			break;
 		case(R.id.button_post):
 			analytics.recordEvent_Conversation_ButtonClick(EventLabel.button_post);
@@ -147,7 +147,7 @@ public class PostViewActivity extends BaseActivity
 		switch(item.getItemId()){
 		case R.id.action_reply:
 			analytics.recordEvent_Conversation_ButtonClick(EventLabel.reply_button);
-			hideList_showReplyToPostPannel();
+			showReplyToPostPannel();
 			return true;
 		default:
             return super.onOptionsItemSelected(item);
@@ -177,7 +177,7 @@ public class PostViewActivity extends BaseActivity
     	 mMap.animateCamera(update);
      }
      
-     private void hideList_showReplyToPostPannel(){
+     private void showReplyToPostPannel(){
     	 Animation slideIn = AnimationUtils.loadAnimation(getApplicationContext(), 
     			 R.anim.slide_in_bottom);
     	 View replyView = findViewById(R.id.reply_to_post_pannel);
@@ -188,7 +188,7 @@ public class PostViewActivity extends BaseActivity
     	 }
      }
      
-     private void hideReplyToPostPannel_showList(){
+     private void hideReplyToPostPannel(){
     	 InputMethodManager inputManager = (InputMethodManager)
                  getSystemService(Context.INPUT_METHOD_SERVICE);
     	 if (inputManager!=null)
@@ -220,7 +220,7 @@ public class PostViewActivity extends BaseActivity
 				replyPost.setRepliesToPostId(currentPost.getId());
 				replyPost.setConversationId(currentPost.getConversationId());
 				
-				hideReplyToPostPannel_showList();
+				hideReplyToPostPannel();
 				adapterData.add(replyPost);
 				adapter.notifyDataSetChanged();
 	
@@ -245,7 +245,7 @@ public class PostViewActivity extends BaseActivity
 	public void onBackPressed(){
 		View replyView = findViewById(R.id.reply_to_post_pannel);
 		if (replyView.getVisibility()==View.VISIBLE){
-			hideReplyToPostPannel_showList();
+			hideReplyToPostPannel();
 		}
 		else{
 			super.onBackPressed();

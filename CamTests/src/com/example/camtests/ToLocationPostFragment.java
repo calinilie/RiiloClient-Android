@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
@@ -16,8 +17,10 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.camtests.AnalyticsWrapper.EventLabel;
@@ -40,9 +43,8 @@ import com.riilo.interfaces.ILocationListener;
 public class ToLocationPostFragment extends Fragment implements OnMapClickListener, OnClickListener, ILocationListener, IBackButtonListener{
 	
 	private GoogleMap map;
-	private Button buttonPost;
-	private Button buttonTakePicture;
-	private Button buttonChooseFromGallery;
+	private ImageButton buttonPost;
+	private ImageButton cancelButton;
 	private EditText inputMessage;
 	private View panelCreatePosts;
 	
@@ -57,7 +59,6 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	@Override
 	public void onAttach(Activity activity){
  		this.activity = (BaseActivity)activity;
- 		Log.d(">>>>>>>>>mapFragment<<<<<<<<<<", "onAttach()");
  		super.onAttach(activity);
  	}
 	
@@ -66,12 +67,10 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
         super.onCreate(savedInstanceState);
 //        setRetainInstance(true);
 //        super.initLocationClient(LocationRequest.PRIORITY_LOW_POWER, 4000, 2000); //TODO
-        Log.d(">>>>>>>>>mapFragment<<<<<<<<<<", "onCreate()");
     }
     
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//    	setRetainInstance(false);
     	view = inflater.inflate(R.layout.write_post_layout, container, false);
     	
     	mapView =(MapView)view.findViewById(R.id.map);
@@ -83,7 +82,6 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
         } catch (GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
         }
-    	Log.d(">>>>>>>>>mapFragment<<<<<<<<<<", "onCreateView()");
     	return view;
     }
     
@@ -171,6 +169,9 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
    				Toast.makeText(activity, getString(R.string.invalid_post_empty), Toast.LENGTH_LONG).show();
    			}
    			break;
+   		case R.id.button_cancel:
+   			hideReplyToPostPannel();
+   			break;
    		}
    	}
     
@@ -186,7 +187,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	@Override
 	public void onMapClick(LatLng location) {
 		activity.analytics.recordEvent_WritePost_MapClick();
-		animatePanelCreatePosts();
+		showCreatePostPanel();
 		animateMapCamera(location, 15);
 		currentPost.setLatitude(location.latitude);
 		currentPost.setLongitude(location.longitude);
@@ -206,15 +207,34 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 //		mapCameraAnimationRun = true;
 	}
 	
-	private void animatePanelCreatePosts(){
-		Animation slideIn = AnimationUtils.loadAnimation(activity,
-                R.anim.slide_in_top);
-		if (panelCreatePosts.getVisibility()==View.INVISIBLE || panelCreatePosts.getVisibility()==View.GONE){
-			panelCreatePosts.setVisibility(View.VISIBLE);
-			panelCreatePosts.requestLayout();
-			panelCreatePosts.startAnimation(slideIn);
-		}
-	}
+	
+	private void hideReplyToPostPannel(){
+   	 InputMethodManager inputManager = (InputMethodManager)
+                activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+   	 if (inputManager!=null)
+   		 if (activity.getCurrentFocus()!=null)
+		    	 inputManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(),
+		                    InputMethodManager.HIDE_NOT_ALWAYS);
+   	 
+   	 Animation slideOut = AnimationUtils.loadAnimation(activity.getApplicationContext(),
+                R.anim.slide_out_bottom);
+   	 
+   	 if (panelCreatePosts.getVisibility()==View.VISIBLE){
+   		 panelCreatePosts.startAnimation(slideOut);
+   		 panelCreatePosts.requestLayout();
+   		 panelCreatePosts.setVisibility(View.GONE);
+   	 	}
+    }
+	
+	private void showCreatePostPanel(){
+   	 Animation slideIn = AnimationUtils.loadAnimation(activity, 
+   			 R.anim.slide_in_bottom);
+   	 if (panelCreatePosts.getVisibility() == View.GONE){
+   		 panelCreatePosts.setVisibility(View.VISIBLE);
+   		 panelCreatePosts.requestLayout();
+   		 panelCreatePosts.startAnimation(slideIn);
+   	 	}
+    }
 	
 	/*private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
@@ -233,7 +253,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	public boolean onBackPressed(){
 		Log.d(">>>>>>>>>>>>>>>>>>>>>>>>", "fragment.onBackPressed");
 		if (panelCreatePosts.getVisibility()==View.VISIBLE){
-			panelCreatePosts.setVisibility(View.GONE);
+			hideReplyToPostPannel();
 			return false;
 		}
 		return true;
@@ -246,14 +266,11 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	}
 	
 	protected void setupWidgetsViewElements() {
-		buttonPost = ((Button)view.findViewById(R.id.button_post));
+		buttonPost = ((ImageButton)view.findViewById(R.id.button_post));
         buttonPost.setOnClickListener(this);
         
-        buttonTakePicture = ((Button)view.findViewById(R.id.button_take_picture));
-        buttonTakePicture.setOnClickListener(this);
-        
-        buttonChooseFromGallery = ((Button)view.findViewById(R.id.button_choose_from_gallery));
-        buttonChooseFromGallery.setOnClickListener(this);
+        cancelButton = ((ImageButton)view.findViewById(R.id.button_cancel));
+        cancelButton.setOnClickListener(this);
         
         inputMessage = (EditText)view.findViewById(R.id.editor_message);
         
