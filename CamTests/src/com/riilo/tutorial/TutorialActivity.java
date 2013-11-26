@@ -90,7 +90,7 @@ public class TutorialActivity extends FragmentActivity{
         public Fragment getItem(int position) {
         	TutorialFragment fragment = new TutorialFragment();
         	fragment.setIsLastPage(position==5);
-        	fragment.setPosition(position);
+        	//fragment.setPosition(position);
             return fragment;
         }
 
