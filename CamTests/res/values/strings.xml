@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RiiLO</string>
+    <string name="app_name">Riilo</string>
     <string name="error_sd_card_not_mounted">SD card not found</string>
     <string name="error_could_not_take_photo">Something went wrong (could not take photo)</string>
     <string name="warning_dialog_heading">Warning</string>
