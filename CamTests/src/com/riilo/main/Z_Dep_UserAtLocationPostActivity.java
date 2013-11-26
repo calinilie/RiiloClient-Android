@@ -1,4 +1,4 @@
-package com.example.camtests;
+package com.riilo.main;
 
 import java.util.Calendar;
 
@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.camtests.R;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;

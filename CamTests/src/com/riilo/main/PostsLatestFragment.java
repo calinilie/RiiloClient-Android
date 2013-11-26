@@ -1,10 +1,11 @@
-package com.example.camtests;
+package com.riilo.main;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.camtests.AnalyticsWrapper.EventLabel;
+import com.example.camtests.R;
 import com.riilo.interfaces.ILocationListener;
+import com.riilo.main.AnalyticsWrapper.EventLabel;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher.OnRefreshListener;

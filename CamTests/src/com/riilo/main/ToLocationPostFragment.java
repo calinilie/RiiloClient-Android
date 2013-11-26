@@ -1,4 +1,4 @@
-package com.example.camtests;
+package com.riilo.main;
 
 import java.util.Calendar;
 import java.util.List;
@@ -23,7 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.camtests.AnalyticsWrapper.EventLabel;
+import com.example.camtests.R;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdate;
@@ -39,6 +39,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.riilo.interfaces.IBackButtonListener;
 import com.riilo.interfaces.ILocationListener;
+import com.riilo.main.AnalyticsWrapper.EventLabel;
 
 public class ToLocationPostFragment extends Fragment implements OnMapClickListener, OnClickListener, ILocationListener, IBackButtonListener{
 	

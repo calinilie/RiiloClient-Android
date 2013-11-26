@@ -1,7 +1,7 @@
 package com.riilo.tutorial;
 
-import com.example.camtests.AnalyticsWrapper;
 import com.example.camtests.R;
+import com.riilo.main.AnalyticsWrapper;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

@@ -1,8 +1,9 @@
-package com.example.camtests;
+package com.riilo.main;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.camtests.R;
 import com.riilo.interfaces.IBackButtonListener;
 import com.riilo.interfaces.ILocationListener;
 import com.riilo.tutorial.TutorialActivity;

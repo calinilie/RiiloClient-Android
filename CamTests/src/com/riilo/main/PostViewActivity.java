@@ -1,4 +1,4 @@
-package com.example.camtests;
+package com.riilo.main;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,7 +28,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.camtests.AnalyticsWrapper.EventLabel;
+import com.example.camtests.R;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -40,6 +40,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.plus.model.people.Person.Collection;
+import com.riilo.main.AnalyticsWrapper.EventLabel;
 
 public class PostViewActivity extends BaseActivity
 	implements android.view.View.OnClickListener,

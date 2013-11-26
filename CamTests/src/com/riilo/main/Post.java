@@ -1,4 +1,4 @@
-package com.example.camtests;
+package com.riilo.main;
 
 import java.io.Serializable;
 import java.util.Date;

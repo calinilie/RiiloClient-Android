@@ -1,4 +1,4 @@
-package com.example.camtests;
+package com.riilo.main;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -39,6 +39,8 @@ import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.example.camtests.R;
 
 import android.app.IntentService;
 import android.app.Service;

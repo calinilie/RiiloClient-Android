@@ -1,4 +1,4 @@
-package com.example.camtests;
+package com.riilo.main;
 
 import android.app.Activity;
 import android.content.Context;

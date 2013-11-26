@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CamTests</string>
+    <string name="app_name">RiiLO</string>
     <string name="error_sd_card_not_mounted">SD card not found</string>
     <string name="error_could_not_take_photo">Something went wrong (could not take photo)</string>
     <string name="warning_dialog_heading">Warning</string>
@@ -7,8 +7,8 @@
     <string name="my_map_activity">MyFirstGoogleMapsApp</string>
     <string name="error_cannot_connect_to_location_services">Unable to connect to GooglePlay services. Please update GooglePlay services. The app will now terminate.</string>
     <string name="user_at_location_activity_label">Leave a note, here</string>
-    <string name="photos_folder_name">prototype</string>
-    <string name="photo_name_base">prototype</string>
+    <string name="photos_folder_name">riilo</string>
+    <string name="photo_name_base">riilo</string>
     
     <string name="endpoint_posts_upload">http://riilo-prod.elasticbeanstalk.com/posts/upload/</string>
     <string name="endpoint_latest_posts">http://d19vwjdwjmit8v.cloudfront.net/posts/latest/</string>
@@ -31,7 +31,7 @@
     <string name="tutorial_activity_label">The more you know</string>
     <string name="button_refresh_label">Refresh</string>
     <!-- <string name="connection_error_last_attempt">Elephants are blocking the connection, retrying...</string> -->
-    <string name="connection_error_no_attempt">There are too many elephants blocking our server, it cannot be reached.</string>
+    <string name="connection_error_no_attempt">There are dragons, many dragons blocking our server, it cannot be reached.</string>
     <string name="upload_post_error">On its way to the server your post was kidnapped by some dragons. Please try again.</string>
     <string name="invalid_post_empty">The dwarves working on the server don\'t fancy empty posts, please write something so they don\'t go on strike.</string>
     <string name="user_at_location_dialog_message">The user who posted this message was nearby the location shown on the map.</string>

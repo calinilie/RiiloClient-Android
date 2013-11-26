@@ -1,8 +1,8 @@
 package com.riilo.tutorial;
 
-import com.example.camtests.Facade;
-import com.example.camtests.MainActivity;
 import com.example.camtests.R;
+import com.riilo.main.Facade;
+import com.riilo.main.MainActivity;
 
 import android.app.Activity;
 import android.content.Intent;

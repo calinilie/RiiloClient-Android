@@ -1,4 +1,4 @@
-package com.example.camtests;
+package com.riilo.main;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -7,10 +7,11 @@ import java.util.List;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher.OnRefreshListener;
 
-import com.example.camtests.AnalyticsWrapper.EventLabel;
+import com.example.camtests.R;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.riilo.interfaces.ILocationListener;
+import com.riilo.main.AnalyticsWrapper.EventLabel;
 
 import android.app.Activity;
 import android.content.Context;

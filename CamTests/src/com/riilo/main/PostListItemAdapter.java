@@ -1,7 +1,9 @@
-package com.example.camtests;
+package com.riilo.main;
 
 import java.text.DecimalFormat;
 import java.util.List;
+
+import com.example.camtests.R;
 
 import android.content.Context;
 import android.util.Log;

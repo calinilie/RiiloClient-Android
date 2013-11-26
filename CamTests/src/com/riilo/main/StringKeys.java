@@ -1,4 +1,4 @@
-package com.example.camtests;
+package com.riilo.main;
 
 public class StringKeys {
 
