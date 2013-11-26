@@ -18,7 +18,7 @@ public class TutorialActivity extends FragmentActivity{
 	/**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 6;
+    private static final int NUM_PAGES = 5;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -88,10 +88,10 @@ public class TutorialActivity extends FragmentActivity{
 
         @Override
         public Fragment getItem(int position) {
-        	TutorialFragment fragment = new TutorialFragment();
-        	fragment.setIsLastPage(position==5);
-        	fragment.setPosition(position);
-            return fragment;
+        	TutorialFragment fargment = new TutorialFragment();
+        	fargment.setIsLastPage(position==4);
+        	fargment.setText(String.format("tutorial page %s/5", position+1));
+            return fargment;
         }
 
         @Override
