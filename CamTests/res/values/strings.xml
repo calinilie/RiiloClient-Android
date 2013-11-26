@@ -36,4 +36,11 @@
     <string name="invalid_post_empty">The dwarves working on the server don\'t fancy empty posts, please write something so they don\'t go on strike.</string>
     <string name="user_at_location_dialog_message">The user who posted this message was nearby the location shown on the map.</string>
     
+    
+    <string name="tutorial_0">Navigate to any place and tap the map to write your message</string>
+    <string name="tutorial_1">Write a message, press post and the pigeons will handle the rest</string>
+    <string name="tutorial_2">Everybody next to Eiffel Tower will see your message</string>
+    <string name="tutorial_3">Navigate to the Nearby tab to see posts in your vicinity</string>
+    <string name="tutorial_4">You can view and reply to all messages related to a particular location.</string>
+    <string name="tutorial_5">Thank you for helping us test Riilo! This is the very beginning, so it will be quite empty around, but you can spread the word. If you have something to tell us, write us at hello@riilo.com </string>
 </resources>

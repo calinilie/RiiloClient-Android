@@ -19,6 +19,7 @@ public class TutorialFragment extends Fragment implements OnClickListener{
 
 	private String text;
 	private boolean isLastPage;
+	private int position;
 	
 	public void setText(String text){
 		this.text = text;
@@ -26,6 +27,10 @@ public class TutorialFragment extends Fragment implements OnClickListener{
 	
 	public void setIsLastPage(boolean isLastPage){
 		this.isLastPage = isLastPage;
+	}
+	
+	public void setPosition(int position){
+		this.position = position;
 	}
 	
 	private TutorialActivity activity;
@@ -40,8 +45,29 @@ public class TutorialFragment extends Fragment implements OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		
-    	ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.tutorial_fragment_layout, container, false);
-    	((TextView)rootView.findViewById(R.id.tutorial_textView)).setText(text);
+		int resourceId = 0;
+		switch (this.position){
+		case 0:
+			resourceId = R.layout.tutorial_fragment_layout_0;
+			break;
+		case 1:
+			resourceId = R.layout.tutorial_fragment_layout_1;
+			break;
+		case 2:
+			resourceId = R.layout.tutorial_fragment_layout_2;
+			break;
+		case 3:
+			resourceId = R.layout.tutorial_fragment_layout_3;
+			break;
+		case 4:
+			resourceId = R.layout.tutorial_fragment_layout_4;
+			break;
+		case 5:
+			resourceId = R.layout.tutorial_fragment_layout_5;
+			break;
+		}
+		
+    	ViewGroup rootView = (ViewGroup) inflater.inflate(resourceId, container, false);
     	if (isLastPage){
     		((Button)rootView.findViewById(R.id.button_end_tutorial)).setVisibility(View.VISIBLE);
     		((Button)rootView.findViewById(R.id.button_end_tutorial)).setOnClickListener(this);
