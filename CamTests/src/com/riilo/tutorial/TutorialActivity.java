@@ -1,5 +1,6 @@
 package com.riilo.tutorial;
 
+import com.example.camtests.AnalyticsWrapper;
 import com.example.camtests.R;
 
 import android.os.Bundle;
@@ -29,7 +30,8 @@ public class TutorialActivity extends FragmentActivity{
      * The pager adapter, which provides the pages to the view pager widget.
      */
     private PagerAdapter mPagerAdapter;
-
+    protected AnalyticsWrapper analytics;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +47,24 @@ public class TutorialActivity extends FragmentActivity{
         mPager = (ViewPager) findViewById(R.id.pager_tutorial);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
+        
+        analytics = AnalyticsWrapper.getInstance(this);
     }
 
+    
+    @Override
+	public void onStart(){
+		super.onStart();
+		analytics.startTracker(this);
+	}
+	
+	@Override
+	protected void onStop(){
+		analytics.stopTracker(this);
+		super.onStop();
+	}
+	
+    
     @Override
     public void onBackPressed() {
         if (mPager.getCurrentItem() == 0) {

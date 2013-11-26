@@ -101,12 +101,6 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
     }
     
     @Override
-    public void onStart(){
-    	super.onStart();
-    	analytics.startTracker(this);
-    }
-    
-    @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
     	savedInstanceState.putBoolean(StringKeys.WAS_TUTORIAL_RUN, wasTutorialRunThisSession);
         super.onSaveInstanceState(savedInstanceState);

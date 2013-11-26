@@ -11,9 +11,9 @@ import com.google.analytics.tracking.android.MapBuilder;
 public class AnalyticsWrapper {
 
 	private enum ScreenName { Write_Post, Latest_Posts, Nearby_Posts, Notifications, Conversation};
-	private enum EventCategory {use_write_post, use_conversation, use_general};
+	private enum EventCategory {use_write_post, use_conversation, use_general, use_tutorial};
 	private enum EventAction {map_click, button_click, post_item_click, pull_to_refresh, tab_click, viewpager_swipe};
-	public enum EventLabel{button_post, button_cancel, map, map_myLocation, reply_button, tab_latest, tab_nearby, tab_notifications};
+	public enum EventLabel{button_post, button_cancel, map, map_myLocation, reply_button, tab_latest, tab_nearby, tab_notifications, button_end_tutorial};
 	
 	private EasyTracker tracker;
 	private static AnalyticsWrapper instance;
@@ -123,6 +123,11 @@ public class AnalyticsWrapper {
 	public void recordEvent_General_ViewPagerSwipe(){
 		recordEvent(EventCategory.use_general, EventAction.viewpager_swipe);
 	}
+
+	public void recordEvent_Tutorial_EndButtonClick(){
+		recordEvent(EventCategory.use_tutorial, EventAction.button_click, EventLabel.button_end_tutorial);
+	}
+	
 	
 	private void recordEvent(EventCategory category, EventAction action){
 		recordEvent(category, action, null, null);
@@ -143,4 +148,6 @@ public class AnalyticsWrapper {
 		
 		Log.d("ANALYTICS", categoryAsString+" "+actionAsString+" "+labelAsStirng+" "+value);
 	}
+
+
 }

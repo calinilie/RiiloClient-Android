@@ -85,13 +85,13 @@ public abstract class BaseActivity extends FragmentActivity
 	public void onStart(){
 		super.onStart();
 		connectLocationClient();
-//		analytics.startTracker(this);
+		analytics.startTracker(this);
 	}
 	
 	@Override
 	protected void onStop(){
 		disconnectLocationClient();
-		analytics.startTracker(this);
+		analytics.stopTracker(this);
 		super.onStop();
 	}
 	

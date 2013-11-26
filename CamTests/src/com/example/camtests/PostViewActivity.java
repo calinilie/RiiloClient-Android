@@ -89,7 +89,7 @@ public class PostViewActivity extends BaseActivity
 		cancelButton.setOnClickListener(this);
 		postButton.setOnClickListener(this);
 		
-		analytics.startTracker(this);
+		
 		analytics.recordScreenHit_Conversation();
 		mMap.setOnMapClickListener(this);
 		postsList.setOnItemClickListener(this);

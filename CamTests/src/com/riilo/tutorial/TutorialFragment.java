@@ -28,11 +28,11 @@ public class TutorialFragment extends Fragment implements OnClickListener{
 		this.isLastPage = isLastPage;
 	}
 	
-	private Activity activity;
+	private TutorialActivity activity;
 	
 	@Override
 	public void onAttach(Activity activity){
- 		this.activity = activity;
+ 		this.activity = (TutorialActivity) activity;
  		super.onAttach(activity);
  	}
 	
@@ -53,6 +53,7 @@ public class TutorialFragment extends Fragment implements OnClickListener{
 	public void onClick(View v) {
 		if (v.getId() == R.id.button_end_tutorial){
 			Facade.getInstance(activity).updateTutorialRun();
+			activity.analytics.recordEvent_Tutorial_EndButtonClick();
 			activity.finish();
 		}
 	}
