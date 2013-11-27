@@ -15,7 +15,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,13 +25,6 @@ import android.widget.AdapterView.OnItemClickListener;
 public class PostsLatestFragment 
 		extends Fragment 
 		implements OnItemClickListener, ILocationListener, OnRefreshListener{
-	
-	private boolean distancesComputed;
-	
-	// Update frequency in milliseconds
-    private static final int UPDATE_INTERVAL = 2000;
-    // A fast frequency ceiling in milliseconds
-    private static final long FASTEST_INTERVAL = 1000;
 	
     private BaseActivity activity;
     private View view;

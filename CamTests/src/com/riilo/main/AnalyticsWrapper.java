@@ -1,8 +1,7 @@
 package com.riilo.main;
 
 import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
+//import android.util.Log;
 
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.Fields;
@@ -54,27 +53,27 @@ public class AnalyticsWrapper {
 	}
 	
 	public void recordScreenHit_WritePost(){
-		Log.d("ANALYTICS", "record_WritePost_ScreenHit");
+		//Log.d("ANALYTICS", "record_WritePost_ScreenHit");
 		recordScreenHit(ScreenName.Write_Post);
 	}
 	
 	public void recordScreenHit_LatestPosts(){
-		Log.d("ANALYTICS", "record_LatestPosts_ScreenHit");
+		//Log.d("ANALYTICS", "record_LatestPosts_ScreenHit");
 		recordScreenHit(ScreenName.Latest_Posts);
 	}
 	
 	public void recordScreenHit_NearbyPosts(){
-		Log.d("ANALYTICS", "record_NearbyPosts_ScreenHit");
+		//Log.d("ANALYTICS", "record_NearbyPosts_ScreenHit");
 		recordScreenHit(ScreenName.Nearby_Posts);
 	}
 	
 	public void recordScreenHit_Notifications(){
-		Log.d("ANALYTICS", "record_Notifications_Screen");
+		//Log.d("ANALYTICS", "record_Notifications_Screen");
 		recordScreenHit(ScreenName.Notifications);
 	}
 	
 	public void recordScreenHit_Conversation(){
-		Log.d("ANALYTICS", "record_Conversation_ScreenHit");
+		//Log.d("ANALYTICS", "record_Conversation_ScreenHit");
 		recordScreenHit(ScreenName.Conversation);
 	}
 	
@@ -146,7 +145,7 @@ public class AnalyticsWrapper {
 		}
 		tracker.send(MapBuilder.createEvent(categoryAsString, actionAsString, labelAsStirng, value).build());
 		
-		Log.d("ANALYTICS", categoryAsString+" "+actionAsString+" "+labelAsStirng+" "+value);
+		//Log.d("ANALYTICS", categoryAsString+" "+actionAsString+" "+labelAsStirng+" "+value);
 	}
 
 

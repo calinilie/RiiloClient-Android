@@ -8,7 +8,6 @@ import android.app.ActionBar.Tab;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -80,7 +79,7 @@ public class PostsResultReceiver extends ResultReceiver{
 				postsListParcelable =  resultData.getParcelable(StringKeys.POST_LIST_PARCELABLE);
 				posts = postsListParcelable.getPostsList();
 				refreshAdapter(posts, true);
-//				Log.d("<<<<<<<<<<<<<<<PostsResultReceiver.onReceiveResult>>>>>>>>>>>>>>>", "Posts: "+posts.size());
+//				//Log.d("<<<<<<<<<<<<<<<PostsResultReceiver.onReceiveResult>>>>>>>>>>>>>>>", "Posts: "+posts.size());
 				break;
 			case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_ASC:
 				if (adapter==null)
@@ -90,7 +89,7 @@ public class PostsResultReceiver extends ResultReceiver{
 				postsListParcelable =  resultData.getParcelable(StringKeys.POST_LIST_PARCELABLE);
 				posts = postsListParcelable.getPostsList();
 				refreshAdapter(posts, false);
-//				Log.d("<<<<<<<<<<<<<<<PostsResultReceiver.onReceiveResult>>>>>>>>>>>>>>>", "Posts: "+posts.size());
+//				//Log.d("<<<<<<<<<<<<<<<PostsResultReceiver.onReceiveResult>>>>>>>>>>>>>>>", "Posts: "+posts.size());
 				break;
 			case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER:
 				if (tab==null)
@@ -105,17 +104,17 @@ public class PostsResultReceiver extends ResultReceiver{
 				posts = postsListParcelable.getPostsList();
 				
 				updateTabText(notifications);
-				Log.d("¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤", notifications+"");
+				//Log.d("¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤", notifications+"");
 				refreshAdapter(posts, true);
 				break;
 		}
-		Log.d("###################################", "OnReceive Called");
+		//Log.d("###################################", "OnReceive Called");
 		handler.post(new Runnable() {
 			
 			@Override
 			public void run() {
 				if (pullToRefreshAttacher!=null){
-					Log.d("###################################", "pullToRefreshAttacher NOT null");
+					//Log.d("###################################", "pullToRefreshAttacher NOT null");
 					pullToRefreshAttacher.setRefreshComplete();
 				}
 				if (button!=null){

@@ -1,16 +1,12 @@
 package com.riilo.main;
 
 import java.util.Calendar;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,21 +14,18 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.riilo.main.R;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -108,7 +101,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
         if(mapView!=null){
         	mapView.onResume();	
         }
-        Log.d(">>>>>>>>>mapFragment<<<<<<<<<<", "onResume()");
+        //Log.d(">>>>>>>>>mapFragment<<<<<<<<<<", "onResume()");
     }
    
     @Override
@@ -116,7 +109,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
         super.onPause();
         if (null != mapView)
         	mapView.onPause();
-        Log.d(">>>>>>>>>mapFragment<<<<<<<<<<", "onPause()");
+        //Log.d(">>>>>>>>>mapFragment<<<<<<<<<<", "onPause()");
     }
     
     @Override
@@ -124,7 +117,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
         super.onDestroy();
         if (null != mapView)
         	mapView.onDestroy();
-        Log.d(">>>>>>>>>mapFragment<<<<<<<<<<", "onDestroy()");
+        //Log.d(">>>>>>>>>mapFragment<<<<<<<<<<", "onDestroy()");
     }
     
     @Override
@@ -132,7 +125,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
         super.onSaveInstanceState(outState);
         if (null != mapView)
         	mapView.onSaveInstanceState(outState);
-        Log.d(">>>>>>>>>mapFragment<<<<<<<<<<", "onSaveInstanceState()");
+        //Log.d(">>>>>>>>>mapFragment<<<<<<<<<<", "onSaveInstanceState()");
     }
     
     @Override
@@ -140,7 +133,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
         super.onLowMemory();
         if (null != mapView)
         	mapView.onLowMemory();
-        Log.d(">>>>>>>>>mapFragment<<<<<<<<<<", "onLowMemory()");
+        //Log.d(">>>>>>>>>mapFragment<<<<<<<<<<", "onLowMemory()");
     }*/
     
    	@Override
@@ -252,7 +245,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	
 	@Override
 	public boolean onBackPressed(){
-		Log.d(">>>>>>>>>>>>>>>>>>>>>>>>", "fragment.onBackPressed");
+		//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>", "fragment.onBackPressed");
 		if (panelCreatePosts.getVisibility()==View.VISIBLE){
 			hideReplyToPostPannel();
 			return false;

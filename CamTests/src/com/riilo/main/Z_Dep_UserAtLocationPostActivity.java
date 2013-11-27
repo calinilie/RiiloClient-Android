@@ -70,7 +70,7 @@ public class Z_Dep_UserAtLocationPostActivity extends BaseActivity
 			currentPost.setDateCreated(Calendar.getInstance().getTime());
 			currentPost.setUserId(deviceId);
 			if (currentPost.getUri()!=null)
-				Log.d("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", currentPost.getUri());
+				//Log.d("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", currentPost.getUri());
     		Intent intentPost= new Intent(this, WorkerService.class);
     		intentPost.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_POST);
     		intentPost.putExtra(StringKeys.POST_BUNDLE, currentPost.toBundle());

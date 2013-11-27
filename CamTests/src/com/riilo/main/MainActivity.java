@@ -5,21 +5,17 @@ import java.util.List;
 
 import com.riilo.main.R;
 import com.riilo.interfaces.IBackButtonListener;
-import com.riilo.interfaces.ILocationListener;
 import com.riilo.tutorial.TutorialActivity;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.location.GpsStatus.Listener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class MainActivity extends BaseActivity implements ActionBar.TabListener{
@@ -145,7 +141,7 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
 
         @Override
         public Fragment getItem(int i) {
-        	Log.d(">>>>>>>>getItem", "getItem "+i);
+        	//Log.d(">>>>>>>>getItem", "getItem "+i);
             switch (i) {
                 case 0:
                 	ToLocationPostFragment toLocationPostFragment = new ToLocationPostFragment();

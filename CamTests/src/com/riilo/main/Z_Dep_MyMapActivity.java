@@ -3,23 +3,15 @@ package com.riilo.main;
 import java.util.List;
 
 import com.riilo.main.R;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.app.Fragment;
-import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,8 +51,8 @@ public class Z_Dep_MyMapActivity extends Fragment implements OnMapClickListener{
     public void onStart() {
     	super.onStart();
     	setUpMapIfNeeded();
-        CameraPosition cPos = CameraPosition.fromLatLngZoom(new LatLng(curLat, curLong), 15);
-        CameraUpdate update = CameraUpdateFactory.newCameraPosition(cPos);
+//        CameraPosition cPos = CameraPosition.fromLatLngZoom(new LatLng(curLat, curLong), 15);
+//        CameraUpdate update = CameraUpdateFactory.newCameraPosition(cPos);
 //        mMap.animateCamera(update);
 
         
@@ -166,7 +158,7 @@ public class Z_Dep_MyMapActivity extends Fragment implements OnMapClickListener{
 
 	@Override
 	public void onMapClick(LatLng arg0) {
-		Log.d("<<<<<<<<<<<<<<<<<<<<<<<<<", arg0.latitude+" "+arg0.longitude);
+		//Log.d("<<<<<<<<<<<<<<<<<<<<<<<<<", arg0.latitude+" "+arg0.longitude);
 		View layout = view.findViewById(R.id.create_post_pannel);
 		Animation slideIn = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),
                 R.anim.slide_in_top);

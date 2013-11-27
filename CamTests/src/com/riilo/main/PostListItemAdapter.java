@@ -6,7 +6,6 @@ import java.util.List;
 import com.riilo.main.R;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +39,7 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 	public int getCount() {
 	    // TODO Auto-generated method stub
 		int count = (items != null) ? items.size() : 0;
-//		Log.d("PostsCache.getPostsByConversationId()","itemAdapter.getcount "+count);
+//		//Log.d("PostsCache.getPostsByConversationId()","itemAdapter.getcount "+count);
 	    return count;
 	}
 	

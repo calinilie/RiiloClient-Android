@@ -10,7 +10,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
-import android.util.Log;
 
 public class Facade {
 
@@ -91,13 +90,13 @@ public class Facade {
 			post.setUserAtLocation(cursor.getInt(10)==1 ? true : false);
 			post.setConversationId(cursor.getInt(11));
 			retVal.add(post);
-//			Log.d("<<<<<<<<<<<<Facade.getAllPosts()>>>>>>>>>>>>", post.displayInList());
+//			//Log.d("<<<<<<<<<<<<Facade.getAllPosts()>>>>>>>>>>>>", post.displayInList());
 		}
 //		if (retVal.size()>=1)
-//			Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>", retVal.get(retVal.size()-1).toString());
+//			//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>", retVal.get(retVal.size()-1).toString());
 		deleteOldPosts(retVal.size());
 		close();
-		Log.d("<<<<<<<<<<<<Facade.getAllPosts()>>>>>>>>>>>>", "posts in db: "+retVal.size());
+		//Log.d("<<<<<<<<<<<<Facade.getAllPosts()>>>>>>>>>>>>", "posts in db: "+retVal.size());
 		return retVal;
 	}
 	
@@ -123,7 +122,7 @@ public class Facade {
 		open();
 		if (!deviceId.equalsIgnoreCase(post.getUserId())){
 			if (!doesPostExist(post.getId())){
-				Log.d(">>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<", "inserting post with id" + post.getId());
+				//Log.d(">>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<", "inserting post with id" + post.getId());
 				insertPost(post);
 			}
 		}
@@ -196,14 +195,14 @@ public class Facade {
 			retVal.setDate(new Date(cursor.getLong(3)));
 		}
 //		if (retVal.getDate()!=null)
-//			Log.d(">>>>>>>>>>>>>>>>>>>LAST LOCATION<<<<<<<<<<<<<<<<<<<<<<<", Helpers.dateToString(retVal.getDate()));
+//			//Log.d(">>>>>>>>>>>>>>>>>>>LAST LOCATION<<<<<<<<<<<<<<<<<<<<<<<", Helpers.dateToString(retVal.getDate()));
 		close();
 		return retVal;
 		
 	}
 	
 	public synchronized boolean wasTutorialRun(){
-		Log.d("tutorial", "wasTutorialRun");
+		//Log.d("tutorial", "wasTutorialRun");
 		open();
 		boolean retVal = false;
 		String selection = String.format("%s = ?", Adapter.APP_STORAGE_KEY_COLUMN);
@@ -211,7 +210,7 @@ public class Facade {
 		Cursor cursor = database.query(Adapter.APP_STORAGE_TABLE, appStorageColumns, selection, selectionArgs, null, null, null);
 		if (cursor.moveToNext()){
 			int value = cursor.getInt(1);
-			Log.d("tutorial", value+"");
+			//Log.d("tutorial", value+"");
 			retVal = value == 1;
 		}
 		close();
@@ -249,7 +248,7 @@ public class Facade {
 			retVal.add(post);
 		}
 		if (retVal.size()>=1)
-			Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>", retVal.get(retVal.size()-1).toString());
+			//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>", retVal.get(retVal.size()-1).toString());
 		close();
 		return retVal;
 	}*/

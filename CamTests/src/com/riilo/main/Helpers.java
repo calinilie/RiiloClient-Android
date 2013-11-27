@@ -6,7 +6,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -77,7 +76,7 @@ public class Helpers {
     }
     
     private static Date shiftTimeZone(Date date, TimeZone sourceTimeZone, TimeZone targetTimeZone) {
-//    	Log.d("default timezone::::::::::::::::::::::::::::::", sourceTimeZone.getDisplayName() + " " + targetTimeZone.getDisplayName());
+//    	//Log.d("default timezone::::::::::::::::::::::::::::::", sourceTimeZone.getDisplayName() + " " + targetTimeZone.getDisplayName());
         Calendar sourceCalendar = Calendar.getInstance();
         sourceCalendar.setTime(date);
         sourceCalendar.setTimeZone(sourceTimeZone);
@@ -86,11 +85,11 @@ public class Helpers {
         targetCalendar.setTimeZone(targetTimeZone);
         for (int field : new int[] {Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, Calendar.HOUR, Calendar.MINUTE, Calendar.SECOND, Calendar.MILLISECOND}) {
         	if (field == Calendar.HOUR)
-        		Log.d("source calendar hour field" , sourceCalendar.get(field)+"");
+        		//Log.d("source calendar hour field" , sourceCalendar.get(field)+"");
             targetCalendar.set(field, sourceCalendar.get(field));
         }
         targetCalendar.setTimeZone(targetTimeZone);
-        Log.d("default timezone::::::::::::::::::::::::::::::",date.getHours() + "  "+ sourceCalendar.getTimeZone().getDisplayName() + sourceCalendar.get(Calendar.HOUR) +" & "+ targetCalendar.getTimeZone().getDisplayName()+targetCalendar.get(Calendar.HOUR));
+        //Log.d("default timezone::::::::::::::::::::::::::::::",date.getHours() + "  "+ sourceCalendar.getTimeZone().getDisplayName() + sourceCalendar.get(Calendar.HOUR) +" & "+ targetCalendar.getTimeZone().getDisplayName()+targetCalendar.get(Calendar.HOUR));
         
         return targetCalendar.getTime();
     }

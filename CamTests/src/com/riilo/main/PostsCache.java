@@ -12,7 +12,6 @@ import android.app.ActionBar.Tab;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
-import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Button;
 
@@ -56,7 +55,7 @@ public class PostsCache {
 		for(int i=0; i<length; i++){
 			int key = this.posts.keyAt(i);
 			retVal.add(this.posts.get(key));
-//			Log.d("=======POST DEBUG======", posts.get(key).toString());
+//			//Log.d("=======POST DEBUG======", posts.get(key).toString());
 		}
 		Collections.sort(retVal, Collections.reverseOrder());
 		return retVal;
@@ -66,10 +65,10 @@ public class PostsCache {
 		addPost(currentPost);
 		boolean conversationFound = false;
 		for(Post p : latestPosts){
-//			Log.d("###########Cache", "post "+p.getId()+" in cahce");
+//			//Log.d("###########Cache", "post "+p.getId()+" in cahce");
 			if(currentPost.getConversationId()==p.getConversationId()){
 				conversationFound = true;
-//				Log.d("###########Cache", "currentPost "+p.getId() + " in conv id " )
+//				//Log.d("###########Cache", "currentPost "+p.getId() + " in conv id " )
 				if (currentPost.isNewer(p)){
 					latestPosts.add(currentPost);
 					latestPosts.remove(p);
@@ -89,7 +88,7 @@ public class PostsCache {
  				PostListItemAdapter adapter, 
  				List<Post> adapterData, 
  				PullToRefreshAttacher pullToRefreshAttacher){
-		Log.d("PostsCache", latestPosts.size()+"");
+		//Log.d("PostsCache", latestPosts.size()+"");
 		return this.getLatestPosts(adapter, adapterData, pullToRefreshAttacher, false);
 	}
 	
@@ -109,9 +108,9 @@ public class PostsCache {
 			List<Post> adapterData, 
 			PullToRefreshAttacher pullToRefreshAttacher){
 		List<Post> retVal = getPostsByConversationId(conversationId);
-//		Log.d("WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID", "postsCache "+conversationId);
+//		//Log.d("WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID", "postsCache "+conversationId);
 		startService_getConversationByPostId(conversationId, adapter, adapterData, pullToRefreshAttacher);
-//		Log.d("PostsCache.getPostsByConversationId()", retVal.size()+"");
+//		//Log.d("PostsCache.getPostsByConversationId()", retVal.size()+"");
 		return retVal;
 	}
 	
@@ -354,7 +353,7 @@ public class PostsCache {
 		else{
 			if (timestamp.getTimeStamp()!=null){
 				long difference = (Calendar.getInstance().getTimeInMillis()-timestamp.getTimeStamp().getTime()) / 1000;
-//				Log.d("<<<<<<<<PostsCache>>>>>>>>", "diff: "+difference);
+//				//Log.d("<<<<<<<<PostsCache>>>>>>>>", "diff: "+difference);
 				if (difference>60){
 					timestamp.setTimeStamp(Calendar.getInstance().getTime());
 					return true;

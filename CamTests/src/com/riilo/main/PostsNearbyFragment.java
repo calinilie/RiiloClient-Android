@@ -1,35 +1,26 @@
 package com.riilo.main;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher.OnRefreshListener;
 
 import com.riilo.main.R;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
 import com.riilo.interfaces.ILocationListener;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
@@ -39,13 +30,6 @@ public class PostsNearbyFragment
 							ILocationListener, 
 							OnRefreshListener,
 							OnClickListener{
-
-	private boolean distancesComputed;
-	
-	// Update frequency in milliseconds
-    private static final int UPDATE_INTERVAL = 2000;
-    // A fast frequency ceiling in milliseconds
-    private static final long FASTEST_INTERVAL = 1000;
 	
     private MainActivity activity;
     private View view;

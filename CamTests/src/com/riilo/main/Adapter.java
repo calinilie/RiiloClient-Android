@@ -3,7 +3,7 @@ package com.riilo.main;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+//import android.util.Log;
 
 public class Adapter extends SQLiteOpenHelper{
 
@@ -70,14 +70,6 @@ public class Adapter extends SQLiteOpenHelper{
 									LOCATION_HISTORY_ACCURACY,
 									LOCATION_HISTORY_DATE);
 	
-	//======================V5=======================================
-	private static final String ALTER_PICTURES_TO_POSTS_TABLE = String.format("ALTER TABLE %s RENAME TO %s", PICTURES_TABLE, POSTS_TABLE);
-	private static final String ALTER_POSTS_ADD_MESSAGE_COLUMN = String.format("ALTER TABLE %s ADD COLUMN %s TEXT", POSTS_TABLE, POSTS_MESSAGE);
-	//======================V6=======================================
-	public static final String ALTER_POSTS_ADD_USER_AT_LOCATION_COLUMN = String.format("ALTER TABLE %s ADD COLUMN %s INTEGER", POSTS_TABLE, POSTS_USER_AT_LOCATION);
-	//======================V7=======================================
-	public static final String UPDATE_POST_USER_AT_LOCATION = String.format("UPDATE %s SET %s=1", POSTS_TABLE, POSTS_USER_AT_LOCATION);
-	//===============================================================
 	private final String[] createQueries = new String[] { CREATE_POSTS_TABLE, CREATE_LOCATION_HISTORY_TABLE, CREATE_APP_STORAGE_TABLE, INSERT_APPSTORAGE_TUTORIAL_RUN };
 //	private final String[] queiresV5 = new String[] {ALTER_PICTURES_TO_POSTS_TABLE, ALTER_POSTS_ADD_MESSAGE_COLUMN};
 //	private final String[] queriesV6 = new String[] {ALTER_POSTS_ADD_USER_AT_LOCATION_COLUMN};
@@ -89,18 +81,18 @@ public class Adapter extends SQLiteOpenHelper{
 	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		Log.d("sqlite_db","on create called");
+		//Log.d("sqlite_db","on create called");
 		try{
 			runSqlQueries(db, createQueries);
 		}
 		catch (Exception e){
-			Log.d("sqlite_db", e.getMessage());
+			//Log.d("sqlite_db", e.getMessage());
 		}
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", "called onUpgrade");
+		//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", "called onUpgrade");
 		/*if (newVersion == 5 && oldVersion==4){
 			runSqlQueries(db, queiresV5);
 		}
@@ -134,7 +126,7 @@ public class Adapter extends SQLiteOpenHelper{
 	
 	private void runSqlQueries(SQLiteDatabase db, String[] queries){
 		for (String s:queries){
-			Log.d("sqlite_db", queries.length +" "+ s);
+			//Log.d("sqlite_db", queries.length +" "+ s);
 			db.execSQL(s);
 		}
 	}

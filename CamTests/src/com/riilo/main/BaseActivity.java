@@ -1,14 +1,10 @@
 package com.riilo.main;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import com.riilo.main.R;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -20,24 +16,14 @@ import com.riilo.interfaces.ILocationListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.database.Cursor;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.provider.Settings.Secure;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public abstract class BaseActivity extends FragmentActivity
@@ -171,7 +157,7 @@ public abstract class BaseActivity extends FragmentActivity
 	//	            if (manufacturer.contains("samsung") && model.contains("nexus")){
 	//	                 intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
 	//	            }
-	//	            Log.d("#########################", fileName);
+	//	            //Log.d("#########################", fileName);
 	        if( !manufacturer.contains("samsung") && !manufacturer.contains("google") )
 	        	intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
 	        else if (model.contains("nexus")){
@@ -190,7 +176,7 @@ public abstract class BaseActivity extends FragmentActivity
             	File f = new File(fileName);
             	if (f.exists()){
 	            	cameraPicUri = Uri.parse(fileName);
-	            	Log.d("<<<<<<<<#####<<<<<<<<<", "From Activity Field: " + fileName);
+	            	//Log.d("<<<<<<<<#####<<<<<<<<<", "From Activity Field: " + fileName);
             	}
             }
         	
@@ -210,7 +196,7 @@ public abstract class BaseActivity extends FragmentActivity
 	                // This will actually give you the file path location of the image.
 	                String largeImagePath = myCursor.getString(myCursor.getColumnIndexOrThrow(MediaStore.Images.ImageColumns.DATA));
 	                Uri tempCameraPicUri = Uri.fromFile(new File(largeImagePath));
-	                Log.d("<<<<<<<<#####<<<<<<<<<", "From Media Store" + largeImagePath);
+	                //Log.d("<<<<<<<<#####<<<<<<<<<", "From Media Store" + largeImagePath);
 	                if (tempCameraPicUri != null) {
 	                    dateOfPicture = new Date(myCursor.getLong(myCursor.getColumnIndexOrThrow(MediaStore.Images.ImageColumns.DATE_TAKEN)));
 	                    if (dateOfPicture != null && dateOfPicture.after(dateCameraIntentStarted)) {
@@ -229,7 +215,7 @@ public abstract class BaseActivity extends FragmentActivity
             if (cameraPicUri == null) {
                 try {
                     cameraPicUri = intent.getData();
-                    Log.d("<<<<<<<<#####<<<<<<<<<", "From Intent.getData()" + cameraPicUri.toString());
+                    //Log.d("<<<<<<<<#####<<<<<<<<<", "From Intent.getData()" + cameraPicUri.toString());
                 } catch (Exception e){                  
                     showWarningDialog(getString(R.string.error_could_not_take_photo));
                 }
@@ -265,7 +251,7 @@ public abstract class BaseActivity extends FragmentActivity
               
         } else if (resultCode == RESULT_CANCELED) {
         	//on HTC One X, if user cancels activity, the condition above is not satisfied !!!!
-//        	Log.d("onTakePhotoActivityResult<<<<<<<<<<<<<<<", "RESULT_CANCELED");
+//        	//Log.d("onTakePhotoActivityResult<<<<<<<<<<<<<<<", "RESULT_CANCELED");
         }
         } else {
 //        	showWarningDialog(getString(R.string.error_could_not_take_photo));
@@ -273,7 +259,7 @@ public abstract class BaseActivity extends FragmentActivity
         }
 //        showWarningDialog(getString(R.string.error_could_not_take_photo));
 		//TODO exception handling in analytics
-//        Log.d("onTakePhotoActivityResult<<<<<<<<<<<<<<<", "SHOULD Have showWarningDialog");
+//        //Log.d("onTakePhotoActivityResult<<<<<<<<<<<<<<<", "SHOULD Have showWarningDialog");
         return null;
     }*/
 	

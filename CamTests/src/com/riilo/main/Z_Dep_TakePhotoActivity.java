@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.provider.Settings.Secure;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -125,9 +124,7 @@ public class Z_Dep_TakePhotoActivity extends BaseActivity implements OnClickList
 		super.onStart();
 		setupWidgetsViewElements();
 		Helpers.renewList(items, PostsCache.getInstance(this).getPostsAsList());
-		Log.d("<<<<<<<<<TakePhotoActivity.onStart>>>>>>>>>",
-				"No of posts in cahce: "
-						+ PostsCache.getInstance(this).getPostsAsList().size());
+//		Log.d("<<<<<<<<<TakePhotoActivity.onStart>>>>>>>>>","No of posts in cahce: "+ PostsCache.getInstance(this).getPostsAsList().size());
 		itemsAdapter.notifyDataSetChanged();
 	}
 
@@ -206,7 +203,7 @@ public class Z_Dep_TakePhotoActivity extends BaseActivity implements OnClickList
 	public void onLocationChanged(Location location) {
 		super.onLocationChanged(location);
 		double[] latLong;
-		// Log.d("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "location Changed!" +
+		// //Log.d("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "location Changed!" +
 		// distancesComputed);
 		if (!distancesComputed) {
 			lastKnownLocation = Facade.getInstance(this).getLastKnownLocation();

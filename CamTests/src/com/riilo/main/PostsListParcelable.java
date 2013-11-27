@@ -3,10 +3,8 @@ package com.riilo.main;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 public class PostsListParcelable implements Parcelable{
 
@@ -32,7 +30,7 @@ public class PostsListParcelable implements Parcelable{
 		if (postsList==null)
 			throw new RuntimeException("PostsListParcelable.postsList is null!!");
 		
-		int length = postsList.size();
+//		int length = postsList.size();
 //		if (length==0)
 //			throw new RuntimeException("PostsListParcelable.postsList is empty!!");
 		
@@ -40,7 +38,7 @@ public class PostsListParcelable implements Parcelable{
 //		for (int i=0; i<length; i++) {
 //			postsBundleArray[i] = postsList.get(i).toBundle();
 //		}
-		Log.d(">>>>>>>>>>>>>>>>>>>>>>>>", "list size:" + postsList.size());
+		////Log.d(">>>>>>>>>>>>>>>>>>>>>>>>", "list size:" + postsList.size());
 		dest.writeList(postsList);
 	}
 	

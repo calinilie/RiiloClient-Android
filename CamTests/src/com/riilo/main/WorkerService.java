@@ -1,37 +1,23 @@
 package com.riilo.main;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.SocketTimeoutException;
-import java.nio.charset.Charset;
-import java.nio.charset.spi.CharsetProvider;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
-import org.apache.http.NameValuePair;
 import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.ContentBody;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.params.HttpConnectionParams;
@@ -45,8 +31,6 @@ import com.riilo.main.R;
 import android.app.IntentService;
 import android.app.Service;
 import android.content.Intent;
-import android.content.MutableContextWrapper;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.provider.Settings.Secure;
@@ -70,19 +54,19 @@ public class WorkerService extends IntentService{
             Secure.ANDROID_ID);
 		postsCache = PostsCache.getInstance(this);
 		
-		Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "onCreate Called ");
+		//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "onCreate Called ");
 	}
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId){
 		super.onStartCommand(intent, flags, startId);
-		Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "onStartCommand Called");
+		//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "onStartCommand Called");
 		return Service.START_NOT_STICKY;
 	}
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "onHandleIntent Called ");
+		//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "onHandleIntent Called ");
 		Bundle resultData = null;
 		ResultReceiver resultReceiver = null;
 		int resultReceiverType = 0;
@@ -101,37 +85,37 @@ public class WorkerService extends IntentService{
 				savePostLocally(post);
 			}
 			postsCache.addPost(post);
-			Log.d("************************************", "WS_INTENT_POST");
+			//Log.d("************************************", "WS_INTENT_POST");
 			break;
 		case StringKeys.WS_INTENT_GET_LATEST_POSTS:
-			Log.d("************************************", "WS_INTENT_GET_LATEST_POSTS");
+			//Log.d("************************************", "WS_INTENT_GET_LATEST_POSTS");
 			resultReceiver = intent.getParcelableExtra(StringKeys.POST_LIST_RESULT_RECEIVER);
 			List<Post> latestPosts = getLatestPosts(0, 200);
 			if (latestPosts==null){
-				Log.d("<<<<<<<#####<<<<<"+WorkerService.class.toString()+">>>>>########>>>>>>>", "getLatestposts(start, limit) FAILED");
+				//Log.d("<<<<<<<#####<<<<<"+WorkerService.class.toString()+">>>>>########>>>>>>>", "getLatestposts(start, limit) FAILED");
 			}
-//			Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "getLatestsPosts() finished");
+//			//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "getLatestsPosts() finished");
 			resultReceiverType = intent.getIntExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
 			if (latestPosts!=null){
-//				Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "getLatestsPosts != null");
+//				//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "getLatestsPosts != null");
 				resultData = new Bundle();
 				resultData.putParcelable(StringKeys.POST_LIST_PARCELABLE, new PostsListParcelable(latestPosts));
 				resultReceiver.send(resultReceiverType, resultData);
 			}
-//			Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "getLatestPosts == NULL");
+//			//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "getLatestPosts == NULL");
 			break;
 		case StringKeys.WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID:
 			resultReceiver = intent.getParcelableExtra(StringKeys.POST_LIST_RESULT_RECEIVER);
 			resultReceiverType = intent.getIntExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_ASC);
 			conversationId = intent.getLongExtra(StringKeys.CONVERSATION_FROM_CONVERSATION_ID, 0);
-//			Log.d("WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID", conversationId +"");
+//			//Log.d("WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID", conversationId +"");
 			if (conversationId!=0){
 				List<Post> postsInConversation = getConverstionByConversationId(conversationId);
 				resultData = new Bundle();
 				resultData.putParcelable(StringKeys.POST_LIST_PARCELABLE, new PostsListParcelable(postsInConversation));
 				resultReceiver.send(resultReceiverType, resultData);
 			}
-			Log.d("************************************", "WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID");
+			//Log.d("************************************", "WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID");
 			break;
 		case StringKeys.WS_INTENT_GET_NOTIFICATIONS:
 			resultReceiver = intent.getParcelableExtra(StringKeys.POST_LIST_RESULT_RECEIVER);
@@ -146,7 +130,7 @@ public class WorkerService extends IntentService{
 					resultReceiver.send(resultReceiverType, resultData);
 				}
 			}
-			Log.d("************************************", "WS_INTENT_GET_NOTIFICATIONS");
+			//Log.d("************************************", "WS_INTENT_GET_NOTIFICATIONS");
 			break;
 		case StringKeys.WS_INTENT_NOTIFICATIONS_SILENCE:
 			conversationId = intent.getLongExtra(StringKeys.NOTIFICATION_SILENCE_CONVERSATION_ID, 0);
@@ -159,7 +143,7 @@ public class WorkerService extends IntentService{
 				}
 				silenceNotifications(postIds, userId);
 			}
-			Log.d("************************************", "WS_INTENT_NOTIFICATIONS_SILENCE");
+			//Log.d("************************************", "WS_INTENT_NOTIFICATIONS_SILENCE");
 			break;
 		case StringKeys.WS_INTENT_NEARBY_POSTS:
 			double latitude = intent.getDoubleExtra(StringKeys.NEARBY_POSTS_LATITUDE, 0);
@@ -175,14 +159,14 @@ public class WorkerService extends IntentService{
 					resultReceiver.send(resultReceiverType, resultData);
 				}
 			}
-			Log.d("************************************", "WS_INTENT_NEARBY_POSTS");
+			//Log.d("************************************", "WS_INTENT_NEARBY_POSTS");
 			break;
 		}
 	}
 	
 	@Override
 	public void onDestroy(){
-		Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "onDestroy Called ");
+		//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "onDestroy Called ");
 	}
 	
 	private void savePostLocally(Post post){
@@ -192,7 +176,7 @@ public class WorkerService extends IntentService{
 	private PostInsertedDTO uploadPost(Post model){
 		String postEndpoint = getResources().getString(R.string.endpoint_posts_upload);
 		try{
-			Log.d("originLoc", "posting json: "+model.toJson().toString());
+			//Log.d("originLoc", "posting json: "+model.toJson().toString());
 			String jsonString = tryPostWithRetry(postEndpoint, model.toJson().toString());
 			PostInsertedDTO retVal = jsonToPostInsertedDTO(jsonString);
 			return retVal;
@@ -227,7 +211,7 @@ public class WorkerService extends IntentService{
 	    List<Post> retVal = getPostsWithRetry(endpoint);
 //	    List<Post> toRemove = new ArrayList<Post>();
 	    if (retVal!=null){
-	    	Log.d("<<<<<<<<<Workerservice.getLatestPosts>>>>>>>>>", "retrieved no of posts: "+retVal.size());
+	    	//Log.d("<<<<<<<<<Workerservice.getLatestPosts>>>>>>>>>", "retrieved no of posts: "+retVal.size());
 	    	for (Post p:retVal){
 //				Facade.getInstance(this).insertForeignPost(p, deviceId);
 	    		savePostLocally(p);//TODO uncoment the one above!
@@ -249,7 +233,7 @@ public class WorkerService extends IntentService{
 		List<Post> retVal = getPostsWithRetry(endpoint);
 		List<Post> postsToRemove = new ArrayList<Post>();//posts from conversation already present, only one post per conversation in List
 		if (retVal!=null){
-			Log.d("<<<<<<<<<Workerservice.getNearbyPosts>>>>>>>>>", "retrieved no of nearby posts: "+retVal.size());
+			//Log.d("<<<<<<<<<Workerservice.getNearbyPosts>>>>>>>>>", "retrieved no of nearby posts: "+retVal.size());
 			for (Post p:retVal){
 				if (!postsCache.addPostAsNearbyPost(p)){
 					postsToRemove.add(p);
@@ -267,7 +251,7 @@ public class WorkerService extends IntentService{
 		List<Post> retVal = getPostsWithRetry(endpoint);
 		
 		if (retVal!=null){
-			Log.d("<<<<<<<<<Workerservice.getConverstionByPostId>>>>>>>>>", "retrieved no of posts in conversation: "+retVal.size());
+			//Log.d("<<<<<<<<<Workerservice.getConverstionByPostId>>>>>>>>>", "retrieved no of posts in conversation: "+retVal.size());
 	    	for (Post p:retVal){
 				postsCache.addPost(p);
 	    	}
@@ -288,7 +272,7 @@ public class WorkerService extends IntentService{
 					postsToRemove.add(p);
 				}
 			}
-			Log.d("<<<<<<<<<Workerservice.getNotificationsForUser>>>>>>>>>", "retrieved no of notifications: "+retVal.size());
+			//Log.d("<<<<<<<<<Workerservice.getNotificationsForUser>>>>>>>>>", "retrieved no of notifications: "+retVal.size());
 			retVal.removeAll(postsToRemove);
 		}		
 		return retVal;
@@ -319,7 +303,7 @@ public class WorkerService extends IntentService{
 	      StatusLine statusLine = response.getStatusLine();
 //	      Header[] headers = response.getHeaders("X-Cache");
 //	      if (headers.length>0)
-//	    	  Log.d("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH", headers[0].getValue());
+//	    	  //Log.d("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH", headers[0].getValue());
 	      int statusCode = statusLine.getStatusCode();
 	      if (statusCode == 200) {
 	        HttpEntity entity = response.getEntity();
@@ -353,13 +337,13 @@ public class WorkerService extends IntentService{
 	    }
 	    try {
 			JSONArray array =  new JSONArray(jsonString);
-//			Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", array.length()+"");
+//			//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", array.length()+"");
 			int length = array.length();
 			for (int i=0; i<length; i++){
-//				Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", array.getJSONObject(i).toString());
+//				//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", array.getJSONObject(i).toString());
 				Post p = new Post(array.getJSONObject(i));
 				retVal.add(p);
-//				Log.d("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", p.displayInList());
+//				//Log.d("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", p.displayInList());
 			}
 		} catch (JSONException e) {
 			Log.e("<<<<<<<<<Workerservice.jsonStringToPostsList>>>>>>>>>", e.getLocalizedMessage(), e);
@@ -417,7 +401,7 @@ public class WorkerService extends IntentService{
 
 	    try {
 	        httppost.setEntity(new StringEntity(jsonPost, "UTF-8"));
-	        Log.d("posting post:>>>>>>>>>>>>>>>>", jsonPost);
+	        //Log.d("posting post:>>>>>>>>>>>>>>>>", jsonPost);
 	        httppost.setHeader("Content-Type", "application/json; charset=utf-8");
 	        HttpResponse response = httpclient.execute(httppost);
 	        int responseCode = response.getStatusLine().getStatusCode();

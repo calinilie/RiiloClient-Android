@@ -8,7 +8,6 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher.OnRefres
 
 
 import com.riilo.main.R;
-import com.google.android.gms.location.LocationRequest;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
 
 import android.app.Activity;
@@ -16,8 +15,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -27,11 +24,6 @@ import android.widget.AdapterView.OnItemClickListener;
 public class PostsNotificationsFragment 
 				extends Fragment 
 				implements OnItemClickListener, OnRefreshListener{
-
-    // Update frequency in milliseconds
-    private static final int UPDATE_INTERVAL = 10000;
-    // A fast frequency ceiling in milliseconds
-    private static final long FASTEST_INTERVAL = 5000;
 	
 	PostListItemAdapter adapter;
  	List<Post> adapterData = new ArrayList<Post>();
