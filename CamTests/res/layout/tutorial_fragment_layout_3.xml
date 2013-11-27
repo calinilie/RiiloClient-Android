@@ -7,13 +7,15 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-    <ImageView
-          android:id="@+id/image_tutorial_image"
-          android:layout_width="wrap_content"
-          android:layout_height="0dp"
-          android:layout_weight="0.70"
-          android:contentDescription="tutorial illustration"
-          android:src="@drawable/riilo_logo" />
+     <ImageView
+         android:id="@+id/image_tutorial_image"
+         android:layout_width="wrap_content"
+         android:layout_height="0dp"
+         android:layout_weight="0.9"
+         android:contentDescription="tutorial illustration"
+         android:layout_marginTop="8dp"
+         android:src="@drawable/four"
+         android:layout_gravity="center_horizontal" />
     
     <LinearLayout
         android:layout_width="wrap_content"
@@ -22,21 +24,12 @@
         
         <TextView
             android:id="@+id/text_tutorial_description"
-            style="?android:textAppearanceMedium"
+            android:textSize="14sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:lineSpacingMultiplier="1.2"
+            android:lineSpacingMultiplier="1.1"
             android:padding="16dp"
             android:text="@string/tutorial_3" />
-        
-        <Button
-            android:id="@+id/button_end_tutorial"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="32dp"
-            android:visibility="gone"
-            android:text="ok, got that" />
         
     </LinearLayout>
 

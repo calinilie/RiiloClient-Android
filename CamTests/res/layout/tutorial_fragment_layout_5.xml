@@ -8,17 +8,18 @@
     android:weightSum="1">
 
     <ImageView
-          android:id="@+id/image_tutorial_image"
-          android:layout_width="wrap_content"
-          android:layout_height="0dp"
-          android:layout_weight="0.70"
-          android:contentDescription="tutorial illustration"
-          android:src="@drawable/riilo_logo" />
+        android:id="@+id/image_tutorial_image"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:contentDescription="tutorial illustration"
+        android:src="@drawable/six"
+        android:layout_marginTop="32dp" />
     
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
         <TextView
             android:id="@+id/thankyou"
@@ -26,26 +27,27 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="Thank You!"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-        
+            android:layout_marginTop="16dp"
+            android:textSize="18sp" />
+
         <TextView
             android:id="@+id/text_tutorial_description"
-            style="?android:textAppearanceMedium"
+            android:textSize="14sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:lineSpacingMultiplier="1.2"
+            android:lineSpacingMultiplier="1.1"
             android:padding="16dp"
             android:text="@string/tutorial_5" />
-        
+
         <Button
             android:id="@+id/button_end_tutorial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:layout_marginRight="32dp"
-            android:visibility="gone"
-            android:text="ok, got that" />
-        
+            android:layout_gravity="right"
+            android:text="ok, got that"
+            android:visibility="visible" />
     </LinearLayout>
 
 </LinearLayout>
