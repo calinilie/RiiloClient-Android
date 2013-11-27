@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:lineSpacingMultiplier="1.2"
             android:padding="16dp"
-            android:text=" " />
+            android:text="@string/tutorial_1" />
         
         <Button
             android:id="@+id/button_end_tutorial"
