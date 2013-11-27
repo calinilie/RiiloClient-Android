@@ -23,7 +23,7 @@
         <ImageButton
             android:id="@+id/button_cancel"
             android:layout_width="48dp"
-            android:layout_height="match_parent"
+            android:layout_height="fill_parent"
             android:padding="8dp"
             android:layout_alignParentLeft="true"
             android:layout_alignBottom="@+id/editor_message"
@@ -52,7 +52,7 @@
         <ImageButton
             android:id="@+id/button_post"
             android:layout_width="48dp"
-            android:layout_height="match_parent"
+            android:layout_height="fill_parent"
             android:padding="8dp"
             android:layout_alignBottom="@+id/editor_message"
             android:layout_alignParentRight="true"

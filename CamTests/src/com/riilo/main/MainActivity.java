@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
         super.onCreate(savedInstanceState);
         
         wasTutorialRunThisSession = savedInstanceState!=null && savedInstanceState.getBoolean(StringKeys.WAS_TUTORIAL_RUN);
-        boolean showTutorial = true;//!Facade.getInstance(this).wasTutorialRun() && !wasTutorialRunThisSession;
+        boolean showTutorial = !Facade.getInstance(this).wasTutorialRun() && !wasTutorialRunThisSession;
         if (showTutorial){
         	wasTutorialRunThisSession = true;
         	Intent intent = new Intent(this, TutorialActivity.class);
