@@ -3,7 +3,7 @@ package com.riilo.main;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.camtests.R;
+import com.riilo.main.R;
 import com.riilo.interfaces.ILocationListener;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
 

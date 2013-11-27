@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import com.example.camtests.R;
+import com.riilo.main.R;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;

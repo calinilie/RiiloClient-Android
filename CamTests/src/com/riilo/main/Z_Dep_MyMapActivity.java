@@ -2,7 +2,7 @@ package com.riilo.main;
 
 import java.util.List;
 
-import com.example.camtests.R;
+import com.riilo.main.R;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;

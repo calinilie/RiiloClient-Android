@@ -3,7 +3,7 @@ package com.riilo.main;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.camtests.R;
+import com.riilo.main.R;
 import com.riilo.interfaces.IBackButtonListener;
 import com.riilo.interfaces.ILocationListener;
 import com.riilo.tutorial.TutorialActivity;
@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
         super.onCreate(savedInstanceState);
         
         wasTutorialRunThisSession = savedInstanceState!=null && savedInstanceState.getBoolean(StringKeys.WAS_TUTORIAL_RUN);
-        boolean showTutorial = true;//!Facade.getInstance(this).wasTutorialRun() && !wasTutorialRunThisSession;
+        boolean showTutorial = !Facade.getInstance(this).wasTutorialRun() && !wasTutorialRunThisSession;
         if (showTutorial){
         	wasTutorialRunThisSession = true;
         	Intent intent = new Intent(this, TutorialActivity.class);

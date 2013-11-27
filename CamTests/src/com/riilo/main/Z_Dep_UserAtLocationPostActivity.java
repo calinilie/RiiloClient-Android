@@ -1,19 +1,12 @@
 package com.riilo.main;
 
-import java.util.Calendar;
-
 import android.content.Intent;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import com.example.camtests.R;
+import com.riilo.main.R;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -26,12 +19,10 @@ public class Z_Dep_UserAtLocationPostActivity extends BaseActivity
 	implements OnClickListener{
 
 	private GoogleMap mMap;
-	private Post currentPost;
 	
 	private Button buttonPost;
 	private Button buttonTakePicture;
 	private Button buttonChooseFromGallery;
-	private EditText inputMessage;
 	
 	
 	@Override
@@ -39,7 +30,6 @@ public class Z_Dep_UserAtLocationPostActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.z_dep_user_at_location_post);
         initLocationClient(LocationRequest.PRIORITY_HIGH_ACCURACY, 2000, 1000);
-        currentPost = new Post();
     }
 	
 	@Override
@@ -121,7 +111,6 @@ public class Z_Dep_UserAtLocationPostActivity extends BaseActivity
         buttonChooseFromGallery = ((Button)findViewById(R.id.button_choose_from_gallery));
         buttonChooseFromGallery.setOnClickListener(this);
         
-        inputMessage = (EditText)findViewById(R.id.editor_message);
 	}
 	
     private void setUpMapIfNeeded() {

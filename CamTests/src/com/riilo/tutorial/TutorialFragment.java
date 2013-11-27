@@ -1,11 +1,9 @@
 package com.riilo.tutorial;
 
-import com.example.camtests.R;
+import com.riilo.main.R;
 import com.riilo.main.Facade;
-import com.riilo.main.MainActivity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,17 +11,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 public class TutorialFragment extends Fragment implements OnClickListener{
 
-	private String text;
 	private boolean isLastPage;
 	private int position;
-	
-	public void setText(String text){
-		this.text = text;
-	}
 	
 	public void setIsLastPage(boolean isLastPage){
 		this.isLastPage = isLastPage;
