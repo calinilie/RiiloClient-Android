@@ -29,7 +29,7 @@ public class Helpers {
 	public static void addMarkersToMap(List<LocationHistory> histories, GoogleMap map){
 		for(LocationHistory h : histories){
 			if (!h.isOnMap()){
-				map.addMarker(new MarkerOptions().position(h.getLatLng()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker_riilo)));
+				map.addMarker(new MarkerOptions().position(h.getLatLng()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker_human)));
 				h.setIsOnMap(true);
 			}
 			else{

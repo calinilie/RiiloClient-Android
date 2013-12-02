@@ -228,7 +228,7 @@ public class Facade {
 	public synchronized List<LocationHistory> getLocationHistory(){
 		open();
 		List<LocationHistory> retVal = new ArrayList<LocationHistory>();
-		Cursor cursor = database.query(Adapter.OUTSIDE_LOCATION_HISTORY_TABLE, outsideLocationColumns, null, null, null, null, null);
+		Cursor cursor = database.query(Adapter.OUTSIDE_LOCATION_HISTORY_TABLE, outsideLocationColumns, null, null, null, null, null, "500");
 		while (cursor.moveToNext()){
 			LocationHistory location = new LocationHistory();
 			location.setLocationHistoryId(cursor.getLong(0));

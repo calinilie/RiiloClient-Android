@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.provider.Settings.Secure;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 public abstract class BaseActivity extends FragmentActivity
@@ -32,9 +33,11 @@ public abstract class BaseActivity extends FragmentActivity
 		GooglePlayServicesClient.OnConnectionFailedListener,
 		LocationListener{
 
-    protected String manufacturer = android.os.Build.MANUFACTURER.toLowerCase(Locale.ENGLISH);
-    protected String model = android.os.Build.MODEL.toLowerCase(Locale.ENGLISH);
+    /*protected String manufacturer = android.os.Build.MANUFACTURER.toLowerCase(Locale.ENGLISH);
+    protected String model = android.os.Build.MODEL.toLowerCase(Locale.ENGLISH);*/
     protected String deviceId="";
+    
+    private static final String TAG = "BASE ACTIVITY";
     
     /*private static String fileName;
     private static Uri cameraPicUri = null;
@@ -77,6 +80,7 @@ public abstract class BaseActivity extends FragmentActivity
 	
 	@Override
 	protected void onStop(){
+		Log.d(TAG, "onStop");
 		disconnectLocationClient();
 		analytics.stopTracker(this);
 		super.onStop();
@@ -275,6 +279,7 @@ public abstract class BaseActivity extends FragmentActivity
 	@Override
 	public void onLocationChanged(Location location) {
 		this.location = location;
+		Log.d(TAG, "onLocationChanged");
 		if (locationListeners!=null && locationListeners.size()>0){
 			for(ILocationListener listener: locationListeners){
 				listener.onLocationChanged(location);
@@ -461,6 +466,7 @@ public abstract class BaseActivity extends FragmentActivity
 	             * the argument is "this".
 	             */
 	        	locationClient.removeLocationUpdates((LocationListener) this);
+	        	Log.d(TAG, "removeLocationUpdates");
 	        }
 	        /*
 	         * After disconnect() is called, the client is
@@ -468,6 +474,7 @@ public abstract class BaseActivity extends FragmentActivity
 	         */
 	        // Disconnecting the client invalidates it.
 	        locationClient.disconnect();
+	        Log.d(TAG, "disconnect");
 		}
 	}
 }

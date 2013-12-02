@@ -27,6 +27,7 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.MapsInitializer;
@@ -40,7 +41,7 @@ import com.riilo.interfaces.IBackButtonListener;
 import com.riilo.interfaces.ILocationListener;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
 
-public class ToLocationPostFragment extends Fragment implements OnMapClickListener, OnClickListener, ILocationListener, IBackButtonListener{
+public class ToLocationPostFragment extends Fragment implements OnMapClickListener, OnClickListener, ILocationListener, IBackButtonListener, OnMarkerClickListener{
 	
 	private GoogleMap map;
 	private ImageButton buttonPost;
@@ -185,6 +186,21 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	@Override
 	public void onMapClick(LatLng location) {
 		activity.analytics.recordEvent_WritePost_MapClick();
+		createPost(location);
+		/*currentPost.setLatitude(location.latitude);
+		currentPost.setLongitude(location.longitude);
+		if (marker!=null)
+			marker.remove();
+		marker = map.addMarker(new MarkerOptions().position(location));*/
+	}
+	
+	@Override
+	public void onDestroyView(){
+		LocationHistoryManager.getInstance(activity).locationHistoryMarkersRemoved();
+		super.onDestroyView();
+	}
+	
+	private void createPost(LatLng location){
 		showCreatePostPanel();
 		animateMapCamera(location, 15);
 		currentPost.setLatitude(location.latitude);
@@ -192,12 +208,6 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 		if (marker!=null)
 			marker.remove();
 		marker = map.addMarker(new MarkerOptions().position(location));
-	}
-	
-	@Override
-	public void onDestroyView(){
-		LocationHistoryManager.getInstance(activity).locationHistoryMarkersRemoved();
-		super.onDestroyView();
 	}
 	
 	/*private void animateMapCamera(LatLng location){
@@ -210,7 +220,6 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 		map.animateCamera(update);
 //		mapCameraAnimationRun = true;
 	}
-	
 	
 	private void hideReplyToPostPannel(){
    	 InputMethodManager inputManager = (InputMethodManager)
@@ -246,6 +255,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	    	if (map!=null){
 	    		map.setOnMapClickListener(this);
 	    		map.setMyLocationEnabled(true);
+	    		map.setOnMarkerClickListener(this);
 	    		addLocationHistoryMarkers();
 	    	}
 	    	else activity.showWarningDialog("Ouch, something went terribly wrong. Please keep calm and try again; if you still get this error your phone might not support Google Maps, and this app relies heavily on Google Maps.");
@@ -288,6 +298,19 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
         inputMessage = (EditText)view.findViewById(R.id.editor_message);
         
         panelCreatePosts = view.findViewById(R.id.create_post_pannel);
+	}
+
+	
+	@Override
+	public boolean onMarkerClick(Marker marker) {
+		activity.analytics.recordEvent_WritePost_MarkerClick();
+		if (map.getCameraPosition().zoom<13){
+			animateMapCamera(marker.getPosition(), 13);
+		}
+		else{
+			createPost(marker.getPosition());
+		}
+		return true;
 	}
 
 }
