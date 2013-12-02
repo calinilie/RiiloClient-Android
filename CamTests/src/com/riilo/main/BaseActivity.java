@@ -82,6 +82,14 @@ public abstract class BaseActivity extends FragmentActivity
 		super.onStop();
 	}
 	
+	@Override
+	protected void onDestroy(){
+		Intent intent = new Intent(this, WorkerService.class);
+		intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_INSERT_LOCATION_HISTORY);
+		startService(intent);
+		super.onDestroy();
+	}
+	
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);

@@ -4,19 +4,17 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 //import android.util.Log;
+import android.text.AlteredCharSequence;
+import android.util.Log;
 
 public class Adapter extends SQLiteOpenHelper{
 
-	private static final String DB_NAME="riilo.db";
+	private static final String DB_NAME="riilo2.db";
 	private static final int DB_VERSION=1;
-	
-	public static final String PICTURES_TABLE="CamTestsPictures";
-	//======================V5=======================================
+
 	public static final String POSTS_TABLE = "CamTestsPosts";
 	public static final String POSTS_MESSAGE = "Message";
-	//======================V6=======================================
 	public static final String POSTS_USER_AT_LOCATION = "IsUserAtLocation";
-	//=============================================================
 	public static final String POSTS_URI="Uri";
 	public static final String POSTS_DATE_CREATED="DateCreated";
 	public static final String POSTS_LONGITUDE="Longitude";
@@ -62,18 +60,34 @@ public class Adapter extends SQLiteOpenHelper{
 	public static final String LOCATION_HISTORY_LATITUDE = "Latitutde";
 	public static final String LOCATION_HISTORY_LONGITUDE = "Longitude";
 	public static final String LOCATION_HISTORY_ACCURACY = "Accuracy";
+	public static final String LOCATION_HISTORY_IS_SENT = "IsSent";
 	
-	private static final String CREATE_LOCATION_HISTORY_TABLE = String.format("CREATE TABLE %s (%s REAL, %s REAL, %s REAL, %s TEXT)",
+	private static final String CREATE_LOCATION_HISTORY_TABLE = String.format("CREATE TABLE %s (%s REAL, %s REAL, %s REAL, %s TEXT, %s INTEGER)",
 									LOCATION_HISTORY_TABLE,
 									LOCATION_HISTORY_LATITUDE,
 									LOCATION_HISTORY_LONGITUDE,
 									LOCATION_HISTORY_ACCURACY,
-									LOCATION_HISTORY_DATE);
+									LOCATION_HISTORY_DATE,
+									LOCATION_HISTORY_IS_SENT);
 	
-	private final String[] createQueries = new String[] { CREATE_POSTS_TABLE, CREATE_LOCATION_HISTORY_TABLE, CREATE_APP_STORAGE_TABLE, INSERT_APPSTORAGE_TUTORIAL_RUN };
-//	private final String[] queiresV5 = new String[] {ALTER_PICTURES_TO_POSTS_TABLE, ALTER_POSTS_ADD_MESSAGE_COLUMN};
-//	private final String[] queriesV6 = new String[] {ALTER_POSTS_ADD_USER_AT_LOCATION_COLUMN};
-//	private final String[] queriesV7 = new String[] {UPDATE_POST_USER_AT_LOCATION};
+	public static final String OUTSIDE_LOCATION_HISTORY_TABLE = "OutsideLocationHistory";
+	public static final String OUTSIDE_LOCATION_HISTORY_ID = "LocationHistoryId";
+	public static final String OUTSIDE_LOCATION_HISTORY_LATITUDE = "Latitude";
+	public static final String OUTSIDE_LOCATION_HISTORY_LONGITUDE = "Longitude";
+	public static final String OUTSIDE_LOCATION_HISTORY_DATE = "CreatedDate";
+	
+	private static final String CREATE_OUTSIDE_LOCATION_HISTORY_TABLE = String.format("CREATE TABLE %s (%s INTEGER, %s REAL, %s REAL, %s TEXT)",
+								OUTSIDE_LOCATION_HISTORY_TABLE,
+								OUTSIDE_LOCATION_HISTORY_ID,
+								OUTSIDE_LOCATION_HISTORY_LATITUDE,
+								OUTSIDE_LOCATION_HISTORY_LONGITUDE,
+								OUTSIDE_LOCATION_HISTORY_DATE);
+	
+	//=============V2================================================================================================================================
+	
+	
+	private final String[] createQueries = new String[] { CREATE_POSTS_TABLE, CREATE_LOCATION_HISTORY_TABLE, CREATE_APP_STORAGE_TABLE, INSERT_APPSTORAGE_TUTORIAL_RUN, CREATE_OUTSIDE_LOCATION_HISTORY_TABLE };
+	
 	
 	public Adapter(Context context){
 		super(context, DB_NAME, null, DB_VERSION);
@@ -82,12 +96,12 @@ public class Adapter extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		//Log.d("sqlite_db","on create called");
-		try{
+//		try{
 			runSqlQueries(db, createQueries);
-		}
-		catch (Exception e){
-			//Log.d("sqlite_db", e.getMessage());
-		}
+//		}
+//		catch (Exception e){
+//			//Log.d("sqlite_db", e.getMessage());
+//		}
 	}
 
 	@Override
@@ -126,7 +140,7 @@ public class Adapter extends SQLiteOpenHelper{
 	
 	private void runSqlQueries(SQLiteDatabase db, String[] queries){
 		for (String s:queries){
-			//Log.d("sqlite_db", queries.length +" "+ s);
+			Log.d("sqlite_db", queries.length +" "+ s);
 			db.execSQL(s);
 		}
 	}

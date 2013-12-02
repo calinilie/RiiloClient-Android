@@ -42,6 +42,7 @@ public class WorkerService extends IntentService{
 //	public static int id = 0;
 	protected String deviceId="";
 	private PostsCache postsCache; 
+	private static final String TAG = "<<<<<<<<<WORKER SERVICE>>>>>>>>>"; 
 	
 	public WorkerService() {
 		super("WorkerIntentService");
@@ -161,6 +162,19 @@ public class WorkerService extends IntentService{
 			}
 			//Log.d("************************************", "WS_INTENT_NEARBY_POSTS");
 			break;
+		case StringKeys.WS_INTENT_INSERT_LOCATION_HISTORY:
+			LocationHistory location = Facade.getInstance(this).getLastKnownLocation();
+			//Log.d(TAG, "1 "+location.isSent()+"");
+			location.setUserId(deviceId);
+			postLocationHistory(location);
+			break;
+		case StringKeys.WS_INTENT_GET_LOCATION_HISTORY:
+			List<LocationHistory> list = getLocationHistory(); 
+			if (list!=null && !list.isEmpty()){
+				Log.d(TAG, list.size()+"");
+				Facade.getInstance(this).insertOutsideLocationHistory(list);
+			}
+			break;
 		}
 	}
 	
@@ -187,6 +201,46 @@ public class WorkerService extends IntentService{
 		return null;
 	}
 
+	private void postLocationHistory(LocationHistory locationHistory){
+		if (locationHistory!=null && !locationHistory.isSent()){
+			if (locationHistory.getLatitude()!= 0 || locationHistory.getLatitude()!=0){
+				try {
+					String json = locationHistory.toJson().toString();
+					//Log.d(TAG, "2 inserLocationHistory:  "+json);
+					String endpoint = getString(R.string.endpoint_post_location);
+					tryPostWithRetry(endpoint, json);
+					Facade.getInstance(this).updateLastLocationSent();
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	private List<LocationHistory> getLocationHistory(){
+		List<LocationHistory> retVal = new ArrayList<LocationHistory>();
+		String endpoint = getString(R.string.endpoint_location_history);
+		//get json with retry
+		String json = getJson(endpoint);
+		if (!isValidJsonResponse(json)){
+			json = getJson(endpoint);
+		}
+		//check if there is something there
+		if (!isValidJsonResponse(json))
+			return null;
+		//json -> objects
+		try {
+			JSONArray jsonArray = new JSONArray(json);
+			int length = jsonArray.length();
+			for (int i=0; i<length; i++){
+				retVal.add(new LocationHistory(jsonArray.getJSONObject(i)));
+			}
+		} catch (JSONException e) {
+			
+		}
+		return retVal;
+	}
+	
 	private String silenceNotifications(List<Long> postIds, String userId){
 		String endpoint = getResources().getString(R.string.endpoint_silence_notifications);
 		JSONObject jsonObject = new JSONObject();
@@ -380,18 +434,21 @@ public class WorkerService extends IntentService{
 		return retVal;
 	}
 	
-	private String tryPostWithRetry(String endpoint, String jsonPost){
-		String response = postJson(endpoint, jsonPost);
+	private String tryPostWithRetry(String endpoint, String json){
+		String response = postJson(endpoint, json);
+		//Log.d(TAG, "3 "+response+" "+json);
 		if (response.equals(StringKeys.CONNECTION_TIMEDOUT)){
-			response = postJson(endpoint, jsonPost);
+			response = postJson(endpoint, json);
+			//Log.d(TAG, "4 "+response+" "+json);
 		}
 		else if (response.equals(StringKeys.POST_REQUEST_FAILED)){
-			response = postJson(endpoint, jsonPost);
+			response = postJson(endpoint, json);
+			//Log.d(TAG, "5 "+response+" "+json);
 		}
 		return response;
 	}
 	
-	public String postJson(String endpoint, String jsonPost) {
+	public String postJson(String endpoint, String json) {
 		HttpParams params = new BasicHttpParams();
 		HttpConnectionParams.setConnectionTimeout(params, 3000);
 		HttpConnectionParams.setSoTimeout(params, 10000);
@@ -400,11 +457,11 @@ public class WorkerService extends IntentService{
 	    HttpPost httppost = new HttpPost(endpoint);
 
 	    try {
-	        httppost.setEntity(new StringEntity(jsonPost, "UTF-8"));
-	        //Log.d("posting post:>>>>>>>>>>>>>>>>", jsonPost);
+	        httppost.setEntity(new StringEntity(json, "UTF-8"));
 	        httppost.setHeader("Content-Type", "application/json; charset=utf-8");
 	        HttpResponse response = httpclient.execute(httppost);
 	        int responseCode = response.getStatusLine().getStatusCode();
+	        //Log.d(TAG, responseCode+" ");
 	        if (responseCode == 200){
 	        	HttpEntity entity = response.getEntity();
 		        InputStream content = entity.getContent();

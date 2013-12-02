@@ -1,6 +1,9 @@
 package com.riilo.main;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +29,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -83,15 +88,11 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
     public void onStart() {
     	super.onStart();
     	
-    	map = mapView.getMap();
-    	if (map!=null){
-    		map.setOnMapClickListener(this);
-    		map.setMyLocationEnabled(true);
-    	}
-    	else activity.showWarningDialog("Ouch, something went terribly wrong. Please keep calm and try again; if you still get this error your phone might not support Google Maps, and this app relies heavily on Google Maps.");
+    	setUpMapIfNeeded();
     	
     	setupWidgetsViewElements();
     	newPostIfNeeded();
+    	
 //    	mapCameraAnimationRun = false;
     }
     
@@ -230,18 +231,26 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
    	 	}
     }
 	
-	/*private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
-        if (map == null) {
-            // Try to obtain the map from the SupportMapFragment.
-            map = mapView.getMap();
-            
-            // Check if we were successful in obtaining the map.
-//            if (map != null) {
-//            	
-//            }
-        }
-    }*/
+	private void setUpMapIfNeeded() {
+//		if (map==null){
+			map = mapView.getMap();
+	    	if (map!=null){
+	    		map.setOnMapClickListener(this);
+	    		map.setMyLocationEnabled(true);
+	    		addLocationHistoryMarkers();
+	    	}
+	    	else activity.showWarningDialog("Ouch, something went terribly wrong. Please keep calm and try again; if you still get this error your phone might not support Google Maps, and this app relies heavily on Google Maps.");
+//		}
+    }
+	
+	private void addLocationHistoryMarkers(){
+		List<LocationHistory> locationhistory = new ArrayList<LocationHistory>();
+		locationhistory = LocationHistoryManager.getInstance(activity).getLocationHistory();
+		for(LocationHistory loc : locationhistory){
+			map.addMarker(new MarkerOptions().position(loc.getLatLng())//.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_plusone_standard_off_client))
+					);
+		}
+	}
 	
 	@Override
 	public boolean onBackPressed(){

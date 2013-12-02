@@ -2,12 +2,32 @@ package com.riilo.main;
 
 import java.util.Date;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.google.android.gms.maps.model.LatLng;
+
+
 public class LocationHistory {
 
 	private Date date;
+	private long locationHistoryId;
 	private double latitude;
 	private double longitude;
 	private float accuracy;
+	private String userId;
+	private boolean isSent;
+	
+	public LocationHistory(){
+		
+	}
+	
+	public LocationHistory(JSONObject json) throws JSONException{
+		this.locationHistoryId = json.getInt("locationHistoryId");
+		this.latitude = json.getDouble("latitude");
+		this.longitude = json.getDouble("longitude");
+	}
+	
 	public Date getDate() {
 		return date;
 	}
@@ -31,6 +51,34 @@ public class LocationHistory {
 	}
 	public void setAccuracy(float accuracy) {
 		this.accuracy = accuracy;
+	}
+	public long getLocationHistoryId() {
+		return locationHistoryId;
+	}
+	public void setLocationHistoryId(long locationHistoryId) {
+		this.locationHistoryId = locationHistoryId;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public boolean isSent() {
+		return isSent;
+	}
+	public void setSent(boolean isSent) {
+		this.isSent = isSent;
+	}
+	public LatLng getLatLng(){
+		return new LatLng(latitude, longitude);
+	}
+	public JSONObject toJson() throws JSONException{
+		JSONObject retVal = new JSONObject();
+		retVal.put("userId", this.userId);
+		retVal.put("latitude", this.latitude);
+		retVal.put("longitude", this.longitude);
+		return retVal;
 	}
 	
 	

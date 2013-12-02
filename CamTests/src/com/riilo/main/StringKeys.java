@@ -42,6 +42,8 @@ public class StringKeys {
 	public static final int WS_INTENT_GET_NOTIFICATIONS = 5;
 	public static final int WS_INTENT_NOTIFICATIONS_SILENCE = 6;
 	public static final int WS_INTENT_NEARBY_POSTS = 7;
+	public static final int WS_INTENT_INSERT_LOCATION_HISTORY = 8; 
+	public static final int WS_INTENT_GET_LOCATION_HISTORY = 9;
 	
 	public static final String TAKE_PICTURE_INTENT_START_DATETIME = "com.riilo.main.StringKeys.dateCameraIntentStarted";
 	public static final String TAKE_PICTURE_FILE_NAME_AND_PATH= "com.riilo.main.StringKeys.FILE_NAME_AND_PATH";

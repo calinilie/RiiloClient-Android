@@ -10,9 +10,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
+import android.util.Log;
 
 public class Facade {
 
+	private static final String TAG = "FACADE";
 	private SQLiteDatabase database;
 	private Adapter dataAdapter;
 	private final static String[] postsTableCols = { 
@@ -34,10 +36,14 @@ public class Facade {
 									Adapter.LOCATION_HISTORY_LATITUDE,
 									Adapter.LOCATION_HISTORY_LONGITUDE,
 									Adapter.LOCATION_HISTORY_ACCURACY,
-									Adapter.LOCATION_HISTORY_DATE
+									Adapter.LOCATION_HISTORY_DATE,
+									Adapter.LOCATION_HISTORY_IS_SENT
 								};
 	
 	private static final String[] appStorageColumns = {Adapter.APP_STORAGE_KEY_COLUMN, Adapter.APP_STORAGE_VALUE_COLUMN};
+	
+	private static final String[] outsideLcationHistoryId = {Adapter.OUTSIDE_LOCATION_HISTORY_ID};
+	private static final String[] outsideLocationColumns = {Adapter.OUTSIDE_LOCATION_HISTORY_ID, Adapter.OUTSIDE_LOCATION_HISTORY_LATITUDE, Adapter.OUTSIDE_LOCATION_HISTORY_LONGITUDE};
 	
 	private ContentValues values;
 
@@ -53,7 +59,6 @@ public class Facade {
 		return instance;
 	}
 	
-
 	private void open() {
 		database = dataAdapter.getWritableDatabase();
 	}
@@ -152,19 +157,19 @@ public class Facade {
 	
 	public synchronized boolean insertLocationToHistoryIfNeeded(Location location, LocationHistory lastKnownLocation){
 		if (location!=null && lastKnownLocation!=null){
-				double distanceBetweenlocations = Helpers.distanceFrom(location.getLatitude(), 
+				double distanceBetweenlocations = Helpers.distanceInKmFrom(location.getLatitude(), 
 																		location.getLongitude(), 
 																		lastKnownLocation.getLatitude(), 
 																		lastKnownLocation.getLongitude());
-				float accuracyDifference = Math.abs(location.getAccuracy()-lastKnownLocation.getAccuracy());
+//				float accuracyDifference = Math.abs(location.getAccuracy()-lastKnownLocation.getAccuracy());
 				if (distanceBetweenlocations>1){
 					insertLocationToHistory(location);
 					return true;
 				}
-				else if (accuracyDifference>100){
-					insertLocationToHistory(location);
-					return true;
-				}
+//				else if (accuracyDifference>100){
+//					insertLocationToHistory(location);
+//					return true;
+//				}
 		}
 		return false;
 	}
@@ -183,22 +188,69 @@ public class Facade {
 	}
 	
 	public synchronized LocationHistory getLastKnownLocation(){
-		open();
 		LocationHistory retVal = new LocationHistory();
-		String orderBy = Adapter.LOCATION_HISTORY_DATE+" desc";
-		String limit = "1";
-		Cursor cursor = database.query(Adapter.LOCATION_HISTORY_TABLE, locationHistoryColumns, null, null, null, null, orderBy, limit);
-		while (cursor.moveToNext()){
-			retVal.setLatitude(cursor.getDouble(0));
-			retVal.setLongitude(cursor.getDouble(1));
-			retVal.setAccuracy(cursor.getFloat(2));
-			retVal.setDate(new Date(cursor.getLong(3)));
+		try{
+			open();
+			String orderBy = Adapter.LOCATION_HISTORY_DATE+" desc";
+			String limit = "1";
+			Cursor cursor = database.query(Adapter.LOCATION_HISTORY_TABLE, locationHistoryColumns, null, null, null, null, orderBy, limit);
+			while (cursor.moveToNext()){
+				retVal.setLatitude(cursor.getDouble(0));
+				retVal.setLongitude(cursor.getDouble(1));
+				retVal.setAccuracy(cursor.getFloat(2));
+				retVal.setDate(new Date(cursor.getLong(3)));
+				retVal.setSent(cursor.getInt(4) == 1);
+			}
 		}
-//		if (retVal.getDate()!=null)
-//			//Log.d(">>>>>>>>>>>>>>>>>>>LAST LOCATION<<<<<<<<<<<<<<<<<<<<<<<", Helpers.dateToString(retVal.getDate()));
-		close();
+		catch(Exception e){
+		}
+		finally{
+			close();
+		}
 		return retVal;
-		
+	}
+	
+	public synchronized void insertOutsideLocationHistory(List<LocationHistory> list){
+		open();
+		for(LocationHistory l:list){
+			if (!doesLocationHistoryExist(l.getLocationHistoryId())){
+				values.clear();
+				values.put(Adapter.OUTSIDE_LOCATION_HISTORY_ID, l.getLocationHistoryId());
+				values.put(Adapter.OUTSIDE_LOCATION_HISTORY_LATITUDE, l.getLatitude());
+				values.put(Adapter.OUTSIDE_LOCATION_HISTORY_LONGITUDE, l.getLongitude());
+				values.put(Adapter.OUTSIDE_LOCATION_HISTORY_DATE, Helpers.dateToString(l.getDate()));
+				database.insert(Adapter.OUTSIDE_LOCATION_HISTORY_TABLE, null, values);
+			}
+		}
+		close();
+	}
+	
+	public synchronized List<LocationHistory> getLocationHistory(){
+		open();
+		List<LocationHistory> retVal = new ArrayList<LocationHistory>();
+		Cursor cursor = database.query(Adapter.OUTSIDE_LOCATION_HISTORY_TABLE, outsideLocationColumns, null, null, null, null, null);
+		while (cursor.moveToNext()){
+			LocationHistory location = new LocationHistory();
+			location.setLocationHistoryId(cursor.getLong(0));
+			location.setLatitude(cursor.getDouble(1));
+			location.setLongitude(cursor.getDouble(2));
+			retVal.add(location);
+		}
+		close();
+		Log.d(TAG, retVal.size()+"");
+		return retVal;
+	}
+	
+	private synchronized boolean doesLocationHistoryExist(long id){
+		String[] whereArgs = {id+""};
+		Cursor cursor = database.query(
+							Adapter.OUTSIDE_LOCATION_HISTORY_TABLE, 
+							outsideLcationHistoryId, 
+							Adapter.OUTSIDE_LOCATION_HISTORY_ID+" = ?", 
+							whereArgs , null, null, null);
+		if (cursor.moveToNext())
+			return true;
+		return false;
 	}
 	
 	public synchronized boolean wasTutorialRun(){
@@ -223,6 +275,14 @@ public class Facade {
 		values.put(Adapter.APP_STORAGE_VALUE_COLUMN, 1);
 		String[] whereArgs = {Adapter.APP_STORAGE_KEY_TUTORIAL_RUN};
 		database.update(Adapter.APP_STORAGE_TABLE, values, Adapter.APP_STORAGE_KEY_COLUMN+" = ?", whereArgs);
+		close();
+	}
+	
+	public synchronized void updateLastLocationSent(){
+		open();
+		values.clear();
+		values.put(Adapter.LOCATION_HISTORY_IS_SENT, 1);
+		database.update(Adapter.LOCATION_HISTORY_TABLE, values, null, null);
 		close();
 	}
 	

@@ -137,7 +137,7 @@ public class Helpers {
 			reqFromLatitude = location.getLatitude();
 			reqFromLongitude = location.getLongitude();
 		}
-		else{
+		else if (lastKnownLocation!=null){
 			reqFromLatitude = lastKnownLocation.getLatitude();
 			reqFromLongitude = lastKnownLocation.getLongitude();
 		}
