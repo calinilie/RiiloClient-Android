@@ -33,13 +33,22 @@ public class LocationHistoryManager {
 		return instance;
 	}
 	
+	public List<LocationHistory> getLocationHistory(GoogleMap map){
+		if (list.isEmpty())
+			list = facade.getLocationHistory(); 
+		
+		startService(map);
+		
+		return list;
+	}
+	
 	public List<LocationHistory> getLocationHistory(){
 		if (list.isEmpty())
 			list = facade.getLocationHistory(); 
 		return list;
 	}
 	
-	public void startService(GoogleMap map){
+	private void startService(GoogleMap map){
 		if (!wasRequestMade){
 	    	Intent intent = new Intent(context, WorkerService.class);
 	    	intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_LOCATION_HISTORY);
@@ -48,7 +57,25 @@ public class LocationHistoryManager {
 	    	intent.putExtra(StringKeys.LOCATION_HISTORY_RESULT_RECEIVER, resultReceiver);
 	    	context.startService(intent);
 	    	Log.d(TAG, "service started");
+	    	wasRequestMade = true;
 		}
+	}
+	
+	public void mergeLocationhistories(List<LocationHistory> locations){
+		for(LocationHistory h : locations){
+			if (!this.list.contains(h))
+				this.list.add(h);
+		}
+	}
+	
+	public void addLocationHistory(LocationHistory h){
+		if (!list.contains(h))
+			list.add(h);
+	}
+	
+	public void locationHistoryMarkersRemoved(){
+		for(LocationHistory h:this.list)
+			h.setIsOnMap(false);
 	}
 	
 }

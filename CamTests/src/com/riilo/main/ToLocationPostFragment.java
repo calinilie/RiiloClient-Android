@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,7 +94,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
     	setupWidgetsViewElements();
     	newPostIfNeeded();
     	
-    	LocationHistoryManager.getInstance(activity).startService(map);
+    	LocationHistoryManager.getInstance(activity).getLocationHistory(map);
     	
 //    	mapCameraAnimationRun = false;
     }
@@ -193,6 +194,12 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 		marker = map.addMarker(new MarkerOptions().position(location));
 	}
 	
+	@Override
+	public void onDestroyView(){
+		LocationHistoryManager.getInstance(activity).locationHistoryMarkersRemoved();
+		super.onDestroyView();
+	}
+	
 	/*private void animateMapCamera(LatLng location){
 		animateMapCamera(location, 10);
 	}*/
@@ -239,7 +246,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	    	if (map!=null){
 	    		map.setOnMapClickListener(this);
 	    		map.setMyLocationEnabled(true);
-//	    		addLocationHistoryMarkers();
+	    		addLocationHistoryMarkers();
 	    	}
 	    	else activity.showWarningDialog("Ouch, something went terribly wrong. Please keep calm and try again; if you still get this error your phone might not support Google Maps, and this app relies heavily on Google Maps.");
 //		}
@@ -248,10 +255,11 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	private void addLocationHistoryMarkers(){
 		List<LocationHistory> locationhistory = new ArrayList<LocationHistory>();
 		locationhistory = LocationHistoryManager.getInstance(activity).getLocationHistory();
-		for(LocationHistory loc : locationhistory){
-			map.addMarker(new MarkerOptions().position(loc.getLatLng())//.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_plusone_standard_off_client))
-					);
-		}
+//		for(LocationHistory loc : locationhistory){
+//			map.addMarker(new MarkerOptions().position(loc.getLatLng())//.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_plusone_standard_off_client))
+//					);
+//		}
+		Helpers.addMarkersToMap(locationhistory, map);
 	}
 	
 	@Override

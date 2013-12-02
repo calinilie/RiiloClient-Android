@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import android.content.Context;
 import android.location.Location;
 import android.media.ExifInterface;
@@ -19,8 +22,20 @@ import android.util.Log;
 
 public class Helpers {
 	
-	/*=========================================================================================================*/
+	private static final String TAG = "HELPERS";
 	
+	/*====================MAP=====================================================================================*/
+	public static void addMarkersToMap(List<LocationHistory> histories, GoogleMap map){
+		for(LocationHistory h : histories){
+			if (!h.isOnMap()){
+				map.addMarker(new MarkerOptions().position(h.getLatLng()));
+				h.setIsOnMap(true);
+			}
+			else{
+				Log.d(TAG, "location History already marked!");
+			}
+		}
+	}
 	
 	/*===================DISTANCES======================================================================================*/
 	public static double distanceFrom(double lat1, double lng1, double lat2, double lng2) {

@@ -25,6 +25,7 @@ public class LocationHistory implements Serializable{
 	private float accuracy;
 	private String userId;
 	private boolean isSent;
+	private boolean isOnMap;
 	
 	public LocationHistory(){
 		
@@ -81,12 +82,38 @@ public class LocationHistory implements Serializable{
 	public LatLng getLatLng(){
 		return new LatLng(latitude, longitude);
 	}
+	public boolean isOnMap() {
+		return isOnMap;
+	}
+	public void setIsOnMap(boolean isOnMap) {
+		this.isOnMap = isOnMap;
+	}
+
 	public JSONObject toJson() throws JSONException{
 		JSONObject retVal = new JSONObject();
 		retVal.put("userId", this.userId);
 		retVal.put("latitude", this.latitude);
 		retVal.put("longitude", this.longitude);
 		return retVal;
+	}
+	
+	@Override
+	public boolean equals(Object another){
+		if (another == null){
+			return false;
+		}
+		if (!(another instanceof LocationHistory)){
+			return false;
+		}
+		
+		return this.locationHistoryId == ((LocationHistory)another).getLocationHistoryId();
+	}
+	
+	@Override
+	public int hashCode() {
+		long hash = 1;
+		hash = hash * 17 + locationHistoryId;
+		return (hash+"").hashCode();
 	}
 	
 	

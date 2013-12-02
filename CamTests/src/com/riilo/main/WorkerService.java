@@ -42,6 +42,7 @@ public class WorkerService extends IntentService{
 //	public static int id = 0;
 	protected String deviceId="";
 	private PostsCache postsCache; 
+	private LocationHistoryManager locationHistoryManager;
 	private static final String TAG = "<<<<<<<<<WORKER SERVICE>>>>>>>>>"; 
 	
 	public WorkerService() {
@@ -54,7 +55,7 @@ public class WorkerService extends IntentService{
 		deviceId = Secure.getString(this.getContentResolver(),
             Secure.ANDROID_ID);
 		postsCache = PostsCache.getInstance(this);
-		
+		locationHistoryManager = LocationHistoryManager.getInstance(this);
 		//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "onCreate Called ");
 	}
 	
@@ -173,9 +174,10 @@ public class WorkerService extends IntentService{
 			resultReceiver = intent.getParcelableExtra(StringKeys.LOCATION_HISTORY_RESULT_RECEIVER);
 			if (list!=null && !list.isEmpty()){
 				Facade.getInstance(this).insertOutsideLocationHistory(list);
+				locationHistoryManager.mergeLocationhistories(list);
 				Log.d(TAG, list.size()+"");
 				resultData = new Bundle();
-				resultData.putParcelable(StringKeys.LOCATION_HISTORY_PARCELABLE, new LocationHistoryParcelable(list));
+				resultData.putParcelable(StringKeys.LOCATION_HISTORY_PARCELABLE, new LocationHistoryParcelable(locationHistoryManager.getLocationHistory()));
 				resultReceiver.send(123, resultData);
 			}
 			break;
