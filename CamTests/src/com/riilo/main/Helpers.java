@@ -12,6 +12,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.content.Context;
@@ -28,7 +29,7 @@ public class Helpers {
 	public static void addMarkersToMap(List<LocationHistory> histories, GoogleMap map){
 		for(LocationHistory h : histories){
 			if (!h.isOnMap()){
-				map.addMarker(new MarkerOptions().position(h.getLatLng()));
+				map.addMarker(new MarkerOptions().position(h.getLatLng()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker_riilo)));
 				h.setIsOnMap(true);
 			}
 			else{
