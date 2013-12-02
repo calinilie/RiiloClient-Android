@@ -1,5 +1,6 @@
 package com.riilo.main;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.json.JSONException;
@@ -8,8 +9,15 @@ import org.json.JSONObject;
 import com.google.android.gms.maps.model.LatLng;
 
 
-public class LocationHistory {
+public class LocationHistory implements Serializable{
 
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Date date;
 	private long locationHistoryId;
 	private double latitude;

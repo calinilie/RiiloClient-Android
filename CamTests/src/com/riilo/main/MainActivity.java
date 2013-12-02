@@ -55,8 +55,6 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
         
         setContentView(R.layout.activity_main_layout);
         
-        LocationHistoryManager.getInstance(this).startService();
-        
         // Create the adapter that will return a fragment for each of the three primary sections
         // of the app.
         mAppSectionsPagerAdapter = new AppSectionsPagerAdapter(getSupportFragmentManager());

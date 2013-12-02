@@ -338,7 +338,6 @@ public class PostsCache {
 	        resultReceiver.setAdapterData(adapterData);
 	        resultReceiver.setPullToRefreshAttacher(pullToRefreshAttacher);
 	        intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
-	        
 	        context.startService(intent);
 	        
 	        startRereshAniamtion(handler, pullToRefreshAttacher);

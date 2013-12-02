@@ -93,6 +93,8 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
     	setupWidgetsViewElements();
     	newPostIfNeeded();
     	
+    	LocationHistoryManager.getInstance(activity).startService(map);
+    	
 //    	mapCameraAnimationRun = false;
     }
     
@@ -237,7 +239,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	    	if (map!=null){
 	    		map.setOnMapClickListener(this);
 	    		map.setMyLocationEnabled(true);
-	    		addLocationHistoryMarkers();
+//	    		addLocationHistoryMarkers();
 	    	}
 	    	else activity.showWarningDialog("Ouch, something went terribly wrong. Please keep calm and try again; if you still get this error your phone might not support Google Maps, and this app relies heavily on Google Maps.");
 //		}

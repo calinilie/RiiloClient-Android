@@ -170,9 +170,13 @@ public class WorkerService extends IntentService{
 			break;
 		case StringKeys.WS_INTENT_GET_LOCATION_HISTORY:
 			List<LocationHistory> list = getLocationHistory(); 
+			resultReceiver = intent.getParcelableExtra(StringKeys.LOCATION_HISTORY_RESULT_RECEIVER);
 			if (list!=null && !list.isEmpty()){
-				Log.d(TAG, list.size()+"");
 				Facade.getInstance(this).insertOutsideLocationHistory(list);
+				Log.d(TAG, list.size()+"");
+				resultData = new Bundle();
+				resultData.putParcelable(StringKeys.LOCATION_HISTORY_PARCELABLE, new LocationHistoryParcelable(list));
+				resultReceiver.send(123, resultData);
 			}
 			break;
 		}

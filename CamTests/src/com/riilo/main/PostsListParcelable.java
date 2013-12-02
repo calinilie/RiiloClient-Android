@@ -21,7 +21,6 @@ public class PostsListParcelable implements Parcelable{
 	
 	@Override
 	public int describeContents() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -30,15 +29,6 @@ public class PostsListParcelable implements Parcelable{
 		if (postsList==null)
 			throw new RuntimeException("PostsListParcelable.postsList is null!!");
 		
-//		int length = postsList.size();
-//		if (length==0)
-//			throw new RuntimeException("PostsListParcelable.postsList is empty!!");
-		
-//		Bundle[] postsBundleArray = new Bundle[length];
-//		for (int i=0; i<length; i++) {
-//			postsBundleArray[i] = postsList.get(i).toBundle();
-//		}
-		////Log.d(">>>>>>>>>>>>>>>>>>>>>>>>", "list size:" + postsList.size());
 		dest.writeList(postsList);
 	}
 	

@@ -34,6 +34,9 @@ public class StringKeys {
 	public static final String POST_ORIGIN_LATITUDE = "com.riilo.main.StringKeys.POST_ORIGIN_LATITUDE";
 	public static final String POST_ORIGIN_LONGITUDE = "com.riilo.main.StringKeys.POST_ORIGIN_LONGITUDE";
 	
+	public static final String LOCATION_HISTORY_PARCELABLE = "com.riilo.main.StringKeys.LOCATION_HISTORY_PARCELABLE";
+	public static final String LOCATION_HISTORY_RESULT_RECEIVER = "com.riilo.main.StringKeys.LOCATION_HISTORY_RESULT_RECEIVER";
+	
 	public static final String WS_INTENT_TYPE = "com.riilo.main.StringKeys.WORKER_SERVICE_INTENT_TYPE";
 	public static final int WS_INTENT_POST = 1;
 //	public static final int WS_INTENT_TAKE_PICTURE = 2;
