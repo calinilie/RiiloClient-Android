@@ -3,6 +3,7 @@ package com.riilo.main;
 import java.util.List;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.os.Bundle;
@@ -40,7 +41,8 @@ public class LocationHistoryResultReceiver extends ResultReceiver{
 					public void run() {
 						if (map!=null){
 							for(LocationHistory h:list){
-								map.addMarker(new MarkerOptions().position(h.getLatLng()));
+								//map.addMarker(new MarkerOptions().position(h.getLatLng()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker_human)));
+								map.addMarker(new MarkerOptions().position(h.getLatLng()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker_riilo)));
 							}
 						}
 						
