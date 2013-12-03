@@ -265,10 +265,6 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	private void addLocationHistoryMarkers(){
 		List<LocationHistory> locationhistory = new ArrayList<LocationHistory>();
 		locationhistory = LocationHistoryManager.getInstance(activity).getLocationHistory();
-//		for(LocationHistory loc : locationhistory){
-//			map.addMarker(new MarkerOptions().position(loc.getLatLng())//.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_plusone_standard_off_client))
-//					);
-//		}
 		Helpers.addMarkersToMap(locationhistory, map);
 	}
 	

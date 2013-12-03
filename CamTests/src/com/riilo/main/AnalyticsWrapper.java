@@ -27,11 +27,11 @@ public class AnalyticsWrapper {
 	}
 	
 	public void startTracker(Activity activity){
-//		tracker.activityStart(activity);
+		tracker.activityStart(activity);
 	}
 	
 	public void stopTracker(Activity activity){
-//		tracker.activityStop(activity);
+		tracker.activityStop(activity);
 	}
 	
 	/*====RECORD SCREEN HITS=======================================================================================================*/
@@ -78,12 +78,12 @@ public class AnalyticsWrapper {
 	}
 	
 	private void recordScreenHit(ScreenName screen){
-//		tracker.set(Fields.SCREEN_NAME, screen.toString());
-//		
-//		tracker.send(MapBuilder
-//			    .createAppView()
-//			    .build()
-//			);
+		tracker.set(Fields.SCREEN_NAME, screen.toString());
+		
+		tracker.send(MapBuilder
+			    .createAppView()
+			    .build()
+			);
 	}
 	
 	/*=====RECORD EVENTS======================================================================================================*/
@@ -141,13 +141,13 @@ public class AnalyticsWrapper {
 	}
 	
 	private void recordEvent(EventCategory category, EventAction action, EventLabel label, Long value){
-//		String categoryAsString = category.toString();
-//		String actionAsString = action.toString();
-//		String labelAsStirng = "";
-//		if (label!=null){
-//			labelAsStirng = label.toString();
-//		}
-//		tracker.send(MapBuilder.createEvent(categoryAsString, actionAsString, labelAsStirng, value).build());
+		String categoryAsString = category.toString();
+		String actionAsString = action.toString();
+		String labelAsStirng = "";
+		if (label!=null){
+			labelAsStirng = label.toString();
+		}
+		tracker.send(MapBuilder.createEvent(categoryAsString, actionAsString, labelAsStirng, value).build());
 		
 		//Log.d("ANALYTICS", categoryAsString+" "+actionAsString+" "+labelAsStirng+" "+value);
 	}
