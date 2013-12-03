@@ -254,7 +254,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 			map = mapView.getMap();
 	    	if (map!=null){
 	    		map.setOnMapClickListener(this);
-	    		map.setMyLocationEnabled(true);
+//	    		map.setMyLocationEnabled(true);
 	    		map.setOnMarkerClickListener(this);
 	    		addLocationHistoryMarkers();
 	    	}

@@ -50,4 +50,4 @@ _sandbox
 proguard/
 
 #AndoirdManifest.cml
-AndroidManifest.xml
+#AndroidManifest.xml
