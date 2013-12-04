@@ -116,5 +116,10 @@ public class LocationHistory implements Serializable{
 		return (hash+"").hashCode();
 	}
 	
+	@Override
+	public String toString(){
+		return String.format("%s %s %s %s",locationHistoryId+"", userId, latitude+"", longitude+"");
+	}
+	
 	
 }

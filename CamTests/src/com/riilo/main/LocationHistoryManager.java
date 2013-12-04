@@ -63,8 +63,10 @@ public class LocationHistoryManager {
 	
 	public void mergeLocationhistories(List<LocationHistory> locations){
 		for(LocationHistory h : locations){
-			if (!this.list.contains(h))
+			if (!this.list.contains(h)){
 				this.list.add(h);
+//				Log.d(TAG, h.toString());
+			}
 		}
 	}
 	

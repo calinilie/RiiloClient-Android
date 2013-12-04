@@ -27,11 +27,11 @@ public class AnalyticsWrapper {
 	}
 	
 	public void startTracker(Activity activity){
-		tracker.activityStart(activity);
+//		tracker.activityStart(activity);
 	}
 	
 	public void stopTracker(Activity activity){
-		tracker.activityStop(activity);
+//		tracker.activityStop(activity);
 	}
 	
 	/*====RECORD SCREEN HITS=======================================================================================================*/
@@ -78,12 +78,12 @@ public class AnalyticsWrapper {
 	}
 	
 	private void recordScreenHit(ScreenName screen){
-		tracker.set(Fields.SCREEN_NAME, screen.toString());
-		
-		tracker.send(MapBuilder
-			    .createAppView()
-			    .build()
-			);
+//		tracker.set(Fields.SCREEN_NAME, screen.toString());
+//		
+//		tracker.send(MapBuilder
+//			    .createAppView()
+//			    .build()
+//			);
 	}
 	
 	/*=====RECORD EVENTS======================================================================================================*/
@@ -147,7 +147,7 @@ public class AnalyticsWrapper {
 		if (label!=null){
 			labelAsStirng = label.toString();
 		}
-		tracker.send(MapBuilder.createEvent(categoryAsString, actionAsString, labelAsStirng, value).build());
+//		tracker.send(MapBuilder.createEvent(categoryAsString, actionAsString, labelAsStirng, value).build());
 		
 		//Log.d("ANALYTICS", categoryAsString+" "+actionAsString+" "+labelAsStirng+" "+value);
 	}
