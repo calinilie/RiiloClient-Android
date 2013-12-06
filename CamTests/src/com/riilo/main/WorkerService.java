@@ -184,11 +184,6 @@ public class WorkerService extends IntentService{
 		}
 	}
 	
-	@Override
-	public void onDestroy(){
-		//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "onDestroy Called ");
-	}
-	
 	private void savePostLocally(Post post){
 		Facade.getInstance(this).insertPost(post);
 	}

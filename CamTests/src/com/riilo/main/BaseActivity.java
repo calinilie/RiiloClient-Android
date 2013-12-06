@@ -66,7 +66,6 @@ public abstract class BaseActivity extends FragmentActivity
         /*if (savedInstanceState!=null)
         	fileName = savedInstanceState.getString(StringKeys.TAKE_PICTURE_FILE_NAME_AND_PATH);*/
         
-        initLocationClient(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY, 2000, 1000);
         postsCache = PostsCache.getInstance(this);
         analytics = AnalyticsWrapper.getInstance(this);
     }
@@ -330,8 +329,14 @@ public abstract class BaseActivity extends FragmentActivity
 	
 	@Override
 	public void onConnected(Bundle arg0) {
-		locationClient.requestLocationUpdates(locationRequest, this);
-		location = locationClient.getLastLocation();
+		if (locationClient==null)
+			initLocationClient(LocationRequest.PRIORITY_LOW_POWER, 2000, 1000);
+		
+		try{
+			locationClient.requestLocationUpdates(locationRequest, this);
+			location = locationClient.getLastLocation();
+		}
+		catch(Exception e){}
 	}
 	
 	@Override

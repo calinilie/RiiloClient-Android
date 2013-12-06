@@ -3,6 +3,7 @@ package com.riilo.main;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.android.gms.location.LocationRequest;
 import com.riilo.main.R;
 import com.riilo.interfaces.IBackButtonListener;
 import com.riilo.tutorial.TutorialActivity;
@@ -94,6 +95,7 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
         
         //create pullToRefreshAttacher
         pullToRefreshAttacher = PullToRefreshAttacher.get(this);
+        initLocationClient(LocationRequest.PRIORITY_LOW_POWER, 2000, 1000);
     }
     
     @Override
