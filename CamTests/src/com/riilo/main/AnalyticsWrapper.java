@@ -1,6 +1,10 @@
 package com.riilo.main;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
+import android.provider.Settings.Secure;
+import android.util.Log;
 //import android.util.Log;
 
 import com.google.analytics.tracking.android.EasyTracker;
@@ -16,8 +20,13 @@ public class AnalyticsWrapper {
 	
 	private EasyTracker tracker;
 	private static AnalyticsWrapper instance;
+	private static String deviceId = "";
 	private AnalyticsWrapper(Activity context){
 		tracker = EasyTracker.getInstance(context);
+		deviceId = Secure.getString(context.getContentResolver(),
+                Secure.ANDROID_ID);
+		
+		Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>ANALYTICS", "DEVICE ID   " + deviceId);
 	}
 	
 	public static AnalyticsWrapper getInstance(Activity context){
@@ -27,11 +36,15 @@ public class AnalyticsWrapper {
 	}
 	
 	public void startTracker(Activity activity){
-//		tracker.activityStart(activity);
+		if (isNotEmployeeDevice()){
+			tracker.activityStart(activity);
+			Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>ANALYTICS", "STARTED");
+		}
 	}
 	
 	public void stopTracker(Activity activity){
-//		tracker.activityStop(activity);
+		if (isNotEmployeeDevice())
+			tracker.activityStop(activity);
 	}
 	
 	/*====RECORD SCREEN HITS=======================================================================================================*/
@@ -78,12 +91,14 @@ public class AnalyticsWrapper {
 	}
 	
 	private void recordScreenHit(ScreenName screen){
-//		tracker.set(Fields.SCREEN_NAME, screen.toString());
-//		
-//		tracker.send(MapBuilder
-//			    .createAppView()
-//			    .build()
-//			);
+		if (isNotEmployeeDevice()){
+			tracker.set(Fields.SCREEN_NAME, screen.toString());
+			
+			tracker.send(MapBuilder
+				    .createAppView()
+				    .build()
+				);
+		}
 	}
 	
 	/*=====RECORD EVENTS======================================================================================================*/
@@ -147,9 +162,25 @@ public class AnalyticsWrapper {
 		if (label!=null){
 			labelAsStirng = label.toString();
 		}
-//		tracker.send(MapBuilder.createEvent(categoryAsString, actionAsString, labelAsStirng, value).build());
+		if (isNotEmployeeDevice())
+			tracker.send(MapBuilder.createEvent(categoryAsString, actionAsString, labelAsStirng, value).build());
 		
 		//Log.d("ANALYTICS", categoryAsString+" "+actionAsString+" "+labelAsStirng+" "+value);
+	}
+	
+	private static final String[] excludedDevices = {"7841715974043649", //Calin 
+														"639832f623d58f2", //Mihai
+														"7871b4c06d1c3fe2", //Galaxy Note
+														"24a2e7d3ed700fc5"}; //Galaxy S2
+	
+	private static boolean isNotEmployeeDevice(){
+		for(String s : excludedDevices){
+			if (s.equalsIgnoreCase(deviceId)){
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 

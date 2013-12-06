@@ -278,7 +278,7 @@ public abstract class BaseActivity extends FragmentActivity
 	@Override
 	public void onLocationChanged(Location location) {
 		this.location = location;
-		Log.d(TAG, "onLocationChanged");
+//		Log.d(TAG, "onLocationChanged");
 		if (locationListeners!=null && locationListeners.size()>0){
 			for(ILocationListener listener: locationListeners){
 				listener.onLocationChanged(location);
