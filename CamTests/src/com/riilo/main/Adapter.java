@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class Adapter extends SQLiteOpenHelper{
 
-	private static final String DB_NAME="riilo2.db";
+	private static final String DB_NAME="riilo3.db";
 	private static final int DB_VERSION=1;
 
 	public static final String POSTS_TABLE = "CamTestsPosts";
@@ -45,6 +45,7 @@ public class Adapter extends SQLiteOpenHelper{
 	public static final String APP_STORAGE_TABLE = "AppStorage";
 	public static final String APP_STORAGE_KEY_COLUMN = "Key";
 	public static final String APP_STORAGE_KEY_TUTORIAL_RUN = "TutorialRun";
+	public static final String APP_STORAGE_KEY_TUTORIAL_MARKER_RUN = "TutorialMarkerRun";
 	public static final String APP_STORAGE_VALUE_COLUMN = "Value";
 	
 	private static final String CREATE_APP_STORAGE_TABLE = String.format("CREATE TABLE %s (%s TEXT, %s TEXT)", APP_STORAGE_TABLE, APP_STORAGE_KEY_COLUMN, APP_STORAGE_VALUE_COLUMN);
@@ -54,6 +55,12 @@ public class Adapter extends SQLiteOpenHelper{
 																	APP_STORAGE_VALUE_COLUMN, 
 																	APP_STORAGE_KEY_TUTORIAL_RUN, 
 																	0);
+	private static final String INSERT_APPSTORAGE_TUTORIAL_MARKER_RUN = String.format("INSERT INTO %s (%s, %s) VALUES('%s', %s)",
+																		APP_STORAGE_TABLE,
+																		APP_STORAGE_KEY_COLUMN,
+																		APP_STORAGE_VALUE_COLUMN,
+																		APP_STORAGE_KEY_TUTORIAL_MARKER_RUN,
+																		0);
 	
 	public static final String LOCATION_HISTORY_TABLE = "LocationHistory";
 	public static final String LOCATION_HISTORY_DATE = "DateCreated";
@@ -86,7 +93,7 @@ public class Adapter extends SQLiteOpenHelper{
 	//=============V2================================================================================================================================
 	
 	
-	private final String[] createQueries = new String[] { CREATE_POSTS_TABLE, CREATE_LOCATION_HISTORY_TABLE, CREATE_APP_STORAGE_TABLE, INSERT_APPSTORAGE_TUTORIAL_RUN, CREATE_OUTSIDE_LOCATION_HISTORY_TABLE };
+	private final String[] createQueries = new String[] { CREATE_POSTS_TABLE, CREATE_LOCATION_HISTORY_TABLE, CREATE_APP_STORAGE_TABLE, INSERT_APPSTORAGE_TUTORIAL_RUN, INSERT_APPSTORAGE_TUTORIAL_MARKER_RUN, CREATE_OUTSIDE_LOCATION_HISTORY_TABLE };
 	
 	
 	public Adapter(Context context){

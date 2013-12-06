@@ -11,12 +11,13 @@
 	  android:layout_height="match_parent"/>
 	
 	<RelativeLayout 
-	    android:id="@+id/tutorial_write_post"
+	    android:id="@+id/tutorial_marker"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:background="@drawable/card_background"
         android:layout_margin="16dp"
+        android:visibility="gone"
         >
 	    
 	    <ImageView
@@ -28,7 +29,7 @@
                 />
 	    
 	    <ImageButton
-            android:id="@+id/button_close"
+            android:id="@+id/button_close_tutorial_marker"
             android:layout_width="48dp"
             android:layout_height="wrap_content"
             android:padding="8dp"
@@ -41,9 +42,9 @@
 	        android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/map_marker"
-            android:layout_toLeftOf="@+id/button_close"
+            android:layout_toLeftOf="@+id/button_close_tutorial_marker"
             android:layout_centerHorizontal="true"
-            android:text="Pellentesque semper dictum sem, eu suscipit lectus ultricies eu. Curabitur aliquet convallis nulla in ultricies."
+            android:text="@string/tutorial_marker"
             android:padding="8dp"
 	        />
 	    

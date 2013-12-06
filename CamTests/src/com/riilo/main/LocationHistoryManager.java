@@ -66,6 +66,7 @@ public class LocationHistoryManager {
 			if (!this.list.contains(h)){
 				this.list.add(h);
 //				Log.d(TAG, h.toString());
+				
 			}
 		}
 	}

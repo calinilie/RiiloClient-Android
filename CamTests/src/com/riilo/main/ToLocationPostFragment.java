@@ -18,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView.FindListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -48,6 +49,8 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	private ImageButton cancelButton;
 	private EditText inputMessage;
 	private View panelCreatePosts;
+	private View tutorialMarker;
+	private ImageButton closeTutorialMarker;
 	
 //	private boolean mapCameraAnimationRun = false; 
 	private Post currentPost;
@@ -171,6 +174,18 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
    		case R.id.button_cancel:
    			hideReplyToPostPannel();
    			break;
+   		case R.id.button_close_tutorial_marker:
+   			Animation slideOut = AnimationUtils.loadAnimation(activity.getApplicationContext(),
+   	                R.anim.slide_out_bottom);
+   	   	 
+	   	   	 if (tutorialMarker.getVisibility()==View.VISIBLE){
+	   	   		 tutorialMarker.startAnimation(slideOut);
+	   	   		 tutorialMarker.requestLayout();
+	   	   		 tutorialMarker.setVisibility(View.GONE);
+	   	   	 }
+	   	   	 
+	   	   	 Facade.getInstance(activity).updateTutorialMarkerRun();
+	   	   	 break;
    		}
    	}
     
@@ -291,8 +306,15 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
         cancelButton = ((ImageButton)view.findViewById(R.id.button_cancel));
         cancelButton.setOnClickListener(this);
         
-        inputMessage = (EditText)view.findViewById(R.id.editor_message);
+        if (!Facade.getInstance(activity).wasTutorialMarkerRun()){
+		    tutorialMarker = view.findViewById(R.id.tutorial_marker);
+		    if (tutorialMarker!=null)
+		    	tutorialMarker.setVisibility(View.VISIBLE);
+		    closeTutorialMarker = (ImageButton)view.findViewById(R.id.button_close_tutorial_marker);
+		    closeTutorialMarker.setOnClickListener(this);
+        }
         
+        inputMessage = (EditText)view.findViewById(R.id.editor_message);
         panelCreatePosts = view.findViewById(R.id.create_post_pannel);
 	}
 

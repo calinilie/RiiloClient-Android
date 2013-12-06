@@ -257,25 +257,78 @@ public class Facade {
 		//Log.d("tutorial", "wasTutorialRun");
 		open();
 		boolean retVal = false;
-		String selection = String.format("%s = ?", Adapter.APP_STORAGE_KEY_COLUMN);
-		String[] selectionArgs = {Adapter.APP_STORAGE_KEY_TUTORIAL_RUN}; 
-		Cursor cursor = database.query(Adapter.APP_STORAGE_TABLE, appStorageColumns, selection, selectionArgs, null, null, null);
-		if (cursor.moveToNext()){
-			int value = cursor.getInt(1);
-			//Log.d("tutorial", value+"");
-			retVal = value == 1;
+		try{
+			String selection = String.format("%s = ?", Adapter.APP_STORAGE_KEY_COLUMN);
+			String[] selectionArgs = {Adapter.APP_STORAGE_KEY_TUTORIAL_RUN}; 
+			Cursor cursor = database.query(Adapter.APP_STORAGE_TABLE, appStorageColumns, selection, selectionArgs, null, null, null);
+			if (cursor.moveToNext()){
+				int value = cursor.getInt(1);
+				//Log.d("tutorial", value+"");
+				retVal = value == 1;
+			}
 		}
-		close();
+		catch(Exception e)
+		{
+			//TODO add ga tracking
+		}
+		finally{
+			close();
+		}
 		return retVal;
 	}
 	
 	public synchronized void updateTutorialRun(){
 		open();
-		values.clear();
-		values.put(Adapter.APP_STORAGE_VALUE_COLUMN, 1);
-		String[] whereArgs = {Adapter.APP_STORAGE_KEY_TUTORIAL_RUN};
-		database.update(Adapter.APP_STORAGE_TABLE, values, Adapter.APP_STORAGE_KEY_COLUMN+" = ?", whereArgs);
-		close();
+		try{
+			values.clear();
+			values.put(Adapter.APP_STORAGE_VALUE_COLUMN, 1);
+			String[] whereArgs = {Adapter.APP_STORAGE_KEY_TUTORIAL_RUN};
+			database.update(Adapter.APP_STORAGE_TABLE, values, Adapter.APP_STORAGE_KEY_COLUMN+" = ?", whereArgs);
+		}
+		catch(Exception e){
+			//TODO add ga tracking
+		}
+		finally{
+			close();
+		}
+	}
+	
+	public synchronized boolean wasTutorialMarkerRun(){
+		open();
+		boolean retVal = false;
+		try{
+			String selection = String.format("%s = ?", Adapter.APP_STORAGE_KEY_COLUMN);
+			String[] selectionArgs = {Adapter.APP_STORAGE_KEY_TUTORIAL_MARKER_RUN}; 
+			Cursor cursor = database.query(Adapter.APP_STORAGE_TABLE, appStorageColumns, selection, selectionArgs, null, null, null);
+			if (cursor.moveToNext()){
+				int value = cursor.getInt(1);
+				//Log.d("tutorial", value+"");
+				retVal = value == 1;
+			}
+		}
+		catch(Exception e){
+			//TODO add ga tracking
+		}
+		finally{
+			close();
+		}
+		return retVal;
+	}
+	
+	public synchronized void updateTutorialMarkerRun(){
+		open();
+		try{
+			values.clear();
+			values.put(Adapter.APP_STORAGE_VALUE_COLUMN, 1);
+			String[] whereArgs = {Adapter.APP_STORAGE_KEY_TUTORIAL_MARKER_RUN};
+			database.update(Adapter.APP_STORAGE_TABLE, values, Adapter.APP_STORAGE_KEY_COLUMN+" = ?", whereArgs);
+		}
+		catch(Exception e){
+			//TODO add ga tracking
+		}
+		finally{
+			close();
+		}
 	}
 	
 	public synchronized void updateLastLocationSent(){
