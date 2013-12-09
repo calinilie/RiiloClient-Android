@@ -26,7 +26,7 @@ public class AnalyticsWrapper {
 		deviceId = Secure.getString(context.getContentResolver(),
                 Secure.ANDROID_ID);
 		
-		Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>ANALYTICS", "DEVICE ID   " + deviceId);
+		//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>ANALYTICS", "DEVICE ID   " + deviceId);
 	}
 	
 	public static AnalyticsWrapper getInstance(Activity context){
@@ -38,7 +38,7 @@ public class AnalyticsWrapper {
 	public void startTracker(Activity activity){
 		if (isNotEmployeeDevice()){
 			tracker.activityStart(activity);
-			Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>ANALYTICS", "STARTED");
+			//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>ANALYTICS", "STARTED");
 		}
 	}
 	

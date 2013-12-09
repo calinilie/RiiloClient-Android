@@ -64,7 +64,7 @@ public class Post implements Comparable<Post>, Serializable{
 		this.conversationId = bundle.getLong(StringKeys.POST_CONVERSATION_ID);
 		this.originLatitude = bundle.getDouble(StringKeys.POST_ORIGIN_LATITUDE);
 		this.originLongitude = bundle.getDouble(StringKeys.POST_ORIGIN_LONGITUDE);
-//		//Log.d("POST BUNDLE CONSTRUCTOR", toString());
+		//Log.d("POST BUNDLE CONSTRUCTOR", toString());
 	}
 	
 	public Post (JSONObject jsonObject) throws JSONException{
@@ -97,7 +97,7 @@ public class Post implements Comparable<Post>, Serializable{
     	bundle.putLong(StringKeys.POST_ID, id);
     	bundle.putLong(StringKeys.POST_REPLIES_TO_POSTID, repliesToPostId);
     	bundle.putLong(StringKeys.POST_CONVERSATION_ID, this.conversationId);
-//    	//Log.d("POST TO BUNDLE", toString());
+    	//Log.d("POST TO BUNDLE", toString());
     	return bundle;
 	}
 
@@ -271,15 +271,15 @@ public class Post implements Comparable<Post>, Serializable{
 	@Override
 	public boolean equals(Object another){
 		if (another == null){
-//			//Log.d(">>>>compare>>>>", "null");
+			//Log.d(">>>>compare>>>>", "null");
 			return false;
 		}
 		if (!(another instanceof Post)){
-//			//Log.d(">>>>compare>>>>", "not Post");
+			//Log.d(">>>>compare>>>>", "not Post");
 			return false;
 		}
 		
-//		//Log.d(">>>>compare>>>>", this.id +" = "+((Post)another).getId());
+		//Log.d(">>>>compare>>>>", this.id +" = "+((Post)another).getId());
 		return this.id == ((Post)another).getId();
 	}
 	

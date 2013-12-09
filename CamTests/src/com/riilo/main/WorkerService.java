@@ -96,21 +96,21 @@ public class WorkerService extends IntentService{
 			if (latestPosts==null){
 				//Log.d("<<<<<<<#####<<<<<"+WorkerService.class.toString()+">>>>>########>>>>>>>", "getLatestposts(start, limit) FAILED");
 			}
-//			//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "getLatestsPosts() finished");
+			//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "getLatestsPosts() finished");
 			resultReceiverType = intent.getIntExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
 			if (latestPosts!=null){
-//				//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "getLatestsPosts != null");
+				//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "getLatestsPosts != null");
 				resultData = new Bundle();
 				resultData.putParcelable(StringKeys.POST_LIST_PARCELABLE, new PostsListParcelable(latestPosts));
 				resultReceiver.send(resultReceiverType, resultData);
 			}
-//			//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "getLatestPosts == NULL");
+			//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "getLatestPosts == NULL");
 			break;
 		case StringKeys.WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID:
 			resultReceiver = intent.getParcelableExtra(StringKeys.POST_LIST_RESULT_RECEIVER);
 			resultReceiverType = intent.getIntExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_ASC);
 			conversationId = intent.getLongExtra(StringKeys.CONVERSATION_FROM_CONVERSATION_ID, 0);
-//			//Log.d("WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID", conversationId +"");
+			//Log.d("WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID", conversationId +"");
 			if (conversationId!=0){
 				List<Post> postsInConversation = getConverstionByConversationId(conversationId);
 				resultData = new Bundle();
@@ -358,7 +358,7 @@ public class WorkerService extends IntentService{
 	      StatusLine statusLine = response.getStatusLine();
 //	      Header[] headers = response.getHeaders("X-Cache");
 //	      if (headers.length>0)
-//	    	  //Log.d("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH", headers[0].getValue());
+	    	  //Log.d("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH", headers[0].getValue());
 	      int statusCode = statusLine.getStatusCode();
 	      if (statusCode == 200) {
 	        HttpEntity entity = response.getEntity();
@@ -392,13 +392,13 @@ public class WorkerService extends IntentService{
 	    }
 	    try {
 			JSONArray array =  new JSONArray(jsonString);
-//			//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", array.length()+"");
+			//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", array.length()+"");
 			int length = array.length();
 			for (int i=0; i<length; i++){
-//				//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", array.getJSONObject(i).toString());
+				//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", array.getJSONObject(i).toString());
 				Post p = new Post(array.getJSONObject(i));
 				retVal.add(p);
-//				//Log.d("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", p.displayInList());
+				//Log.d("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", p.displayInList());
 			}
 		} catch (JSONException e) {
 			Log.e("<<<<<<<<<Workerservice.jsonStringToPostsList>>>>>>>>>", e.getLocalizedMessage(), e);

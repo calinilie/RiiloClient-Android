@@ -92,7 +92,7 @@ public class Helpers {
     }
     
     private static Date shiftTimeZone(Date date, TimeZone sourceTimeZone, TimeZone targetTimeZone) {
-//    	//Log.d("default timezone::::::::::::::::::::::::::::::", sourceTimeZone.getDisplayName() + " " + targetTimeZone.getDisplayName());
+    	//Log.d("default timezone::::::::::::::::::::::::::::::", sourceTimeZone.getDisplayName() + " " + targetTimeZone.getDisplayName());
         Calendar sourceCalendar = Calendar.getInstance();
         sourceCalendar.setTime(date);
         sourceCalendar.setTimeZone(sourceTimeZone);

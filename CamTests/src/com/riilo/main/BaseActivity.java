@@ -168,7 +168,7 @@ public abstract class BaseActivity extends FragmentActivity
 	//	            if (manufacturer.contains("samsung") && model.contains("nexus")){
 	//	                 intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
 	//	            }
-	//	            //Log.d("#########################", fileName);
+		            //Log.d("#########################", fileName);
 	        if( !manufacturer.contains("samsung") && !manufacturer.contains("google") )
 	        	intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
 	        else if (model.contains("nexus")){
@@ -262,7 +262,7 @@ public abstract class BaseActivity extends FragmentActivity
               
         } else if (resultCode == RESULT_CANCELED) {
         	//on HTC One X, if user cancels activity, the condition above is not satisfied !!!!
-//        	//Log.d("onTakePhotoActivityResult<<<<<<<<<<<<<<<", "RESULT_CANCELED");
+        	//Log.d("onTakePhotoActivityResult<<<<<<<<<<<<<<<", "RESULT_CANCELED");
         }
         } else {
 //        	showWarningDialog(getString(R.string.error_could_not_take_photo));
@@ -270,7 +270,7 @@ public abstract class BaseActivity extends FragmentActivity
         }
 //        showWarningDialog(getString(R.string.error_could_not_take_photo));
 		//TODO exception handling in analytics
-//        //Log.d("onTakePhotoActivityResult<<<<<<<<<<<<<<<", "SHOULD Have showWarningDialog");
+        //Log.d("onTakePhotoActivityResult<<<<<<<<<<<<<<<", "SHOULD Have showWarningDialog");
         return null;
     }*/
 	

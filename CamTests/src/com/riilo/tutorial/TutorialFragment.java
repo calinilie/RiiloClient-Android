@@ -25,6 +25,7 @@ public class TutorialFragment extends Fragment implements OnClickListener{
 		this.position = position;
 	}
 	
+	
 	private TutorialActivity activity;
 	
 	@Override

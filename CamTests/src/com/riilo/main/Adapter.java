@@ -107,7 +107,7 @@ public class Adapter extends SQLiteOpenHelper{
 			runSqlQueries(db, createQueries);
 //		}
 //		catch (Exception e){
-//			//Log.d("sqlite_db", e.getMessage());
+			//Log.d("sqlite_db", e.getMessage());
 //		}
 	}
 
@@ -147,7 +147,7 @@ public class Adapter extends SQLiteOpenHelper{
 	
 	private void runSqlQueries(SQLiteDatabase db, String[] queries){
 		for (String s:queries){
-			Log.d("sqlite_db", queries.length +" "+ s);
+			//Log.d("sqlite_db", queries.length +" "+ s);
 			db.execSQL(s);
 		}
 	}

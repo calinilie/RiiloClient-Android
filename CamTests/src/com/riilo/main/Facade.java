@@ -95,10 +95,10 @@ public class Facade {
 			post.setUserAtLocation(cursor.getInt(10)==1 ? true : false);
 			post.setConversationId(cursor.getInt(11));
 			retVal.add(post);
-//			//Log.d("<<<<<<<<<<<<Facade.getAllPosts()>>>>>>>>>>>>", post.displayInList());
+			//Log.d("<<<<<<<<<<<<Facade.getAllPosts()>>>>>>>>>>>>", post.displayInList());
 		}
 //		if (retVal.size()>=1)
-//			//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>", retVal.get(retVal.size()-1).toString());
+			//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>", retVal.get(retVal.size()-1).toString());
 		deleteOldPosts(retVal.size());
 		close();
 		//Log.d("<<<<<<<<<<<<Facade.getAllPosts()>>>>>>>>>>>>", "posts in db: "+retVal.size());
@@ -226,30 +226,39 @@ public class Facade {
 	}
 	
 	public synchronized List<LocationHistory> getLocationHistory(){
-		open();
 		List<LocationHistory> retVal = new ArrayList<LocationHistory>();
-		Cursor cursor = database.query(Adapter.OUTSIDE_LOCATION_HISTORY_TABLE, outsideLocationColumns, null, null, null, null, null, "500");
-		while (cursor.moveToNext()){
-			LocationHistory location = new LocationHistory();
-			location.setLocationHistoryId(cursor.getLong(0));
-			location.setLatitude(cursor.getDouble(1));
-			location.setLongitude(cursor.getDouble(2));
-			retVal.add(location);
+		try{
+			open();
+			Cursor cursor = database.query(Adapter.OUTSIDE_LOCATION_HISTORY_TABLE, outsideLocationColumns, null, null, null, null, null, "500");
+			while (cursor.moveToNext()){
+				LocationHistory location = new LocationHistory();
+				location.setLocationHistoryId(cursor.getLong(0));
+				location.setLatitude(cursor.getDouble(1));
+				location.setLongitude(cursor.getDouble(2));
+				retVal.add(location);
+			}
+			
+			Log.d(TAG, retVal.size()+"");
 		}
-		close();
-		Log.d(TAG, retVal.size()+"");
+		catch(Exception e){}
+		finally{
+			close();
+		}
 		return retVal;
 	}
 	
 	private synchronized boolean doesLocationHistoryExist(long id){
-		String[] whereArgs = {id+""};
-		Cursor cursor = database.query(
-							Adapter.OUTSIDE_LOCATION_HISTORY_TABLE, 
-							outsideLcationHistoryId, 
-							Adapter.OUTSIDE_LOCATION_HISTORY_ID+" = ?", 
-							whereArgs , null, null, null);
-		if (cursor.moveToNext())
-			return true;
+		try{
+			String[] whereArgs = {id+""};
+			Cursor cursor = database.query(
+								Adapter.OUTSIDE_LOCATION_HISTORY_TABLE, 
+								outsideLcationHistoryId, 
+								Adapter.OUTSIDE_LOCATION_HISTORY_ID+" = ?", 
+								whereArgs , null, null, null);
+			if (cursor.moveToNext())
+				return true;
+		}
+		catch(Exception e){}
 		return false;
 	}
 	
