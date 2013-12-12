@@ -15,7 +15,7 @@ public class PostsResultReceiver extends ResultReceiver{
 
 	private PostListItemAdapter adapter;
 	private List<Post> adapterData;
-	private Tab tab;
+	private String tab;
 	private PullToRefreshAttacher pullToRefreshAttacher;
 	private Button button;
 	
@@ -34,7 +34,7 @@ public class PostsResultReceiver extends ResultReceiver{
 		this.adapterData = adapterData;
 	}
 
-	public void setTab(Tab tab) {
+	public void setTab(String tab) {
 		this.tab = tab;
 	}
 	
@@ -140,7 +140,7 @@ public class PostsResultReceiver extends ResultReceiver{
 	}
 	
 	private void updateTabText(final int notifications){
-		if (tab!=null){
+		/*if (tab!=null){
 			this.handler.post(new Runnable() {
 				@Override
 				public void run() {
@@ -154,7 +154,7 @@ public class PostsResultReceiver extends ResultReceiver{
 					}
 				}
 			});
-		}
+		}*/
 	}
 	
 	

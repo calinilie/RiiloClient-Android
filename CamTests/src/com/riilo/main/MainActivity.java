@@ -1,47 +1,35 @@
 package com.riilo.main;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.android.gms.location.LocationRequest;
 import com.riilo.main.R;
 import com.riilo.interfaces.IBackButtonListener;
 import com.riilo.tutorial.TutorialActivity;
 
 import android.app.ActionBar;
-import android.app.ActionBar.Tab;
-import android.app.FragmentTransaction;
+import android.app.ActionBar.OnNavigationListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.SpinnerAdapter;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
-public class MainActivity extends BaseActivity implements ActionBar.TabListener{
+public class MainActivity extends BaseActivity implements OnNavigationListener{
+	
+    AppSectionsPagerAdapter appSectionsPagerAdapter;
 
-	/**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide fragments for each of the
-     * three primary sections of the app. We use a {@link android.support.v4.app.FragmentPagerAdapter}
-     * derivative, which will keep every loaded fragment in memory. If this becomes too memory
-     * intensive, it may be best to switch to a {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    AppSectionsPagerAdapter mAppSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will display the three primary sections of the app, one at a
-     * time.
-     */
-    ViewPager mViewPager;
+    ViewPager viewPager;
+    SpinnerAdapter spinnerAdapter;
     
     PullToRefreshAttacher pullToRefreshAttacher;
-//    private ToLocationPostFragment toLocationPostFragment;
     private boolean wasTutorialRunThisSession = false;
     private IBackButtonListener backButtonListener;
-    
-    
-    private List<Tab> tabs;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,44 +44,24 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
         
         setContentView(R.layout.activity_main_layout);
         
-        // Create the adapter that will return a fragment for each of the three primary sections
-        // of the app.
-        mAppSectionsPagerAdapter = new AppSectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the action bar.
         final ActionBar actionBar = getActionBar();
-
-        // Specify that the Home/Up button should not be enabled, since there is no hierarchical
-        // parent.
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        actionBar.setDisplayShowTitleEnabled(false);
+        spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.riilo_sections,
+                android.R.layout.simple_spinner_dropdown_item);
+        actionBar.setListNavigationCallbacks(spinnerAdapter, this);
         actionBar.setHomeButtonEnabled(false);
         
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mAppSectionsPagerAdapter);
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        appSectionsPagerAdapter = new AppSectionsPagerAdapter(getSupportFragmentManager());
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(appSectionsPagerAdapter);
+        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                // When swiping between different app sections, select the corresponding tab.
-                // We can also use ActionBar.Tab#select() to do this if we have a reference to the
-                // Tab.
             	actionBar.setSelectedNavigationItem(position);
             }
-        });
-        tabs = new ArrayList<ActionBar.Tab>();
-        // For each of the sections in the app, add a tab to the action bar.
-        for (int i = 0; i < mAppSectionsPagerAdapter.getCount(); i++) {
-            // Create a tab with text corresponding to the page title defined by the adapter.
-            // Also specify this Activity object, which implements the TabListener interface, as the
-            // listener for when this tab is selected.
-        	Tab tab =  actionBar.newTab()
-                    .setText(mAppSectionsPagerAdapter.getPageTitle(i))
-                    .setTabListener(this);
-            actionBar.addTab(tab);
-            tabs.add(tab);
-        }
+        });        
         
-        //create pullToRefreshAttacher
         pullToRefreshAttacher = PullToRefreshAttacher.get(this);
         initLocationClient(LocationRequest.PRIORITY_LOW_POWER, 2000, 1000);
     }
@@ -102,17 +70,6 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
     public void onSaveInstanceState(Bundle savedInstanceState) {
     	savedInstanceState.putBoolean(StringKeys.WAS_TUTORIAL_RUN, wasTutorialRunThisSession);
         super.onSaveInstanceState(savedInstanceState);
-    }
-    
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        // When the given tab is selected, switch to the corresponding page in the ViewPager.
-        mViewPager.setCurrentItem(tab.getPosition());
-        analytics.recordScreenHit_TabSelect(tab.getPosition());
     }
     
     @Override
@@ -126,14 +83,23 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
     	}
     }
     
-    public List<Tab> getTabs(){
-    	return tabs;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main_activity_layout_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    
+    /*@Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+    	final MenuItem menuItem = menu.findItem(R.id.all_notifications);     
+    	return super.onPrepareOptionsMenu(menu);
+    }*/
+    
+    public SpinnerAdapter getSpinner(){
+    	return spinnerAdapter;
     }
 
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-	
     public class AppSectionsPagerAdapter extends FragmentPagerAdapter {
 
         public AppSectionsPagerAdapter(FragmentManager fm) {
@@ -142,7 +108,6 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
 
         @Override
         public Fragment getItem(int i) {
-        	//Log.d(">>>>>>>>getItem", "getItem "+i);
             switch (i) {
                 case 0:
                 	ToLocationPostFragment toLocationPostFragment = new ToLocationPostFragment();
@@ -173,13 +138,13 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
         @Override
         public CharSequence getPageTitle(int position) {
         	switch (position) {
-            case 0:
+            /*case 0:
             	return "Post";
             case 1:
                 return "Latest";
             case 2:
             	return "Nearby";
-            case 3:
+            case 3:*/
             default:
             	return "Notifications: 0";
         	}
@@ -188,10 +153,15 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener{
     
 	@Override
 	protected void setupWidgetsViewElements() {
-		// TODO Auto-generated method stub
 	}
 
 	public PullToRefreshAttacher getPullToRefreshAttacher(){
 		return this.pullToRefreshAttacher;
+	}
+
+	@Override
+	public boolean onNavigationItemSelected(int position, long itemId) {
+		viewPager.setCurrentItem(position);
+		return true;
 	}
 }

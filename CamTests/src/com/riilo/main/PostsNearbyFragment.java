@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -122,6 +123,7 @@ public class PostsNearbyFragment
 	
 	@Override
 	public void onLocationChanged(Location location) {
+		Log.d(">>>>>>>>>>>>>>>>>", (String) activity.getSpinner().getItem(2));
 //		Toast.makeText(activity, "Location Changed "+(location==null), Toast.LENGTH_SHORT).show();
 		if (location!=null){
 			boolean refreshAdapter = false;
@@ -133,7 +135,7 @@ public class PostsNearbyFragment
 							latLong[1],
 							adapter,
 							adapterData,
-							activity.getTabs().get(2),
+							activity.getSpinner().getItem(2),
 							pullToRefreshAttacher,
 							buttonRefresh,
 							false,
@@ -152,6 +154,9 @@ public class PostsNearbyFragment
 
 	@Override
 	public void onRefreshStarted(View view) {
+		
+		
+		
 		activity.analytics.recordEvent_General_PullToRefresh(EventLabel.tab_nearby);
 		Location location = ((BaseActivity) getActivity()).getLocation();
 		if (location!=null){
@@ -163,7 +168,7 @@ public class PostsNearbyFragment
 							latLong[1],
 							adapter,
 							adapterData,
-							activity.getTabs().get(2),
+							activity.getSpinner().getItem(2),
 							pullToRefreshAttacher,
 							buttonRefresh,
 							true,
@@ -189,7 +194,7 @@ public class PostsNearbyFragment
 							latLong[1],
 							adapter,
 							adapterData,
-							activity.getTabs().get(2),
+							activity.getSpinner().getItem(2),
 							pullToRefreshAttacher,
 							buttonRefresh,
 							true,
