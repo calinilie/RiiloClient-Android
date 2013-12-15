@@ -6,6 +6,8 @@
 	    <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
 	    <item name="ptrHeaderStyle">@style/Widget.Custom.PtrHeader</item>
 	    
+		<item name=""
+	    
 	    
 	 	<!-- <item name="android:popupMenuStyle">@style/PopupMenu</item> -->   
 	    <!-- <item name="android:actionBarWidgetTheme">@style/Theme.stylingactionbar.widget</item>
