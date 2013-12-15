@@ -176,8 +176,8 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 	private static final List<SpinnerSection> sections = new ArrayList<SpinnerSection>(
 			Arrays.asList(
 				new SpinnerSection("Post Something", 0, R.drawable.riilo_logo, false),
-				new SpinnerSection("Latest", 0, R.drawable.common_signin_btn_icon_disabled_dark, false),
-				new SpinnerSection("Nearby", 3, R.drawable.common_signin_btn_icon_pressed_light, true),
+				new SpinnerSection("Latest", 0, R.drawable.ic_latest_posts, false),
+				new SpinnerSection("Nearby", 3, R.drawable.ic_nearby_posts, true),
 				new SpinnerSection("Notifications", 10, R.drawable.ic_map_marker_human, true)
 			)
 		);
