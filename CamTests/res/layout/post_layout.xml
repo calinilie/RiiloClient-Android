@@ -75,7 +75,7 @@
             android:layout_alignBottom="@+id/editor_message"
             android:layout_alignParentRight="true"
             android:src="@android:drawable/ic_menu_send"
-            android:background="@drawable/selector" 
+            android:background="@drawable/selector"
             android:contentDescription="Send message"/>
   
     </RelativeLayout>

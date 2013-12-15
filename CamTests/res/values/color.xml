@@ -15,4 +15,8 @@
     <color name="holo_blue_light">#33B5E5</color>
     <color name="holo_blue_dark">#0099CC</color>
     <color name="holo_blue_bright">#00DDFF</color>
+    <color name="riilo_light_red">#e23627</color>
+    <color name="riilo_lighter_red">#ff382e</color>
+    <color name="riilo_dark_red">#c52b1c</color>
+    
 </resources>
