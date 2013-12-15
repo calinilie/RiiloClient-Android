@@ -331,4 +331,5 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 		return true;
 	}
 
+
 }

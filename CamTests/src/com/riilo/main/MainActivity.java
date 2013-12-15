@@ -1,5 +1,9 @@
 package com.riilo.main;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.google.android.gms.location.LocationRequest;
 import com.riilo.main.R;
 import com.riilo.interfaces.IBackButtonListener;
@@ -16,8 +20,10 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class MainActivity extends BaseActivity implements OnNavigationListener{
@@ -25,7 +31,8 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
     AppSectionsPagerAdapter appSectionsPagerAdapter;
 
     ViewPager viewPager;
-    SpinnerAdapter spinnerAdapter;
+//    SpinnerAdapter spinnerAdapter;
+    SpinnerSectionItemAdapter spinnerAdapter;
     
     PullToRefreshAttacher pullToRefreshAttacher;
     private boolean wasTutorialRunThisSession = false;
@@ -33,6 +40,10 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final ActionBar actionBar = getActionBar();
+        actionBar.setHomeButtonEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
         
         wasTutorialRunThisSession = savedInstanceState!=null && savedInstanceState.getBoolean(StringKeys.WAS_TUTORIAL_RUN);
         boolean showTutorial = !Facade.getInstance(this).wasTutorialRun() && !wasTutorialRunThisSession;
@@ -43,14 +54,13 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
         }
         
         setContentView(R.layout.activity_main_layout);
-        
-        final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-        actionBar.setDisplayShowTitleEnabled(false);
-        spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.riilo_sections,
-                android.R.layout.simple_spinner_dropdown_item);
+        
+//        spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.riilo_sections,
+//                android.R.layout.simple_spinner_dropdown_item);
+        spinnerAdapter = new SpinnerSectionItemAdapter(this, R.layout.spinner_section_item_layout, sections);
         actionBar.setListNavigationCallbacks(spinnerAdapter, this);
-        actionBar.setHomeButtonEnabled(false);
+
         
         appSectionsPagerAdapter = new AppSectionsPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.pager);
@@ -61,6 +71,7 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
             	actionBar.setSelectedNavigationItem(position);
             }
         });        
+        
         
         pullToRefreshAttacher = PullToRefreshAttacher.get(this);
         initLocationClient(LocationRequest.PRIORITY_LOW_POWER, 2000, 1000);
@@ -87,14 +98,10 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
     public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_activity_layout_menu, menu);
+//		MenuItem item = menu.findItem(R.id.all_notifications);
+//		((TextView) item.getActionView().findViewById(R.id.notifications_number)).setText("got you fucker!");
         return super.onCreateOptionsMenu(menu);
     }
-    
-    /*@Override
-    public boolean onPrepareOptionsMenu(final Menu menu) {
-    	final MenuItem menuItem = menu.findItem(R.id.all_notifications);     
-    	return super.onPrepareOptionsMenu(menu);
-    }*/
     
     public SpinnerAdapter getSpinner(){
     	return spinnerAdapter;
@@ -117,6 +124,7 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
                 case 1:
                 	PostsLatestFragment latestPostsFragment = new PostsLatestFragment();
                 	addLocationListener(latestPostsFragment);
+                	latestPostsFragment.setHasOptionsMenu(true);
                 	return latestPostsFragment;
                 case 2:
                 	PostsNearbyFragment nearbyPostsFragment = new PostsNearbyFragment();
@@ -164,4 +172,13 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 		viewPager.setCurrentItem(position);
 		return true;
 	}
+	
+	private static final List<SpinnerSection> sections = new ArrayList<SpinnerSection>(
+			Arrays.asList(
+				new SpinnerSection("Post Something", 0, R.drawable.riilo_logo, false),
+				new SpinnerSection("Latest", 0, R.drawable.common_signin_btn_icon_disabled_dark, false),
+				new SpinnerSection("Nearby", 3, R.drawable.common_signin_btn_icon_pressed_light, true),
+				new SpinnerSection("Notifications", 10, R.drawable.ic_map_marker_human, true)
+			)
+		);
 }

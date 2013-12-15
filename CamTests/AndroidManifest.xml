@@ -30,6 +30,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/riilo_logo"
+        android:logo="@drawable/riilo_logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity

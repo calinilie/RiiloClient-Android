@@ -23,9 +23,9 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 	private boolean showDistance;
 	public String unitOfMeasure = "km";
 	
-	public PostListItemAdapter(Context context, int resource, List<Post> items, String currentUserId, boolean showDistance) {
-		super(context, resource, items);
-		this.layoutId = resource;
+	public PostListItemAdapter(Context context, int layoutId, List<Post> items, String currentUserId, boolean showDistance) {
+		super(context, layoutId, items);
+		this.layoutId = layoutId;
 		this.items = items;
 		decimalFormat10 = new DecimalFormat("#.#");
 		decimalFormat1 = new DecimalFormat("#.##");
@@ -37,7 +37,6 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 	
 	@Override
 	public int getCount() {
-	    // TODO Auto-generated method stub
 		int count = (items != null) ? items.size() : 0;
 		//Log.d("PostsCache.getPostsByConversationId()","itemAdapter.getcount "+count);
 	    return count;

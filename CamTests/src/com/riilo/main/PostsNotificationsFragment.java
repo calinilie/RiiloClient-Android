@@ -124,6 +124,7 @@ public class PostsNotificationsFragment
 	@Override
 	public void onRefreshStarted(View view) {
 		activity.analytics.recordEvent_General_PullToRefresh(EventLabel.tab_notifications);
+		
 		PostsCache.getInstance(activity).getNotifications(activity.deviceId, adapter, adapterData, activity.getSpinner().getItem(3), pullToRefreshAttacher, true, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
 	}
 
