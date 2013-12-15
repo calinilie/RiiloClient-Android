@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.google.android.gms.location.LocationRequest;
 import com.riilo.main.R;
+import com.riilo.main.AnalyticsWrapper.EventLabel;
 import com.riilo.interfaces.IBackButtonListener;
 import com.riilo.tutorial.TutorialActivity;
 
@@ -25,6 +26,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class MainActivity extends BaseActivity implements OnNavigationListener{
@@ -110,14 +112,14 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
     	}
     }
     
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_activity_layout_menu, menu);
 //		MenuItem item = menu.findItem(R.id.all_notifications);
-//		((TextView) item.getActionView().findViewById(R.id.notifications_number)).setText("got you fucker!");
+//		((TextView) item.getActionView().findViewById(R.id.notifications_number)).setText("got you!");
         return super.onCreateOptionsMenu(menu);
-    }
+    }*/
     
     public SpinnerSectionItemAdapter getSpinnerAdapter(){
     	return spinnerAdapter;
@@ -145,12 +147,13 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
                 case 2:
                 	PostsNearbyFragment nearbyPostsFragment = new PostsNearbyFragment();
                 	addLocationListener(nearbyPostsFragment);
+                	nearbyPostsFragment.setHasOptionsMenu(true);
                     return nearbyPostsFragment;
                 case 3:
                 default:
                 	PostsNotificationsFragment notificationsPostsFragment = new PostsNotificationsFragment();
+                	notificationsPostsFragment.setHasOptionsMenu(true);
                 	return notificationsPostsFragment;
-                	
             }
         }
 
@@ -166,6 +169,17 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 
 	public PullToRefreshAttacher getPullToRefreshAttacher(){
 		return this.pullToRefreshAttacher;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+		case R.id.action_reply:
+			analytics.recordEvent_General_ReplyButtonClicked();
+			return onNavigationItemSelected(0, 0);
+		default:
+            return super.onOptionsItemSelected(item);
+		}
 	}
 
 	@Override

@@ -17,6 +17,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -95,12 +97,11 @@ public class PostsNearbyFragment
 			buttonRefresh.setVisibility(View.VISIBLE);
 		}
  	}
- 	
- 	/*@Override
- 	protected void onRestoreInstanceState (Bundle savedInstanceState){
-		super.onRestoreInstanceState(savedInstanceState);
-		
- 	}*/
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+    	inflater.inflate(R.menu.main_activity_layout_menu, menu);
+    }
  	
 	protected void setupWidgetsViewElements() {
 		postsListView = (ListView)view.findViewById(R.id.posts_listView);
