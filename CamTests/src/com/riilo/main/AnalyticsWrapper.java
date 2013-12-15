@@ -130,6 +130,10 @@ public class AnalyticsWrapper {
 		recordEvent(EventCategory.use_general, EventAction.post_item_click, label, value);
 	}
 	
+	public void recordEvent_General_ReplyButtonClicked(){
+		recordEvent(EventCategory.use_general, EventAction.button_click, EventLabel.reply_button);
+	}
+	
 	public void recordEvent_General_PullToRefresh(EventLabel label){
 		recordEvent(EventCategory.use_general, EventAction.pull_to_refresh, label);
 	}

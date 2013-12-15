@@ -6,10 +6,11 @@ public class SpinnerSection {
 	private int notifications;
 	private int iconResId;
 	private boolean showNotifications;
+	private int position;
 	
-	public SpinnerSection(String title, int notifications, int iconResId, boolean showNotifications){
+	public SpinnerSection(int position, String title, int iconResId, boolean showNotifications){
+		this.position = position;
 		this.title = title;
-		this.notifications = notifications;
 		this.iconResId = iconResId;
 		this.showNotifications = showNotifications;
 	}
@@ -32,14 +33,17 @@ public class SpinnerSection {
 	public void setIconResId(int iconRes) {
 		this.iconResId = iconRes;
 	}
-
 	public boolean isShowNotifications() {
-		return showNotifications;
+		return showNotifications && notifications>0;
 	}
-
 	public void setShowNotifications(boolean showNotifications) {
 		this.showNotifications = showNotifications;
 	}
-	
+	public int getPosition(){
+		return this.position;
+	}
+	public void descreaseNotificationNumber(){
+		this.notifications--;
+	}
 
 }

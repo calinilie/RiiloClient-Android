@@ -15,6 +15,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -65,12 +67,10 @@ public class PostsNotificationsFragment
  		return view;
  	}
  	
-	/*@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.list_view_layout_menu, menu);
-		return super.onCreateOptionsMenu(menu);
-	}*/
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+    	inflater.inflate(R.menu.main_activity_layout_menu, menu);
+    }
  	
  	@Override
 	public void onStart(){
@@ -81,7 +81,17 @@ public class PostsNotificationsFragment
 		}		
 		postsListView.setAdapter(adapter);
 		
-		List<Post> newNotifications = PostsCache.getInstance(activity).getNotifications(activity.deviceId, adapter, adapterData, activity.getSpinner().getItem(3), pullToRefreshAttacher, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
+		List<Post> newNotifications = PostsCache
+				.getInstance(activity)
+				.getNotifications(
+						activity.deviceId,
+						adapter,
+						adapterData,
+						activity.getSpinnerAdapter(),
+						activity.getSpinnerAdapter().getItem(3),
+						pullToRefreshAttacher,
+						false,
+						StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
 		if (Helpers.renewList(adapterData, newNotifications)){
 			adapter.notifyDataSetChanged();
 		}
@@ -104,6 +114,7 @@ public class PostsNotificationsFragment
 		activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_notifications, post.getConversationId());
 		
 		PostsCache.getInstance(activity).removeNotification(post);
+		activity.getSpinnerAdapter().getItem(3).descreaseNotificationNumber();
 		adapterData.remove(post);
 		
 		//TODO desc tab count
@@ -125,7 +136,14 @@ public class PostsNotificationsFragment
 	public void onRefreshStarted(View view) {
 		activity.analytics.recordEvent_General_PullToRefresh(EventLabel.tab_notifications);
 		
-		PostsCache.getInstance(activity).getNotifications(activity.deviceId, adapter, adapterData, activity.getSpinner().getItem(3), pullToRefreshAttacher, true, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
+		PostsCache.getInstance(activity).getNotifications(activity.deviceId,
+				adapter, 
+				adapterData, 
+				activity.getSpinnerAdapter(),
+				activity.getSpinnerAdapter().getItem(3),
+				pullToRefreshAttacher, 
+				true,
+				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
 	}
 
 }

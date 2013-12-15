@@ -471,7 +471,7 @@ public abstract class BaseActivity extends FragmentActivity
 	             * the argument is "this".
 	             */
 	        	locationClient.removeLocationUpdates((LocationListener) this);
-	        	Log.d(TAG, "removeLocationUpdates");
+//	        	Log.d(TAG, "removeLocationUpdates");
 	        }
 	        /*
 	         * After disconnect() is called, the client is

@@ -6,12 +6,14 @@ import java.util.List;
 
 import com.google.android.gms.location.LocationRequest;
 import com.riilo.main.R;
+import com.riilo.main.AnalyticsWrapper.EventLabel;
 import com.riilo.interfaces.IBackButtonListener;
 import com.riilo.tutorial.TutorialActivity;
 
 import android.app.ActionBar;
 import android.app.ActionBar.OnNavigationListener;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,6 +26,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class MainActivity extends BaseActivity implements OnNavigationListener{
@@ -31,7 +34,6 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
     AppSectionsPagerAdapter appSectionsPagerAdapter;
 
     ViewPager viewPager;
-//    SpinnerAdapter spinnerAdapter;
     SpinnerSectionItemAdapter spinnerAdapter;
     
     PullToRefreshAttacher pullToRefreshAttacher;
@@ -55,13 +57,9 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
         
         setContentView(R.layout.activity_main_layout);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-        
-//        spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.riilo_sections,
-//                android.R.layout.simple_spinner_dropdown_item);
         spinnerAdapter = new SpinnerSectionItemAdapter(this, R.layout.spinner_section_item_layout, sections);
         actionBar.setListNavigationCallbacks(spinnerAdapter, this);
 
-        
         appSectionsPagerAdapter = new AppSectionsPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(appSectionsPagerAdapter);
@@ -72,9 +70,29 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
             }
         });        
         
-        
         pullToRefreshAttacher = PullToRefreshAttacher.get(this);
         initLocationClient(LocationRequest.PRIORITY_LOW_POWER, 2000, 1000);
+        
+        postsCache.getNotifications(this.deviceId, null, null, spinnerAdapter, spinnerAdapter.getItem(3), pullToRefreshAttacher, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);
+        
+    }
+    
+    @Override
+    public void onLocationChanged(Location location){
+    	super.onLocationChanged(location);
+		double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, null);
+		postsCache
+		.getNearbyPosts(
+				latLong[0],
+				latLong[1],
+				null,
+				null,
+				spinnerAdapter,
+				spinnerAdapter.getItem(2),
+				pullToRefreshAttacher,
+				null,
+				false,
+				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);
     }
     
     @Override
@@ -94,16 +112,16 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
     	}
     }
     
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_activity_layout_menu, menu);
 //		MenuItem item = menu.findItem(R.id.all_notifications);
-//		((TextView) item.getActionView().findViewById(R.id.notifications_number)).setText("got you fucker!");
+//		((TextView) item.getActionView().findViewById(R.id.notifications_number)).setText("got you!");
         return super.onCreateOptionsMenu(menu);
-    }
+    }*/
     
-    public SpinnerAdapter getSpinner(){
+    public SpinnerSectionItemAdapter getSpinnerAdapter(){
     	return spinnerAdapter;
     }
 
@@ -129,33 +147,19 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
                 case 2:
                 	PostsNearbyFragment nearbyPostsFragment = new PostsNearbyFragment();
                 	addLocationListener(nearbyPostsFragment);
+                	nearbyPostsFragment.setHasOptionsMenu(true);
                     return nearbyPostsFragment;
                 case 3:
                 default:
                 	PostsNotificationsFragment notificationsPostsFragment = new PostsNotificationsFragment();
+                	notificationsPostsFragment.setHasOptionsMenu(true);
                 	return notificationsPostsFragment;
-                	
             }
         }
 
         @Override
         public int getCount() {
             return 4;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-        	switch (position) {
-            /*case 0:
-            	return "Post";
-            case 1:
-                return "Latest";
-            case 2:
-            	return "Nearby";
-            case 3:*/
-            default:
-            	return "Notifications: 0";
-        	}
         }
     }
     
@@ -166,6 +170,17 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 	public PullToRefreshAttacher getPullToRefreshAttacher(){
 		return this.pullToRefreshAttacher;
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+		case R.id.action_reply:
+			analytics.recordEvent_General_ReplyButtonClicked();
+			return onNavigationItemSelected(0, 0);
+		default:
+            return super.onOptionsItemSelected(item);
+		}
+	}
 
 	@Override
 	public boolean onNavigationItemSelected(int position, long itemId) {
@@ -174,11 +189,10 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 	}
 	
 	private static final List<SpinnerSection> sections = new ArrayList<SpinnerSection>(
-			Arrays.asList(
-				new SpinnerSection("Post Something", 0, R.drawable.riilo_logo, false),
-				new SpinnerSection("Latest", 0, R.drawable.ic_latest_posts, false),
-				new SpinnerSection("Nearby", 3, R.drawable.ic_nearby_posts, true),
-				new SpinnerSection("Notifications", 10, R.drawable.ic_map_marker_human, true)
-			)
-		);
+		Arrays.asList(
+			new SpinnerSection(0, "Post Something", R.drawable.riilo_logo, false),
+			new SpinnerSection(1, "Latest", R.drawable.ic_latest_posts, false),
+			new SpinnerSection(2, "Nearby", R.drawable.ic_nearby_posts, true),
+			new SpinnerSection(3, "Notifications", R.drawable.ic_map_marker_human, true)
+		));
 }

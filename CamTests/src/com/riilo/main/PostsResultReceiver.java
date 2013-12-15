@@ -15,7 +15,8 @@ public class PostsResultReceiver extends ResultReceiver{
 
 	private PostListItemAdapter adapter;
 	private List<Post> adapterData;
-	private String tab;
+	private SpinnerSectionItemAdapter spinnerAdapter;
+	private SpinnerSection section;
 	private PullToRefreshAttacher pullToRefreshAttacher;
 	private Button button;
 	
@@ -34,8 +35,8 @@ public class PostsResultReceiver extends ResultReceiver{
 		this.adapterData = adapterData;
 	}
 
-	public void setTab(String tab) {
-		this.tab = tab;
+	public void setSpinnerAdapter(SpinnerSectionItemAdapter section) {
+		this.spinnerAdapter = section;
 	}
 	
 	public void setPullToRefreshAttacher(PullToRefreshAttacher pullToRefreshAttacher){
@@ -53,6 +54,10 @@ public class PostsResultReceiver extends ResultReceiver{
 	public void setButton(Button button){
 		this.button = button;
 	}
+	
+	public void setSpinnerSection(SpinnerSection section){
+		this.section = section;
+	}
 
 	@Override
 	protected void onReceiveResult(int resultCode, Bundle resultData){
@@ -65,10 +70,13 @@ public class PostsResultReceiver extends ResultReceiver{
 		switch (resultCode){
 			case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW:
 				notifications = resultData.getInt(StringKeys.POST_RESULT_RECEIVER_NOTIFICATION_NUMBER, 0);
-				if (tab==null)
-					throw new RuntimeException("VIEW should NOT be null! Maybe you forgot to set it??");
+				if (spinnerAdapter==null)
+					throw new RuntimeException("SPINNER adapter should NOT be null! Maybe you forgot to set it??");
+				if (section==null){
+					throw new RuntimeException("SECTION in spinner should NOT be null! Mayb you forgot to set it??");
+				}
 				if (notifications>0){
-					updateTabText(notifications);
+					updateSection(notifications);
 				}
 				break;
 			case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC:
@@ -78,7 +86,7 @@ public class PostsResultReceiver extends ResultReceiver{
 					throw new RuntimeException("adapterDATA should NOT be null! Maybe you forgot to set it??");
 				postsListParcelable =  resultData.getParcelable(StringKeys.POST_LIST_PARCELABLE);
 				posts = postsListParcelable.getPostsList();
-				refreshAdapter(posts, true);
+				refreshPostsListAdapter(posts, true);
 				//Log.d("<<<<<<<<<<<<<<<PostsResultReceiver.onReceiveResult>>>>>>>>>>>>>>>", "Posts: "+posts.size());
 				break;
 			case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_ASC:
@@ -88,12 +96,12 @@ public class PostsResultReceiver extends ResultReceiver{
 					throw new RuntimeException("adapterDATA should NOT be null! Maybe you forgot to set it??");
 				postsListParcelable =  resultData.getParcelable(StringKeys.POST_LIST_PARCELABLE);
 				posts = postsListParcelable.getPostsList();
-				refreshAdapter(posts, false);
+				refreshPostsListAdapter(posts, false);
 				//Log.d("<<<<<<<<<<<<<<<PostsResultReceiver.onReceiveResult>>>>>>>>>>>>>>>", "Posts: "+posts.size());
 				break;
 			case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER:
-				if (tab==null)
-					throw new RuntimeException("VIEW should NOT be null! Maybe you forgot to set it??");
+				if (spinnerAdapter==null)
+					throw new RuntimeException("SPINNER adapter should NOT be null! Maybe you forgot to set it??");
 				if (adapter==null)
 					throw new RuntimeException("adapter should NOT be null! Maybe you forgot to set it??");
 				if (adapterData==null)
@@ -103,9 +111,9 @@ public class PostsResultReceiver extends ResultReceiver{
 				postsListParcelable =  resultData.getParcelable(StringKeys.POST_LIST_PARCELABLE);
 				posts = postsListParcelable.getPostsList();
 				
-				updateTabText(notifications);
+				updateSection(notifications);
 				//Log.d("¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤", notifications+"");
-				refreshAdapter(posts, true);
+				refreshPostsListAdapter(posts, true);
 				break;
 		}
 		//Log.d("###################################", "OnReceive Called");
@@ -125,7 +133,7 @@ public class PostsResultReceiver extends ResultReceiver{
 		});
 	}
 	
-	private void refreshAdapter(List<Post> newPosts, boolean desc){
+	private void refreshPostsListAdapter(List<Post> newPosts, boolean desc){
 		if (newPosts!=null && newPosts.size()>0){
 			if (Helpers.renewList(adapterData, newPosts, desc)){
 				this.handler.post(new Runnable() {
@@ -139,22 +147,16 @@ public class PostsResultReceiver extends ResultReceiver{
 		}
 	}
 	
-	private void updateTabText(final int notifications){
-		/*if (tab!=null){
+	private void updateSection(final int notifications){
+		if (section!=null && spinnerAdapter!=null){
 			this.handler.post(new Runnable() {
 				@Override
 				public void run() {
-					switch(tab.getPosition()){
-					case 2:
-						tab.setText("Nearby: "+notifications);
-						break;
-					case 3:
-						tab.setText("Notifications: "+notifications);
-						break;
-					}
+					section.setNotifications(notifications);
+					spinnerAdapter.notifyDataSetChanged();
 				}
 			});
-		}*/
+		}
 	}
 	
 	

@@ -17,6 +17,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -24,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class PostsNearbyFragment 
 				extends Fragment 
@@ -94,12 +97,11 @@ public class PostsNearbyFragment
 			buttonRefresh.setVisibility(View.VISIBLE);
 		}
  	}
- 	
- 	/*@Override
- 	protected void onRestoreInstanceState (Bundle savedInstanceState){
-		super.onRestoreInstanceState(savedInstanceState);
-		
- 	}*/
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+    	inflater.inflate(R.menu.main_activity_layout_menu, menu);
+    }
  	
 	protected void setupWidgetsViewElements() {
 		postsListView = (ListView)view.findViewById(R.id.posts_listView);
@@ -135,7 +137,8 @@ public class PostsNearbyFragment
 							latLong[1],
 							adapter,
 							adapterData,
-							activity.getSpinner().getItem(2),
+							activity.getSpinnerAdapter(),
+							activity.getSpinnerAdapter().getItem(2),
 							pullToRefreshAttacher,
 							buttonRefresh,
 							false,
@@ -154,9 +157,6 @@ public class PostsNearbyFragment
 
 	@Override
 	public void onRefreshStarted(View view) {
-		
-		
-		
 		activity.analytics.recordEvent_General_PullToRefresh(EventLabel.tab_nearby);
 		Location location = ((BaseActivity) getActivity()).getLocation();
 		if (location!=null){
@@ -168,7 +168,8 @@ public class PostsNearbyFragment
 							latLong[1],
 							adapter,
 							adapterData,
-							activity.getSpinner().getItem(2),
+							activity.getSpinnerAdapter(),
+							activity.getSpinnerAdapter().getItem(2),
 							pullToRefreshAttacher,
 							buttonRefresh,
 							true,
@@ -194,7 +195,8 @@ public class PostsNearbyFragment
 							latLong[1],
 							adapter,
 							adapterData,
-							activity.getSpinner().getItem(2),
+							activity.getSpinnerAdapter(),
+							activity.getSpinnerAdapter().getItem(2),
 							pullToRefreshAttacher,
 							buttonRefresh,
 							true,
@@ -202,7 +204,6 @@ public class PostsNearbyFragment
 			adapter.notifyDataSetChanged();
 			break;
 		}
-		
 	}
 
 }

@@ -131,12 +131,13 @@ public class PostsCache {
 			String userId, 
 			PostListItemAdapter adapter, 
 			List<Post> adapterData, 
-			Object tab, 
+			SpinnerSectionItemAdapter spinnerAdapter, 
+			SpinnerSection section,
 			PullToRefreshAttacher pullToRefreshAttacher, 
 			boolean forcedUpdate, 
 			int postResultReceiverType){
 		if (isRequestAllowed(timestamp_NotificationsCall, forcedUpdate)){
-//			startService_getNotifications(userId, adapter, adapterData, tab, pullToRefreshAttacher, postResultReceiverType);
+			startService_getNotifications(userId, adapter, adapterData, spinnerAdapter, section, pullToRefreshAttacher, postResultReceiverType);
 		}
 		return this.notifications;
 	}
@@ -176,12 +177,13 @@ public class PostsCache {
 			double longitude, 
 			PostListItemAdapter adapter, 
 			List<Post> adapterData, 
-			Object tab,
+			SpinnerSectionItemAdapter spinnerAdapter,
+			SpinnerSection section,
 			PullToRefreshAttacher pullToRefreshAttacher,
 			Button button,
 			boolean forcedUpdate, 
 			int postResultReceiverType){
-//		startService_getNearby(latitude, longitude, adapter, adapterData, tab, pullToRefreshAttacher, button, postResultReceiverType, forcedUpdate);
+		startService_getNearby(latitude, longitude, adapter, adapterData, spinnerAdapter, section, pullToRefreshAttacher, button, postResultReceiverType, forcedUpdate);
 		return nearbyPosts;
 	}
 	
@@ -268,7 +270,8 @@ public class PostsCache {
 			String userId, 
 			PostListItemAdapter adapter, 
 			List<Post> adapterData, 
-			Tab tab, 
+			SpinnerSectionItemAdapter spinnerAdapter, 
+			SpinnerSection section,
 			PullToRefreshAttacher pullToRefreshAttacher, 
 			int postResultReceiverType){
 		Intent intent = new Intent(this.context, WorkerService.class);
@@ -280,7 +283,8 @@ public class PostsCache {
 		PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);
 		resultReceiver.setAdapter(adapter);
 		resultReceiver.setAdapterData(adapterData);
-//		resultReceiver.setTab(tab);
+		resultReceiver.setSpinnerAdapter(spinnerAdapter);
+		resultReceiver.setSpinnerSection(section);
 		resultReceiver.setPullToRefreshAttacher(pullToRefreshAttacher);
 		intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
 
@@ -294,7 +298,8 @@ public class PostsCache {
 			double longitude, 
 			PostListItemAdapter adapter, 
 			List<Post> adapterData, 
-			Object tab, 
+			SpinnerSectionItemAdapter spinnerAdapter, 
+			SpinnerSection section,
 			PullToRefreshAttacher pullToRefreshAttacher,
 			Button button,
 			int postResultReceiverType,
@@ -310,7 +315,8 @@ public class PostsCache {
 			PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);
 			resultReceiver.setAdapter(adapter);
 			resultReceiver.setAdapterData(adapterData);
-//			resultReceiver.setTab(tab);
+			resultReceiver.setSpinnerAdapter(spinnerAdapter);
+			resultReceiver.setSpinnerSection(section);
 			resultReceiver.setPullToRefreshAttacher(pullToRefreshAttacher);
 			resultReceiver.setButton(button);
 			intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
@@ -377,7 +383,6 @@ public class PostsCache {
 			});
 		}
 	}
-	
 	
 	public class RequestTimestamp{
 		

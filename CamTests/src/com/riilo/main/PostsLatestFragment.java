@@ -16,6 +16,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -84,6 +86,11 @@ public class PostsLatestFragment
 			adapter.notifyDataSetChanged();
 		}
  	}
+ 	
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+    	inflater.inflate(R.menu.main_activity_layout_menu, menu);
+    }
  	
  	protected void setupWidgetsViewElements() {
 		postsListView = (ListView)view.findViewById(R.id.posts_listView);
