@@ -29,7 +29,7 @@
     	    android:layout_marginLeft="32dp"
             android:textSize="12sp"
 	        android:text="aprox 420 meters away"
-	        android:textColor="@color/holo_blue_dark" />
+	        android:textColor="@color/riilo_dark_red" />
 	    
    	    <LinearLayout
 	        android:layout_width="match_parent"
