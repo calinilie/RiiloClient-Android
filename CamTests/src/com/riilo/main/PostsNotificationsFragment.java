@@ -81,7 +81,17 @@ public class PostsNotificationsFragment
 		}		
 		postsListView.setAdapter(adapter);
 		
-		List<Post> newNotifications = PostsCache.getInstance(activity).getNotifications(activity.deviceId, adapter, adapterData, activity.getSpinner().getItem(3), pullToRefreshAttacher, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
+		List<Post> newNotifications = PostsCache
+				.getInstance(activity)
+				.getNotifications(
+						activity.deviceId,
+						adapter,
+						adapterData,
+						activity.getSpinnerAdapter(),
+						activity.getSpinnerAdapter().getItem(3),
+						pullToRefreshAttacher,
+						false,
+						StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
 		if (Helpers.renewList(adapterData, newNotifications)){
 			adapter.notifyDataSetChanged();
 		}
@@ -125,7 +135,14 @@ public class PostsNotificationsFragment
 	public void onRefreshStarted(View view) {
 		activity.analytics.recordEvent_General_PullToRefresh(EventLabel.tab_notifications);
 		
-		PostsCache.getInstance(activity).getNotifications(activity.deviceId, adapter, adapterData, activity.getSpinner().getItem(3), pullToRefreshAttacher, true, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
+		PostsCache.getInstance(activity).getNotifications(activity.deviceId,
+				adapter, 
+				adapterData, 
+				activity.getSpinnerAdapter(),
+				activity.getSpinnerAdapter().getItem(3),
+				pullToRefreshAttacher, 
+				true,
+				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
 	}
 
 }
