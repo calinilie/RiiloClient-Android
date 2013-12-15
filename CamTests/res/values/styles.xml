@@ -27,7 +27,13 @@
     <style name="Widget.Custom.PtrHeader" parent="android:Widget">
         <item name="ptrHeaderBackground">@color/riilo_lighter_red</item>
         <item name="ptrProgressBarColor">@color/riilo_light_red</item>
-        <item name="ptrHeaderTitleTextAppearance">@android:color/white</item>
+        <item name="ptrHeaderTitleTextAppearance">@style/TextAppearance.Custom.PtrHeader.Title</item>
+    </style>
+    
+    <style name="TextAppearance.Custom.PtrHeader.Title"
+           parent="android:TextAppearance.Large.Inverse">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
     
 </resources>
