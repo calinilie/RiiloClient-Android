@@ -477,7 +477,7 @@ public abstract class BaseActivity extends FragmentActivity
 	         * After disconnect() is called, the client is
 	         * considered "dead".
 	         */
-	        // Disconnecting the client invalidates it.
+	        // Disconnecting the client invalidates it. 
 	        locationClient.disconnect();
 	        Log.d(TAG, "disconnect");
 		}
