@@ -58,7 +58,6 @@ public class SpinnerSectionItemAdapter extends ArrayAdapter<SpinnerSection> impl
 		else{
 			notifications.setVisibility(View.GONE);
 		}
-//		image.setVisibility(View.GONE);
 		image.setImageResource(section.getIconResId());
 		
 		
@@ -69,16 +68,12 @@ public class SpinnerSectionItemAdapter extends ArrayAdapter<SpinnerSection> impl
 	public View getDropDownView(int position, View convertView, ViewGroup parent){
 		LinearLayout sectionView;
 		SpinnerSection section = getItem(position);
-		if (convertView==null){
-			sectionView = new LinearLayout(getContext());
-			String inflater = Context.LAYOUT_INFLATER_SERVICE;
-			LayoutInflater li;
-			li = (LayoutInflater)getContext().getSystemService(inflater);
-			li.inflate(layoutId, sectionView, true);
-		}
-		else{
-			sectionView = (LinearLayout) convertView;
-		}
+
+		sectionView = new LinearLayout(getContext());
+		String inflater = Context.LAYOUT_INFLATER_SERVICE;
+		LayoutInflater li;
+		li = (LayoutInflater)getContext().getSystemService(inflater);
+		li.inflate(layoutId, sectionView, true);
 		
 		TextView title = (TextView) sectionView.findViewById(R.id.section_title);
 		TextView notifications = (TextView) sectionView.findViewById(R.id.section_notifications);

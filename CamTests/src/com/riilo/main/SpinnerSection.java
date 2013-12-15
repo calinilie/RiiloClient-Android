@@ -42,5 +42,8 @@ public class SpinnerSection {
 	public int getPosition(){
 		return this.position;
 	}
+	public void descreaseNotificationNumber(){
+		this.notifications--;
+	}
 
 }

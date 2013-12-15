@@ -279,7 +279,6 @@ public abstract class BaseActivity extends FragmentActivity
 	public void onLocationChanged(Location location) {
 		this.location = location;
 //		Log.d(TAG, "onLocationChanged");
-		Toast.makeText(this, "Location Changed "+(location==null), Toast.LENGTH_SHORT).show();
 		if (locationListeners!=null && locationListeners.size()>0){
 			for(ILocationListener listener: locationListeners){
 				listener.onLocationChanged(location);

@@ -114,6 +114,7 @@ public class PostsNotificationsFragment
 		activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_notifications, post.getConversationId());
 		
 		PostsCache.getInstance(activity).removeNotification(post);
+		activity.getSpinnerAdapter().getItem(3).descreaseNotificationNumber();
 		adapterData.remove(post);
 		
 		//TODO desc tab count
