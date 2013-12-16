@@ -1,4 +1,5 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Not used for the time beeing -->
     <!-- Application theme. -->
     <style name="AppTheme" 
            parent="@android:style/Theme.Holo.Light">

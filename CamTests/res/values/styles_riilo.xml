@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <style name="Theme.Riilo" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_riilo</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu.Riilo</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Riilo</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Riilo</item>
+        <item name="android:actionDropDownStyle">@style/DropDownNav.Riilo</item>
+        <item name="android:actionBarStyle">@style/ActionBar.Solid.Riilo</item>
+        <item name="android:actionModeBackground">@drawable/cab_background_top_riilo</item>
+        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_riilo</item>
+        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Riilo</item>
+        
+        <item name="ptrHeaderStyle">@style/Widget.Custom.PtrHeader</item>
+        
+        
+    </style>
+
+    <style name="ActionBar.Solid.Riilo" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
+        <item name="android:background">@drawable/ab_solid_riilo</item>
+        <item name="android:backgroundStacked">@drawable/ab_stacked_solid_riilo</item>
+        <item name="android:backgroundSplit">@drawable/ab_bottom_solid_riilo</item>
+        <item name="android:progressBarStyle">@style/ProgressBar.Riilo</item>
+    </style>
+
+    <style name="ActionBar.Transparent.Riilo" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@drawable/ab_transparent_riilo</item>
+        <item name="android:progressBarStyle">@style/ProgressBar.Riilo</item>
+    </style>
+
+    <style name="PopupMenu.Riilo" parent="@android:style/Widget.Holo.Light.ListPopupWindow">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_riilo</item>	
+    </style>
+
+    <style name="DropDownListView.Riilo" parent="@android:style/Widget.Holo.Light.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_riilo</item>
+    </style>
+
+    <style name="ActionBarTabStyle.Riilo" parent="@android:style/Widget.Holo.Light.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_riilo</item>
+    </style>
+
+    <style name="DropDownNav.Riilo" parent="@android:style/Widget.Holo.Light.Spinner">
+        <item name="android:background">@drawable/spinner_background_ab_riilo</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_riilo</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_riilo</item>
+    </style>
+    
+    <style name="ProgressBar.Riilo" parent="@android:style/Widget.Holo.Light.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_riilo</item>
+    </style>
+    
+    <style name="ActionButton.CloseMode.Riilo" parent="@android:style/Widget.Holo.Light.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_riilo</item>
+    </style>
+
+    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
+    <style name="Theme.Riilo.Widget" parent="@android:style/Theme.Holo">
+        <item name="android:popupMenuStyle">@style/PopupMenu.Riilo</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Riilo</item>
+    </style>
+    
+    <style name="Widget.Custom.PtrHeader" parent="android:Widget">
+        <item name="ptrHeaderBackground">@color/riilo_lighter_red</item>
+        <item name="ptrProgressBarColor">@color/riilo_light_red</item>
+        <item name="ptrHeaderTitleTextAppearance">@style/TextAppearance.Custom.PtrHeader.Title</item>
+    </style>
+    
+    <style name="TextAppearance.Custom.PtrHeader.Title"
+           parent="android:TextAppearance.Large.Inverse">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+</resources>

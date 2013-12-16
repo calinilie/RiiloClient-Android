@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-
+	
+    <drawable name="screen_background_light">#ffffffff</drawable>
+    <drawable name="screen_background_dark">#ff000000</drawable>
+    <drawable name="screen_background_holo_light_old">#fff3f3f3</drawable>
+    
 	<color name="orange">#FF9912</color>
     <color name="mediumGps">#F2FF00</color>
     <color name="goodGps">#00FF00</color>
@@ -18,5 +22,6 @@
     <color name="riilo_light_red">#e23627</color>
     <color name="riilo_lighter_red">#ff382e</color>
     <color name="riilo_dark_red">#c52b1c</color>
+    <color name="transparent">#80FFFFFF</color>
     
 </resources>

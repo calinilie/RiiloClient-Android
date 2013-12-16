@@ -46,7 +46,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignBottom="@+id/editor_message"
             android:src="@android:drawable/ic_menu_close_clear_cancel"
-            android:background="@drawable/selector"
+            android:background="@drawable/selectable_background_riilo"
             android:contentDescription="Cancel action" />
         
         <EditText
@@ -75,7 +75,7 @@
             android:layout_alignBottom="@+id/editor_message"
             android:layout_alignParentRight="true"
             android:src="@android:drawable/ic_menu_send"
-            android:background="@drawable/selector"
+            android:background="@drawable/selectable_background_riilo"
             android:contentDescription="Send message"/>
   
     </RelativeLayout>
