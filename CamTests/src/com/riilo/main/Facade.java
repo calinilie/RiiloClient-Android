@@ -238,7 +238,7 @@ public class Facade {
 				retVal.add(location);
 			}
 			
-			Log.d(TAG, retVal.size()+"");
+			//Log.d(TAG, retVal.size()+"");
 		}
 		catch(Exception e){}
 		finally{

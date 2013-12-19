@@ -56,7 +56,7 @@ public class LocationHistoryManager {
 	    	resultReceiver.setMap(map);
 	    	intent.putExtra(StringKeys.LOCATION_HISTORY_RESULT_RECEIVER, resultReceiver);
 	    	context.startService(intent);
-	    	Log.d(TAG, "service started");
+	    	//Log.d(TAG, "service started");
 	    	wasRequestMade = true;
 		}
 	}
@@ -65,8 +65,7 @@ public class LocationHistoryManager {
 		for(LocationHistory h : locations){
 			if (!this.list.contains(h)){
 				this.list.add(h);
-//				Log.d(TAG, h.toString());
-				
+					//Log.d(TAG, h.toString());
 			}
 		}
 	}

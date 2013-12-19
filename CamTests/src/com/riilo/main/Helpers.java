@@ -33,7 +33,7 @@ public class Helpers {
 				h.setIsOnMap(true);
 			}
 			else{
-				Log.d(TAG, "location History already marked!");
+				//Log.d(TAG, "location History already marked!");
 			}
 		}
 	}

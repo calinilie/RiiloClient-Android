@@ -125,7 +125,7 @@ public class PostsNearbyFragment
 	
 	@Override
 	public void onLocationChanged(Location location) {
-//		Log.d(">>>>>>>>>>>>>>>>>", (String) activity.getSpinner().getItem(2));
+		//Log.d(">>>>>>>>>>>>>>>>>", (String) activity.getSpinner().getItem(2));
 //		Toast.makeText(activity, "Location Changed "+(location==null), Toast.LENGTH_SHORT).show();
 		if (location!=null){
 			boolean refreshAdapter = false;

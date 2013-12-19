@@ -175,7 +175,7 @@ public class WorkerService extends IntentService{
 			if (list!=null && !list.isEmpty()){
 				Facade.getInstance(this).insertOutsideLocationHistory(list);
 				locationHistoryManager.mergeLocationhistories(list);
-				Log.d(TAG, list.size()+"");
+				//Log.d(TAG, list.size()+"");
 				resultData = new Bundle();
 				resultData.putParcelable(StringKeys.LOCATION_HISTORY_PARCELABLE, new LocationHistoryParcelable(locationHistoryManager.getLocationHistory()));
 				resultReceiver.send(123, resultData);
