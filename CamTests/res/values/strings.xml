@@ -39,6 +39,8 @@
     <string name="upload_post_error">On its way to the server your post was kidnapped by some dragons. Please try again.</string>
     <string name="invalid_post_empty">The dwarves working on the server don\'t fancy empty posts, please write something so they don\'t go on strike.</string>
     <string name="user_at_location_dialog_message">The user who posted this message was nearby the location shown on the map.</string>
+    <string name="say_anything_anywhere_hint">Say anything, anywhere&#8230;</string>
+    <string name="say_anything_hint">Say anything, anywhere&#8230;</string>
     
     <string name="tutorial_0">Navigate to any place and tap the map to write your message</string>
     <string name="tutorial_1">Write a message, press post and the pigeons will handle the rest</string>
@@ -48,10 +50,4 @@
     <string name="tutorial_5">This is the very beginning, so it will be quite empty around, but you can spread the word. The more we are, the more opportunities we have. </string>
     <string name="tutorial_marker">This shows that somebody is/was in that area. Tap on the marker to leave them a message, and people in area will see you post.</string>
     
-    <string-array name="riilo_sections">
-        <item>Say something</item>
-        <item>Latest</item>
-        <item>Nearby</item>
-        <item>Notifications</item>
-    </string-array>
 </resources>

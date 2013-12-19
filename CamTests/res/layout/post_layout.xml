@@ -58,7 +58,7 @@
             android:layout_toRightOf="@+id/button_cancel"
             android:gravity="bottom"
             android:textSize="14sp"
-            android:hint="Your post..."
+            android:hint="@string/say_anything_hint"
             android:inputType="textCapSentences|textMultiLine"
             android:maxLines="5"
             android:paddingBottom="16dp"
