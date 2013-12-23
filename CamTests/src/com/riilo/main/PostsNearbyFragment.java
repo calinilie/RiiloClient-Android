@@ -3,8 +3,10 @@ package com.riilo.main;
 import java.util.ArrayList;
 import java.util.List;
 
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher.OnRefreshListener;
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
+
 
 import com.riilo.main.R;
 import com.riilo.interfaces.ILocationListener;
@@ -35,6 +37,8 @@ public class PostsNearbyFragment
 							OnRefreshListener,
 							OnClickListener{
 	
+	private static final String TAG = "<<<<<<<<<<<<<<PostsNearbyFragment>>>>>>>>>>>>>>";
+	
     private MainActivity activity;
     private View view;
     private Button buttonRefresh;
@@ -46,7 +50,7 @@ public class PostsNearbyFragment
  	
  	private LocationHistory lastKnownLocation;
  	
- 	private PullToRefreshAttacher pullToRefreshAttacher;
+ 	private PullToRefreshLayout pullToRefreshLayout;
  	
  	public void onAttach(Activity activity){
  		this.activity = (MainActivity)activity;
@@ -58,9 +62,13 @@ public class PostsNearbyFragment
  		view = inflater.inflate(R.layout.posts_lists_layout, container, false); 
  		setupWidgetsViewElements();
  		
-        pullToRefreshAttacher = activity
-                .getPullToRefreshAttacher();
-        pullToRefreshAttacher.addRefreshableView(postsListView, this);
+// 		if (pullToRefreshLayout==null){
+	 		pullToRefreshLayout =  (PullToRefreshLayout) view.findViewById(R.id.ptr_layout);
+	 		ActionBarPullToRefresh.from(activity)
+	 			.allChildrenArePullable()
+	 			.listener(this)
+	 			.setup(pullToRefreshLayout);
+// 		}
  		
  		return view;
  	}
@@ -113,9 +121,7 @@ public class PostsNearbyFragment
 	@Override
 	public void onItemClick(AdapterView<?> parentView, View view, int position, long index) {
 		Post post = adapterData.get((int) index);
-		
-//		long conversationId = post.getConversationId();
-		
+				
 		activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_nearby, post.getConversationId());
 		
 		Intent postViewIntent = new Intent(activity, PostViewActivity.class);
@@ -130,7 +136,8 @@ public class PostsNearbyFragment
 		if (location!=null){
 			boolean refreshAdapter = false;
 			double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, null);
-			adapterData = PostsCache
+//			adapterData = 
+			PostsCache
 					.getInstance(activity)
 					.getNearbyPosts(
 							latLong[0],
@@ -139,7 +146,7 @@ public class PostsNearbyFragment
 							adapterData,
 							activity.getSpinnerAdapter(),
 							activity.getSpinnerAdapter().getItem(2),
-							pullToRefreshAttacher,
+							pullToRefreshLayout,
 							buttonRefresh,
 							false,
 							StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
@@ -161,7 +168,8 @@ public class PostsNearbyFragment
 		Location location = ((BaseActivity) getActivity()).getLocation();
 		if (location!=null){
 			double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, lastKnownLocation);
-			adapterData = PostsCache
+//			adapterData = 
+			PostsCache
 					.getInstance(activity)
 					.getNearbyPosts(
 							latLong[0],
@@ -170,14 +178,14 @@ public class PostsNearbyFragment
 							adapterData,
 							activity.getSpinnerAdapter(),
 							activity.getSpinnerAdapter().getItem(2),
-							pullToRefreshAttacher,
+							pullToRefreshLayout,
 							buttonRefresh,
 							true,
 							StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
 			adapter.notifyDataSetChanged();
 		}
 		else{
-			pullToRefreshAttacher.setRefreshComplete();
+			pullToRefreshLayout.setRefreshComplete();
 		}
 	}
 
@@ -188,20 +196,30 @@ public class PostsNearbyFragment
 			buttonRefresh.setVisibility(View.GONE);
 			Location location = ((BaseActivity) getActivity()).getLocation();
 			double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, lastKnownLocation);
-			adapterData = PostsCache
-					.getInstance(activity)
-					.getNearbyPosts(
-							latLong[0],
-							latLong[1],
-							adapter,
-							adapterData,
-							activity.getSpinnerAdapter(),
-							activity.getSpinnerAdapter().getItem(2),
-							pullToRefreshAttacher,
-							buttonRefresh,
-							true,
-							StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
+			
+			//TODO warning! shitty code below! 
+//			if ((adapterData = PostsCache.getInstance(activity).getNearbyPosts()).size()>0){
+//				adapter.notifyDataSetChanged();
+//			}
+				
+//			PostsCache
+//					.getInstance(activity)
+//					.getNearbyPosts(
+//							latLong[0],
+//							latLong[1],
+//							adapter,
+//							adapterData,
+//							activity.getSpinnerAdapter(),
+//							activity.getSpinnerAdapter().getItem(2),
+//							pullToRefreshLayout,
+//							buttonRefresh,
+//							true,
+//							StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
+			
+			Helpers.renewList(adapterData, PostsCache.getInstance(activity).getNearbyPosts());
 			adapter.notifyDataSetChanged();
+			
+			Log.d(TAG, adapterData.size()+" "+adapterData.hashCode());
 			break;
 		}
 	}

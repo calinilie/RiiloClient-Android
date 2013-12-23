@@ -3,12 +3,13 @@ package com.riilo.main;
 import java.util.ArrayList;
 import java.util.List;
 
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
+
 import com.riilo.main.R;
 import com.riilo.interfaces.ILocationListener;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
-
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher.OnRefreshListener;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -37,7 +38,7 @@ public class PostsLatestFragment
  	ListView postsListView;
  	
  	
- 	private PullToRefreshAttacher pullToRefreshAttacher;
+ 	private PullToRefreshLayout pullToRefreshLayout;
 
  	public void onAttach(Activity activity){
  		this.activity = (BaseActivity)activity;
@@ -55,6 +56,7 @@ public class PostsLatestFragment
 				adapter.notifyDataSetChanged();
 			}
 		}
+		
  	}
 	
  	@Override
@@ -62,13 +64,14 @@ public class PostsLatestFragment
  		view = inflater.inflate(R.layout.posts_lists_layout, container, false); 
  		setupWidgetsViewElements();
 
-        // Now get the PullToRefresh attacher from the Activity. An exercise to the reader
-        // is to create an implicit interface instead of casting to the concrete Activity
-        pullToRefreshAttacher = ((MainActivity) getActivity())
-                .getPullToRefreshAttacher();
-
-        // Now set the ScrollView as the refreshable view, and the refresh listener (this)
-        pullToRefreshAttacher.addRefreshableView(postsListView, this);
+// 		if (pullToRefreshLayout==null){
+	 		pullToRefreshLayout =  (PullToRefreshLayout) view.findViewById(R.id.ptr_layout);
+	 		ActionBarPullToRefresh.from(activity)
+	 			.allChildrenArePullable()
+	 			.listener(this)
+	 			.setup(pullToRefreshLayout);
+// 		}
+ 		
  		return view;
  	}
  	
@@ -81,7 +84,7 @@ public class PostsLatestFragment
 		}
 		postsListView.setAdapter(adapter);
 		
-		List<Post> latestPosts = PostsCache.getInstance(activity).getLatestPosts(adapter, adapterData, pullToRefreshAttacher);
+		List<Post> latestPosts = PostsCache.getInstance(activity).getLatestPosts(adapter, adapterData, null);
 		if (Helpers.renewList(adapterData, latestPosts)){
 			adapter.notifyDataSetChanged();
 		}
@@ -100,8 +103,6 @@ public class PostsLatestFragment
  	@Override
 	public void onItemClick(AdapterView<?> parentView, View view, int position, long index) {
 		Post post = adapterData.get((int) index);
-		
-//		long conversationId = post.getConversationId();
 		
 		activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_latest, post.getConversationId());
 		
@@ -134,7 +135,7 @@ public class PostsLatestFragment
 			.getLatestPosts(
 				adapter, 
 				adapterData, 
-				pullToRefreshAttacher, 
+				pullToRefreshLayout, 
 				true);
 	}
 

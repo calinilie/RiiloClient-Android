@@ -2,12 +2,13 @@ package com.riilo.main;
 
 import java.util.List;
 
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 
 import android.app.ActionBar.Tab;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -17,7 +18,7 @@ public class PostsResultReceiver extends ResultReceiver{
 	private List<Post> adapterData;
 	private SpinnerSectionItemAdapter spinnerAdapter;
 	private SpinnerSection section;
-	private PullToRefreshAttacher pullToRefreshAttacher;
+	private PullToRefreshLayout pullToRefreshLayout;
 	private Button button;
 	
 	private Handler handler;
@@ -39,14 +40,10 @@ public class PostsResultReceiver extends ResultReceiver{
 		this.spinnerAdapter = section;
 	}
 	
-	public void setPullToRefreshAttacher(PullToRefreshAttacher pullToRefreshAttacher){
-		this.pullToRefreshAttacher = pullToRefreshAttacher;
+	public void setPullToRefreshAttacher(PullToRefreshLayout pullToRefreshLayout){
+		this.pullToRefreshLayout = pullToRefreshLayout;
 	}
 	
-	public PullToRefreshAttacher getPullToRefreshAttacher() {
-		return pullToRefreshAttacher;
-	}
-
 	public Handler getHandler() {
 		return handler;
 	}
@@ -121,9 +118,9 @@ public class PostsResultReceiver extends ResultReceiver{
 			
 			@Override
 			public void run() {
-				if (pullToRefreshAttacher!=null){
+				if (pullToRefreshLayout!=null){
 					//Log.d("###################################", "pullToRefreshAttacher NOT null");
-					pullToRefreshAttacher.setRefreshComplete();
+					pullToRefreshLayout.setRefreshComplete();
 				}
 				if (button!=null){
 					button.setVisibility(View.GONE);
@@ -134,6 +131,7 @@ public class PostsResultReceiver extends ResultReceiver{
 	}
 	
 	private void refreshPostsListAdapter(List<Post> newPosts, boolean desc){
+		Log.d("pwla", (newPosts==null)+"");
 		if (newPosts!=null && newPosts.size()>0){
 			if (Helpers.renewList(adapterData, newPosts, desc)){
 				this.handler.post(new Runnable() {

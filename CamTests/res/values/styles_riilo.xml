@@ -14,8 +14,6 @@
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Riilo</item>
         
         <item name="ptrHeaderStyle">@style/Widget.Custom.PtrHeader</item>
-        
-        
     </style>
 
     <style name="ActionBar.Solid.Riilo" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">

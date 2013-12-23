@@ -155,9 +155,10 @@ public class WorkerService extends IntentService{
 			if (latitude != 0 && longitude != 0){
 				List<Post> nearbyPosts = getNearbyPosts(latitude, longitude);
 				if (resultReceiver!=null){
+					Log.d(TAG, nearbyPosts.size()+"");
 					resultData = new Bundle();
 					resultData.putParcelable(StringKeys.POST_LIST_PARCELABLE, new PostsListParcelable(nearbyPosts));
-					resultData.putInt(StringKeys.POST_RESULT_RECEIVER_NOTIFICATION_NUMBER, postsCache.getNearbyPosts().size());//TODO change to NEARBY_POSTS_NUMBER
+					resultData.putInt(StringKeys.POST_RESULT_RECEIVER_NOTIFICATION_NUMBER, postsCache.getNearbyPosts().size());
 					resultReceiver.send(resultReceiverType, resultData);
 				}
 			}

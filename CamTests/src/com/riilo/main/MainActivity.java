@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+
 import com.google.android.gms.location.LocationRequest;
 import com.riilo.main.R;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
@@ -27,7 +29,6 @@ import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class MainActivity extends BaseActivity implements OnNavigationListener{
 	
@@ -36,7 +37,6 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
     ViewPager viewPager;
     SpinnerSectionItemAdapter spinnerAdapter;
     
-    PullToRefreshAttacher pullToRefreshAttacher;
     private boolean wasTutorialRunThisSession = false;
     private IBackButtonListener backButtonListener;
 
@@ -70,10 +70,17 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
             }
         });        
         
-        pullToRefreshAttacher = PullToRefreshAttacher.get(this);
         initLocationClient(LocationRequest.PRIORITY_LOW_POWER, 2000, 1000);
         
-        postsCache.getNotifications(this.deviceId, null, null, spinnerAdapter, spinnerAdapter.getItem(3), pullToRefreshAttacher, false, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);
+		postsCache.getNotifications(
+				this.deviceId, 
+				null, 
+				null, 
+				spinnerAdapter,
+				spinnerAdapter.getItem(3), 
+				null, 
+				false,
+				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);
         
     }
     
@@ -89,7 +96,7 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 				null,
 				spinnerAdapter,
 				spinnerAdapter.getItem(2),
-				pullToRefreshAttacher,
+				null,
 				null,
 				false,
 				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);
@@ -165,10 +172,6 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
     
 	@Override
 	protected void setupWidgetsViewElements() {
-	}
-
-	public PullToRefreshAttacher getPullToRefreshAttacher(){
-		return this.pullToRefreshAttacher;
 	}
 	
 	@Override

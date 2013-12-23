@@ -3,8 +3,11 @@ package com.riilo.main;
 import java.util.ArrayList;
 import java.util.List;
 
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher.OnRefreshListener;
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
+
+//import uk.co.senyab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 
 import com.riilo.main.R;
@@ -25,7 +28,9 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class PostsNotificationsFragment 
 				extends Fragment 
-				implements OnItemClickListener, OnRefreshListener{
+				implements OnItemClickListener,
+				OnRefreshListener
+				{
 	
 	PostListItemAdapter adapter;
  	List<Post> adapterData = new ArrayList<Post>();
@@ -34,7 +39,7 @@ public class PostsNotificationsFragment
  	private View view;
  	private MainActivity activity;
  	
- 	private PullToRefreshAttacher pullToRefreshAttacher;
+ 	private PullToRefreshLayout pullToRefreshLayout;
  	
  	public void onAttach(Activity activity){
  		this.activity = (MainActivity)activity;
@@ -60,9 +65,13 @@ public class PostsNotificationsFragment
  		
  		setupWidgetsViewElements();
  		
- 		pullToRefreshAttacher = activity
-                .getPullToRefreshAttacher();
-        pullToRefreshAttacher.addRefreshableView(postsListView, this);
+// 		if (pullToRefreshLayout==null){
+	 		pullToRefreshLayout = (PullToRefreshLayout) view.findViewById(R.id.ptr_layout);
+	 		ActionBarPullToRefresh.from(activity)
+	 			.allChildrenArePullable()
+	 			.listener(this)
+	 			.setup(pullToRefreshLayout);
+// 		}
         
  		return view;
  	}
@@ -89,7 +98,7 @@ public class PostsNotificationsFragment
 						adapterData,
 						activity.getSpinnerAdapter(),
 						activity.getSpinnerAdapter().getItem(3),
-						pullToRefreshAttacher,
+						pullToRefreshLayout,
 						false,
 						StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
 		if (Helpers.renewList(adapterData, newNotifications)){
@@ -141,7 +150,7 @@ public class PostsNotificationsFragment
 				adapterData, 
 				activity.getSpinnerAdapter(),
 				activity.getSpinnerAdapter().getItem(3),
-				pullToRefreshAttacher, 
+				pullToRefreshLayout, 
 				true,
 				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
 	}

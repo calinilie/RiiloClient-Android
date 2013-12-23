@@ -6,7 +6,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+
 
 import android.app.ActionBar.Tab;
 import android.content.Context;
@@ -87,18 +88,18 @@ public class PostsCache {
  	public synchronized List<Post> getLatestPosts(
  				PostListItemAdapter adapter, 
  				List<Post> adapterData, 
- 				PullToRefreshAttacher pullToRefreshAttacher){
+ 				PullToRefreshLayout pullToRefreshLayout){
 		//Log.d("PostsCache", latestPosts.size()+"");
-		return this.getLatestPosts(adapter, adapterData, pullToRefreshAttacher, false);
+		return this.getLatestPosts(adapter, adapterData, pullToRefreshLayout, false);
 	}
 	
  	//TODO
 	public synchronized List<Post> getLatestPosts(
 			PostListItemAdapter adapter, 
 			List<Post> adapterData, 
-			PullToRefreshAttacher pullToRefreshAttacher, 
+			PullToRefreshLayout pullToRefreshLayout, 
 			boolean forcedUpdate){
-		startService_getLatest(adapter, adapterData, pullToRefreshAttacher, forcedUpdate);
+		startService_getLatest(adapter, adapterData, pullToRefreshLayout, forcedUpdate);
 		return latestPosts;
 	}
 	
@@ -106,10 +107,10 @@ public class PostsCache {
 			long conversationId, 
 			PostListItemAdapter adapter, 
 			List<Post> adapterData, 
-			PullToRefreshAttacher pullToRefreshAttacher){
+			PullToRefreshLayout pullToRefreshLayout){
 		List<Post> retVal = getPostsByConversationId(conversationId);
 		//Log.d("WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID", "postsCache "+conversationId);
-		startService_getConversationByPostId(conversationId, adapter, adapterData, pullToRefreshAttacher);
+		startService_getConversationByPostId(conversationId, adapter, adapterData, pullToRefreshLayout);
 		//Log.d("PostsCache.getPostsByConversationId()", retVal.size()+"");
 		return retVal;
 	}
@@ -133,11 +134,11 @@ public class PostsCache {
 			List<Post> adapterData, 
 			SpinnerSectionItemAdapter spinnerAdapter, 
 			SpinnerSection section,
-			PullToRefreshAttacher pullToRefreshAttacher, 
+			PullToRefreshLayout pullToRefreshLayout, 
 			boolean forcedUpdate, 
 			int postResultReceiverType){
 		if (isRequestAllowed(timestamp_NotificationsCall, forcedUpdate)){
-			startService_getNotifications(userId, adapter, adapterData, spinnerAdapter, section, pullToRefreshAttacher, postResultReceiverType);
+			startService_getNotifications(userId, adapter, adapterData, spinnerAdapter, section, pullToRefreshLayout, postResultReceiverType);
 		}
 		return this.notifications;
 	}
@@ -179,11 +180,11 @@ public class PostsCache {
 			List<Post> adapterData, 
 			SpinnerSectionItemAdapter spinnerAdapter,
 			SpinnerSection section,
-			PullToRefreshAttacher pullToRefreshAttacher,
+			PullToRefreshLayout pullToRefreshLayout,
 			Button button,
 			boolean forcedUpdate, 
 			int postResultReceiverType){
-		startService_getNearby(latitude, longitude, adapter, adapterData, spinnerAdapter, section, pullToRefreshAttacher, button, postResultReceiverType, forcedUpdate);
+		startService_getNearby(latitude, longitude, adapter, adapterData, spinnerAdapter, section, pullToRefreshLayout, button, postResultReceiverType, forcedUpdate);
 		return nearbyPosts;
 	}
 	
@@ -248,7 +249,7 @@ public class PostsCache {
 			long conversationId, 
 			PostListItemAdapter adapter, 
 			List<Post> adapterData, 
-			PullToRefreshAttacher pullToRefreshAttacher){
+			PullToRefreshLayout pullToRefreshLayout){
 		Intent intent = new Intent(this.context, WorkerService.class);
         intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID);
         intent.putExtra(StringKeys.CONVERSATION_FROM_CONVERSATION_ID, conversationId);
@@ -258,12 +259,12 @@ public class PostsCache {
         PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);
         resultReceiver.setAdapter(adapter);
         resultReceiver.setAdapterData(adapterData);
-        resultReceiver.setPullToRefreshAttacher(pullToRefreshAttacher);
+        resultReceiver.setPullToRefreshAttacher(pullToRefreshLayout);
         intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
         
         this.context.startService(intent);
         
-        startRereshAniamtion(handler, pullToRefreshAttacher);
+        startRereshAniamtion(handler, pullToRefreshLayout);
 	}
 	
 	private void startService_getNotifications(
@@ -272,7 +273,7 @@ public class PostsCache {
 			List<Post> adapterData, 
 			SpinnerSectionItemAdapter spinnerAdapter, 
 			SpinnerSection section,
-			PullToRefreshAttacher pullToRefreshAttacher, 
+			PullToRefreshLayout pullToRefreshLayout, 
 			int postResultReceiverType){
 		Intent intent = new Intent(this.context, WorkerService.class);
 		intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_NOTIFICATIONS);
@@ -285,12 +286,12 @@ public class PostsCache {
 		resultReceiver.setAdapterData(adapterData);
 		resultReceiver.setSpinnerAdapter(spinnerAdapter);
 		resultReceiver.setSpinnerSection(section);
-		resultReceiver.setPullToRefreshAttacher(pullToRefreshAttacher);
+		resultReceiver.setPullToRefreshAttacher(pullToRefreshLayout);
 		intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
 
 		this.context.startService(intent);
 		
-		startRereshAniamtion(handler, pullToRefreshAttacher);
+		startRereshAniamtion(handler, pullToRefreshLayout);
 	}
 	
 	private void startService_getNearby(
@@ -300,7 +301,7 @@ public class PostsCache {
 			List<Post> adapterData, 
 			SpinnerSectionItemAdapter spinnerAdapter, 
 			SpinnerSection section,
-			PullToRefreshAttacher pullToRefreshAttacher,
+			PullToRefreshLayout pullToRefreshLayout,
 			Button button,
 			int postResultReceiverType,
 			boolean forceUpdate){
@@ -317,20 +318,20 @@ public class PostsCache {
 			resultReceiver.setAdapterData(adapterData);
 			resultReceiver.setSpinnerAdapter(spinnerAdapter);
 			resultReceiver.setSpinnerSection(section);
-			resultReceiver.setPullToRefreshAttacher(pullToRefreshAttacher);
+			resultReceiver.setPullToRefreshAttacher(pullToRefreshLayout);
 			resultReceiver.setButton(button);
 			intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
 			
 			this.context.startService(intent);
 			
-			startRereshAniamtion(handler, pullToRefreshAttacher);
+			startRereshAniamtion(handler, pullToRefreshLayout);
 		}
 	}
 	
 	private void startService_getLatest(
 			PostListItemAdapter adapter, 
 			List<Post> adapterData, 
-			PullToRefreshAttacher pullToRefreshAttacher, 
+			PullToRefreshLayout pullToRefreshLayout, 
 			boolean forcedUpdate){
 		if (isRequestAllowed(this.timestamp_PostsCall, forcedUpdate)){
 			
@@ -342,11 +343,11 @@ public class PostsCache {
 	        PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);
 	        resultReceiver.setAdapter(adapter);
 	        resultReceiver.setAdapterData(adapterData);
-	        resultReceiver.setPullToRefreshAttacher(pullToRefreshAttacher);
+	        resultReceiver.setPullToRefreshAttacher(pullToRefreshLayout);
 	        intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
 	        context.startService(intent);
 	        
-	        startRereshAniamtion(handler, pullToRefreshAttacher);
+	        startRereshAniamtion(handler, pullToRefreshLayout);
 		}
 	}
 	
@@ -372,13 +373,13 @@ public class PostsCache {
 		return false;
 	}
 	
-	private void startRereshAniamtion(Handler handler, final PullToRefreshAttacher pullToRefreshAttacher){
-		if (pullToRefreshAttacher!=null && !pullToRefreshAttacher.isRefreshing()){
+	private void startRereshAniamtion(Handler handler, final PullToRefreshLayout pullToRefreshLayout){
+		if (pullToRefreshLayout!=null && !pullToRefreshLayout.isRefreshing()){
 			handler.post(new Runnable() {
 				
 				@Override
 				public void run() {
-					pullToRefreshAttacher.setRefreshing(true);
+					pullToRefreshLayout.setRefreshing(true);
 				}
 			});
 		}
