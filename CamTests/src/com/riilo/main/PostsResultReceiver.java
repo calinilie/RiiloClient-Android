@@ -123,6 +123,7 @@ public class PostsResultReceiver extends ResultReceiver{
 					pullToRefreshLayout.setRefreshComplete();
 				}
 				if (button!=null){
+					Log.d("###################################", "button NOT null");
 					button.setVisibility(View.GONE);
 				}
 					

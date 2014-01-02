@@ -56,7 +56,6 @@ public class PostsCache {
 		for(int i=0; i<length; i++){
 			int key = this.posts.keyAt(i);
 			retVal.add(this.posts.get(key));
-			//Log.d("=======POST DEBUG======", posts.get(key).toString());
 		}
 		Collections.sort(retVal, Collections.reverseOrder());
 		return retVal;
@@ -66,10 +65,8 @@ public class PostsCache {
 		addPost(currentPost);
 		boolean conversationFound = false;
 		for(Post p : latestPosts){
-			//Log.d("###########Cache", "post "+p.getId()+" in cahce");
 			if(currentPost.getConversationId()==p.getConversationId()){
 				conversationFound = true;
-				//Log.d("###########Cache", "currentPost "+p.getId() + " in conv id " )
 				if (currentPost.isNewer(p)){
 					latestPosts.add(currentPost);
 					latestPosts.remove(p);
@@ -89,7 +86,6 @@ public class PostsCache {
  				PostListItemAdapter adapter, 
  				List<Post> adapterData, 
  				PullToRefreshLayout pullToRefreshLayout){
-		//Log.d("PostsCache", latestPosts.size()+"");
 		return this.getLatestPosts(adapter, adapterData, pullToRefreshLayout, false);
 	}
 	
@@ -109,9 +105,7 @@ public class PostsCache {
 			List<Post> adapterData, 
 			PullToRefreshLayout pullToRefreshLayout){
 		List<Post> retVal = getPostsByConversationId(conversationId);
-		//Log.d("WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID", "postsCache "+conversationId);
 		startService_getConversationByPostId(conversationId, adapter, adapterData, pullToRefreshLayout);
-		//Log.d("PostsCache.getPostsByConversationId()", retVal.size()+"");
 		return retVal;
 	}
 	

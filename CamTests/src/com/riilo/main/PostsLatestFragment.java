@@ -29,7 +29,7 @@ public class PostsLatestFragment
 		extends Fragment 
 		implements OnItemClickListener, ILocationListener, OnRefreshListener{
 	
-    private BaseActivity activity;
+    private MainActivity activity;
     private View view;
     
     
@@ -41,7 +41,7 @@ public class PostsLatestFragment
  	private PullToRefreshLayout pullToRefreshLayout;
 
  	public void onAttach(Activity activity){
- 		this.activity = (BaseActivity)activity;
+ 		this.activity = (MainActivity)activity;
  		super.onAttach(activity);
  	}
  	
@@ -64,13 +64,11 @@ public class PostsLatestFragment
  		view = inflater.inflate(R.layout.posts_lists_layout, container, false); 
  		setupWidgetsViewElements();
 
-// 		if (pullToRefreshLayout==null){
-	 		pullToRefreshLayout =  (PullToRefreshLayout) view.findViewById(R.id.ptr_layout);
-	 		ActionBarPullToRefresh.from(activity)
-	 			.allChildrenArePullable()
-	 			.listener(this)
-	 			.setup(pullToRefreshLayout);
-// 		}
+ 		pullToRefreshLayout =  (PullToRefreshLayout) view.findViewById(R.id.ptr_layout_fragment);
+ 		ActionBarPullToRefresh.from(activity)
+ 			.allChildrenArePullable()
+ 			.listener(this)
+ 			.setup(pullToRefreshLayout);
  		
  		return view;
  	}
@@ -84,7 +82,7 @@ public class PostsLatestFragment
 		}
 		postsListView.setAdapter(adapter);
 		
-		List<Post> latestPosts = PostsCache.getInstance(activity).getLatestPosts(adapter, adapterData, null);
+		List<Post> latestPosts = PostsCache.getInstance(activity).getLatestPosts(adapter, adapterData, activity.getPullToRefresh());
 		if (Helpers.renewList(adapterData, latestPosts)){
 			adapter.notifyDataSetChanged();
 		}
@@ -135,7 +133,7 @@ public class PostsLatestFragment
 			.getLatestPosts(
 				adapter, 
 				adapterData, 
-				pullToRefreshLayout, 
+				this.pullToRefreshLayout, 
 				true);
 	}
 

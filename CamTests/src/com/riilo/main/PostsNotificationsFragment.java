@@ -65,13 +65,11 @@ public class PostsNotificationsFragment
  		
  		setupWidgetsViewElements();
  		
-// 		if (pullToRefreshLayout==null){
-	 		pullToRefreshLayout = (PullToRefreshLayout) view.findViewById(R.id.ptr_layout);
-	 		ActionBarPullToRefresh.from(activity)
-	 			.allChildrenArePullable()
-	 			.listener(this)
-	 			.setup(pullToRefreshLayout);
-// 		}
+ 		pullToRefreshLayout = (PullToRefreshLayout) view.findViewById(R.id.ptr_layout_fragment);
+ 		ActionBarPullToRefresh.from(activity)
+ 			.allChildrenArePullable()
+ 			.listener(this)
+ 			.setup(pullToRefreshLayout);
         
  		return view;
  	}

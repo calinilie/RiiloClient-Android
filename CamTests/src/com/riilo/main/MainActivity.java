@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh.SetupWizard;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 
 import com.google.android.gms.location.LocationRequest;
@@ -39,6 +41,9 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
     
     private boolean wasTutorialRunThisSession = false;
     private IBackButtonListener backButtonListener;
+    
+    private PullToRefreshLayout pullToRefreshLayout;
+    private SetupWizard setupWizard;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +73,13 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
             public void onPageSelected(int position) {
             	actionBar.setSelectedNavigationItem(position);
             }
-        });        
+        });
+        
+        pullToRefreshLayout =  (PullToRefreshLayout) findViewById(R.id.ptr_layout);
+        
+ 		setupWizard = ActionBarPullToRefresh.from(this)
+ 			.allChildrenArePullable();
+		setupWizard.setup(pullToRefreshLayout);
         
         initLocationClient(LocationRequest.PRIORITY_LOW_POWER, 2000, 1000);
         
@@ -78,7 +89,7 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 				null, 
 				spinnerAdapter,
 				spinnerAdapter.getItem(3), 
-				null, 
+				pullToRefreshLayout, 
 				false,
 				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);
         
@@ -189,6 +200,10 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 	public boolean onNavigationItemSelected(int position, long itemId) {
 		viewPager.setCurrentItem(position);
 		return true;
+	}
+	
+	public PullToRefreshLayout getPullToRefresh(){
+		return this.pullToRefreshLayout;
 	}
 	
 	private static final List<SpinnerSection> sections = new ArrayList<SpinnerSection>(
