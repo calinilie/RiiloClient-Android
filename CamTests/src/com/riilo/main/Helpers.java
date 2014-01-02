@@ -128,7 +128,6 @@ public class Helpers {
     
     public static boolean renewList(List<Post> target, List<Post> source, boolean desc){
     	boolean newItemsAdded = false;
-    	Log.d(TAG, "adapterdata: " + target.size()+" newPosts: "+source.size());
     	if (source!=null && target!=null){
 	    	for(Post p: source){
 	    		if (!target.contains(p)){
