@@ -20,14 +20,20 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class PostsLatestFragment 
 		extends Fragment 
-		implements OnItemClickListener, ILocationListener, OnRefreshListener{
+		implements OnItemClickListener, ILocationListener, OnRefreshListener, OnClickListener{
 	
     private MainActivity activity;
     private View view;
@@ -36,6 +42,10 @@ public class PostsLatestFragment
 	PostListItemAdapter adapter;
  	List<Post> adapterData = new ArrayList<Post>();
  	ListView postsListView;
+ 	
+ 	View tutorialSwipe;
+ 	View tutorialSwipeContainer;
+ 	ImageButton buttonCloseTutorialSwipe;
  	
  	
  	private PullToRefreshLayout pullToRefreshLayout;
@@ -96,6 +106,15 @@ public class PostsLatestFragment
  	protected void setupWidgetsViewElements() {
 		postsListView = (ListView)view.findViewById(R.id.posts_listView);
 		postsListView.setOnItemClickListener(this);
+		
+		tutorialSwipeContainer = view.findViewById(R.id.tutorial_swipe_container);
+		tutorialSwipeContainer.setVisibility(View.VISIBLE);
+		
+		tutorialSwipe = view.findViewById(R.id.tutorial_swipe);
+//		tutorialSwipe.setVisibility(View.VISIBLE);
+		
+		buttonCloseTutorialSwipe = (ImageButton)view.findViewById(R.id.button_close_tutorial_swipe);
+		buttonCloseTutorialSwipe.setOnClickListener(this);
 	}
  	
  	@Override
@@ -109,6 +128,32 @@ public class PostsLatestFragment
 		startActivity(postViewIntent);
 	}
  	
+ 	@Override
+   	public void onClick(View v) {
+ 		if (v.getId() == R.id.button_close_tutorial_swipe){
+ 			
+ 			Animation slideOut = AnimationUtils.loadAnimation(activity.getApplicationContext(),
+   	                R.anim.slide_out_bottom);
+ 			
+ 			Animation fadeOut = AnimationUtils.loadAnimation(activity.getApplicationContext(),
+   	                R.anim.fade_out);
+   	   	 
+	   	   	 if (tutorialSwipeContainer.getVisibility()==View.VISIBLE){
+	   	   		 
+	   	   		 tutorialSwipe.startAnimation(slideOut);
+	   	   		 tutorialSwipeContainer.startAnimation(fadeOut);
+	   	   		 
+	   	   		 tutorialSwipe.requestLayout();
+	   	   		 tutorialSwipeContainer.requestLayout();
+	   	   		 
+	   	   		 tutorialSwipe.setVisibility(View.GONE);
+	   	   		 tutorialSwipeContainer.setVisibility(View.GONE);
+	   	   		 
+	   	   		 //TODO
+	   	   		 //update tutorial swipe run
+	   	   	 }
+ 		}
+ 	}
  	
  	@Override
 	public void onLocationChanged(Location location) {

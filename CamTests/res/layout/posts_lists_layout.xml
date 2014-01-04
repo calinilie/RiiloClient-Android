@@ -4,7 +4,6 @@
     android:id="@+id/ptr_layout_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-	
     
     <ListView
         android:id="@+id/posts_listView"
@@ -14,7 +13,55 @@
 		android:dividerHeight="0dp"
 		android:overScrollMode="never" >
     </ListView>
-
+	
+    <RelativeLayout 
+        android:id="@+id/tutorial_swipe_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#66000000"
+        android:visibility="gone">
+    
+	    <RelativeLayout
+	        android:id="@+id/tutorial_swipe"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_centerVertical="true"
+	        android:layout_margin="16dp"
+	        android:background="@drawable/card_background"
+	        android:visibility="visible" >
+	
+	        <ImageButton
+	            android:id="@+id/button_close_tutorial_swipe"
+	            android:layout_width="48dp"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:background="@drawable/selector"
+	            android:contentDescription="Cancel action"
+	            android:padding="8dp"
+	            android:src="@android:drawable/ic_menu_close_clear_cancel" />
+	
+	        <TextView
+	            android:id="@+id/textView1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@+id/button_close_tutorial_swipe"
+	            android:layout_centerHorizontal="true"
+	            android:padding="8dp"
+	            android:text="@string/tutorial_swipe_text"
+	            android:visibility="visible" />
+	
+	        <ImageView
+	            android:id="@+id/map_marker"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@+id/textView1"
+	            android:layout_centerHorizontal="true"
+	            android:layout_margin="8dp"
+	            android:background="@drawable/ic_map_marker_human" />
+	    </RelativeLayout>
+    
+    </RelativeLayout>
+    
     <Button
         android:id="@+id/button_refresh"
         android:layout_width="wrap_content"
