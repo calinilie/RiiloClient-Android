@@ -105,7 +105,6 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
         if(mapView!=null){
         	mapView.onResume();	
         }
-        //Log.d(">>>>>>>>>mapFragment<<<<<<<<<<", "onResume()");
     }
    
     @Override
@@ -113,7 +112,6 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
         super.onPause();
         if (null != mapView)
         	mapView.onPause();
-        //Log.d(">>>>>>>>>mapFragment<<<<<<<<<<", "onPause()");
     }
     
     @Override
@@ -121,7 +119,6 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
         super.onDestroy();
         if (null != mapView)
         	mapView.onDestroy();
-        //Log.d(">>>>>>>>>mapFragment<<<<<<<<<<", "onDestroy()");
     }
     
     @Override
@@ -129,7 +126,6 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
         super.onSaveInstanceState(outState);
         if (null != mapView)
         	mapView.onSaveInstanceState(outState);
-        //Log.d(">>>>>>>>>mapFragment<<<<<<<<<<", "onSaveInstanceState()");
     }
     
     @Override
@@ -137,7 +133,6 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
         super.onLowMemory();
         if (null != mapView)
         	mapView.onLowMemory();
-        //Log.d(">>>>>>>>>mapFragment<<<<<<<<<<", "onLowMemory()");
     }*/
     
    	@Override
@@ -281,7 +276,6 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	
 	@Override
 	public boolean onBackPressed(){
-		//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>", "fragment.onBackPressed");
 		if (panelCreatePosts.getVisibility()==View.VISIBLE){
 			hideReplyToPostPannel();
 			return false;

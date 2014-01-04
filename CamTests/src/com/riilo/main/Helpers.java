@@ -32,9 +32,6 @@ public class Helpers {
 				map.addMarker(new MarkerOptions().position(h.getLatLng()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker_human)));
 				h.setIsOnMap(true);
 			}
-			else{
-				//Log.d(TAG, "location History already marked!");
-			}
 		}
 	}
 	
@@ -92,7 +89,6 @@ public class Helpers {
     }
     
     private static Date shiftTimeZone(Date date, TimeZone sourceTimeZone, TimeZone targetTimeZone) {
-    	//Log.d("default timezone::::::::::::::::::::::::::::::", sourceTimeZone.getDisplayName() + " " + targetTimeZone.getDisplayName());
         Calendar sourceCalendar = Calendar.getInstance();
         sourceCalendar.setTime(date);
         sourceCalendar.setTimeZone(sourceTimeZone);
@@ -100,12 +96,11 @@ public class Helpers {
         Calendar targetCalendar = Calendar.getInstance();
         targetCalendar.setTimeZone(targetTimeZone);
         for (int field : new int[] {Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, Calendar.HOUR, Calendar.MINUTE, Calendar.SECOND, Calendar.MILLISECOND}) {
-        	if (field == Calendar.HOUR)
-        		//Log.d("source calendar hour field" , sourceCalendar.get(field)+"");
+        	/*if (field == Calendar.HOUR)
+        		Log.d("source calendar hour field" , sourceCalendar.get(field)+"");*/
             targetCalendar.set(field, sourceCalendar.get(field));
         }
         targetCalendar.setTimeZone(targetTimeZone);
-        //Log.d("default timezone::::::::::::::::::::::::::::::",date.getHours() + "  "+ sourceCalendar.getTimeZone().getDisplayName() + sourceCalendar.get(Calendar.HOUR) +" & "+ targetCalendar.getTimeZone().getDisplayName()+targetCalendar.get(Calendar.HOUR));
         
         return targetCalendar.getTime();
     }
@@ -197,7 +192,6 @@ public class Helpers {
 	             break;
 	         }
 	         
-	         Log.v(">>>>>>>>>>>>>Orient<<<<<<<<<<<<<", "Exif orientation: " + orientation);
 	     } catch (Exception e) {
 	         e.printStackTrace();
 	     }

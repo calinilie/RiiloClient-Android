@@ -68,8 +68,6 @@ public class PostsNearbyFragment
  			.listener(this)
  			.setup(pullToRefreshLayout);
  		
-// 		Log.d(TAG, adapterData.size()+" onCreateView");
- 		
  		return view;
  	}
  	
@@ -86,7 +84,6 @@ public class PostsNearbyFragment
 			}
 		}
 		
-//		Log.d(TAG, adapterData.size()+" onCreate");
  	}
  	
  	@Override
@@ -107,7 +104,6 @@ public class PostsNearbyFragment
 			buttonRefresh.setVisibility(View.VISIBLE);
 		}
 		
-//		Log.d(TAG, adapterData.size()+" onStart");
  	}
 
     @Override
@@ -219,7 +215,6 @@ public class PostsNearbyFragment
 			
 			adapter.notifyDataSetChanged();
 			
-			Log.d(TAG, adapterData.size()+" "+adapterData.hashCode());
 			break;
 		}
 	}

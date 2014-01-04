@@ -79,7 +79,6 @@ public abstract class BaseActivity extends FragmentActivity
 	
 	@Override
 	protected void onStop(){
-		//Log.d(TAG, "onStop");
 		disconnectLocationClient();
 		analytics.stopTracker(this);
 		super.onStop();
@@ -470,7 +469,6 @@ public abstract class BaseActivity extends FragmentActivity
 	             * the argument is "this".
 	             */
 	        	locationClient.removeLocationUpdates((LocationListener) this);
-				//Log.d(TAG, "removeLocationUpdates");
 	        }
 	        /*
 	         * After disconnect() is called, the client is
@@ -478,7 +476,6 @@ public abstract class BaseActivity extends FragmentActivity
 	         */
 	        // Disconnecting the client invalidates it. 
 	        locationClient.disconnect();
-	        //Log.d(TAG, "disconnect");
 		}
 	}
 }

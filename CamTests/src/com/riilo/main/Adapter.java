@@ -102,7 +102,6 @@ public class Adapter extends SQLiteOpenHelper{
 	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		//Log.d("sqlite_db","on create called");
 //		try{
 			runSqlQueries(db, createQueries);
 //		}
@@ -113,7 +112,6 @@ public class Adapter extends SQLiteOpenHelper{
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", "called onUpgrade");
 		/*if (newVersion == 5 && oldVersion==4){
 			runSqlQueries(db, queiresV5);
 		}

@@ -64,7 +64,6 @@ public class Post implements Comparable<Post>, Serializable{
 		this.conversationId = bundle.getLong(StringKeys.POST_CONVERSATION_ID);
 		this.originLatitude = bundle.getDouble(StringKeys.POST_ORIGIN_LATITUDE);
 		this.originLongitude = bundle.getDouble(StringKeys.POST_ORIGIN_LONGITUDE);
-		//Log.d("POST BUNDLE CONSTRUCTOR", toString());
 	}
 	
 	public Post (JSONObject jsonObject) throws JSONException{
@@ -97,7 +96,6 @@ public class Post implements Comparable<Post>, Serializable{
     	bundle.putLong(StringKeys.POST_ID, id);
     	bundle.putLong(StringKeys.POST_REPLIES_TO_POSTID, repliesToPostId);
     	bundle.putLong(StringKeys.POST_CONVERSATION_ID, this.conversationId);
-    	//Log.d("POST TO BUNDLE", toString());
     	return bundle;
 	}
 
@@ -118,7 +116,6 @@ public class Post implements Comparable<Post>, Serializable{
 //		retVal.put("createdDateAsString", Helpers.dateToString(dateCreated));//TODO review!
 //		retVal.put("pictureUri", this.uri);//TODO
 		
-		//Log.d("originLoc", "toJson: "+this.originLatitude + " "+this.originLongitude);
 		
 		return retVal;
 	}
@@ -179,7 +176,6 @@ public class Post implements Comparable<Post>, Serializable{
 		if (currentLocation!=null && lat!=0 && longitude!=0){
 			this.originLatitude = currentLocation.getLatitude();
 			this.originLongitude = currentLocation.getLongitude();
-			//Log.d("originLoc", "setUserAtLocation: "+this.originLatitude + " "+this.originLongitude);
 			double distanceFromCurrentLocation = Helpers.distanceInKmFrom(lat, longitude, currentLocation.getLatitude(), currentLocation.getLongitude()); 
 			if (distanceFromCurrentLocation<2){
 				setUserAtLocation(true);
@@ -271,15 +267,12 @@ public class Post implements Comparable<Post>, Serializable{
 	@Override
 	public boolean equals(Object another){
 		if (another == null){
-			//Log.d(">>>>compare>>>>", "null");
 			return false;
 		}
 		if (!(another instanceof Post)){
-			//Log.d(">>>>compare>>>>", "not Post");
 			return false;
 		}
 		
-		//Log.d(">>>>compare>>>>", this.id +" = "+((Post)another).getId());
 		return this.id == ((Post)another).getId();
 	}
 	

@@ -84,7 +84,6 @@ public class PostsResultReceiver extends ResultReceiver{
 				postsListParcelable =  resultData.getParcelable(StringKeys.POST_LIST_PARCELABLE);
 				posts = postsListParcelable.getPostsList();
 				refreshPostsListAdapter(posts, true);
-				//Log.d("<<<<<<<<<<<<<<<PostsResultReceiver.onReceiveResult>>>>>>>>>>>>>>>", "Posts: "+posts.size());
 				break;
 			case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_ASC:
 				if (adapter==null)
@@ -94,7 +93,6 @@ public class PostsResultReceiver extends ResultReceiver{
 				postsListParcelable =  resultData.getParcelable(StringKeys.POST_LIST_PARCELABLE);
 				posts = postsListParcelable.getPostsList();
 				refreshPostsListAdapter(posts, false);
-				//Log.d("<<<<<<<<<<<<<<<PostsResultReceiver.onReceiveResult>>>>>>>>>>>>>>>", "Posts: "+posts.size());
 				break;
 			case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER:
 				if (spinnerAdapter==null)
@@ -109,21 +107,17 @@ public class PostsResultReceiver extends ResultReceiver{
 				posts = postsListParcelable.getPostsList();
 				
 				updateSection(notifications);
-				//Log.d("¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤", notifications+"");
 				refreshPostsListAdapter(posts, true);
 				break;
 		}
-		//Log.d("###################################", "OnReceive Called");
 		handler.post(new Runnable() {
 			
 			@Override
 			public void run() {
 				if (pullToRefreshLayout!=null){
-					//Log.d("###################################", "pullToRefreshAttacher NOT null");
 					pullToRefreshLayout.setRefreshComplete();
 				}
 				if (button!=null){
-					Log.d("###################################", "button NOT null");
 					button.setVisibility(View.GONE);
 				}
 					
@@ -132,7 +126,6 @@ public class PostsResultReceiver extends ResultReceiver{
 	}
 	
 	private void refreshPostsListAdapter(List<Post> newPosts, boolean desc){
-		Log.d("pwla", (newPosts==null)+"");
 		if (newPosts!=null && newPosts.size()>0){
 			if (Helpers.renewList(adapterData, newPosts, desc)){
 				this.handler.post(new Runnable() {

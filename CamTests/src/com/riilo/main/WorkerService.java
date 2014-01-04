@@ -56,19 +56,16 @@ public class WorkerService extends IntentService{
             Secure.ANDROID_ID);
 		postsCache = PostsCache.getInstance(this);
 		locationHistoryManager = LocationHistoryManager.getInstance(this);
-		//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "onCreate Called ");
 	}
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId){
 		super.onStartCommand(intent, flags, startId);
-		//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "onStartCommand Called");
 		return Service.START_NOT_STICKY;
 	}
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "onHandleIntent Called ");
 		Bundle resultData = null;
 		ResultReceiver resultReceiver = null;
 		int resultReceiverType = 0;
@@ -87,37 +84,27 @@ public class WorkerService extends IntentService{
 				savePostLocally(post);
 			}
 			postsCache.addPost(post);
-			//Log.d("************************************", "WS_INTENT_POST");
 			break;
 		case StringKeys.WS_INTENT_GET_LATEST_POSTS:
-			//Log.d("************************************", "WS_INTENT_GET_LATEST_POSTS");
 			resultReceiver = intent.getParcelableExtra(StringKeys.POST_LIST_RESULT_RECEIVER);
 			List<Post> latestPosts = getLatestPosts(0, 200);
-			if (latestPosts==null){
-				//Log.d("<<<<<<<#####<<<<<"+WorkerService.class.toString()+">>>>>########>>>>>>>", "getLatestposts(start, limit) FAILED");
-			}
-			//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "getLatestsPosts() finished");
 			resultReceiverType = intent.getIntExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
 			if (latestPosts!=null){
-				//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "getLatestsPosts != null");
 				resultData = new Bundle();
 				resultData.putParcelable(StringKeys.POST_LIST_PARCELABLE, new PostsListParcelable(latestPosts));
 				resultReceiver.send(resultReceiverType, resultData);
 			}
-			//Log.d(">>>>>>>>>>>worker intent<<<<<<<<<<<", "getLatestPosts == NULL");
 			break;
 		case StringKeys.WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID:
 			resultReceiver = intent.getParcelableExtra(StringKeys.POST_LIST_RESULT_RECEIVER);
 			resultReceiverType = intent.getIntExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_ASC);
 			conversationId = intent.getLongExtra(StringKeys.CONVERSATION_FROM_CONVERSATION_ID, 0);
-			//Log.d("WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID", conversationId +"");
 			if (conversationId!=0){
 				List<Post> postsInConversation = getConverstionByConversationId(conversationId);
 				resultData = new Bundle();
 				resultData.putParcelable(StringKeys.POST_LIST_PARCELABLE, new PostsListParcelable(postsInConversation));
 				resultReceiver.send(resultReceiverType, resultData);
 			}
-			//Log.d("************************************", "WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID");
 			break;
 		case StringKeys.WS_INTENT_GET_NOTIFICATIONS:
 			resultReceiver = intent.getParcelableExtra(StringKeys.POST_LIST_RESULT_RECEIVER);
@@ -132,7 +119,6 @@ public class WorkerService extends IntentService{
 					resultReceiver.send(resultReceiverType, resultData);
 				}
 			}
-			//Log.d("************************************", "WS_INTENT_GET_NOTIFICATIONS");
 			break;
 		case StringKeys.WS_INTENT_NOTIFICATIONS_SILENCE:
 			conversationId = intent.getLongExtra(StringKeys.NOTIFICATION_SILENCE_CONVERSATION_ID, 0);
@@ -145,7 +131,6 @@ public class WorkerService extends IntentService{
 				}
 				silenceNotifications(postIds, userId);
 			}
-			//Log.d("************************************", "WS_INTENT_NOTIFICATIONS_SILENCE");
 			break;
 		case StringKeys.WS_INTENT_NEARBY_POSTS:
 			double latitude = intent.getDoubleExtra(StringKeys.NEARBY_POSTS_LATITUDE, 0);
@@ -155,18 +140,15 @@ public class WorkerService extends IntentService{
 			if (latitude != 0 && longitude != 0){
 				List<Post> nearbyPosts = getNearbyPosts(latitude, longitude);
 				if (resultReceiver!=null){
-					//Log.d(TAG, nearbyPosts.size()+"");
 					resultData = new Bundle();
 					resultData.putParcelable(StringKeys.POST_LIST_PARCELABLE, new PostsListParcelable(nearbyPosts));
 					resultData.putInt(StringKeys.POST_RESULT_RECEIVER_NOTIFICATION_NUMBER, postsCache.getNearbyPosts().size());
 					resultReceiver.send(resultReceiverType, resultData);
 				}
 			}
-			//Log.d("************************************", "WS_INTENT_NEARBY_POSTS");
 			break;
 		case StringKeys.WS_INTENT_INSERT_LOCATION_HISTORY:
 			LocationHistory location = Facade.getInstance(this).getLastKnownLocation();
-			//Log.d(TAG, "1 "+location.isSent()+"");
 			location.setUserId(deviceId);
 			postLocationHistory(location);
 			break;
@@ -176,7 +158,6 @@ public class WorkerService extends IntentService{
 			if (list!=null && !list.isEmpty()){
 				Facade.getInstance(this).insertOutsideLocationHistory(list);
 				locationHistoryManager.mergeLocationhistories(list);
-				//Log.d(TAG, list.size()+"");
 				resultData = new Bundle();
 				resultData.putParcelable(StringKeys.LOCATION_HISTORY_PARCELABLE, new LocationHistoryParcelable(locationHistoryManager.getLocationHistory()));
 				resultReceiver.send(123, resultData);
@@ -190,9 +171,8 @@ public class WorkerService extends IntentService{
 	}
 	
 	private PostInsertedDTO uploadPost(Post model){
-		String postEndpoint = getResources().getString(R.string.endpoint_posts_upload);
+		String postEndpoint = getResources().getString(R.string.local_test_posts_upload);
 		try{
-			//Log.d("originLoc", "posting json: "+model.toJson().toString());
 			String jsonString = tryPostWithRetry(postEndpoint, model.toJson().toString());
 			PostInsertedDTO retVal = jsonToPostInsertedDTO(jsonString);
 			return retVal;
@@ -208,8 +188,7 @@ public class WorkerService extends IntentService{
 			if (locationHistory.getLatitude()!= 0 || locationHistory.getLatitude()!=0){
 				try {
 					String json = locationHistory.toJson().toString();
-					//Log.d(TAG, "2 inserLocationHistory:  "+json);
-					String endpoint = getString(R.string.endpoint_post_location);
+					String endpoint = getString(R.string.local_test_post_location);
 					tryPostWithRetry(endpoint, json);
 					Facade.getInstance(this).updateLastLocationSent();
 				} catch (JSONException e) {
@@ -221,7 +200,7 @@ public class WorkerService extends IntentService{
 	
 	private List<LocationHistory> getLocationHistory(){
 		List<LocationHistory> retVal = new ArrayList<LocationHistory>();
-		String endpoint = getString(R.string.endpoint_location_history);
+		String endpoint = getString(R.string.local_test_location_history);
 		//get json with retry
 		String json = getJson(endpoint);
 		if (!isValidJsonResponse(json)){
@@ -244,7 +223,7 @@ public class WorkerService extends IntentService{
 	}
 	
 	private String silenceNotifications(List<Long> postIds, String userId){
-		String endpoint = getResources().getString(R.string.endpoint_silence_notifications);
+		String endpoint = getResources().getString(R.string.local_test_silence_notifications);
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("userId", userId);
@@ -261,13 +240,12 @@ public class WorkerService extends IntentService{
 	
 	private List<Post> getLatestPosts(int start, int limit){
 		//build endpoint
-		String endpoint = getString(R.string.endpoint_latest_posts);
+		String endpoint = getString(R.string.local_test_latest_posts);
 	    endpoint += String.format("%s/%s/", start, limit);
 		
 	    List<Post> retVal = getPostsWithRetry(endpoint);
 //	    List<Post> toRemove = new ArrayList<Post>();
 	    if (retVal!=null){
-	    	//Log.d("<<<<<<<<<Workerservice.getLatestPosts>>>>>>>>>", "retrieved no of posts: "+retVal.size());
 	    	for (Post p:retVal){
 //				Facade.getInstance(this).insertForeignPost(p, deviceId);
 	    		savePostLocally(p);//TODO uncoment the one above!
@@ -282,14 +260,13 @@ public class WorkerService extends IntentService{
 	}
 	
 	private List<Post> getNearbyPosts(double latitude, double longitude){
-		String endpoint = getString(R.string.endpoint_nearby_posts);
+		String endpoint = getString(R.string.local_test_nearby_posts);
 		int distance = 0;//server side controlled distance
 		endpoint = String.format("%s%s/%s/%s/", endpoint, latitude+"", longitude+"", distance+"");
 		
 		List<Post> retVal = getPostsWithRetry(endpoint);
 		List<Post> postsToRemove = new ArrayList<Post>();//posts from conversation already present, only one post per conversation in List
 		if (retVal!=null){
-			//Log.d("<<<<<<<<<Workerservice.getNearbyPosts>>>>>>>>>", "retrieved no of nearby posts: "+retVal.size());
 			for (Post p:retVal){
 				if (!postsCache.addPostAsNearbyPost(p)){
 					postsToRemove.add(p);
@@ -301,13 +278,12 @@ public class WorkerService extends IntentService{
 	}
 	
 	private List<Post> getConverstionByConversationId(long conversationId){
-		String endpoint = getString(R.string.endpoint_conversation);
+		String endpoint = getString(R.string.local_test_conversation);
 		endpoint += conversationId;
 		
 		List<Post> retVal = getPostsWithRetry(endpoint);
 		
 		if (retVal!=null){
-			//Log.d("<<<<<<<<<Workerservice.getConverstionByPostId>>>>>>>>>", "retrieved no of posts in conversation: "+retVal.size());
 	    	for (Post p:retVal){
 				postsCache.addPost(p);
 	    	}
@@ -317,7 +293,7 @@ public class WorkerService extends IntentService{
 	
 	private List<Post> getNotificationsForUser(String userId){
 		List<Post> retVal = null;
-		String endpoint = getString(R.string.endpoint_notifications);
+		String endpoint = getString(R.string.local_test_notifications);
 		endpoint += userId;
 		
 		retVal = getPostsWithRetry(endpoint);
@@ -328,7 +304,6 @@ public class WorkerService extends IntentService{
 					postsToRemove.add(p);
 				}
 			}
-			//Log.d("<<<<<<<<<Workerservice.getNotificationsForUser>>>>>>>>>", "retrieved no of notifications: "+retVal.size());
 			retVal.removeAll(postsToRemove);
 		}		
 		return retVal;
@@ -357,9 +332,7 @@ public class WorkerService extends IntentService{
 	    try {
 	      HttpResponse response = client.execute(httpGet);
 	      StatusLine statusLine = response.getStatusLine();
-//	      Header[] headers = response.getHeaders("X-Cache");
-//	      if (headers.length>0)
-	    	  //Log.d("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH", headers[0].getValue());
+		  
 	      int statusCode = statusLine.getStatusCode();
 	      if (statusCode == 200) {
 	        HttpEntity entity = response.getEntity();
@@ -393,13 +366,10 @@ public class WorkerService extends IntentService{
 	    }
 	    try {
 			JSONArray array =  new JSONArray(jsonString);
-			//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", array.length()+"");
 			int length = array.length();
 			for (int i=0; i<length; i++){
-				//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", array.getJSONObject(i).toString());
 				Post p = new Post(array.getJSONObject(i));
 				retVal.add(p);
-				//Log.d("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", p.displayInList());
 			}
 		} catch (JSONException e) {
 			Log.e("<<<<<<<<<Workerservice.jsonStringToPostsList>>>>>>>>>", e.getLocalizedMessage(), e);
@@ -438,14 +408,11 @@ public class WorkerService extends IntentService{
 	
 	private String tryPostWithRetry(String endpoint, String json){
 		String response = postJson(endpoint, json);
-		//Log.d(TAG, "3 "+response+" "+json);
 		if (response.equals(StringKeys.CONNECTION_TIMEDOUT)){
 			response = postJson(endpoint, json);
-			//Log.d(TAG, "4 "+response+" "+json);
 		}
 		else if (response.equals(StringKeys.POST_REQUEST_FAILED)){
 			response = postJson(endpoint, json);
-			//Log.d(TAG, "5 "+response+" "+json);
 		}
 		return response;
 	}
@@ -463,7 +430,6 @@ public class WorkerService extends IntentService{
 	        httppost.setHeader("Content-Type", "application/json; charset=utf-8");
 	        HttpResponse response = httpclient.execute(httppost);
 	        int responseCode = response.getStatusLine().getStatusCode();
-	        //Log.d(TAG, responseCode+" ");
 	        if (responseCode == 200){
 	        	HttpEntity entity = response.getEntity();
 		        InputStream content = entity.getContent();

@@ -353,7 +353,6 @@ public class PostsCache {
 		else{
 			if (timestamp.getTimeStamp()!=null){
 				long difference = (Calendar.getInstance().getTimeInMillis()-timestamp.getTimeStamp().getTime()) / 1000;
-				//Log.d("<<<<<<<<PostsCache>>>>>>>>", "diff: "+difference);
 				if (difference>60){
 					timestamp.setTimeStamp(Calendar.getInstance().getTime());
 					return true;

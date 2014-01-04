@@ -39,7 +39,6 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 	@Override
 	public int getCount() {
 		int count = (items != null) ? items.size() : 0;
-//		Log.d("PostsCache.getPostsByConversationId()", "hascode: " + items.hashCode() + "itemAdapter.getcount "+count);
 	    return count;
 	}
 	

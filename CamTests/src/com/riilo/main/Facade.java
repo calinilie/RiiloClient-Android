@@ -95,13 +95,9 @@ public class Facade {
 			post.setUserAtLocation(cursor.getInt(10)==1 ? true : false);
 			post.setConversationId(cursor.getInt(11));
 			retVal.add(post);
-			//Log.d("<<<<<<<<<<<<Facade.getAllPosts()>>>>>>>>>>>>", post.displayInList());
 		}
-//		if (retVal.size()>=1)
-			//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>", retVal.get(retVal.size()-1).toString());
 		deleteOldPosts(retVal.size());
 		close();
-		//Log.d("<<<<<<<<<<<<Facade.getAllPosts()>>>>>>>>>>>>", "posts in db: "+retVal.size());
 		return retVal;
 	}
 	
@@ -127,7 +123,6 @@ public class Facade {
 		open();
 		if (!deviceId.equalsIgnoreCase(post.getUserId())){
 			if (!doesPostExist(post.getId())){
-				//Log.d(">>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<", "inserting post with id" + post.getId());
 				insertPost(post);
 			}
 		}
@@ -237,8 +232,6 @@ public class Facade {
 				location.setLongitude(cursor.getDouble(2));
 				retVal.add(location);
 			}
-			
-			//Log.d(TAG, retVal.size()+"");
 		}
 		catch(Exception e){}
 		finally{
@@ -263,7 +256,6 @@ public class Facade {
 	}
 	
 	public synchronized boolean wasTutorialRun(){
-		//Log.d("tutorial", "wasTutorialRun");
 		open();
 		boolean retVal = false;
 		try{
@@ -272,7 +264,6 @@ public class Facade {
 			Cursor cursor = database.query(Adapter.APP_STORAGE_TABLE, appStorageColumns, selection, selectionArgs, null, null, null);
 			if (cursor.moveToNext()){
 				int value = cursor.getInt(1);
-				//Log.d("tutorial", value+"");
 				retVal = value == 1;
 			}
 		}
@@ -311,7 +302,6 @@ public class Facade {
 			Cursor cursor = database.query(Adapter.APP_STORAGE_TABLE, appStorageColumns, selection, selectionArgs, null, null, null);
 			if (cursor.moveToNext()){
 				int value = cursor.getInt(1);
-				//Log.d("tutorial", value+"");
 				retVal = value == 1;
 			}
 		}
@@ -369,8 +359,7 @@ public class Facade {
 			post.setUserAtLocation(cursor.getInt(10)==1 ? true : false);
 			retVal.add(post);
 		}
-		if (retVal.size()>=1)
-			//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>", retVal.get(retVal.size()-1).toString());
+
 		close();
 		return retVal;
 	}*/

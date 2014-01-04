@@ -27,12 +27,9 @@ public class LocationHistoryResultReceiver extends ResultReceiver{
 	@Override
 	protected void onReceiveResult(int resultCode, Bundle resultData){
 		LocationHistoryParcelable locationHistoryParcelable = resultData.getParcelable(StringKeys.LOCATION_HISTORY_PARCELABLE);
-		//Log.d(TAG, "onReceiveResult");
 		if (locationHistoryParcelable!=null){
 			final List<LocationHistory> list = locationHistoryParcelable.getLocationHistory();
-			//Log.d(TAG, "locationHistoryParcelable!=null" + list.size());
 			if (list!=null && !list.isEmpty()){
-				//Log.d(TAG, list.size()+"");
 				handler.post(new Runnable() {
 					
 					@Override

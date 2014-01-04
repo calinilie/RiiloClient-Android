@@ -25,8 +25,6 @@ public class AnalyticsWrapper {
 		tracker = EasyTracker.getInstance(context);
 		deviceId = Secure.getString(context.getContentResolver(),
                 Secure.ANDROID_ID);
-		
-		//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>ANALYTICS", "DEVICE ID   " + deviceId);
 	}
 	
 	public static AnalyticsWrapper getInstance(Activity context){
@@ -38,7 +36,6 @@ public class AnalyticsWrapper {
 	public void startTracker(Activity activity){
 		if (isNotEmployeeDevice()){
 			tracker.activityStart(activity);
-			//Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>ANALYTICS", "STARTED");
 		}
 	}
 	
@@ -66,27 +63,22 @@ public class AnalyticsWrapper {
 	}
 	
 	public void recordScreenHit_WritePost(){
-		//Log.d("ANALYTICS", "record_WritePost_ScreenHit");
 		recordScreenHit(ScreenName.Write_Post);
 	}
 	
 	public void recordScreenHit_LatestPosts(){
-		//Log.d("ANALYTICS", "record_LatestPosts_ScreenHit");
 		recordScreenHit(ScreenName.Latest_Posts);
 	}
 	
 	public void recordScreenHit_NearbyPosts(){
-		//Log.d("ANALYTICS", "record_NearbyPosts_ScreenHit");
 		recordScreenHit(ScreenName.Nearby_Posts);
 	}
 	
 	public void recordScreenHit_Notifications(){
-		//Log.d("ANALYTICS", "record_Notifications_Screen");
 		recordScreenHit(ScreenName.Notifications);
 	}
 	
 	public void recordScreenHit_Conversation(){
-		//Log.d("ANALYTICS", "record_Conversation_ScreenHit");
 		recordScreenHit(ScreenName.Conversation);
 	}
 	
@@ -169,7 +161,6 @@ public class AnalyticsWrapper {
 		if (isNotEmployeeDevice())
 			tracker.send(MapBuilder.createEvent(categoryAsString, actionAsString, labelAsStirng, value).build());
 		
-		//Log.d("ANALYTICS", categoryAsString+" "+actionAsString+" "+labelAsStirng+" "+value);
 	}
 	
 	private static final String[] excludedDevices = {"7841715974043649", //Calin 

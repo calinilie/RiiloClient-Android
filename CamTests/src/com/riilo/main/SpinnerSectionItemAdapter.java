@@ -28,7 +28,6 @@ public class SpinnerSectionItemAdapter extends ArrayAdapter<SpinnerSection> impl
 	@Override
 	public int getCount() {
 		int count = (items != null) ? items.size() : 0;
-		//Log.d("PostsCache.getPostsByConversationId()","itemAdapter.getcount "+count);
 	    return count;
 	}
 	
