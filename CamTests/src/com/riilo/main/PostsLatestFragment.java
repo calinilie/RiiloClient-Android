@@ -82,7 +82,7 @@ public class PostsLatestFragment
 		}
 		postsListView.setAdapter(adapter);
 		
-		List<Post> latestPosts = PostsCache.getInstance(activity).getLatestPosts(adapter, adapterData, activity.getPullToRefresh());
+		List<Post> latestPosts = PostsCache.getInstance(activity).getLatestPosts(adapter, adapterData, this.pullToRefreshLayout);
 		if (Helpers.renewList(adapterData, latestPosts)){
 			adapter.notifyDataSetChanged();
 		}

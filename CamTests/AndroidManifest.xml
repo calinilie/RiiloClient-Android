@@ -67,6 +67,14 @@
             	android:name="com.riilo.main.WorkerService">
         </service>
         
+        <!-- Used for Google Play Store Campaign Measurement-->;
+		<service android:name="com.google.analytics.tracking.android.CampaignTrackingService" />
+		<receiver android:name="com.google.analytics.tracking.android.CampaignTrackingReceiver" android:exported="true" >
+		  <intent-filter>
+		    <action android:name="com.android.vending.INSTALL_REFERRER" />
+		  </intent-filter>
+		</receiver>
+        
         <meta-data
    			android:name="com.google.android.maps.v2.API_KEY"
    			android:value="AIzaSyAGlwOkJyI1_bwiYfXtA3XJIdoNWPiRk8A">

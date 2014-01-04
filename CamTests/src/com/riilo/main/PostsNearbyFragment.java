@@ -186,7 +186,7 @@ public class PostsNearbyFragment
 			adapter.notifyDataSetChanged();
 		}
 		else{
-			activity.getPullToRefresh().setRefreshComplete();
+			this.pullToRefreshLayout.setRefreshComplete();
 		}
 	}
 
