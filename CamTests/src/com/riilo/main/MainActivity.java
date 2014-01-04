@@ -202,10 +202,6 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 		return true;
 	}
 	
-	public PullToRefreshLayout getPullToRefresh(){
-		return this.pullToRefreshLayout;
-	}
-	
 	private static final List<SpinnerSection> sections = new ArrayList<SpinnerSection>(
 		Arrays.asList(
 			new SpinnerSection(0, "Post Something", R.drawable.riilo_logo, false),
