@@ -4,7 +4,6 @@ import java.util.List;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 
-import android.app.ActionBar.Tab;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;

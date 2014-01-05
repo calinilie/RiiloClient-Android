@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.Options;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
@@ -67,6 +68,7 @@ public class PostsNotificationsFragment
  		
  		pullToRefreshLayout = (PullToRefreshLayout) view.findViewById(R.id.ptr_layout_fragment);
  		ActionBarPullToRefresh.from(activity)
+ 			.options(Options.create().scrollDistance(.33f).build())
  			.allChildrenArePullable()
  			.listener(this)
  			.setup(pullToRefreshLayout);

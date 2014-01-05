@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.Options;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
@@ -20,14 +21,21 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class PostsLatestFragment 
 		extends Fragment 
-		implements OnItemClickListener, ILocationListener, OnRefreshListener{
+		implements OnItemClickListener, ILocationListener, OnRefreshListener, OnClickListener, AnimationListener{
 	
     private MainActivity activity;
     private View view;
@@ -36,6 +44,10 @@ public class PostsLatestFragment
 	PostListItemAdapter adapter;
  	List<Post> adapterData = new ArrayList<Post>();
  	ListView postsListView;
+ 	
+ 	View tutorialSwipe;
+ 	View tutorialSwipeContainer;
+ 	ImageButton buttonCloseTutorialSwipe;
  	
  	
  	private PullToRefreshLayout pullToRefreshLayout;
@@ -66,6 +78,7 @@ public class PostsLatestFragment
 
  		pullToRefreshLayout =  (PullToRefreshLayout) view.findViewById(R.id.ptr_layout_fragment);
  		ActionBarPullToRefresh.from(activity)
+ 			.options(Options.create().scrollDistance(.33f).build())
  			.allChildrenArePullable()
  			.listener(this)
  			.setup(pullToRefreshLayout);
@@ -96,6 +109,16 @@ public class PostsLatestFragment
  	protected void setupWidgetsViewElements() {
 		postsListView = (ListView)view.findViewById(R.id.posts_listView);
 		postsListView.setOnItemClickListener(this);
+		
+		if (Facade.getInstance(activity).wasTutorialSwipeRun()==false){
+			tutorialSwipeContainer = view.findViewById(R.id.tutorial_swipe_container);
+			tutorialSwipeContainer.setVisibility(View.VISIBLE);
+			
+			tutorialSwipe = view.findViewById(R.id.tutorial_swipe);
+			
+			buttonCloseTutorialSwipe = (ImageButton)view.findViewById(R.id.button_close_tutorial_swipe);
+			buttonCloseTutorialSwipe.setOnClickListener(this);
+		}
 	}
  	
  	@Override
@@ -109,6 +132,22 @@ public class PostsLatestFragment
 		startActivity(postViewIntent);
 	}
  	
+ 	@Override
+   	public void onClick(View v) {
+ 		if (v.getId() == R.id.button_close_tutorial_swipe){ 
+ 			//dialog slideOut
+ 			Animation slideOut = AnimationUtils.loadAnimation(activity.getApplicationContext(),
+	                R.anim.slide_out_bottom);
+ 			slideOut.setAnimationListener(this);
+ 			if (tutorialSwipeContainer.getVisibility()==View.VISIBLE){
+				tutorialSwipe.startAnimation(slideOut);
+				tutorialSwipe.requestLayout();
+				tutorialSwipe.setVisibility(View.GONE);
+	   	   	 }
+ 			
+ 			Facade.getInstance(activity).updateTutorialSwipeRun();
+ 		}
+ 	}
  	
  	@Override
 	public void onLocationChanged(Location location) {
@@ -135,6 +174,28 @@ public class PostsLatestFragment
 				adapterData, 
 				this.pullToRefreshLayout, 
 				true);
+	}
+
+	@Override
+	public void onAnimationEnd(Animation animation) {
+		//fade out
+		Animation fadeOut = AnimationUtils.loadAnimation(activity.getApplicationContext(),
+                R.anim.fade_out);
+		tutorialSwipeContainer.startAnimation(fadeOut);
+		tutorialSwipeContainer.requestLayout();	   	   		 
+		tutorialSwipeContainer.setVisibility(View.GONE);
+	}
+
+	@Override
+	public void onAnimationRepeat(Animation animation) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onAnimationStart(Animation animation) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

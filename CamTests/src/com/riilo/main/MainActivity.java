@@ -10,7 +10,6 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 
 import com.google.android.gms.location.LocationRequest;
 import com.riilo.main.R;
-import com.riilo.main.AnalyticsWrapper.EventLabel;
 import com.riilo.interfaces.IBackButtonListener;
 import com.riilo.tutorial.TutorialActivity;
 
@@ -23,14 +22,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.SpinnerAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends BaseActivity implements OnNavigationListener{
 	
