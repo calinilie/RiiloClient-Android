@@ -31,7 +31,9 @@ public class Helpers {
 		for(LocationHistory h : histories){
 			if (!h.isOnMap()){
 //				map.addMarker(new MarkerOptions().position(h.getLatLng()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker_human)));
-				clusterManager.addItem(h);
+				if (h.getPosition()!=null){
+					clusterManager.addItem(h);
+				}
 				h.setIsOnMap(true);
 			}
 		}

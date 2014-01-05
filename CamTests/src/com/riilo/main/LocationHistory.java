@@ -33,6 +33,12 @@ public class LocationHistory implements Serializable, ClusterItem{
 		
 	}
 	
+	public LocationHistory(double latitude, double longitude){
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.position = new LatLng(this.latitude, this.longitude);
+	}
+	
 	public LocationHistory(JSONObject json) throws JSONException{
 		this.locationHistoryId = json.getInt("locationHistoryId");
 		this.latitude = json.getDouble("latitude");

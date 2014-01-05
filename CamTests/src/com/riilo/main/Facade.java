@@ -225,10 +225,10 @@ public class Facade {
 			open();
 			Cursor cursor = database.query(Adapter.OUTSIDE_LOCATION_HISTORY_TABLE, outsideLocationColumns, null, null, null, null, null, "500");
 			while (cursor.moveToNext()){
-				LocationHistory location = new LocationHistory();
+				double latitude = cursor.getDouble(1);
+				double longitude = cursor.getDouble(2);
+				LocationHistory location = new LocationHistory(latitude, longitude);
 				location.setLocationHistoryId(cursor.getLong(0));
-				location.setLatitude(cursor.getDouble(1));
-				location.setLongitude(cursor.getDouble(2));
 				retVal.add(location);
 			}
 		}
