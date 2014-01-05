@@ -3,6 +3,7 @@ package com.riilo.main;
 import java.util.List;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.maps.android.clustering.ClusterManager;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,9 +15,9 @@ public class LocationHistoryResultReceiver extends ResultReceiver{
 	private static final String TAG = "LocationHistoryResultReceiver";
 	private Handler handler;
 	
-	private GoogleMap map;
-	public void setMap(GoogleMap map){
-		this.map = map;
+	private ClusterManager<LocationHistory> mapClusterManager;
+	public void setClusterManager(ClusterManager<LocationHistory> mapClusterManager){
+		this.mapClusterManager = mapClusterManager;
 	}
 	
 	public LocationHistoryResultReceiver(Handler handler) {
@@ -34,8 +35,8 @@ public class LocationHistoryResultReceiver extends ResultReceiver{
 					
 					@Override
 					public void run() {
-						if (map!=null){
-							Helpers.addMarkersToMap(list, map);
+						if (mapClusterManager!=null){
+							Helpers.addMarkersToMap(list, mapClusterManager);
 						}
 					}
 				});

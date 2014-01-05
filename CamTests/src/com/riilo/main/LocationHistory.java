@@ -7,9 +7,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.android.clustering.ClusterItem;
 
 
-public class LocationHistory implements Serializable{
+public class LocationHistory implements Serializable, ClusterItem{
 
 	
 	
@@ -26,6 +27,7 @@ public class LocationHistory implements Serializable{
 	private String userId;
 	private boolean isSent;
 	private boolean isOnMap;
+	private LatLng position;
 	
 	public LocationHistory(){
 		
@@ -35,6 +37,7 @@ public class LocationHistory implements Serializable{
 		this.locationHistoryId = json.getInt("locationHistoryId");
 		this.latitude = json.getDouble("latitude");
 		this.longitude = json.getDouble("longitude");
+		this.position = new LatLng(this.latitude, this.longitude);
 	}
 	
 	public Date getDate() {
@@ -119,6 +122,11 @@ public class LocationHistory implements Serializable{
 	@Override
 	public String toString(){
 		return String.format("%s %s %s %s",locationHistoryId+"", userId, latitude+"", longitude+"");
+	}
+
+	@Override
+	public LatLng getPosition() {
+		return this.position;
 	}
 	
 	

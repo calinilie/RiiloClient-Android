@@ -14,6 +14,7 @@ import java.util.TimeZone;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.clustering.ClusterManager;
 
 import android.content.Context;
 import android.location.Location;
@@ -26,10 +27,11 @@ public class Helpers {
 	private static final String TAG = "HELPERS";
 	
 	/*====================MAP=====================================================================================*/
-	public static void addMarkersToMap(List<LocationHistory> histories, GoogleMap map){
+	public static void addMarkersToMap(List<LocationHistory> histories, ClusterManager<LocationHistory> clusterManager){
 		for(LocationHistory h : histories){
 			if (!h.isOnMap()){
-				map.addMarker(new MarkerOptions().position(h.getLatLng()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker_human)));
+//				map.addMarker(new MarkerOptions().position(h.getLatLng()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker_human)));
+				clusterManager.addItem(h);
 				h.setIsOnMap(true);
 			}
 		}

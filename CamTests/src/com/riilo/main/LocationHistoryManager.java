@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.maps.android.clustering.ClusterManager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -33,11 +34,11 @@ public class LocationHistoryManager {
 		return instance;
 	}
 	
-	public List<LocationHistory> getLocationHistory(GoogleMap map){
+	public List<LocationHistory> getLocationHistory(ClusterManager<LocationHistory> mapClusterManager){
 		if (list.isEmpty())
 			list = facade.getLocationHistory(); 
 		
-		startService(map);
+		startService(mapClusterManager);
 		
 		return list;
 	}
@@ -48,12 +49,12 @@ public class LocationHistoryManager {
 		return list;
 	}
 	
-	private void startService(GoogleMap map){
+	private void startService(ClusterManager<LocationHistory> mapClusterManager){
 		if (!wasRequestMade){
 	    	Intent intent = new Intent(context, WorkerService.class);
 	    	intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_LOCATION_HISTORY);
 	    	LocationHistoryResultReceiver resultReceiver = new LocationHistoryResultReceiver(new Handler());
-	    	resultReceiver.setMap(map);
+	    	resultReceiver.setClusterManager(mapClusterManager);
 	    	intent.putExtra(StringKeys.LOCATION_HISTORY_RESULT_RECEIVER, resultReceiver);
 	    	context.startService(intent);
 	    	wasRequestMade = true;

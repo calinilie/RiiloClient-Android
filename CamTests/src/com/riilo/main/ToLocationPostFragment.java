@@ -34,6 +34,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.clustering.ClusterManager;
 import com.riilo.interfaces.IBackButtonListener;
 import com.riilo.interfaces.ILocationListener;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
@@ -41,6 +42,8 @@ import com.riilo.main.AnalyticsWrapper.EventLabel;
 public class ToLocationPostFragment extends Fragment implements OnMapClickListener, OnClickListener, ILocationListener, IBackButtonListener, OnMarkerClickListener{
 	
 	private GoogleMap map;
+	private ClusterManager<LocationHistory> mapClusterManager;
+	
 	private ImageButton buttonPost;
 	private ImageButton cancelButton;
 	private EditText inputMessage;
@@ -94,7 +97,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
     	setupWidgetsViewElements();
     	newPostIfNeeded();
     	
-    	LocationHistoryManager.getInstance(activity).getLocationHistory(map);
+    	LocationHistoryManager.getInstance(activity).getLocationHistory(mapClusterManager);
     	
 //    	mapCameraAnimationRun = false;
     }
@@ -258,10 +261,15 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	private void setUpMapIfNeeded() {
 //		if (map==null){
 			map = mapView.getMap();
+			mapClusterManager = new ClusterManager<LocationHistory>(activity, map);
 	    	if (map!=null){
 	    		map.setOnMapClickListener(this);
 //	    		map.setMyLocationEnabled(true);
-	    		map.setOnMarkerClickListener(this);
+	    		
+//	    		map.setOnMarkerClickListener(this);
+	    		map.setOnCameraChangeListener(mapClusterManager);
+	    		map.setOnMarkerClickListener(mapClusterManager);
+	    		
 	    		addLocationHistoryMarkers();
 	    	}
 	    	else activity.showWarningDialog("Ouch, something went terribly wrong. Please keep calm and try again; if you still get this error your phone might not support Google Maps, and this app relies heavily on Google Maps.");
@@ -271,7 +279,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	private void addLocationHistoryMarkers(){
 		List<LocationHistory> locationhistory = new ArrayList<LocationHistory>();
 		locationhistory = LocationHistoryManager.getInstance(activity).getLocationHistory();
-		Helpers.addMarkersToMap(locationhistory, map);
+		Helpers.addMarkersToMap(locationhistory, mapClusterManager);
 	}
 	
 	@Override
