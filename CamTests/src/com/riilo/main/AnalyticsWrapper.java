@@ -1,10 +1,7 @@
 package com.riilo.main;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.provider.Settings.Secure;
-import android.util.Log;
 //import android.util.Log;
 
 import com.google.analytics.tracking.android.EasyTracker;

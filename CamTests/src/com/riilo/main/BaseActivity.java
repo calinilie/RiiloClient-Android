@@ -2,7 +2,6 @@ package com.riilo.main;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import com.riilo.main.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -24,7 +23,6 @@ import android.os.Bundle;
 import android.provider.Settings.Secure;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.widget.Toast;
 
 public abstract class BaseActivity extends FragmentActivity

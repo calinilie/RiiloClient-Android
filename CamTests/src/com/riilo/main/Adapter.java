@@ -3,9 +3,6 @@ package com.riilo.main;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-//import android.util.Log;
-import android.text.AlteredCharSequence;
-import android.util.Log;
 
 public class Adapter extends SQLiteOpenHelper{
 

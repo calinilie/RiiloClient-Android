@@ -8,8 +8,6 @@ import java.util.List;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 
-
-import android.app.ActionBar.Tab;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
