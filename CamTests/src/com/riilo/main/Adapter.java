@@ -10,7 +10,7 @@ import android.util.Log;
 public class Adapter extends SQLiteOpenHelper{
 
 	private static final String DB_NAME="riilo3.db";
-	private static final int DB_VERSION=1;
+	private static final int DB_VERSION=2;
 
 	public static final String POSTS_TABLE = "CamTestsPosts";
 	public static final String POSTS_MESSAGE = "Message";
@@ -91,9 +91,17 @@ public class Adapter extends SQLiteOpenHelper{
 								OUTSIDE_LOCATION_HISTORY_DATE);
 	
 	//=============V2================================================================================================================================
+	public static final  String APP_STORAGE_KEY_TUTORIAL_SWIPE_RUN = "TutorialSwipeRun";
+	private static final String INSERT_APPSTORAGE_SWIPTE_TUTORIAL_RUN = String.format("INSERT INTO %s (%s, %s) VALUES ('%s', %s)", 
+																		APP_STORAGE_TABLE,
+																		APP_STORAGE_KEY_COLUMN,
+																		APP_STORAGE_VALUE_COLUMN,
+																		APP_STORAGE_KEY_TUTORIAL_SWIPE_RUN,
+																		0);
+	private final String[] updateQueriesV2 = new String[]{ INSERT_APPSTORAGE_SWIPTE_TUTORIAL_RUN };
 	
-	
-	private final String[] createQueries = new String[] { CREATE_POSTS_TABLE, CREATE_LOCATION_HISTORY_TABLE, CREATE_APP_STORAGE_TABLE, INSERT_APPSTORAGE_TUTORIAL_RUN, INSERT_APPSTORAGE_TUTORIAL_MARKER_RUN, CREATE_OUTSIDE_LOCATION_HISTORY_TABLE };
+	//create queries ================================================================================================================================
+	private final String[] createQueries = new String[] { CREATE_POSTS_TABLE, CREATE_LOCATION_HISTORY_TABLE, CREATE_APP_STORAGE_TABLE, INSERT_APPSTORAGE_TUTORIAL_RUN, INSERT_APPSTORAGE_TUTORIAL_MARKER_RUN, INSERT_APPSTORAGE_SWIPTE_TUTORIAL_RUN,CREATE_OUTSIDE_LOCATION_HISTORY_TABLE };
 	
 	
 	public Adapter(Context context){
@@ -112,6 +120,9 @@ public class Adapter extends SQLiteOpenHelper{
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		if (newVersion == 2 && oldVersion == 1){
+			runSqlQueries(db, updateQueriesV2);
+		}
 		/*if (newVersion == 5 && oldVersion==4){
 			runSqlQueries(db, queiresV5);
 		}

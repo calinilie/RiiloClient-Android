@@ -330,6 +330,43 @@ public class Facade {
 		}
 	}
 	
+	public synchronized boolean wasTutorialSwipeRun(){
+		open();
+		boolean retVal = false;
+		try{
+			String selection = String.format("%s = ?", Adapter.APP_STORAGE_KEY_COLUMN);
+			String[] selectionArgs = {Adapter.APP_STORAGE_KEY_TUTORIAL_SWIPE_RUN}; 
+			Cursor cursor = database.query(Adapter.APP_STORAGE_TABLE, appStorageColumns, selection, selectionArgs, null, null, null);
+			if (cursor.moveToNext()){
+				int value = cursor.getInt(1);
+				retVal = value == 1;
+			}
+		}
+		catch(Exception e){
+			//TODO add ga tracking
+		}
+		finally{
+			close();
+		}
+		return retVal;
+	}
+	
+	public synchronized void updateTutorialSwipeRun(){
+		open();
+		try{
+			values.clear();
+			values.put(Adapter.APP_STORAGE_VALUE_COLUMN, 1);
+			String[] whereArgs = {Adapter.APP_STORAGE_KEY_TUTORIAL_SWIPE_RUN};
+			database.update(Adapter.APP_STORAGE_TABLE, values, Adapter.APP_STORAGE_KEY_COLUMN+" = ?", whereArgs);
+		}
+		catch(Exception e){
+			//TODO add ga tracking
+		}
+		finally{
+			close();
+		}
+	}
+	
 	public synchronized void updateLastLocationSent(){
 		open();
 		values.clear();

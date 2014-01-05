@@ -49,6 +49,6 @@
     <string name="tutorial_4">You can view and reply to all messages related to a particular location.</string>
     <string name="tutorial_5">This is the very beginning, so it will be quite empty around, but you can spread the word. The more we are, the more opportunities we have. </string>
     <string name="tutorial_marker">This shows that somebody is/was in that area. Tap on the marker to leave them a message, and people in area will see you post.</string>
-    <string name="tutorial_swipe_text">You can still swipe to easily navigate between app sections.</string>
+    <string name="tutorial_swipe_text">You can just swipe to easily navigate between app sections.</string>
     
 </resources>

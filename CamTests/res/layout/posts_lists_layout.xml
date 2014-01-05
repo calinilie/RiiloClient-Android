@@ -40,24 +40,36 @@
 	            android:padding="8dp"
 	            android:src="@android:drawable/ic_menu_close_clear_cancel" />
 	
-	        <TextView
-	            android:id="@+id/textView1"
+	        <ImageView
+	            android:id="@+id/swipe_with_hand"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_below="@+id/button_close_tutorial_swipe"
+	            android:layout_below="@+id/tutorial_swipe_title"
 	            android:layout_centerHorizontal="true"
+	            android:layout_margin="8dp"
+	            android:background="@drawable/tutorial_swipe_with_hand" />
+
+	        <TextView
+	            android:id="@+id/tutorial_swipe_title"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_below="@+id/button_close_tutorial_swipe"
 	            android:padding="8dp"
 	            android:text="@string/tutorial_swipe_text"
 	            android:visibility="visible" />
-	
-	        <ImageView
-	            android:id="@+id/map_marker"
+
+	        <TextView
+	            android:id="@+id/textView2"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_below="@+id/textView1"
-	            android:layout_centerHorizontal="true"
-	            android:layout_margin="8dp"
-	            android:background="@drawable/ic_map_marker_human" />
+	            android:layout_alignBottom="@+id/button_close_tutorial_swipe"
+	            android:layout_alignParentLeft="true"
+	            android:layout_toLeftOf="@+id/button_close_tutorial_swipe"
+	            android:padding="8dp"
+	            android:text="Tip:"
+	            android:textAppearance="?android:attr/textAppearanceMedium" />
+
 	    </RelativeLayout>
     
     </RelativeLayout>
