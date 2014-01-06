@@ -36,18 +36,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:lineSpacingMultiplier="1.1"
-            android:padding="16dp"
+            android:paddingTop="16dp"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:paddingBottom="16dp"
             android:text="@string/tutorial_5" />
 
         <Button
             android:id="@+id/button_end_tutorial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="right"
             android:layout_marginBottom="20dp"
             android:layout_marginRight="32dp"
-            android:layout_gravity="right"
             android:text="ok, got that"
             android:visibility="visible" />
+
     </LinearLayout>
 
 </LinearLayout>
