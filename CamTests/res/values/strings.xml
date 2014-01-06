@@ -25,6 +25,14 @@
     <string name="content_description_submit">Submit</string>
     <string name="content_description_map_marker">Map Marker</string>
     
+    <string name="post_adapter_you">You</string>
+    <string name="post_adapter_somebody">Somebody</string>
+    <string name="post_adapter_posted">posted:</string>
+    <string name="post_adapter_replied">replied:</string>
+    <string name="post_adapter_posted_on">posted on</string>
+    <string name="post_adapter_waiting_for_location">waiting for location,</string>
+    <string name="post_adapter_away">away,</string>
+    
     <string name="warning_dialog_heading">Warning</string>
     <string name="info_dialog_heading">The more you know&#8230;</string>
     

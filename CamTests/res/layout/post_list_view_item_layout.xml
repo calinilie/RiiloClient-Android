@@ -47,7 +47,8 @@
 	            android:id="@+id/postListItem_userAction"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="3dp"/>
+	            android:layout_marginLeft="3dp"
+	            android:textStyle="bold"/>
 	        
 	    </LinearLayout>
 	    

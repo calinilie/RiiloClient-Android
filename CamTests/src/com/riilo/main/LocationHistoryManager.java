@@ -60,7 +60,7 @@ public class LocationHistoryManager {
 		}
 	}
 	
-	public void mergeLocationhistories(List<LocationHistory> locations){
+	public synchronized void mergeLocationhistories(List<LocationHistory> locations){
 		for(LocationHistory h : locations){
 			if (!this.list.contains(h)){
 				this.list.add(h);
@@ -68,12 +68,12 @@ public class LocationHistoryManager {
 		}
 	}
 	
-	public void addLocationHistory(LocationHistory h){
+	public synchronized void addLocationHistory(LocationHistory h){
 		if (!list.contains(h))
 			list.add(h);
 	}
 	
-	public void locationHistoryMarkersRemoved(){
+	public synchronized void locationHistoryMarkersRemoved(){
 		for(LocationHistory h:this.list)
 			h.setIsOnMap(false);
 	}
