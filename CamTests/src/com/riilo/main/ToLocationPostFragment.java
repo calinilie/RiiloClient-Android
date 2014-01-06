@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	private View tutorialMarker;
 	private ImageButton closeTutorialMarker;
 	
-//	private boolean mapCameraAnimationRun = false; 
+	private boolean mapCameraAnimationRun = false; 
 	private Post currentPost;
 	private Marker marker;
 	
@@ -96,10 +97,10 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
     	
     	LocationHistoryManager.getInstance(activity).getLocationHistory(map);
     	
-//    	mapCameraAnimationRun = false;
+    	mapCameraAnimationRun = false;
     }
     
-    /*@Override
+    @Override
 	public void onResume() {
         super.onResume();
         if(mapView!=null){
@@ -115,13 +116,6 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
     }
     
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (null != mapView)
-        	mapView.onDestroy();
-    }
-    
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (null != mapView)
@@ -133,7 +127,14 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
         super.onLowMemory();
         if (null != mapView)
         	mapView.onLowMemory();
-    }*/
+    }
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (null != mapView)
+        	mapView.onDestroy();
+    }
     
    	@Override
    	public void onClick(View v) {
@@ -182,11 +183,11 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
     
    	@Override
     public void onLocationChanged(Location location) {
-//    	if (!mapCameraAnimationRun){
-//    		if (location.getAccuracy()<2000){
-//	    		animateMapCamera(new LatLng(location.getLatitude(), location.getLongitude()));
-//    		}
-//    	}
+    	if (!mapCameraAnimationRun){
+    		if (location.getAccuracy()<2000){
+	    		animateMapCamera(new LatLng(location.getLatitude(), location.getLongitude()), 10);
+    		}
+    	}
     }
 
 	@Override
@@ -216,15 +217,11 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 		marker = map.addMarker(new MarkerOptions().position(location));
 	}
 	
-	/*private void animateMapCamera(LatLng location){
-		animateMapCamera(location, 10);
-	}*/
-	
 	private void animateMapCamera(LatLng location, int zoom){
 		CameraPosition cPos = CameraPosition.fromLatLngZoom(new LatLng(location.latitude, location.longitude), zoom);
 		CameraUpdate update = CameraUpdateFactory.newCameraPosition(cPos);
 		map.animateCamera(update);
-//		mapCameraAnimationRun = true;
+		mapCameraAnimationRun = true;
 	}
 	
 	private void hideReplyToPostPannel(){
@@ -260,7 +257,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 			map = mapView.getMap();
 	    	if (map!=null){
 	    		map.setOnMapClickListener(this);
-//	    		map.setMyLocationEnabled(true);
+	    		map.setMyLocationEnabled(true);
 	    		map.setOnMarkerClickListener(this);
 	    		addLocationHistoryMarkers();
 	    	}
