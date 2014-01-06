@@ -29,7 +29,6 @@
 	        android:layout_height="wrap_content"
     	    android:layout_marginLeft="32dp"
             android:textSize="12sp"
-	        android:text="aprox 420 meters away"
 	        android:textColor="@color/riilo_dark_red" />
 	    
    	    <LinearLayout
@@ -42,15 +41,13 @@
 	            android:id="@+id/postListItem_userId"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:textStyle="bold"
-	            android:text="UserId" />
+	            android:textStyle="bold"/>
 	
 	        <TextView
 	            android:id="@+id/postListItem_userAction"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="3dp"
-	            android:text="posted/replyed" />
+	            android:layout_marginLeft="3dp"/>
 	        
 	    </LinearLayout>
 	    
@@ -66,8 +63,7 @@
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:paddingRight="16dp"
-		        android:paddingLeft="16dp"
-		        android:text="Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. " />
+		        android:paddingLeft="16dp"/>
 		
 	 	    <!-- <TextView
 		        android:id="@+id/postListItem_postId"
@@ -81,18 +77,18 @@
 	        
 	</LinearLayout>
 	
-   </FrameLayout>
+   	</FrameLayout>
    
-	       	<ImageView
-			   android:id="@+id/postListItem_userAtLocation"
-			   android:layout_width="32dp"
-			   android:layout_height="32dp"
-		   	   android:layout_marginLeft="16dp"
-		       android:layout_marginRight="16dp"
-		       android:layout_marginTop="4dp"
-			   android:src="@drawable/ic_user_at_location"
-			   android:background="@drawable/screen_background_holo_light_old"
-			   android:visibility="visible"
-			   />
+	<ImageView
+		android:id="@+id/postListItem_userAtLocation"
+		android:layout_width="32dp"
+		android:layout_height="32dp"
+		   android:layout_marginLeft="16dp"
+		   android:layout_marginRight="16dp"
+		   android:layout_marginTop="4dp"
+		android:src="@drawable/ic_user_at_location"
+		android:background="@drawable/screen_background_holo_light_old"
+		android:contentDescription="@string/content_description_user_at_location"
+		android:visibility="visible"/>
 
 </FrameLayout>

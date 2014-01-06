@@ -225,7 +225,7 @@ public class PostViewActivity extends BaseActivity
 	        	inputText.setText("");
 			}
 			else{
-				Toast.makeText(this, getString(R.string.invalid_post_empty), Toast.LENGTH_LONG).show();
+				Toast.makeText(this, getString(R.string.error_post_empty), Toast.LENGTH_LONG).show();
 			}
      }
 

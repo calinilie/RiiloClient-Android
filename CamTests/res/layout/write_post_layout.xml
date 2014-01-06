@@ -26,6 +26,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_map_marker_human"
                 android:layout_margin="8dp"
+                android:contentDescription="@string/content_description_map_marker"
                 />
 	    
 	    <ImageButton
@@ -36,7 +37,7 @@
             android:layout_alignParentRight="true"
             android:src="@android:drawable/ic_menu_close_clear_cancel"
             android:background="@drawable/selector"
-            android:contentDescription="Cancel action" />
+            android:contentDescription="@string/content_description_cancel_action" />
 	    
    	    <TextView 
 	        android:layout_width="wrap_content"
@@ -68,7 +69,7 @@
             android:layout_alignBottom="@+id/editor_message"
             android:src="@android:drawable/ic_menu_close_clear_cancel"
             android:background="@drawable/selector"
-            android:contentDescription="Cancel action" />
+            android:contentDescription="@string/content_description_cancel_action" />
         
         <EditText
             android:id="@+id/editor_message"
@@ -97,7 +98,7 @@
             android:layout_alignParentRight="true"
             android:src="@android:drawable/ic_menu_send"
             android:background="@drawable/selector" 
-            android:contentDescription="Send message"/>
+            android:contentDescription="@string/content_description_submit"/>
   
     </RelativeLayout>
     

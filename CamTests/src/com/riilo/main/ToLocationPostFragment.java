@@ -159,7 +159,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	    		inputMessage.setText("");
    			}
    			else{
-   				Toast.makeText(activity, getString(R.string.invalid_post_empty), Toast.LENGTH_LONG).show();
+   				Toast.makeText(activity, getString(R.string.error_post_empty), Toast.LENGTH_LONG).show();
    			}
    			break;
    		case R.id.button_cancel:
