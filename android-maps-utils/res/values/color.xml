@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+	
+    <drawable name="screen_background_light">#ffffffff</drawable>
+    <drawable name="screen_background_dark">#ff000000</drawable>
+    <drawable name="screen_background_holo_light_old">#fff3f3f3</drawable>
+    
+	<color name="orange">#FF9912</color>
+    <color name="mediumGps">#F2FF00</color>
+    <color name="goodGps">#00FF00</color>
+    <color name="badGps">#FF0000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="red">#FF0000</color>
+    <color name="darkGrey">#CCCCCC</color>
+    <color name="grey">#A3A3A3</color>
+    <color name="lightGrey">#E6E6E6</color>
+    <color name="background_holo_light">#fff3f3f3</color>
+    <color name="holo_blue_light">#33B5E5</color>
+    <color name="holo_blue_dark">#0099CC</color>
+    <color name="holo_blue_bright">#00DDFF</color>
+    <color name="riilo_light_red">#e23627</color>
+    <color name="riilo_lighter_red">#ff382e</color>
+    <color name="riilo_dark_red">#c52b1c</color>
+    <color name="transparent">#80FFFFFF</color>
+    
+</resources>

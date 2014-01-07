@@ -77,7 +77,7 @@ public class NonHierarchicalDistanceBasedAlgorithm<T extends ClusterItem> implem
     }
 
     @Override
-    public Set<? extends Cluster<T>> getClusters(double zoom) {
+    public synchronized Set<? extends Cluster<T>> getClusters(double zoom) {
         final int discreteZoom = (int) zoom;
 
         final double zoomSpecificSpan = MAX_DISTANCE_AT_ZOOM / Math.pow(2, discreteZoom) / 256;
