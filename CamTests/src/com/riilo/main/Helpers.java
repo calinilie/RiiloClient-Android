@@ -37,6 +37,7 @@ public class Helpers {
 				h.setIsOnMap(true);
 			}
 		}
+		clusterManager.cluster();
 	}
 	
 	/*===================DISTANCES======================================================================================*/

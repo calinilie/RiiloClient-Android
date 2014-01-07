@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,6 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.MapsInitializer;
@@ -35,12 +33,14 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
+import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.riilo.interfaces.IBackButtonListener;
 import com.riilo.interfaces.ILocationListener;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
 
-public class ToLocationPostFragment extends Fragment implements OnMapClickListener, OnClickListener, ILocationListener, IBackButtonListener, OnMarkerClickListener{
+public class ToLocationPostFragment extends Fragment implements OnMapClickListener, OnClickListener, ILocationListener, IBackButtonListener, ClusterManager.OnClusterItemClickListener<LocationHistory>, ClusterManager.OnClusterClickListener<LocationHistory>{
 	
 	private GoogleMap map;
 	private ClusterManager<LocationHistory> mapClusterManager;
@@ -58,11 +58,11 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	
 	private View view;
 	private MapView mapView;
-	private BaseActivity activity;
+	private MainActivity activity;
 	
 	@Override
 	public void onAttach(Activity activity){
- 		this.activity = (BaseActivity)activity;
+ 		this.activity = (MainActivity)activity;
  		super.onAttach(activity);
  	}
 	
@@ -186,7 +186,6 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
     
    	@Override
     public void onLocationChanged(Location location) {
-   		Log.d(">>>>>>>>>>>>>>>>>", mapCameraAnimationRun+"");
     	if (!mapCameraAnimationRun){
     		if (location.getAccuracy()<2000){
 	    		animateMapCamera(new LatLng(location.getLatitude(), location.getLongitude()), 10);
@@ -221,7 +220,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 		marker = map.addMarker(new MarkerOptions().position(location));
 	}
 	
-	private void animateMapCamera(LatLng location, int zoom){
+	private void animateMapCamera(LatLng location, float zoom){
 		CameraPosition cPos = CameraPosition.fromLatLngZoom(new LatLng(location.latitude, location.longitude), zoom);
 		CameraUpdate update = CameraUpdateFactory.newCameraPosition(cPos);
 		map.animateCamera(update);
@@ -260,19 +259,23 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 //		if (map==null){
 			map = mapView.getMap();
 			mapClusterManager = new ClusterManager<LocationHistory>(activity, map);
+			mapClusterManager.setRenderer(new DefaultClusterRenderer<LocationHistory>(activity, map, mapClusterManager));
 	    	if (map!=null){
 	    		map.setOnMapClickListener(this);
 	    		
-//	    		map.setOnMarkerClickListener(this);
 	    		map.setOnCameraChangeListener(mapClusterManager);
 	    		map.setOnMarkerClickListener(mapClusterManager);
+//	    		map.setOnMarkerClickListener(this);
+	    		
+	    		mapClusterManager.setOnClusterClickListener(this);
+	    		mapClusterManager.setOnClusterItemClickListener(this);
 	    		
 	    		map.setMyLocationEnabled(true);
 	    		addLocationHistoryMarkers();
 	    	}
 	    	else activity.showWarningDialog("Ouch, something went terribly wrong. Please keep calm and try again; if you still get this error your phone might not support Google Maps, and this app relies heavily on Google Maps.");
-		}
-//    }
+//		}
+    }
 	
 	private void addLocationHistoryMarkers(){
 		List<LocationHistory> locationhistory = new ArrayList<LocationHistory>();
@@ -315,7 +318,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	}
 
 	
-	@Override
+	/*@Override
 	public boolean onMarkerClick(Marker marker) {
 		activity.analytics.recordEvent_WritePost_MarkerClick();
 		if (map.getCameraPosition().zoom<13){
@@ -325,7 +328,24 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 			createPost(marker.getPosition());
 		}
 		return true;
+	}*/
+
+	@Override
+	public boolean onClusterItemClick(LocationHistory item) {
+		activity.analytics.recordEvent_WritePost_MarkerClick();
+		if (map.getCameraPosition().zoom<13){
+			animateMapCamera(item.getPosition(), 13);
+		}
+		else{
+			createPost(item.getPosition());
+		}
+		return true;
 	}
 
+	@Override
+	public boolean onClusterClick(Cluster<LocationHistory> cluster) {
+		animateMapCamera(cluster.getPosition(), map.getCameraPosition().zoom+2);
+		return true;
+	}
 
 }
