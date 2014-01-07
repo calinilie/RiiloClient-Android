@@ -22,10 +22,13 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 	DecimalFormat decimalFormat10, decimalFormat1;
 	private String currentUserId;
 	private boolean showDistance;
-	public String unitOfMeasure = "km";
+	private String unitOfMeasure = "km";
+	private Context context;
+	
 	
 	public PostListItemAdapter(Context context, int layoutId, List<Post> items, String currentUserId, boolean showDistance) {
 		super(context, layoutId, items);
+		this.context = context;
 		this.layoutId = layoutId;
 		this.items = items;
 		decimalFormat10 = new DecimalFormat("#.#");
@@ -64,14 +67,22 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 		ImageView userAtLocation_ImageView = (ImageView)postView.findViewById(R.id.postListItem_userAtLocation);
 		
 		
-		userId_textView.setText(post.getUserId().equalsIgnoreCase(this.currentUserId)? "You" : "Somebody");//"User "+post.getUserId());
-		String userAction = post.getRepliesToPostId() == 0 ? "posted:" : "replied:";
+		userId_textView.setText(
+					post.getUserId().equalsIgnoreCase(this.currentUserId) ? 
+					this.context.getString(R.string.post_adapter_you) : 
+					this.context.getString(R.string.post_adapter_somebody));
+		String userAction = post.getRepliesToPostId() == 0 ? 
+							this.context.getString(R.string.post_adapter_posted) : 
+							this.context.getString(R.string.post_adapter_replied);
 		userAction_textView.setText(userAction);
 		String postedOnDistance = "";
 		
 		if (showDistance){
 			if (post.getDistanceFromCurLoc()==-1){
-				postedOnDistance = String.format("waiting for location, posted on %s", post.getDateAsString());
+				postedOnDistance = String.format("%s %s %s",
+												this.context.getString(R.string.post_adapter_waiting_for_location),
+												this.context.getString(R.string.post_adapter_posted_on),
+												post.getDateAsString());
 			}
 			else{
 				double dist = post.getDistanceFromCurLoc();
@@ -85,11 +96,16 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 				else {
 					distanceAsString = ((int)dist)+"";
 				}
-				postedOnDistance = String.format("~ %s %s away, posted on %s", distanceAsString, unitOfMeasure, post.getDateAsString());
+				postedOnDistance = String.format("~ %s %s %s %s %s", 
+												distanceAsString, 
+												unitOfMeasure, 
+												this.context.getString(R.string.post_adapter_away),
+												this.context.getString(R.string.post_adapter_posted_on),
+												post.getDateAsString());
 			}
 		}
 		else{
-			postedOnDistance = String.format("posted on %s", post.getDateAsString());
+			postedOnDistance = String.format("%s %s", this.context.getString(R.string.post_adapter_posted_on), post.getDateAsString());
 		}
 		distanceAndDate_textView.setText(postedOnDistance);
 		message_textView.setText(post.getMessage());

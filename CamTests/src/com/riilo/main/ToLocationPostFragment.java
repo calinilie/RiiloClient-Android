@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	private View tutorialMarker;
 	private ImageButton closeTutorialMarker;
 	
-//	private boolean mapCameraAnimationRun = false; 
+	private boolean mapCameraAnimationRun = false; 
 	private Post currentPost;
 	private Marker marker;
 	
@@ -99,10 +100,10 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
     	
     	LocationHistoryManager.getInstance(activity).getLocationHistory(mapClusterManager);
     	
-//    	mapCameraAnimationRun = false;
+    	mapCameraAnimationRun = false;
     }
     
-    /*@Override
+    @Override
 	public void onResume() {
         super.onResume();
         if(mapView!=null){
@@ -118,13 +119,6 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
     }
     
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (null != mapView)
-        	mapView.onDestroy();
-    }
-    
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (null != mapView)
@@ -136,7 +130,14 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
         super.onLowMemory();
         if (null != mapView)
         	mapView.onLowMemory();
-    }*/
+    }
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (null != mapView)
+        	mapView.onDestroy();
+    }
     
    	@Override
    	public void onClick(View v) {
@@ -162,7 +163,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	    		inputMessage.setText("");
    			}
    			else{
-   				Toast.makeText(activity, getString(R.string.invalid_post_empty), Toast.LENGTH_LONG).show();
+   				Toast.makeText(activity, getString(R.string.error_post_empty), Toast.LENGTH_LONG).show();
    			}
    			break;
    		case R.id.button_cancel:
@@ -185,11 +186,12 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
     
    	@Override
     public void onLocationChanged(Location location) {
-//    	if (!mapCameraAnimationRun){
-//    		if (location.getAccuracy()<2000){
-//	    		animateMapCamera(new LatLng(location.getLatitude(), location.getLongitude()));
-//    		}
-//    	}
+   		Log.d(">>>>>>>>>>>>>>>>>", mapCameraAnimationRun+"");
+    	if (!mapCameraAnimationRun){
+    		if (location.getAccuracy()<2000){
+	    		animateMapCamera(new LatLng(location.getLatitude(), location.getLongitude()), 10);
+    		}
+    	}
     }
 
 	@Override
@@ -219,15 +221,11 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 		marker = map.addMarker(new MarkerOptions().position(location));
 	}
 	
-	/*private void animateMapCamera(LatLng location){
-		animateMapCamera(location, 10);
-	}*/
-	
 	private void animateMapCamera(LatLng location, int zoom){
 		CameraPosition cPos = CameraPosition.fromLatLngZoom(new LatLng(location.latitude, location.longitude), zoom);
 		CameraUpdate update = CameraUpdateFactory.newCameraPosition(cPos);
 		map.animateCamera(update);
-//		mapCameraAnimationRun = true;
+		mapCameraAnimationRun = true;
 	}
 	
 	private void hideReplyToPostPannel(){
@@ -264,17 +262,17 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 			mapClusterManager = new ClusterManager<LocationHistory>(activity, map);
 	    	if (map!=null){
 	    		map.setOnMapClickListener(this);
-//	    		map.setMyLocationEnabled(true);
 	    		
 //	    		map.setOnMarkerClickListener(this);
 	    		map.setOnCameraChangeListener(mapClusterManager);
 	    		map.setOnMarkerClickListener(mapClusterManager);
 	    		
+	    		map.setMyLocationEnabled(true);
 	    		addLocationHistoryMarkers();
 	    	}
 	    	else activity.showWarningDialog("Ouch, something went terribly wrong. Please keep calm and try again; if you still get this error your phone might not support Google Maps, and this app relies heavily on Google Maps.");
-//		}
-    }
+		}
+//    }
 	
 	private void addLocationHistoryMarkers(){
 		List<LocationHistory> locationhistory = new ArrayList<LocationHistory>();

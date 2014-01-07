@@ -1,15 +1,6 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Riilo</string>
-    <string name="error_sd_card_not_mounted">SD card not found</string>
-    <string name="error_could_not_take_photo">Something went wrong (could not take photo)</string>
-    <string name="warning_dialog_heading">Warning</string>
-    <string name="info_dialog_heading">The more you know&#8230;</string>
-    <string name="my_map_activity">MyFirstGoogleMapsApp</string>
-    <string name="error_cannot_connect_to_location_services">Unable to connect to GooglePlay services. Please update GooglePlay services. The app will now terminate.</string>
-    <string name="user_at_location_activity_label">Leave a note, here</string>
-    <string name="photos_folder_name">riilo</string>
-    <string name="photo_name_base">riilo</string>
-    
+   
     <string name="endpoint_posts_upload">http://riilo-prod.elasticbeanstalk.com/posts/upload/</string>
     <string name="endpoint_latest_posts">http://d19vwjdwjmit8v.cloudfront.net/posts/latest/</string>
     <string name="endpoint_conversation">http://d19vwjdwjmit8v.cloudfront.net/posts/conversation/</string>
@@ -28,19 +19,35 @@
     <string name="local_test_post_location">http://192.168.0.197:8080/web/location/insert/</string>
     <string name="local_test_location_history">http://192.168.0.197:8080/web/location/history/</string>
     
-    <string name="to_location_post_activity_label">Post something, anywhere&#8230;</string>
-    <string name="feed_activity_label">Feed</string>
-    <string name="nearby_activity_label">Nearby Posts</string>
+    <string name="content_description_tutorial_image">Tutorial Illustration</string>
+    <string name="content_description_user_at_location">User at location</string>
+    <string name="content_description_cancel_action">Cancel action</string>
+    <string name="content_description_submit">Submit</string>
+    <string name="content_description_map_marker">Map Marker</string>
+    
+    <string name="post_adapter_you">You</string>
+    <string name="post_adapter_somebody">Somebody</string>
+    <string name="post_adapter_posted">posted:</string>
+    <string name="post_adapter_replied">replied:</string>
+    <string name="post_adapter_posted_on">posted on</string>
+    <string name="post_adapter_waiting_for_location">waiting for location,</string>
+    <string name="post_adapter_away">away,</string>
+    
+    <string name="warning_dialog_heading">Warning</string>
+    <string name="info_dialog_heading">The more you know&#8230;</string>
+    
     <string name="post_view_activity_label">Conversation</string>
     <string name="tutorial_activity_label">The more you know</string>
     <string name="button_refresh_label">Refresh</string>
-    <!-- <string name="connection_error_last_attempt">Elephants are blocking the connection, retrying...</string> -->
-    <string name="connection_error_no_attempt">There are dragons, many dragons blocking our server, it cannot be reached.</string>
-    <string name="upload_post_error">On its way to the server your post was kidnapped by some dragons. Please try again.</string>
-    <string name="invalid_post_empty">The dwarves working on the server don\'t fancy empty posts, please write something so they don\'t go on strike.</string>
+    
+    <string name="error_cannot_connect_to_location_services">Unable to connect to GooglePlay services. Please update GooglePlay services. The app will now terminate.</string>
+    <string name="error_connection_no_attempt">There are dragons, many dragons blocking our server, it cannot be reached.</string>
+    <string name="error_upload_post">On its way to the server your post was kidnapped by some dragons. Please try again.</string>
+    <string name="error_post_empty">The dwarves working on the server don\'t fancy empty posts, please write something so they don\'t go on strike.</string>
+    
     <string name="user_at_location_dialog_message">The user who posted this message was nearby the location shown on the map.</string>
     <string name="say_anything_anywhere_hint">Say anything, anywhere&#8230;</string>
-    <string name="say_anything_hint">Say anything, anywhere&#8230;</string>
+    <string name="say_anything_hint">Say anything&#8230;</string>
     
     <string name="tutorial_0">Navigate to any place and tap the map to write your message</string>
     <string name="tutorial_1">Write a message, press post and the pigeons will handle the rest</string>
@@ -48,7 +55,19 @@
     <string name="tutorial_3">Navigate to the Nearby section to see posts in your vicinity</string>
     <string name="tutorial_4">You can view and reply to all messages related to a particular location.</string>
     <string name="tutorial_5">This is the very beginning, so it will be quite empty around, but you can spread the word. The more we are, the more opportunities we have. </string>
+    <string name="tutorial_5_title">Thank You!</string>
+    <string name="tutorial_5_button" tools:ignore="Typos">ok, got that</string>
     <string name="tutorial_marker">This shows that somebody is/was in that area. Tap on the marker to leave them a message, and people in area will see you post.</string>
     <string name="tutorial_swipe_text">You can just swipe to easily navigate between app sections.</string>
     
+    <!-- <string name="error_sd_card_not_mounted">SD card not found</string> -->
+    <!-- <string name="error_could_not_take_photo">Something went wrong (could not take photo)</string> -->
+    <!-- <string name="user_at_location_activity_label">Leave a note, here</string> -->
+    <!-- <string name="photos_folder_name">riilo</string> -->
+    <!-- <string name="photo_name_base">riilo</string> -->
+    
+    <!-- <string name="to_location_post_activity_label">Post something, anywhere&#8230;</string> -->
+    <!-- <string name="feed_activity_label">Feed</string> -->
+    <!-- <string name="nearby_activity_label">Nearby Posts</string> -->
+    <!-- <string name="connection_error_last_attempt">Elephants are blocking the connection, retrying...</string> -->
 </resources>

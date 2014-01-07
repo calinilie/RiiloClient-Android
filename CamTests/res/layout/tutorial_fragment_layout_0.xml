@@ -12,7 +12,7 @@
          android:layout_width="wrap_content"
          android:layout_height="0dp"
          android:layout_weight="0.9"
-         android:contentDescription="tutorial illustration"
+         android:contentDescription="@string/content_description_tutorial_image"
          android:layout_marginTop="8dp"
          android:src="@drawable/one"
          android:layout_gravity="center_horizontal" />
@@ -28,7 +28,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:lineSpacingMultiplier="1.1"
-            android:padding="16dp"
+            android:paddingTop="16dp"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:paddingBottom="16dp"
             android:text="@string/tutorial_0" />
         
     </LinearLayout>
