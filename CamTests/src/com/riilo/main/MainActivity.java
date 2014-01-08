@@ -36,9 +36,12 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
     
     private PullToRefreshLayout pullToRefreshLayout;
     private SetupWizard setupWizard;
+    
+    private List<SpinnerSection> sections;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setupSpinnerSections();
         final ActionBar actionBar = getActionBar();
         actionBar.setHomeButtonEnabled(false);
         actionBar.setDisplayShowHomeEnabled(false);
@@ -83,8 +86,7 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 				spinnerAdapter.getItem(3), 
 				pullToRefreshLayout, 
 				false,
-				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);
-        
+				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);        
     }
     
     @Override
@@ -194,11 +196,15 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 		return true;
 	}
 	
-	private static final List<SpinnerSection> sections = new ArrayList<SpinnerSection>(
-		Arrays.asList(
-			new SpinnerSection(0, "Post Something", R.drawable.riilo_logo, false),
-			new SpinnerSection(1, "Latest", R.drawable.ic_latest_posts, false),
-			new SpinnerSection(2, "Nearby", R.drawable.ic_nearby_posts, true),
-			new SpinnerSection(3, "Notifications", R.drawable.ic_map_marker_human, true)
-		));
+	private void setupSpinnerSections(){
+		if (sections==null){
+			sections = new ArrayList<SpinnerSection>(
+				Arrays.asList(
+						new SpinnerSection(0, getString(R.string.section_post), R.drawable.riilo_logo, false),
+						new SpinnerSection(1, getString(R.string.section_latest), R.drawable.ic_latest_posts, false),
+						new SpinnerSection(2, getString(R.string.section_nearby), R.drawable.ic_nearby_posts, true),
+						new SpinnerSection(3, getString(R.string.section_notifications), R.drawable.ic_map_marker_human, true)
+					));
+		}
+	}
 }

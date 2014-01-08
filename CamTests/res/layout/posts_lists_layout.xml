@@ -67,7 +67,7 @@
 	            android:layout_alignParentLeft="true"
 	            android:layout_toLeftOf="@+id/button_close_tutorial_swipe"
 	            android:padding="8dp"
-	            android:text="Tip:"
+	            android:text="@string/info_dialog_heading"
 	            android:textAppearance="?android:attr/textAppearanceMedium" />
 
 	    </RelativeLayout>

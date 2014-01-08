@@ -378,7 +378,7 @@ public abstract class BaseActivity extends FragmentActivity
         alertDialogBuilder
             .setMessage(message)
             .setCancelable(false)
-            .setPositiveButton("Ok, got that.",new DialogInterface.OnClickListener() {
+            .setPositiveButton(getString(R.string.tutorial_5_button),new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog,int id) {
                     dialog.cancel();
                 }

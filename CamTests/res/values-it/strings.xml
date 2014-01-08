@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="post_adapter_you">Te</string>
+	<string name="post_adapter_somebody">Qualcuno</string>
+	<string name="post_adapter_posted">hai scritto:</string>
+	<string name="post_adapter_replied">risposto:</string>
+	<string name="post_adapter_posted_on">scritto il</string>
+	<string name="post_adapter_waiting_for_location">in attesa della posizione,</string>
+	<string name="post_adapter_away">da te,</string>
+	
+	<string name="warning_dialog_heading">Attenzione</string>
+	<string name="info_dialog_heading">Qualcosa da sapere&#8230;</string>
+	
+	<string name="post_view_activity_label">Conversazione</string>
+	<string name="tutorial_activity_label">Qualcosa da sapere</string>
+	<string name="button_refresh_label">Aggiorna</string>
+	
+	<string name="error_cannot_connect_to_location_services">Impossibile connettersi ai servizi di GooglePlay. Si prega di aggiornare i servizi di GooglePlay. L\'applicazione verrà ora interrotta.</string>
+	<string name="error_connection_no_attempt">Ci sono draghi, molti draghi che bloccano il nostro server, non può essere raggiunto.</string>
+	<string name="error_upload_post">Nel suo percorso al server il tuo messaggio è stato rapito da alcuni draghi. Per favore riprova.</string>
+	<string name="error_post_empty">I nani che lavorano sul server non amano i messaggi vuoti, si prega di scrivere qualcosa così non vanno in sciopero.</string>
+	<string name="error_no_google_maps">Ouch, qualcosa è andato storto. Per favore prova di nuovo; se continui a ricevere questo errore il tuo telefono potrebbe non supportare Google Maps e quest\'app necessita di Google Maps.</string>
+	
+	<string name="user_at_location_dialog_message">L\'utente che ha scritto questo messaggio era vicino alla posizione indicata sulla mappa.</string>
+	<string name="say_anything_anywhere_hint">Di qualsiasi cosa, ovunque&#8230;</string>
+	<string name="say_anything_hint">Di qualsiasi cosa&#8230;</string>
+	
+	<string name="tutorial_0">Naviga in qualsiasi luogo e tocca la mappa per scrivere il tuo messaggio.</string>
+	<string name="tutorial_1">Scrivi un messaggio, invia e lascia che i piccioni viaggiatori facciano il resto.</string>
+	<string name="tutorial_2">Chiunque si trovi vicino alla Tour Eiffel vedrà il tuo messaggio.</string>
+	<string name="tutorial_3">Vai alla sezione Dintorni per vedere i messaggi nelle tue vicinanze.</string>
+	<string name="tutorial_4">Puoi visualizzare e rispondere a tutti i messaggi relativi ad un particolare luogo.</string>
+	<string name="tutorial_5">Questo è solo l\'inizio, è probabile che per ora ci siano pochi post vicino a te, ma possiamo diffondere la parola! Più siamo, più opportunità abbiamo.</string>
+	<string name="tutorial_5_title">Grazie!</string>
+	<string name="tutorial_5_button" tools:ignore="Typos">Ok, ho capito.</string>
+	<string name="tutorial_marker">Questo significa che qualcuno è/era in quella zona. Tocca sull\'icona per lasciare un messaggio, la gente in zona lo vedrà.</string>
+	<string name="tutorial_swipe_text">Puoi anche fare uno swipe per navigare facilmente tra le sezioni dell\'app.</string>
+	<string name="tutorial_tutorial_swipe_text">Puoi semplicemente fare swype per navigare da una sezione all\'altra del tutorial.</string>
+	
+	<string name="section_post">Scrivi qualcosa</string>
+    <string name="section_latest">Novità</string>
+    <string name="section_nearby">Nelle vicinanze</string>
+    <string name="section_notifications">Notifiche</string>
+</resources>

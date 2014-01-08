@@ -273,7 +273,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	    		map.setMyLocationEnabled(true);
 	    		addLocationHistoryMarkers();
 	    	}
-	    	else activity.showWarningDialog("Ouch, something went terribly wrong. Please keep calm and try again; if you still get this error your phone might not support Google Maps, and this app relies heavily on Google Maps.");
+	    	else activity.showWarningDialog(activity.getString(R.string.error_no_google_maps));
 //		}
     }
 	
