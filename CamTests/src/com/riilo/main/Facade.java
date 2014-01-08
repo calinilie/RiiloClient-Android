@@ -223,7 +223,7 @@ public class Facade {
 		List<LocationHistory> retVal = new ArrayList<LocationHistory>();
 		try{
 			open();
-			Cursor cursor = database.query(Adapter.OUTSIDE_LOCATION_HISTORY_TABLE, outsideLocationColumns, null, null, null, null, null, "500");
+			Cursor cursor = database.query(Adapter.OUTSIDE_LOCATION_HISTORY_TABLE, outsideLocationColumns, null, null, null, null, null, "3000");
 			while (cursor.moveToNext()){
 				double latitude = cursor.getDouble(1);
 				double longitude = cursor.getDouble(2);
