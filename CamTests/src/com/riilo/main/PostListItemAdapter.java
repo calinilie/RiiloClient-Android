@@ -66,15 +66,24 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 //		TextView postId_textView = (TextView) postView.findViewById(R.id.postListItem_postId);
 		ImageView userAtLocation_ImageView = (ImageView)postView.findViewById(R.id.postListItem_userAtLocation);
 		
-		
-		userId_textView.setText(
-					post.getUserId().equalsIgnoreCase(this.currentUserId) ? 
-					this.context.getString(R.string.post_adapter_you) : 
-					this.context.getString(R.string.post_adapter_somebody));
-		String userAction = post.getRepliesToPostId() == 0 ? 
-							this.context.getString(R.string.post_adapter_posted) : 
-							this.context.getString(R.string.post_adapter_replied);
-		userAction_textView.setText(userAction);
+		if (post.getUserId().equalsIgnoreCase(this.currentUserId)){
+			userId_textView.setText(this.context.getString(R.string.post_adapter_you));
+			if (post.getRepliesToPostId() == 0){
+				userAction_textView.setText(this.context.getString(R.string.post_adapter_posted_1st));
+			}
+			else{
+				userAction_textView.setText(this.context.getString(R.string.post_adapter_replied_1st));
+			}
+		}
+		else{
+			userId_textView.setText(this.context.getString(R.string.post_adapter_somebody));
+			if (post.getRepliesToPostId() == 0){
+				userAction_textView.setText(this.context.getString(R.string.post_adapter_posted_3rd));
+			}
+			else{
+				userAction_textView.setText(this.context.getString(R.string.post_adapter_replied_3rd));
+			}
+		}
 		String postedOnDistance = "";
 		
 		if (showDistance){
