@@ -36,7 +36,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_alignParentRight="true"
 	            android:background="@drawable/selector"
-	            android:contentDescription="Cancel action"
+	            android:contentDescription="@string/content_description_cancel_action"
 	            android:padding="8dp"
 	            android:src="@android:drawable/ic_menu_close_clear_cancel" />
 	
@@ -47,6 +47,7 @@
 	            android:layout_below="@+id/tutorial_swipe_title"
 	            android:layout_centerHorizontal="true"
 	            android:layout_margin="8dp"
+	            android:contentDescription="@string/content_description_tutorial_image"
 	            android:background="@drawable/tutorial_swipe_with_hand" />
 
 	        <TextView
