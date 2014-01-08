@@ -59,6 +59,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	private View view;
 	private MapView mapView;
 	private MainActivity activity;
+	boolean skipNullCheck;
 	
 	@Override
 	public void onAttach(Activity activity){
@@ -82,18 +83,22 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
     	mapView.onResume();
     	
     	try {
-            MapsInitializer.initialize(getActivity());
+            MapsInitializer.initialize(activity);
         } catch (GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
         }
+    	
+    	skipNullCheck = true;
+    	
     	return view;
     }
     
     @Override
     public void onStart() {
     	super.onStart();
-    	
-    	setUpMapIfNeeded();
+
+    	setUpMapIfNeeded(skipNullCheck);
+    	skipNullCheck = false;
     	
     	setupWidgetsViewElements();
     	newPostIfNeeded();
@@ -255,8 +260,8 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
    	 	}
     }
 	
-	private void setUpMapIfNeeded() {
-//		if (map==null){
+	private void setUpMapIfNeeded(boolean skipNullCheck) {
+		if (skipNullCheck || map==null){
 			map = mapView.getMap();
 			mapClusterManager = new ClusterManager<LocationHistory>(activity, map);
 			mapClusterManager.setRenderer(new DefaultClusterRenderer<LocationHistory>(activity, map, mapClusterManager));
@@ -274,7 +279,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	    		addLocationHistoryMarkers();
 	    	}
 	    	else activity.showWarningDialog(activity.getString(R.string.error_no_google_maps));
-//		}
+		}
     }
 	
 	private void addLocationHistoryMarkers(){
@@ -316,19 +321,6 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
         inputMessage = (EditText)view.findViewById(R.id.editor_message);
         panelCreatePosts = view.findViewById(R.id.create_post_pannel);
 	}
-
-	
-	/*@Override
-	public boolean onMarkerClick(Marker marker) {
-		activity.analytics.recordEvent_WritePost_MarkerClick();
-		if (map.getCameraPosition().zoom<13){
-			animateMapCamera(marker.getPosition(), 13);
-		}
-		else{
-			createPost(marker.getPosition());
-		}
-		return true;
-	}*/
 
 	@Override
 	public boolean onClusterItemClick(LocationHistory item) {
