@@ -2,8 +2,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="post_adapter_you">Te</string>
 	<string name="post_adapter_somebody">Qualcuno</string>
-	<string name="post_adapter_posted">hai scritto:</string>
-	<string name="post_adapter_replied">risposto:</string>
+	
+	<string name="post_adapter_posted_1st">hai scritto:</string>
+	<string name="post_adapter_replied_1st">hai risposto:</string>
+	
+	<string name="post_adapter_posted_3rd">ha scritto:</string>
+	<string name="post_adapter_replied_3rd">ha risposto:</string>
+	
 	<string name="post_adapter_posted_on">scritto il</string>
 	<string name="post_adapter_waiting_for_location">in attesa della posizione,</string>
 	<string name="post_adapter_away">da te,</string>

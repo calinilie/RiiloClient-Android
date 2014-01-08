@@ -27,8 +27,13 @@
     
     <string name="post_adapter_you">You</string>
     <string name="post_adapter_somebody">Somebody</string>
-    <string name="post_adapter_posted">posted:</string>
-    <string name="post_adapter_replied">replied:</string>
+    
+   	<string name="post_adapter_posted_1st">posted:</string>
+	<string name="post_adapter_replied_1st">replied:</string>
+	
+	<string name="post_adapter_posted_3rd">posted:</string>
+	<string name="post_adapter_replied_3rd">replied:</string>
+    
     <string name="post_adapter_posted_on">posted on</string>
     <string name="post_adapter_waiting_for_location">waiting for location,</string>
     <string name="post_adapter_away">away,</string>
