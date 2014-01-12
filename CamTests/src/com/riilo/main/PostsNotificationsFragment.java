@@ -76,6 +76,11 @@ public class PostsNotificationsFragment
  		return view;
  	}
  	
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+    	inflater.inflate(R.menu.main_activity_layout_menu, menu);
+    }
+ 	
  	@Override
 	public void onStart(){
 		super.onStart();
@@ -92,7 +97,7 @@ public class PostsNotificationsFragment
 						adapter,
 						adapterData,
 						activity.getSpinnerAdapter(),
-						activity.getSpinnerAdapter().getItem(2),
+						activity.getSpinnerAdapter().getItem(3),
 						pullToRefreshLayout,
 						false,
 						StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);

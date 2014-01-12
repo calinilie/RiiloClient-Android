@@ -22,8 +22,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 public class MainActivity extends BaseActivity implements OnNavigationListener{
@@ -85,7 +83,7 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 				null, 
 				null, 
 				spinnerAdapter,
-				spinnerAdapter.getItem(2), 
+				spinnerAdapter.getItem(3), 
 				pullToRefreshLayout, 
 				false,
 				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);        
@@ -125,15 +123,15 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
     		super.onBackPressed();
     	}
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-    	MenuInflater inflater = getMenuInflater();
-    	inflater.inflate(R.menu.main_activity_layout_menu, menu);
+    
+    /*@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main_activity_layout_menu, menu);
 //		MenuItem item = menu.findItem(R.id.all_notifications);
 //		((TextView) item.getActionView().findViewById(R.id.notifications_number)).setText("got you!");
-    	return super.onCreateOptionsMenu(menu);
-    }
+        return super.onCreateOptionsMenu(menu);
+    }*/
     
     public SpinnerSectionItemAdapter getSpinnerAdapter(){
     	return spinnerAdapter;
@@ -148,32 +146,32 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
         @Override
         public Fragment getItem(int i) {
             switch (i) {
-//                case 0:
-//                	ToLocationPostFragment toLocationPostFragment = new ToLocationPostFragment();
-//                	addLocationListener(toLocationPostFragment);
-//                	backButtonListener = toLocationPostFragment;
-//                	return toLocationPostFragment;
                 case 0:
+                	ToLocationPostFragment toLocationPostFragment = new ToLocationPostFragment();
+                	addLocationListener(toLocationPostFragment);
+                	backButtonListener = toLocationPostFragment;
+                	return toLocationPostFragment;
+                case 1:
                 	PostsLatestFragment latestPostsFragment = new PostsLatestFragment();
                 	addLocationListener(latestPostsFragment);
-//                	latestPostsFragment.setHasOptionsMenu(true);
+                	latestPostsFragment.setHasOptionsMenu(true);
                 	return latestPostsFragment;
-                case 1:
+                case 2:
                 	PostsNearbyFragment nearbyPostsFragment = new PostsNearbyFragment();
                 	addLocationListener(nearbyPostsFragment);
-//                	nearbyPostsFragment.setHasOptionsMenu(true);
+                	nearbyPostsFragment.setHasOptionsMenu(true);
                     return nearbyPostsFragment;
-                case 2:
+                case 3:
                 default:
                 	PostsNotificationsFragment notificationsPostsFragment = new PostsNotificationsFragment();
-//                	notificationsPostsFragment.setHasOptionsMenu(true);
+                	notificationsPostsFragment.setHasOptionsMenu(true);
                 	return notificationsPostsFragment;
             }
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
     }
     
@@ -186,10 +184,7 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 		switch(item.getItemId()){
 		case R.id.action_reply:
 			analytics.recordEvent_General_ReplyButtonClicked();
-//			return onNavigationItemSelected(0, 0);
-			Intent intent = new Intent(this, ToLocationPostActivity.class);
-			startActivity(intent);
-			return true;
+			return onNavigationItemSelected(0, 0);
 		default:
             return super.onOptionsItemSelected(item);
 		}
@@ -205,10 +200,10 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 		if (sections==null){
 			sections = new ArrayList<SpinnerSection>(
 				Arrays.asList(
-//						new SpinnerSection(0, getString(R.string.section_post), R.drawable.riilo_logo, false),
-						new SpinnerSection(0, getString(R.string.section_latest), R.drawable.ic_latest_posts, false),
-						new SpinnerSection(1, getString(R.string.section_nearby), R.drawable.ic_nearby_posts, true),
-						new SpinnerSection(2, getString(R.string.section_notifications), R.drawable.ic_map_marker_human, true)
+						new SpinnerSection(0, getString(R.string.section_post), R.drawable.riilo_logo, false),
+						new SpinnerSection(1, getString(R.string.section_latest), R.drawable.ic_latest_posts, false),
+						new SpinnerSection(2, getString(R.string.section_nearby), R.drawable.ic_nearby_posts, true),
+						new SpinnerSection(3, getString(R.string.section_notifications), R.drawable.ic_map_marker_human, true)
 					));
 		}
 	}

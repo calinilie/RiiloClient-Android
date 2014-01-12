@@ -1,6 +1,5 @@
 package com.riilo.main;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -21,11 +20,6 @@ public class LocationHistoryResultReceiver extends ResultReceiver{
 		this.mapClusterManager = mapClusterManager;
 	}
 	
-	private GoogleMap map;
-	public void setMap(GoogleMap map){
-		this.map = map;
-	}
-	
 	public LocationHistoryResultReceiver(Handler handler) {
 		super(handler);
 		this.handler = handler;
@@ -41,19 +35,8 @@ public class LocationHistoryResultReceiver extends ResultReceiver{
 					
 					@Override
 					public void run() {
-						if (mapClusterManager!=null && map!=null){
+						if (mapClusterManager!=null){
 							Helpers.addMarkersToMap(list, mapClusterManager);
-//							Helpers.addMarkersToMap(list, map);
-							
-							/*List<LocationHistory> list1 = new ArrayList<LocationHistory>();
-							int half = (int)list.size()/2;
-							for (int i=0; i<half; i++){
-								list1.add(list.get(i));
-							}
-							list.removeAll(list1);
-							
-							Helpers.addMarkersToMap(list, map);
-							Helpers.addMarkersToMap(list1, map);*/
 						}
 					}
 				});

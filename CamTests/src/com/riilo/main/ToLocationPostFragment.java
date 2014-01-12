@@ -103,7 +103,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
     	setupWidgetsViewElements();
     	newPostIfNeeded();
     	
-    	LocationHistoryManager.getInstance(activity).getLocationHistory(mapClusterManager, null);
+    	LocationHistoryManager.getInstance(activity).getLocationHistory(mapClusterManager);
     	
     	mapCameraAnimationRun = false;
     }
