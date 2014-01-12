@@ -240,9 +240,10 @@ public class Facade {
 	}
 	
 	private synchronized boolean doesLocationHistoryExist(long id){
+		Cursor cursor = null;
 		try{
 			String[] whereArgs = {id+""};
-			Cursor cursor = database.query(
+			cursor = database.query(
 								Adapter.OUTSIDE_LOCATION_HISTORY_TABLE, 
 								outsideLcationHistoryId, 
 								Adapter.OUTSIDE_LOCATION_HISTORY_ID+" = ?", 
@@ -251,6 +252,9 @@ public class Facade {
 				return true;
 		}
 		catch(Exception e){}
+		finally{
+			cursor.close();
+		}
 		return false;
 	}
 	
