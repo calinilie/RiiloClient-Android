@@ -8,6 +8,7 @@ import com.google.maps.android.clustering.ClusterManager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
@@ -34,11 +35,11 @@ public class LocationHistoryManager {
 		return instance;
 	}
 	
-	public List<LocationHistory> getLocationHistory(ClusterManager<LocationHistory> mapClusterManager){
+	public List<LocationHistory> getLocationHistory(ClusterManager<LocationHistory> mapClusterManager, GoogleMap map){
 		if (list.isEmpty())
 			list = facade.getLocationHistory(); 
 		
-		startService(mapClusterManager);
+		startService(mapClusterManager, map);
 		
 		return list;
 	}
@@ -49,11 +50,16 @@ public class LocationHistoryManager {
 		return list;
 	}
 	
-	private void startService(ClusterManager<LocationHistory> mapClusterManager){
+	public void getRemoteLocationHistory(ClusterManager<LocationHistory> mapClusterManager, GoogleMap map){
+		startService(mapClusterManager, map);
+	}
+	
+	private void startService(ClusterManager<LocationHistory> mapClusterManager, GoogleMap map){
 		if (!wasRequestMade){
 	    	Intent intent = new Intent(context, WorkerService.class);
 	    	intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_LOCATION_HISTORY);
 	    	LocationHistoryResultReceiver resultReceiver = new LocationHistoryResultReceiver(new Handler());
+	    	resultReceiver.setMap(map);
 	    	resultReceiver.setClusterManager(mapClusterManager);
 	    	intent.putExtra(StringKeys.LOCATION_HISTORY_RESULT_RECEIVER, resultReceiver);
 	    	context.startService(intent);
