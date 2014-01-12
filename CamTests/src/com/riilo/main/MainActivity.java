@@ -186,7 +186,6 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 		switch(item.getItemId()){
 		case R.id.action_reply:
 			analytics.recordEvent_General_ReplyButtonClicked();
-//			return onNavigationItemSelected(0, 0);
 			Intent intent = new Intent(this, ToLocationPostActivity.class);
 			startActivity(intent);
 			return true;
