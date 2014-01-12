@@ -57,7 +57,7 @@ import static com.google.maps.android.clustering.algo.NonHierarchicalDistanceBas
  * The default view for a ClusterManager. Markers are animated in and out of clusters.
  */
 public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRenderer<T> {
-    private static final boolean SHOULD_ANIMATE = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+    private static final boolean SHOULD_ANIMATE = false;//Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     private final GoogleMap mMap;
     private final IconGenerator mIconGenerator;
     private final ClusterManager<T> mClusterManager;
@@ -106,6 +106,11 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
     private ClusterManager.OnClusterClickListener<T> mClickListener;
     private ClusterManager.OnClusterItemClickListener<T> mItemClickListener;
 
+    BitmapDescriptor icon;
+    int lightRed = 0;
+    int lighterRed = 0;
+    int darkRed = 0;
+    
     public DefaultClusterRenderer(Context context, GoogleMap map, ClusterManager<T> clusterManager) {
         mMap = map;
         mDensity = context.getResources().getDisplayMetrics().density;
@@ -114,6 +119,10 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
         mIconGenerator.setTextAppearance(R.style.ClusterIcon_TextAppearance);
         mIconGenerator.setBackground(makeClusterBackground());
         mClusterManager = clusterManager;
+        icon = BitmapDescriptorFactory.fromResource(R.drawable.location_history);
+        lightRed = context.getResources().getColor(R.color.riilo_light_red);
+        lighterRed = context.getResources().getColor(R.color.riilo_lighter_red);
+        darkRed = context.getResources().getColor(R.color.riilo_dark_red);
     }
 
     @Override
@@ -160,13 +169,14 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
     }
 
     private int getColor(int clusterSize) {
-        final float hueRange = 220;
-        final float sizeRange = 300;
-        final float size = Math.min(clusterSize, sizeRange);
-        final float hue = (sizeRange - size) * (sizeRange - size) / (sizeRange * sizeRange) * hueRange;
-        return Color.HSVToColor(new float[]{
-                hue, 1f, .6f
-        });
+        if (clusterSize<21){
+        	return darkRed;
+        }
+        if (clusterSize<101){
+        	return lighterRed;
+        }
+        return lighterRed;
+    	
     }
 
     protected String getClusterText(int bucket) {
@@ -717,6 +727,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
                         } else {
                             markerOptions.position(item.getPosition());
                         }
+                        markerOptions.icon(icon);
                         onBeforeClusterItemRendered(item, markerOptions);
                         marker = mClusterManager.getMarkerCollection().addMarker(markerOptions);
                         markerWithPosition = new MarkerWithPosition(marker);
