@@ -40,6 +40,15 @@ public class Helpers {
 		clusterManager.cluster();
 	}
 	
+	public static synchronized void addMarkersToMap(List<LocationHistory> histories, GoogleMap map){
+		for(LocationHistory h : histories){
+			if (!h.isOnMap()){
+				map.addMarker(new MarkerOptions().position(h.getLatLng()).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_history)));
+				h.setIsOnMap(true);
+			}
+		}
+	}
+	
 	/*===================DISTANCES======================================================================================*/
 	public static double distanceFrom(double lat1, double lng1, double lat2, double lng2) {
 		return distanceFrom(lat1, lng1, lat2, lng2, false);

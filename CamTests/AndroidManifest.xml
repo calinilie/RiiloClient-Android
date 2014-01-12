@@ -53,6 +53,16 @@
 	            android:value="com.riilo.main.MainActivity" />
         </activity>
         
+       	<activity
+	      android:name="com.riilo.main.ToLocationPostActivity"
+	      android:label="@string/section_post"
+	      android:screenOrientation="portrait"
+	      android:parentActivityName="com.riilo.main.MainActivity">
+            <meta-data
+	            android:name="android.support.PARENT_ACTIVITY"
+	            android:value="com.riilo.main.MainActivity" />
+        </activity>
+        
         <activity
 	      android:name="com.riilo.tutorial.TutorialActivity"
 	      android:label="@string/tutorial_activity_label"
