@@ -65,6 +65,7 @@ public class ToLocationPostActivity extends BaseActivity implements OnClusterCli
 		setupWidgetsViewElements();
 		setUpMapIfNeeded();
 		newPostIfNeeded();
+		LocationHistoryManager.getInstance(this).getRemoteLocationHistory(clusterManager, map);
 	}
 	
 	@Override
@@ -102,7 +103,7 @@ public class ToLocationPostActivity extends BaseActivity implements OnClusterCli
 		super.onLocationChanged(location);
 		if (!mapCameraAnimationRun){
     		if (location.getAccuracy()<2000){
-	    		animateMapCamera(new LatLng(location.getLatitude(), location.getLongitude()), 10);
+	    		animateMapCamera(new LatLng(location.getLatitude(), location.getLongitude()), 5);
     		}
     	}
 	}
