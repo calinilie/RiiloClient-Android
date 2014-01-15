@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+     	
+	 	<com.google.android.gms.maps.MapView
+	 	    android:id="@+id/map"
+	 	    android:layout_width="match_parent"
+	 	    android:layout_height="0dp"
+	 	    android:layout_weight="0.80" />
+	 	
+	   	<ListView
+		    android:id="@+id/posts_list_view"
+		    android:layout_width="fill_parent"
+		    android:layout_height="0dp"
+		    android:layout_weight="0.20"
+		    android:divider="@null"
+		    android:dividerHeight="0dp">
+		</ListView>
+		
+	</LinearLayout>
+		
+    <RelativeLayout
+        android:id="@+id/reply_to_post_pannel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/border"
+        android:gravity="bottom"
+        android:visibility="gone">
+
+        <ImageButton
+            android:id="@+id/button_cancel"
+            android:layout_width="48dp"
+            android:layout_height="fill_parent"
+            android:padding="8dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignBottom="@+id/editor_message"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:background="@drawable/selectable_background_riilo"
+            android:contentDescription="Cancel action" />
+        
+        <EditText
+            android:id="@+id/editor_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:layout_toLeftOf="@+id/button_post"
+            android:layout_toRightOf="@+id/button_cancel"
+            android:gravity="bottom"
+            android:textSize="14sp"
+            android:hint="@string/say_anything_hint"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLines="5"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:textColorHint="#B0B0B0"
+            android:background="@android:color/transparent"
+            android:visibility="visible" />
+
+        <ImageButton
+            android:id="@+id/button_post"
+            android:layout_width="48dp"
+            android:layout_height="fill_parent"
+            android:padding="8dp"
+            android:layout_alignBottom="@+id/editor_message"
+            android:layout_alignParentRight="true"
+            android:src="@android:drawable/ic_menu_send"
+            android:background="@drawable/selectable_background_riilo"
+            android:contentDescription="Send message"/>
+  
+    </RelativeLayout>
+	
+</RelativeLayout>
