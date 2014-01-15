@@ -20,6 +20,9 @@ public class StringKeys {
 	public static final String NEARBY_POSTS_LONGITUDE = "com.riilo.main.StringKeys.NEARBY_POSTS_LONGITUDE";
 	public static final String WAS_TUTORIAL_RUN = "com.riilo.main.StringKeys.WAS_TUTORIAL_RUN";
 	
+	public static final String AT_LOCATION_POSTS_LATITUDE = "com.riilo.main.StringKeys.NEARBY_POSTS_LATITUDE";
+	public static final String AT_LOCATION_POSTS_LONGITUDE = "com.riilo.main.StringKeys.NEARBY_POSTS_LONGITUDE";
+	
 	public static final String POST_PIC_URI ="com.riilo.main.StringKeys.POST_PIC_URI";
 	public static final String POST_LATITUDE = "com.riilo.main.StringKeys.POST_LATITUDE";
 	public static final String POST_LONGITUDE = "com.riilo.main.StringKeys.POST_LONGITUDE";
@@ -36,6 +39,7 @@ public class StringKeys {
 	
 	public static final String LOCATION_HISTORY_PARCELABLE = "com.riilo.main.StringKeys.LOCATION_HISTORY_PARCELABLE";
 	public static final String LOCATION_HISTORY_RESULT_RECEIVER = "com.riilo.main.StringKeys.LOCATION_HISTORY_RESULT_RECEIVER";
+	public static final String AT_LOCATON_POSTS_RESULT_RECEIVER = "com.riilo.main.AT_LOCATON_POSTS_RESULT_RECEIVER";
 	
 	public static final String WS_INTENT_TYPE = "com.riilo.main.StringKeys.WORKER_SERVICE_INTENT_TYPE";
 	public static final int WS_INTENT_POST = 1;
@@ -47,6 +51,7 @@ public class StringKeys {
 	public static final int WS_INTENT_NEARBY_POSTS = 7;
 	public static final int WS_INTENT_INSERT_LOCATION_HISTORY = 8; 
 	public static final int WS_INTENT_GET_LOCATION_HISTORY = 9;
+	public static final int WS_INTENT_GET_AT_LOCATION_POSTS = 10;
 	
 	public static final String TAKE_PICTURE_INTENT_START_DATETIME = "com.riilo.main.StringKeys.dateCameraIntentStarted";
 	public static final String TAKE_PICTURE_FILE_NAME_AND_PATH= "com.riilo.main.StringKeys.FILE_NAME_AND_PATH";

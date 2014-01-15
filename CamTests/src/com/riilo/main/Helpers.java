@@ -13,6 +13,7 @@ import java.util.TimeZone;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.ClusterManager;
 
@@ -46,6 +47,16 @@ public class Helpers {
 				map.addMarker(new MarkerOptions().position(h.getLatLng()).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_history)));
 				h.setIsOnMap(true);
 			}
+		}
+	}
+	
+	public static synchronized void addPostsToMap(List<Post> posts, GoogleMap map){
+		for(Post p : posts){
+//			if (!h.isOnMap()){
+				//TODO create position property in Post type - just like LocationHistory
+				map.addMarker(new MarkerOptions().position(new LatLng(p.getLatitude(), p.getLongitude())).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_history)));
+//				h.setIsOnMap(true);
+//			}
 		}
 	}
 	

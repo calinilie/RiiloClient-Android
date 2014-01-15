@@ -72,6 +72,8 @@ public class WorkerService extends IntentService{
 		long conversationId = 0;
 		String userId = null;
 		int intentType = intent.getIntExtra(StringKeys.WS_INTENT_TYPE, -1);
+		double latitude = 0;
+		double longitude = 0;
 		switch (intentType){
 		case StringKeys.WS_INTENT_POST:
 			Post post = new Post(intent.getBundleExtra(StringKeys.POST_BUNDLE));
@@ -133,8 +135,8 @@ public class WorkerService extends IntentService{
 			}
 			break;
 		case StringKeys.WS_INTENT_NEARBY_POSTS:
-			double latitude = intent.getDoubleExtra(StringKeys.NEARBY_POSTS_LATITUDE, 0);
-			double longitude = intent.getDoubleExtra(StringKeys.NEARBY_POSTS_LONGITUDE, 0);
+			latitude = intent.getDoubleExtra(StringKeys.NEARBY_POSTS_LATITUDE, 0);
+			longitude = intent.getDoubleExtra(StringKeys.NEARBY_POSTS_LONGITUDE, 0);
 			resultReceiver = intent.getParcelableExtra(StringKeys.POST_LIST_RESULT_RECEIVER);
 			resultReceiverType = intent.getIntExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);
 			if (latitude != 0 && longitude != 0){
@@ -144,6 +146,23 @@ public class WorkerService extends IntentService{
 					resultData.putParcelable(StringKeys.POST_LIST_PARCELABLE, new PostsListParcelable(nearbyPosts));
 					resultData.putInt(StringKeys.POST_RESULT_RECEIVER_NOTIFICATION_NUMBER, postsCache.getNearbyPosts().size());
 					resultReceiver.send(resultReceiverType, resultData);
+				}
+			}
+			break;
+		//TODO create AtLocationPostsIntentService
+		case StringKeys.WS_INTENT_GET_AT_LOCATION_POSTS:
+			Log.d(TAG, "handling WS_INTENT_GET_AT_LOCATION_POSTS");
+			latitude = intent.getDoubleExtra(StringKeys.AT_LOCATION_POSTS_LATITUDE, 0);
+			longitude = intent.getDoubleExtra(StringKeys.AT_LOCATION_POSTS_LONGITUDE, 0);
+			//TODO create AtLocationPostsResultReceiver
+			resultReceiver = intent.getParcelableExtra(StringKeys.AT_LOCATON_POSTS_RESULT_RECEIVER);
+			if (latitude!=0 && longitude!=0){
+				List<Post> postsAtLocation = getNearbyPosts(latitude, longitude);
+				Log.d(TAG, "postsAtLocation "+postsAtLocation.size());
+				if (resultReceiver!=null){
+					resultData = new Bundle();
+					resultData.putParcelable(StringKeys.POST_LIST_PARCELABLE, new PostsListParcelable(postsAtLocation));
+					resultReceiver.send(0, resultData);
 				}
 			}
 			break;

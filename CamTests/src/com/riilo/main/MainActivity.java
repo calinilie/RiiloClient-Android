@@ -102,7 +102,7 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 				null,
 				null,
 				spinnerAdapter,
-				spinnerAdapter.getItem(2),
+				spinnerAdapter.getItem(1),
 				null,
 				null,
 				false,
@@ -153,17 +153,19 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 //                	addLocationListener(toLocationPostFragment);
 //                	backButtonListener = toLocationPostFragment;
 //                	return toLocationPostFragment;
-                case 0:
+            	case 0:
+            		ExploreFragment exploreFragment = new ExploreFragment();
+            		addLocationListener(exploreFragment);
+            		return exploreFragment;
+                case 1:
                 	PostsLatestFragment latestPostsFragment = new PostsLatestFragment();
                 	addLocationListener(latestPostsFragment);
-//                	latestPostsFragment.setHasOptionsMenu(true);
                 	return latestPostsFragment;
-                case 1:
+                case 2:
                 	PostsNearbyFragment nearbyPostsFragment = new PostsNearbyFragment();
                 	addLocationListener(nearbyPostsFragment);
-//                	nearbyPostsFragment.setHasOptionsMenu(true);
                     return nearbyPostsFragment;
-                case 2:
+                case 3:
                 default:
                 	PostsNotificationsFragment notificationsPostsFragment = new PostsNotificationsFragment();
 //                	notificationsPostsFragment.setHasOptionsMenu(true);
@@ -173,7 +175,7 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
     }
     
@@ -205,9 +207,10 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 			sections = new ArrayList<SpinnerSection>(
 				Arrays.asList(
 //						new SpinnerSection(0, getString(R.string.section_post), R.drawable.riilo_logo, false),
-						new SpinnerSection(0, getString(R.string.section_latest), R.drawable.ic_latest_posts, false),
-						new SpinnerSection(1, getString(R.string.section_nearby), R.drawable.ic_nearby_posts, true),
-						new SpinnerSection(2, getString(R.string.section_notifications), R.drawable.ic_map_marker_human, true)
+						new SpinnerSection(0, "Explore", R.drawable.riilo_logo, false),
+						new SpinnerSection(1, getString(R.string.section_latest), R.drawable.ic_latest_posts, false),
+						new SpinnerSection(2, getString(R.string.section_nearby), R.drawable.ic_nearby_posts, true),
+						new SpinnerSection(3, getString(R.string.section_notifications), R.drawable.ic_map_marker_human, true)
 					));
 		}
 	}

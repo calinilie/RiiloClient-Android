@@ -6,16 +6,21 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import com.google.android.gms.maps.GoogleMap;
+
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Button;
 
 public class PostsCache {
 
+	private static final String TAG = "<<<<<<<<<<<<<<<<<PostsCache>>>>>>>>>>>>>>>>>";
+	
 	private Context context;
 	private RequestTimestamp timestamp_PostsCall;	
 	private RequestTimestamp timestamp_NotificationsCall;
@@ -184,6 +189,14 @@ public class PostsCache {
 		return this.nearbyPosts;
 	}
 	
+	public synchronized void getAtLocationPosts(
+			double latitude, 
+			double longitude, 
+			GoogleMap map, Handler handler){
+		startService_getAtLocationPosts(latitude, longitude, map, handler);
+	}
+	
+	
 	public synchronized boolean addPostAsNearbyPost(Post p){
 		boolean addNearby = true;
 		addPost(p);
@@ -318,6 +331,19 @@ public class PostsCache {
 			
 			startRereshAniamtion(handler, pullToRefreshLayout);
 		}
+	}
+	
+	
+	private void startService_getAtLocationPosts(double latitude, double longitude, GoogleMap map, Handler handler){
+		Log.d(TAG, "startService_getAtLocationPosts");
+		Intent intent =  new Intent(context, WorkerService.class);
+		intent.putExtra(StringKeys.AT_LOCATION_POSTS_LATITUDE, latitude);
+		intent.putExtra(StringKeys.AT_LOCATION_POSTS_LONGITUDE, longitude);
+		intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_AT_LOCATION_POSTS);
+		AtLocationPostsResultReceiver resultReceiver = new AtLocationPostsResultReceiver(handler);
+		resultReceiver.setMap(map);
+		intent.putExtra(StringKeys.AT_LOCATON_POSTS_RESULT_RECEIVER, resultReceiver);
+		context.startService(intent);
 	}
 	
 	private void startService_getLatest(
