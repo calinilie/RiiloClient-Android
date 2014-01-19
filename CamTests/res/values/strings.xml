@@ -9,7 +9,7 @@
     <string name="endpoint_nearby_posts">http://riilo-prod.elasticbeanstalk.com/posts/nearby/</string>
     <string name="endpoint_post_location">http://riilo-prod.elasticbeanstalk.com/location/insert/</string>
     <string name="endpoint_location_history">http://d19vwjdwjmit8v.cloudfront.net/location/history/</string>
-    <string name="endpoint_posts_on_map">http://riilo-prod.elasticbeanstalk.com/posts/onmap</string>
+    <string name="endpoint_posts_on_map">http://d19vwjdwjmit8v.cloudfront.net/posts/onmap/</string>
     
     <string name="local_test_posts_upload">http://192.168.0.197:8080/web/posts/upload/</string>
     <string name="local_test_latest_posts">http://192.168.0.197:8080/web/posts/latest/</string>

@@ -4,7 +4,9 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +28,23 @@ import android.util.Log;
 public class Helpers {
 	
 	private static final String TAG = "HELPERS";
+	
+	public static Collection<Post> mergeLists(Collection<Post> target, Collection<Post> source){
+		List<Post> postsToRemove = new ArrayList<Post>();//posts from conversation already present, only one post per conversation in List
+		if (source!=null){
+			for (Post p:source){
+				if (target.contains(p)){
+					postsToRemove.add(p);
+				}
+				else{
+					target.add(p);
+				}
+	    	}
+			source.removeAll(postsToRemove);
+		}
+		return source;
+	}
+	
 	
 	/*====================MAP=====================================================================================*/
 	public static void addMarkersToMap(List<LocationHistory> histories, ClusterManager<LocationHistory> clusterManager){

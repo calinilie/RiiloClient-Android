@@ -36,6 +36,7 @@ public class PostsCache {
 		nearbyPosts = new ArrayList<Post>();
 		latestPosts = new ArrayList<Post>();
 		explore_onMapPostGroups = new HashSet<Post>();
+		explore_onMapPosts = new HashSet<Post>();
 		
 		this.addPosts(Facade.getInstance(context).getAllPosts());
 		this.context = context;
@@ -206,6 +207,31 @@ public class PostsCache {
 		startService_getPostsOnMap(map, handler);
 	}
 	
+	
+	/*public synchronized void addPostTo_PostsOnMapSet(Post post){
+		this.explore_onMapPosts.add(post);
+	}
+	
+	public synchronized void addPostsTo_PostsOnMapSet(List<Post> posts){
+		this.explore_onMapPosts.addAll(posts);
+	}*/
+	
+	public Set<Post> getExplore_onMapPosts() {
+		return explore_onMapPosts;
+	}
+	
+	/*public synchronized void addPostTo_PostsGroupOnMapSet(Post post){
+		this.explore_onMapPostGroups.add(post);
+	}
+	
+	public synchronized void addPostsTo_PostsGroupOnMapSet(List<Post> posts){
+		this.explore_onMapPostGroups.addAll(posts);
+	}*/
+	
+	public Set<Post> getExplore_onMapPostGroups() {
+		return explore_onMapPostGroups;
+	}
+
 	public synchronized boolean addPostAsNearbyPost(Post p){
 		boolean addNearby = true;
 		addPost(p);
@@ -357,7 +383,7 @@ public class PostsCache {
 	
 	private void startService_getPostsOnMap(GoogleMap map, Handler handler){
 		Intent intent = new Intent(context, WorkerService.class);
-		intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_POSTS_ON_MAP);
+		intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_POST_GROUPS_ON_MAP);
 		AtLocationPostsResultReceiver resultReceiver = new AtLocationPostsResultReceiver(handler);
 		resultReceiver.setMap(map);
 		intent.putExtra(StringKeys.AT_LOCATON_POSTS_RESULT_RECEIVER, resultReceiver);

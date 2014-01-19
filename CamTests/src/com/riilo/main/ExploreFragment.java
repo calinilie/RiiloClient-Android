@@ -7,11 +7,13 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.riilo.interfaces.ILocationListener;
 
 import android.app.Activity;
@@ -27,7 +29,7 @@ import android.widget.Toast;
 
 public class ExploreFragment 
 		extends Fragment
-		implements ILocationListener, OnCameraChangeListener{
+		implements ILocationListener, OnCameraChangeListener, OnMarkerClickListener{
 
 	private static final String TAG = "<<<<<<<<ExploreFragment>>>>>>>>";
 	
@@ -79,8 +81,8 @@ public class ExploreFragment
 	@Override
 	public void onLocationChanged(Location location) {
 		if (!mapCameraAnimationRun){
-			animateMapCamera(new LatLng(location.getLatitude(), location.getLongitude()), 6);
-			double[] latLng = Helpers.setReqFrom_Latitude_and_Longitude(location, null);
+			animateMapCamera(new LatLng(location.getLatitude(), location.getLongitude()), 7.5f);
+//			double[] latLng = Helpers.setReqFrom_Latitude_and_Longitude(location, null);
 			PostsCache.getInstance(activity).getPostsOnMap(map, new Handler());//getAtLocationPosts(latLng[0], latLng[1], map, new Handler());
 		}		
 	}
@@ -136,6 +138,7 @@ public class ExploreFragment
 		if (map!=null){
 			map.setMyLocationEnabled(true);
 			map.setOnCameraChangeListener(this);
+			map.setOnMarkerClickListener(this);
 		}
 	}
 	
@@ -183,23 +186,14 @@ public class ExploreFragment
 				}
 			}
 		}, 2000);
-//			if (isRequestAllowed()){
-//				Toast.makeText(activity, "loading ", Toast.LENGTH_LONG).show();
-//				PostsCache.getInstance(activity).getAtLocationPosts(position.target.latitude, position.target.longitude, map);
-//			}
 	
 	}
+
 	
-	
-	private long timeStarted;
-	private boolean isRequestAllowed(){
-		if (System.nanoTime() - timeStarted >= 1000000000){
-			timeStarted = System.nanoTime();
-			Log.d(TAG, timeStarted+" true");
-			return true;
-		}
-		Log.d(TAG, timeStarted+" false");
-		return false;
+	@Override
+	public boolean onMarkerClick(Marker marker) {
+		animateMapCamera(marker.getPosition(), 7.7f);
+		return true;
 	}
 
 }
