@@ -25,7 +25,7 @@
 	        	android:id="@+id/map_marker"
 	        	android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/location_history"
+                android:background="@drawable/location_history1"
                 android:layout_margin="8dp"
                 android:contentDescription="@string/content_description_map_marker"
                 />
