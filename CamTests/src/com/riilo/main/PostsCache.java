@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.google.android.gms.maps.GoogleMap;
 
@@ -33,6 +35,7 @@ public class PostsCache {
 		notifications = new ArrayList<Post>();
 		nearbyPosts = new ArrayList<Post>();
 		latestPosts = new ArrayList<Post>();
+		explore_onMapPostGroups = new HashSet<Post>();
 		
 		this.addPosts(Facade.getInstance(context).getAllPosts());
 		this.context = context;
@@ -52,6 +55,8 @@ public class PostsCache {
 	private List<Post> notifications;
 	private List<Post> nearbyPosts;
 	private List<Post> latestPosts;
+	private Set<Post> explore_onMapPostGroups;
+	private Set<Post> explore_onMapPosts;
 	
 	public synchronized List<Post> getPostsAsList() {
 		List<Post> retVal = new ArrayList<Post>();
@@ -191,11 +196,15 @@ public class PostsCache {
 	
 	public synchronized void getAtLocationPosts(
 			double latitude, 
-			double longitude, 
+			double longitude,
+			double distance,
 			GoogleMap map, Handler handler){
-		startService_getAtLocationPosts(latitude, longitude, map, handler);
+		startService_getAtLocationPosts(latitude, longitude, distance, map, handler);
 	}
 	
+	public synchronized void getPostsOnMap(GoogleMap map, Handler handler){
+		startService_getPostsOnMap(map, handler);
+	}
 	
 	public synchronized boolean addPostAsNearbyPost(Post p){
 		boolean addNearby = true;
@@ -333,13 +342,22 @@ public class PostsCache {
 		}
 	}
 	
-	
-	private void startService_getAtLocationPosts(double latitude, double longitude, GoogleMap map, Handler handler){
+	private void startService_getAtLocationPosts(double latitude, double longitude, double distance, GoogleMap map, Handler handler){
 		Log.d(TAG, "startService_getAtLocationPosts");
 		Intent intent =  new Intent(context, WorkerService.class);
 		intent.putExtra(StringKeys.AT_LOCATION_POSTS_LATITUDE, latitude);
 		intent.putExtra(StringKeys.AT_LOCATION_POSTS_LONGITUDE, longitude);
+		intent.putExtra(StringKeys.AT_LOCATION_POSTS_DISTANCE, distance);
 		intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_AT_LOCATION_POSTS);
+		AtLocationPostsResultReceiver resultReceiver = new AtLocationPostsResultReceiver(handler);
+		resultReceiver.setMap(map);
+		intent.putExtra(StringKeys.AT_LOCATON_POSTS_RESULT_RECEIVER, resultReceiver);
+		context.startService(intent);
+	}
+	
+	private void startService_getPostsOnMap(GoogleMap map, Handler handler){
+		Intent intent = new Intent(context, WorkerService.class);
+		intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_POSTS_ON_MAP);
 		AtLocationPostsResultReceiver resultReceiver = new AtLocationPostsResultReceiver(handler);
 		resultReceiver.setMap(map);
 		intent.putExtra(StringKeys.AT_LOCATON_POSTS_RESULT_RECEIVER, resultReceiver);
