@@ -154,16 +154,26 @@ public class WorkerService extends IntentService{
 			Log.d(TAG, "handling WS_INTENT_GET_AT_LOCATION_POSTS");
 			latitude = intent.getDoubleExtra(StringKeys.AT_LOCATION_POSTS_LATITUDE, 0);
 			longitude = intent.getDoubleExtra(StringKeys.AT_LOCATION_POSTS_LONGITUDE, 0);
+			double distance = intent.getDoubleExtra(StringKeys.AT_LOCATION_POSTS_DISTANCE, 100);
 			//TODO create AtLocationPostsResultReceiver
 			resultReceiver = intent.getParcelableExtra(StringKeys.AT_LOCATON_POSTS_RESULT_RECEIVER);
 			if (latitude!=0 && longitude!=0){
-				List<Post> postsAtLocation = getNearbyPosts(latitude, longitude);
+				List<Post> postsAtLocation = getAtLocationPosts(latitude, longitude, distance);
 				Log.d(TAG, "postsAtLocation "+postsAtLocation.size());
 				if (resultReceiver!=null){
 					resultData = new Bundle();
 					resultData.putParcelable(StringKeys.POST_LIST_PARCELABLE, new PostsListParcelable(postsAtLocation));
 					resultReceiver.send(0, resultData);
 				}
+			}
+			break;
+		case StringKeys.WS_INTENT_GET_POSTS_ON_MAP:
+			resultReceiver = intent.getParcelableExtra(StringKeys.AT_LOCATON_POSTS_RESULT_RECEIVER);
+			List<Post> onMapPosts = getPostsOnMap();
+			if (resultReceiver!=null){
+				resultData = new Bundle();
+				resultData.putParcelable(StringKeys.POST_LIST_PARCELABLE, new PostsListParcelable(onMapPosts));
+				resultReceiver.send(0, resultData);
 			}
 			break;
 		case StringKeys.WS_INTENT_INSERT_LOCATION_HISTORY:
@@ -257,6 +267,15 @@ public class WorkerService extends IntentService{
 		return StringKeys.POST_REQUEST_FAILED;
 	}
 	
+	private List<Post> getPostsOnMap(){
+		String endpoint = getString(R.string.endpoint_posts_on_map);
+		List<Post> retVal = getPostsWithRetry(endpoint);
+		if (retVal!=null){
+			//TODO add to cache
+		}
+		return retVal;
+	}
+	
 	private List<Post> getLatestPosts(int start, int limit){
 		//build endpoint
 		String endpoint = getString(R.string.endpoint_latest_posts);
@@ -278,12 +297,18 @@ public class WorkerService extends IntentService{
 	    return retVal;
 	}
 	
+	
+	/*private List<Post> getNearbyPosts(double latitude, double longitude){
+		return getNearbyPosts(latitude, longitude, 0);
+	}*/
+	
 	private List<Post> getNearbyPosts(double latitude, double longitude){
 		String endpoint = getString(R.string.endpoint_nearby_posts);
-		int distance = 0;//server side controlled distance
+		int distance = 20;
 		endpoint = String.format("%s%s/%s/%s/", endpoint, latitude+"", longitude+"", distance+"");
-		
+//		Log.d(TAG, endpoint);
 		List<Post> retVal = getPostsWithRetry(endpoint);
+//		Log.d(TAG, retVal.size()+"");
 		List<Post> postsToRemove = new ArrayList<Post>();//posts from conversation already present, only one post per conversation in List
 		if (retVal!=null){
 			for (Post p:retVal){
@@ -293,6 +318,15 @@ public class WorkerService extends IntentService{
 	    	}
 			retVal.removeAll(postsToRemove);
 		}
+		return retVal;
+	}
+	
+	private List<Post> getAtLocationPosts(double latitude, double longitude, double distance){
+		String endpoint = getString(R.string.endpoint_nearby_posts);
+		endpoint = String.format("%s%s/%s/%s/", endpoint, latitude+"", longitude+"", distance+"");
+//		Log.d(TAG, endpoint);
+		List<Post> retVal = getPostsWithRetry(endpoint);
+//		Log.d(TAG, retVal.size()+"");
 		return retVal;
 	}
 	

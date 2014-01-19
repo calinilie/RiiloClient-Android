@@ -22,6 +22,7 @@ public class StringKeys {
 	
 	public static final String AT_LOCATION_POSTS_LATITUDE = "com.riilo.main.StringKeys.NEARBY_POSTS_LATITUDE";
 	public static final String AT_LOCATION_POSTS_LONGITUDE = "com.riilo.main.StringKeys.NEARBY_POSTS_LONGITUDE";
+	public static final String AT_LOCATION_POSTS_DISTANCE = "com.riilo.main.StringKeys.NEARBY_POSTS_DISTANCE";
 	
 	public static final String POST_PIC_URI ="com.riilo.main.StringKeys.POST_PIC_URI";
 	public static final String POST_LATITUDE = "com.riilo.main.StringKeys.POST_LATITUDE";
@@ -52,6 +53,7 @@ public class StringKeys {
 	public static final int WS_INTENT_INSERT_LOCATION_HISTORY = 8; 
 	public static final int WS_INTENT_GET_LOCATION_HISTORY = 9;
 	public static final int WS_INTENT_GET_AT_LOCATION_POSTS = 10;
+	public static final int WS_INTENT_GET_POSTS_ON_MAP = 11;
 	
 	public static final String TAKE_PICTURE_INTENT_START_DATETIME = "com.riilo.main.StringKeys.dateCameraIntentStarted";
 	public static final String TAKE_PICTURE_FILE_NAME_AND_PATH= "com.riilo.main.StringKeys.FILE_NAME_AND_PATH";

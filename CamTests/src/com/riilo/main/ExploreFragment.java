@@ -79,9 +79,9 @@ public class ExploreFragment
 	@Override
 	public void onLocationChanged(Location location) {
 		if (!mapCameraAnimationRun){
-			animateMapCamera(new LatLng(location.getLatitude(), location.getLongitude()), 10);
+			animateMapCamera(new LatLng(location.getLatitude(), location.getLongitude()), 6);
 			double[] latLng = Helpers.setReqFrom_Latitude_and_Longitude(location, null);
-			PostsCache.getInstance(activity).getAtLocationPosts(latLng[0], latLng[1], map, new Handler());
+			PostsCache.getInstance(activity).getPostsOnMap(map, new Handler());//getAtLocationPosts(latLng[0], latLng[1], map, new Handler());
 		}		
 	}
 	
@@ -154,19 +154,23 @@ public class ExploreFragment
 		timer = new Timer();
 		final CameraPosition camPos = position;
 		final Handler handler = new Handler();
+		Log.d(TAG, position.zoom+"");
+		LatLng farLeftVisibleEdge = map.getProjection().getVisibleRegion().farLeft;
+		final double distance = Helpers.distanceFrom(camPos.target.latitude, camPos.target.longitude, farLeftVisibleEdge.latitude, farLeftVisibleEdge.longitude);
+		
 		timer.schedule(new TimerTask() {
 			
 			@Override
 			public void run() {
-				if (camPos.zoom>=10){
-				PostsCache.getInstance(activity).getAtLocationPosts(camPos.target.latitude, camPos.target.longitude, map, handler);
-				handler.post(new Runnable() {
-					
-					@Override
-					public void run() {
-						Toast.makeText(activity, "loading ", Toast.LENGTH_SHORT).show();
-					}
-				});
+				if (camPos.zoom>=7.5){
+					PostsCache.getInstance(activity).getAtLocationPosts(camPos.target.latitude, camPos.target.longitude, distance, map, handler);
+					handler.post(new Runnable() {
+						
+						@Override
+						public void run() {
+							Toast.makeText(activity, "loading ", Toast.LENGTH_SHORT).show();
+						}
+					});
 				}
 				else{
 					handler.post(new Runnable() {
