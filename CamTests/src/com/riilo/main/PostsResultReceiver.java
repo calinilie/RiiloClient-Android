@@ -60,8 +60,8 @@ public class PostsResultReceiver extends ResultReceiver{
 		int notifications= 0;
 		PostsListParcelable postsListParcelable =  resultData.getParcelable(StringKeys.POST_LIST_PARCELABLE);
 		List<Post> posts = null;
-		if (postsListParcelable!=null)
-			postsListParcelable.getPostsList();
+		/*if (postsListParcelable!=null)
+			postsListParcelable.getPostsList();*/
 		
 		switch (resultCode){
 			case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW:

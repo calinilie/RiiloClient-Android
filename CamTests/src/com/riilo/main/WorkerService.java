@@ -149,33 +149,38 @@ public class WorkerService extends IntentService{
 				}
 			}
 			break;
+			
 		//TODO create AtLocationPostsIntentService
 		case StringKeys.WS_INTENT_GET_AT_LOCATION_POSTS:
 			Log.d(TAG, "handling WS_INTENT_GET_AT_LOCATION_POSTS");
 			latitude = intent.getDoubleExtra(StringKeys.AT_LOCATION_POSTS_LATITUDE, 0);
 			longitude = intent.getDoubleExtra(StringKeys.AT_LOCATION_POSTS_LONGITUDE, 0);
 			double distance = intent.getDoubleExtra(StringKeys.AT_LOCATION_POSTS_DISTANCE, 100);
-			//TODO create AtLocationPostsResultReceiver
 			resultReceiver = intent.getParcelableExtra(StringKeys.AT_LOCATON_POSTS_RESULT_RECEIVER);
 			if (latitude!=0 && longitude!=0){
 				List<Post> postsAtLocation = getAtLocationPosts(latitude, longitude, distance);
+				postsAtLocation = (List<Post>) Helpers.mergeLists(postsCache.getExplore_onMapPosts(), postsAtLocation);
 				Log.d(TAG, "postsAtLocation "+postsAtLocation.size());
 				if (resultReceiver!=null){
 					resultData = new Bundle();
 					resultData.putParcelable(StringKeys.POST_LIST_PARCELABLE, new PostsListParcelable(postsAtLocation));
-					resultReceiver.send(0, resultData);
+					resultReceiver.send(StringKeys.AT_LOCATION_POSTS_RESULT_RECEIVER_ADD_POSTS, resultData);
 				}
 			}
 			break;
-		case StringKeys.WS_INTENT_GET_POSTS_ON_MAP:
+			
+		case StringKeys.WS_INTENT_GET_POST_GROUPS_ON_MAP:
 			resultReceiver = intent.getParcelableExtra(StringKeys.AT_LOCATON_POSTS_RESULT_RECEIVER);
-			List<Post> onMapPosts = getPostsOnMap();
+			List<Post> onMapPostGroups = getPostsOnMap();
+			onMapPostGroups = (List<Post>) Helpers.mergeLists(postsCache.getExplore_onMapPosts(), onMapPostGroups);
+			onMapPostGroups = (List<Post>) Helpers.mergeLists(postsCache.getExplore_onMapPostGroups(), onMapPostGroups);
 			if (resultReceiver!=null){
 				resultData = new Bundle();
-				resultData.putParcelable(StringKeys.POST_LIST_PARCELABLE, new PostsListParcelable(onMapPosts));
-				resultReceiver.send(0, resultData);
+				resultData.putParcelable(StringKeys.POST_LIST_PARCELABLE, new PostsListParcelable(onMapPostGroups));
+				resultReceiver.send(StringKeys.AT_LOCATION_POSTS_RESULT_RECEIVER_ADD_POST_GROUPS, resultData);
 			}
 			break;
+			
 		case StringKeys.WS_INTENT_INSERT_LOCATION_HISTORY:
 			LocationHistory location = Facade.getInstance(this).getLastKnownLocation();
 			location.setUserId(deviceId);
