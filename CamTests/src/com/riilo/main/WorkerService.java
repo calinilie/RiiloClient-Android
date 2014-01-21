@@ -159,7 +159,6 @@ public class WorkerService extends IntentService{
 			resultReceiver = intent.getParcelableExtra(StringKeys.AT_LOCATON_POSTS_RESULT_RECEIVER);
 			if (latitude!=0 && longitude!=0){
 				List<Post> postsAtLocation = getAtLocationPosts(latitude, longitude, distance);
-				postsAtLocation = (List<Post>) Helpers.mergeLists(postsCache.getExplore_onMapPosts(), postsAtLocation);
 				Log.d(TAG, "postsAtLocation "+postsAtLocation.size());
 				if (resultReceiver!=null){
 					resultData = new Bundle();
@@ -172,8 +171,6 @@ public class WorkerService extends IntentService{
 		case StringKeys.WS_INTENT_GET_POST_GROUPS_ON_MAP:
 			resultReceiver = intent.getParcelableExtra(StringKeys.AT_LOCATON_POSTS_RESULT_RECEIVER);
 			List<Post> onMapPostGroups = getPostsOnMap();
-			onMapPostGroups = (List<Post>) Helpers.mergeLists(postsCache.getExplore_onMapPosts(), onMapPostGroups);
-			onMapPostGroups = (List<Post>) Helpers.mergeLists(postsCache.getExplore_onMapPostGroups(), onMapPostGroups);
 			if (resultReceiver!=null){
 				resultData = new Bundle();
 				resultData.putParcelable(StringKeys.POST_LIST_PARCELABLE, new PostsListParcelable(onMapPostGroups));

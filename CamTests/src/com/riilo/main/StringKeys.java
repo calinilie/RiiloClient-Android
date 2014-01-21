@@ -25,6 +25,7 @@ public class StringKeys {
 	public static final String AT_LOCATION_POSTS_DISTANCE = "com.riilo.main.StringKeys.NEARBY_POSTS_DISTANCE";
 	public static final int AT_LOCATION_POSTS_RESULT_RECEIVER_ADD_POST_GROUPS = 200;
 	public static final int AT_LOCATION_POSTS_RESULT_RECEIVER_ADD_POSTS = 210;
+	public static final int AT_LOCATION_POSTS_ON_LOAD_END_NO_POSTS = 204;
 	
 	public static final String POST_PIC_URI ="com.riilo.main.StringKeys.POST_PIC_URI";
 	public static final String POST_LATITUDE = "com.riilo.main.StringKeys.POST_LATITUDE";

@@ -1,5 +1,7 @@
 package com.riilo.main;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -7,6 +9,7 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
@@ -15,21 +18,38 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.riilo.interfaces.ILocationListener;
+import com.riilo.interfaces.UIListener;
+import com.riilo.main.AnalyticsWrapper.EventLabel;
+import com.riilo.utils.ExpandAnimation;
+import com.riilo.utils.ResizeAnimation;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.LiveFolders;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class ExploreFragment 
 		extends Fragment
-		implements ILocationListener, OnCameraChangeListener, OnMarkerClickListener{
+		implements ILocationListener, OnCameraChangeListener, OnMarkerClickListener, UIListener, OnItemClickListener, OnMapClickListener{
 
 	private static final String TAG = "<<<<<<<<ExploreFragment>>>>>>>>";
 	
@@ -38,8 +58,18 @@ public class ExploreFragment
 	private MapView mapView;
 	private MainActivity activity;
 	
+	private PostsCache postsCache;
+	
 	private boolean mapCameraAnimationRun = false; 
 	private Timer timer;
+	private ProgressBar progressBar;
+	private ListView listView;
+	private LinearLayout contentView;
+	private LinearLayout mapWrapper;
+	private PostListItemAdapter adapter;
+	private List<Post> adapterData;
+	
+	
 	
 	@Override
 	public void onAttach(Activity activity){
@@ -50,6 +80,7 @@ public class ExploreFragment
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        postsCache = PostsCache.getInstance(activity);
 //        setRetainInstance(true);
 //        super.initLocationClient(LocationRequest.PRIORITY_LOW_POWER, 4000, 2000); //TODO
     }
@@ -83,7 +114,7 @@ public class ExploreFragment
 		if (!mapCameraAnimationRun){
 			animateMapCamera(new LatLng(location.getLatitude(), location.getLongitude()), 7.5f);
 //			double[] latLng = Helpers.setReqFrom_Latitude_and_Longitude(location, null);
-			PostsCache.getInstance(activity).getPostsOnMap(map, new Handler());//getAtLocationPosts(latLng[0], latLng[1], map, new Handler());
+			PostsCache.getInstance(activity).getPostsOnMap(map, new Handler(), this);//getAtLocationPosts(latLng[0], latLng[1], map, new Handler());
 		}		
 	}
 	
@@ -100,6 +131,7 @@ public class ExploreFragment
     @Override
     public void onPause() {
         super.onPause();
+        postsCache.clear_mapPosts();
         if (null != mapView)
         	mapView.onPause();
     }
@@ -121,6 +153,7 @@ public class ExploreFragment
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.d(TAG, "onDestroy");
         if (null != mapView)
         	mapView.onDestroy();
     }
@@ -131,6 +164,17 @@ public class ExploreFragment
 		mapCameraAnimationRun = false;
 		if (timer==null)
 			timer = new Timer();
+		
+		progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+		listView = (ListView) view.findViewById(R.id.posts_list_view);
+		adapterData = new ArrayList<Post>();
+		adapter = new PostListItemAdapter(activity, R.layout.post_list_view_item_layout, adapterData, activity.deviceId, false);
+		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(this);
+		
+		contentView = (LinearLayout) view.findViewById(R.id.content);
+		mapWrapper = (LinearLayout) view.findViewById(R.id.map_wrapper);
+		
 	}
 
 	private void setUpMapIfNeeded() {
@@ -139,6 +183,8 @@ public class ExploreFragment
 			map.setMyLocationEnabled(true);
 			map.setOnCameraChangeListener(this);
 			map.setOnMarkerClickListener(this);
+			map.setOnMapClickListener(this);
+			Helpers.addPostsToMap(postsCache.getExplore_onMapPostGroups(), map);
 		}
 	}
 	
@@ -147,7 +193,6 @@ public class ExploreFragment
 		CameraUpdate update = CameraUpdateFactory.newCameraPosition(cPos);
 		map.animateCamera(update);
 		mapCameraAnimationRun = true;
-		
 	}
 
 	@Override
@@ -166,12 +211,11 @@ public class ExploreFragment
 			@Override
 			public void run() {
 				if (camPos.zoom>=7.5){
-					PostsCache.getInstance(activity).getAtLocationPosts(camPos.target.latitude, camPos.target.longitude, distance, map, handler);
 					handler.post(new Runnable() {
 						
 						@Override
 						public void run() {
-							Toast.makeText(activity, "loading ", Toast.LENGTH_SHORT).show();
+							PostsCache.getInstance(activity).getAtLocationPosts(camPos.target.latitude, camPos.target.longitude, distance, map, handler, ExploreFragment.this);
 						}
 					});
 				}
@@ -185,7 +229,7 @@ public class ExploreFragment
 					});
 				}
 			}
-		}, 2000);
+		}, 1500);
 	
 	}
 
@@ -194,6 +238,76 @@ public class ExploreFragment
 	public boolean onMarkerClick(Marker marker) {
 		animateMapCamera(marker.getPosition(), 7.7f);
 		return true;
+	}
+
+	@Override
+	public void onLoadStart() {
+		progressBar.setVisibility(View.VISIBLE);
+		listView.setVisibility(View.GONE);
+	}
+
+	@Override
+	public void onLoadEnd(List<Post> posts) {
+		progressBar.setVisibility(View.GONE);
+		if (posts !=null && posts.size() > 0){
+			adapterData.clear();
+			if (Helpers.renewList(adapterData, posts))
+				adapter.notifyDataSetChanged();
+			
+			listView.setVisibility(View.VISIBLE);
+			shrinkMap();
+		}
+		else{
+			listView.setVisibility(View.GONE);
+		}
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parentView, View view, int position, long index) {
+		Post post = adapterData.get((int) index);
+		
+		activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_explore, post.getConversationId());
+		
+		Intent postViewIntent = new Intent(activity, PostViewActivity.class);
+		postViewIntent.putExtra(StringKeys.POST_BUNDLE, post.toBundle());
+		startActivity(postViewIntent);
+		
+	}
+	
+	private void shrinkMap(){
+		LinearLayout.LayoutParams mapWrapperLayoutParams = (android.widget.LinearLayout.LayoutParams) mapWrapper.getLayoutParams();
+		LinearLayout.LayoutParams contentViewLayoutParams = (android.widget.LinearLayout.LayoutParams) contentView.getLayoutParams();
+		
+		if (mapWrapperLayoutParams.weight>contentViewLayoutParams.weight){
+			ExpandAnimation mapWrapperAnimation = new ExpandAnimation((LinearLayout) mapWrapper, 0.8f, 0.5f);
+			mapWrapperAnimation.setDuration(200);
+			mapWrapper.startAnimation(mapWrapperAnimation);
+			
+			ExpandAnimation vontenetViewAnimation = new ExpandAnimation((LinearLayout) contentView, 0.2f, 0.5f);
+			vontenetViewAnimation.setDuration(200);
+			contentView.startAnimation(vontenetViewAnimation);
+		}
+	}
+	
+	private void growMap(){
+		LinearLayout.LayoutParams mapWrapperLayoutParams = (android.widget.LinearLayout.LayoutParams) mapWrapper.getLayoutParams();
+		LinearLayout.LayoutParams contentViewLayoutParams = (android.widget.LinearLayout.LayoutParams) contentView.getLayoutParams();
+		if (mapWrapperLayoutParams.weight==contentViewLayoutParams.weight){
+			ExpandAnimation mapWrapperAnimation = new ExpandAnimation((LinearLayout) mapWrapper, 0.5f, 0.8f);
+			mapWrapperAnimation.setDuration(200);
+			mapWrapper.startAnimation(mapWrapperAnimation);
+			
+			
+			ExpandAnimation vontenetViewAnimation = new ExpandAnimation((LinearLayout) contentView, 0.5f, 0.2f);
+			vontenetViewAnimation.setDuration(200);
+			contentView.startAnimation(vontenetViewAnimation);
+		}
+	}
+
+	@Override
+	public void onMapClick(LatLng arg0) {
+		growMap();
+		
 	}
 
 }

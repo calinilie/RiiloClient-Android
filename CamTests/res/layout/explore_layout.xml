@@ -11,20 +11,50 @@
         android:orientation="vertical"
         android:weightSum="1">
      	
-	 	<com.google.android.gms.maps.MapView
-	 	    android:id="@+id/map"
-	 	    android:layout_width="match_parent"
+        <LinearLayout 
+	 	    android:id="@+id/map_wrapper"
+	 	    android:layout_width="fill_parent"
+	 	    android:layout_gravity="center"
+	 	    android:orientation="vertical"
 	 	    android:layout_height="0dp"
-	 	    android:layout_weight="0.80" />
+	 	    android:layout_weight="0.8">
+	 	    
+		 	<com.google.android.gms.maps.MapView
+		 	    android:id="@+id/map"
+		 	    android:layout_width="fill_parent"
+		 	    android:layout_height="match_parent"
+		 	    />
+		 	<!-- android:layout_height="200dp" -->
+		 	
+	 	</LinearLayout>
 	 	
-	   	<ListView
-		    android:id="@+id/posts_list_view"
-		    android:layout_width="fill_parent"
-		    android:layout_height="0dp"
-		    android:layout_weight="0.20"
-		    android:divider="@null"
-		    android:dividerHeight="0dp">
-		</ListView>
+	 	<LinearLayout 
+	 	    android:id="@+id/content"
+	 	    android:layout_width="fill_parent"
+	 	    android:layout_gravity="center"
+	 	    android:orientation="vertical"
+	 	    android:layout_height="0dp"
+	 	    android:layout_weight="0.2">
+	 	    <!--  -->
+	 	    <!-- android:layout_height="200dp" -->
+	 	    
+	 	    <ListView
+			    android:id="@+id/posts_list_view"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:divider="@null"
+			    android:dividerHeight="0dp"
+			    android:visibility="gone"
+			    >
+			</ListView>
+
+	 	    <ProgressBar
+	 	        android:id="@+id/progressBar"
+	 	        style="?android:attr/progressBarStyleLarge"
+	 	        android:layout_width="wrap_content"
+	 	        android:layout_height="wrap_content" />
+
+	 	</LinearLayout> 
 		
 	</LinearLayout>
 		

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.riilo.interfaces.UIListener;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 
@@ -199,34 +200,24 @@ public class PostsCache {
 			double latitude, 
 			double longitude,
 			double distance,
-			GoogleMap map, Handler handler){
-		startService_getAtLocationPosts(latitude, longitude, distance, map, handler);
+			GoogleMap map, 
+			Handler handler,
+			UIListener uiListener){
+		startService_getPostsOnMap(latitude, longitude, distance, map, handler, uiListener);
 	}
 	
-	public synchronized void getPostsOnMap(GoogleMap map, Handler handler){
-		startService_getPostsOnMap(map, handler);
+	public synchronized void getPostsOnMap(GoogleMap map, Handler handler, UIListener uiListener){
+		startService_getPostGroupsOnMap(map, handler, uiListener);
 	}
-	
-	
-	/*public synchronized void addPostTo_PostsOnMapSet(Post post){
-		this.explore_onMapPosts.add(post);
-	}
-	
-	public synchronized void addPostsTo_PostsOnMapSet(List<Post> posts){
-		this.explore_onMapPosts.addAll(posts);
-	}*/
 	
 	public Set<Post> getExplore_onMapPosts() {
 		return explore_onMapPosts;
 	}
 	
-	/*public synchronized void addPostTo_PostsGroupOnMapSet(Post post){
-		this.explore_onMapPostGroups.add(post);
+	public void clear_mapPosts(){
+		this.explore_onMapPosts.clear();
+		Helpers.mergeLists(this.explore_onMapPosts, this.explore_onMapPostGroups);
 	}
-	
-	public synchronized void addPostsTo_PostsGroupOnMapSet(List<Post> posts){
-		this.explore_onMapPostGroups.addAll(posts);
-	}*/
 	
 	public Set<Post> getExplore_onMapPostGroups() {
 		return explore_onMapPostGroups;
@@ -368,26 +359,34 @@ public class PostsCache {
 		}
 	}
 	
-	private void startService_getAtLocationPosts(double latitude, double longitude, double distance, GoogleMap map, Handler handler){
+	private void startService_getPostsOnMap(
+			double latitude, 
+			double longitude, 
+			double distance, 
+			GoogleMap map, 
+			Handler handler,
+			UIListener uiListener){
 		Log.d(TAG, "startService_getAtLocationPosts");
 		Intent intent =  new Intent(context, WorkerService.class);
 		intent.putExtra(StringKeys.AT_LOCATION_POSTS_LATITUDE, latitude);
 		intent.putExtra(StringKeys.AT_LOCATION_POSTS_LONGITUDE, longitude);
 		intent.putExtra(StringKeys.AT_LOCATION_POSTS_DISTANCE, distance);
 		intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_AT_LOCATION_POSTS);
-		AtLocationPostsResultReceiver resultReceiver = new AtLocationPostsResultReceiver(handler);
+		AtLocationPostsResultReceiver resultReceiver = new AtLocationPostsResultReceiver(handler, this, uiListener);
 		resultReceiver.setMap(map);
 		intent.putExtra(StringKeys.AT_LOCATON_POSTS_RESULT_RECEIVER, resultReceiver);
 		context.startService(intent);
+		uiListener.onLoadStart();
 	}
 	
-	private void startService_getPostsOnMap(GoogleMap map, Handler handler){
+	private void startService_getPostGroupsOnMap(GoogleMap map, Handler handler, UIListener uiListener){
 		Intent intent = new Intent(context, WorkerService.class);
 		intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_POST_GROUPS_ON_MAP);
-		AtLocationPostsResultReceiver resultReceiver = new AtLocationPostsResultReceiver(handler);
+		AtLocationPostsResultReceiver resultReceiver = new AtLocationPostsResultReceiver(handler, this, uiListener);
 		resultReceiver.setMap(map);
 		intent.putExtra(StringKeys.AT_LOCATON_POSTS_RESULT_RECEIVER, resultReceiver);
 		context.startService(intent);
+		uiListener.onLoadStart();
 	}
 	
 	private void startService_getLatest(

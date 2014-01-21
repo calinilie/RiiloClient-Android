@@ -29,6 +29,12 @@ public class Helpers {
 	
 	private static final String TAG = "HELPERS";
 	
+	/**
+	 * adds all items that are not existent in source into target, and removes all items from source that are in target
+	 * @param target
+	 * @param source
+	 * @return source without items that are already in target
+	 */
 	public static Collection<Post> mergeLists(Collection<Post> target, Collection<Post> source){
 		List<Post> postsToRemove = new ArrayList<Post>();//posts from conversation already present, only one post per conversation in List
 		if (source!=null){
@@ -69,7 +75,7 @@ public class Helpers {
 		}
 	}
 	
-	public static synchronized void addPostsToMap(List<Post> posts, GoogleMap map){
+	public static synchronized void addPostsToMap(Collection<Post> posts, GoogleMap map){
 		for(Post p : posts){
 //			if (!h.isOnMap()){
 				//TODO create position property in Post type - just like LocationHistory
@@ -161,10 +167,24 @@ public class Helpers {
     	return found;
     }
     
+    
+    /**
+     * adds all items from source into target. Note, only items that are NOT in target already will be added. Sorts desc by ID by default
+     * @param target
+     * @param source
+     * @return true if new items were added to the target
+     */
     public static boolean renewList(List<Post> target, List<Post> source){
     	return renewList(target, source, true);
     }
     
+    /**
+     * adds all items from source into target. Note, only items that are NOT in target already will be added. 
+     * @param target
+     * @param source
+     * @param desc boolean specifying whether to sort desc by ID (same as desc chronological order - so far) 
+     * @return true if new items were added to the target
+     */
     public static boolean renewList(List<Post> target, List<Post> source, boolean desc){
     	boolean newItemsAdded = false;
     	if (source!=null && target!=null){
