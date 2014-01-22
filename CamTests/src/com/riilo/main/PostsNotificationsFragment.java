@@ -92,7 +92,7 @@ public class PostsNotificationsFragment
 						adapter,
 						adapterData,
 						activity.getSpinnerAdapter(),
-						activity.getSpinnerAdapter().getItem(2),
+						activity.getSpinnerAdapter().getItem(3),
 						pullToRefreshLayout,
 						false,
 						StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
@@ -118,7 +118,7 @@ public class PostsNotificationsFragment
 		activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_notifications, post.getConversationId());
 		
 		PostsCache.getInstance(activity).removeNotification(post);
-		activity.getSpinnerAdapter().getItem(2).descreaseNotificationNumber();
+		activity.getSpinnerAdapter().getItem(3).descreaseNotificationNumber();
 		adapterData.remove(post);
 		
 		long conversationId = post.getConversationId();
@@ -142,7 +142,7 @@ public class PostsNotificationsFragment
 				adapter, 
 				adapterData, 
 				activity.getSpinnerAdapter(),
-				activity.getSpinnerAdapter().getItem(2),
+				activity.getSpinnerAdapter().getItem(3),
 				pullToRefreshLayout, 
 				true,
 				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);

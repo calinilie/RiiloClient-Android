@@ -203,6 +203,7 @@ public class ExploreFragment
 		final CameraPosition camPos = position;
 		final Handler handler = new Handler();
 		resetPreviouslySelectedItem();
+		errorNoPosts.setVisibility(View.GONE);
 		if (camPos.zoom>=7.5){
 			errorMoreZoom.setVisibility(View.GONE);
 			timer.schedule(new TimerTask() {

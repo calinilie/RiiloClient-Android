@@ -85,7 +85,7 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 				null, 
 				null, 
 				spinnerAdapter,
-				spinnerAdapter.getItem(2), 
+				spinnerAdapter.getItem(3), 
 				pullToRefreshLayout, 
 				false,
 				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);        
@@ -102,7 +102,7 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 				null,
 				null,
 				spinnerAdapter,
-				spinnerAdapter.getItem(1),
+				spinnerAdapter.getItem(2),
 				null,
 				null,
 				false,
