@@ -66,6 +66,10 @@ public class ExploreFragment
 	private ListView listView;
 	private LinearLayout contentView;
 	private LinearLayout mapWrapper;
+	private View errorNoPosts;
+	private View errorMoreZoom;
+	
+	
 	private PostListItemAdapter adapter;
 	private List<Post> adapterData;
 	
@@ -175,6 +179,8 @@ public class ExploreFragment
 		contentView = (LinearLayout) view.findViewById(R.id.content);
 		mapWrapper = (LinearLayout) view.findViewById(R.id.map_wrapper);
 		
+		errorMoreZoom = view.findViewById(R.id.err_more_zoom);
+		errorNoPosts = view.findViewById(R.id.err_no_posts);
 	}
 
 	private void setUpMapIfNeeded() {
@@ -205,12 +211,12 @@ public class ExploreFragment
 		Log.d(TAG, position.zoom+"");
 		LatLng farLeftVisibleEdge = map.getProjection().getVisibleRegion().farLeft;
 		final double distance = Helpers.distanceFrom(camPos.target.latitude, camPos.target.longitude, farLeftVisibleEdge.latitude, farLeftVisibleEdge.longitude);
+		if (camPos.zoom>=7.5){
+			errorMoreZoom.setVisibility(View.GONE);
+			timer.schedule(new TimerTask() {
 		
-		timer.schedule(new TimerTask() {
-			
 			@Override
 			public void run() {
-				if (camPos.zoom>=7.5){
 					handler.post(new Runnable() {
 						
 						@Override
@@ -218,18 +224,12 @@ public class ExploreFragment
 							PostsCache.getInstance(activity).getAtLocationPosts(camPos.target.latitude, camPos.target.longitude, distance, map, handler, ExploreFragment.this);
 						}
 					});
-				}
-				else{
-					handler.post(new Runnable() {
-						
-						@Override
-						public void run() {
-							Toast.makeText(activity, "you have to zoom in a little more", Toast.LENGTH_SHORT).show();
-						}
-					});
-				}
-			}
-		}, 1500);
+			}}, 1500);
+		}
+		else {
+			errorMoreZoom.setVisibility(View.VISIBLE);
+			listView.setVisibility(View.GONE);
+		}
 	
 	}
 
@@ -244,6 +244,7 @@ public class ExploreFragment
 	public void onLoadStart() {
 		progressBar.setVisibility(View.VISIBLE);
 		listView.setVisibility(View.GONE);
+		errorNoPosts.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -259,6 +260,7 @@ public class ExploreFragment
 		}
 		else{
 			listView.setVisibility(View.GONE);
+			errorNoPosts.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -307,7 +309,6 @@ public class ExploreFragment
 	@Override
 	public void onMapClick(LatLng arg0) {
 		growMap();
-		
 	}
 
 }

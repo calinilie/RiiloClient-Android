@@ -54,6 +54,22 @@
 	 	        android:layout_width="wrap_content"
 	 	        android:layout_height="wrap_content" />
 
+	 	    <TextView
+	 	        android:id="@+id/err_more_zoom"
+	 	        android:layout_width="wrap_content"
+	 	        android:layout_height="wrap_content"
+	 	        android:text="@string/error_more_zoom"
+	 	        android:textAppearance="?android:attr/textAppearanceMedium" 
+	 	        android:visibility="gone"/>
+
+	 	    <TextView
+	 	        android:id="@+id/err_no_posts"
+	 	        android:layout_width="wrap_content"
+	 	        android:layout_height="wrap_content"
+	 	        android:text="@string/error_no_posts"
+	 	        android:textAppearance="?android:attr/textAppearanceMedium" 
+	 	        android:visibility="gone"/>
+	 	    
 	 	</LinearLayout> 
 		
 	</LinearLayout>
