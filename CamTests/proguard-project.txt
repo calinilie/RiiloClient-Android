@@ -19,8 +19,8 @@
 #   public *;
 #}
 
-
 -libraryjars /libs/libGoogleAnalyticsServices.jar
+#-libraryjars /libs/commons-collections4-4.0.jar
 
 -dontwarn org.apache.log4j.**
 -dontwarn org.apache.commons.logging.**

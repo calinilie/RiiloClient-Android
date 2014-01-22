@@ -14,6 +14,8 @@ import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -25,6 +27,7 @@ import com.riilo.utils.ResizeAnimation;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -70,8 +73,11 @@ public class ExploreFragment
 	private View errorMoreZoom;
 	
 	
+	
+	
 	private PostListItemAdapter adapter;
 	private List<Post> adapterData;
+	private long currentSelectedItem=-1;
 	
 	
 	
@@ -207,8 +213,7 @@ public class ExploreFragment
 		timer = new Timer();
 		final CameraPosition camPos = position;
 		final Handler handler = new Handler();
-		LatLng farLeftVisibleEdge = map.getProjection().getVisibleRegion().farLeft;
-		final double distance = Helpers.distanceFrom(camPos.target.latitude, camPos.target.longitude, farLeftVisibleEdge.latitude, farLeftVisibleEdge.longitude);
+		resetPreviouslySelectedItem();
 		if (camPos.zoom>=7.5){
 			errorMoreZoom.setVisibility(View.GONE);
 			timer.schedule(new TimerTask() {
@@ -219,14 +224,16 @@ public class ExploreFragment
 						
 						@Override
 						public void run() {
+							LatLng farLeftVisibleEdge = map.getProjection().getVisibleRegion().farLeft;
+							final double distance = Helpers.distanceFrom(camPos.target.latitude, camPos.target.longitude, farLeftVisibleEdge.latitude, farLeftVisibleEdge.longitude)*0.7;
 							PostsCache.getInstance(activity).getAtLocationPosts(camPos.target.latitude, camPos.target.longitude, distance, map, handler, ExploreFragment.this);
 						}
 					});
-			}}, 1500);
+			}}, 1000);
 		}
 		else {
 			errorMoreZoom.setVisibility(View.VISIBLE);
-			listView.setVisibility(View.GONE);
+			resetList();
 		}
 	
 	}
@@ -241,7 +248,7 @@ public class ExploreFragment
 	@Override
 	public void onLoadStart() {
 		progressBar.setVisibility(View.VISIBLE);
-		listView.setVisibility(View.GONE);
+		resetList();
 		errorNoPosts.setVisibility(View.GONE);
 	}
 
@@ -258,7 +265,7 @@ public class ExploreFragment
 		}
 		else{
 			if (!isMapPostGroups){
-				listView.setVisibility(View.GONE);
+				resetList();
 				errorNoPosts.setVisibility(View.VISIBLE);
 			}
 		}
@@ -267,12 +274,15 @@ public class ExploreFragment
 	@Override
 	public void onItemClick(AdapterView<?> parentView, View view, int position, long index) {
 		Post post = adapterData.get((int) index);
-		
-		activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_explore, post.getConversationId());
-		
-		Intent postViewIntent = new Intent(activity, PostViewActivity.class);
-		postViewIntent.putExtra(StringKeys.POST_BUNDLE, post.toBundle());
-		startActivity(postViewIntent);
+		if (currentSelectedItem==index){
+			activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_explore, post.getConversationId());
+			Intent postViewIntent = new Intent(activity, PostViewActivity.class);
+			postViewIntent.putExtra(StringKeys.POST_BUNDLE, post.toBundle());
+			startActivity(postViewIntent);
+		}
+		else{
+			selectItem(post, index);
+		}
 		
 	}
 	
@@ -294,11 +304,11 @@ public class ExploreFragment
 	private void growMap(){
 		LinearLayout.LayoutParams mapWrapperLayoutParams = (android.widget.LinearLayout.LayoutParams) mapWrapper.getLayoutParams();
 		LinearLayout.LayoutParams contentViewLayoutParams = (android.widget.LinearLayout.LayoutParams) contentView.getLayoutParams();
+		
 		if (mapWrapperLayoutParams.weight==contentViewLayoutParams.weight){
 			ExpandAnimation mapWrapperAnimation = new ExpandAnimation((LinearLayout) mapWrapper, 0.5f, 0.8f);
 			mapWrapperAnimation.setDuration(200);
 			mapWrapper.startAnimation(mapWrapperAnimation);
-			
 			
 			ExpandAnimation vontenetViewAnimation = new ExpandAnimation((LinearLayout) contentView, 0.5f, 0.2f);
 			vontenetViewAnimation.setDuration(200);
@@ -309,6 +319,26 @@ public class ExploreFragment
 	@Override
 	public void onMapClick(LatLng arg0) {
 		growMap();
+	}
+	
+	private void resetList(){
+		listView.setVisibility(View.GONE);
+		currentSelectedItem = -1;
+	}
+	
+	private void selectItem(Post currentPost, long index){
+		resetPreviouslySelectedItem();
+		currentSelectedItem = index;
+		postsCache.getExplore_onMapPosts().
+		currentPost.getMarker().setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker_riilo));
+	}
+	
+	private void resetPreviouslySelectedItem(){
+		if (currentSelectedItem>=0){
+			Post previouslySelectedPost = adapterData.get((int) currentSelectedItem);
+			previouslySelectedPost.getMarker().setIcon(BitmapDescriptorFactory.fromResource(R.drawable.location_history));
+			currentSelectedItem = -1;
+		}
 	}
 
 }
