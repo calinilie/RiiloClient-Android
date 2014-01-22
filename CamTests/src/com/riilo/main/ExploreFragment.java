@@ -65,7 +65,7 @@ public class ExploreFragment
 	
 	private boolean mapCameraAnimationRun = false; 
 	private Timer timer;
-	private ProgressBar progressBar;
+	private View progressBar;
 	private ListView listView;
 	private LinearLayout contentView;
 	private LinearLayout mapWrapper;
@@ -175,7 +175,7 @@ public class ExploreFragment
 		if (timer==null)
 			timer = new Timer();
 		
-		progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+		progressBar = view.findViewById(R.id.progressBar);
 		listView = (ListView) view.findViewById(R.id.posts_list_view);
 		adapterData = new ArrayList<Post>();
 		adapter = new PostListItemAdapter(activity, R.layout.post_list_view_item_layout, adapterData, activity.deviceId, false);
