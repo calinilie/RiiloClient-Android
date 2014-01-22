@@ -35,11 +35,11 @@ public class AtLocationPostsResultReceiver extends ResultReceiver{
 			case StringKeys.AT_LOCATION_POSTS_RESULT_RECEIVER_ADD_POST_GROUPS:
 				posts = (List<Post>) Helpers.mergeLists(postsCache.getExplore_onMapPosts() , posts) ;
 				posts = (List<Post>) Helpers.mergeLists(postsCache.getExplore_onMapPostGroups(), posts);
-				uiListener.onLoadEnd(null);
+				uiListener.onLoadEnd(null, true);
 				break;
 			case StringKeys.AT_LOCATION_POSTS_RESULT_RECEIVER_ADD_POSTS:
 				//TODO add to adapter data here!!
-				uiListener.onLoadEnd(posts);
+				uiListener.onLoadEnd(posts, false);
 				//existent posts on the map have to be removed from the collection
 				posts = (List<Post>) Helpers.mergeLists(postsCache.getExplore_onMapPosts(), posts);
 				break;

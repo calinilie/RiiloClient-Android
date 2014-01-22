@@ -157,7 +157,6 @@ public class ExploreFragment
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "onDestroy");
         if (null != mapView)
         	mapView.onDestroy();
     }
@@ -208,7 +207,6 @@ public class ExploreFragment
 		timer = new Timer();
 		final CameraPosition camPos = position;
 		final Handler handler = new Handler();
-		Log.d(TAG, position.zoom+"");
 		LatLng farLeftVisibleEdge = map.getProjection().getVisibleRegion().farLeft;
 		final double distance = Helpers.distanceFrom(camPos.target.latitude, camPos.target.longitude, farLeftVisibleEdge.latitude, farLeftVisibleEdge.longitude);
 		if (camPos.zoom>=7.5){
@@ -248,7 +246,7 @@ public class ExploreFragment
 	}
 
 	@Override
-	public void onLoadEnd(List<Post> posts) {
+	public void onLoadEnd(List<Post> posts, boolean isMapPostGroups) {
 		progressBar.setVisibility(View.GONE);
 		if (posts !=null && posts.size() > 0){
 			adapterData.clear();
@@ -259,8 +257,10 @@ public class ExploreFragment
 			shrinkMap();
 		}
 		else{
-			listView.setVisibility(View.GONE);
-			errorNoPosts.setVisibility(View.VISIBLE);
+			if (!isMapPostGroups){
+				listView.setVisibility(View.GONE);
+				errorNoPosts.setVisibility(View.VISIBLE);
+			}
 		}
 	}
 

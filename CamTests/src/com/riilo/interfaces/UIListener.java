@@ -8,6 +8,7 @@ public interface UIListener {
 	
 	public void onLoadStart();
 	
-	public void onLoadEnd(List<Post> posts);
+	//TODO use a result code to differentiate between event trigger types
+	public void onLoadEnd(List<Post> posts, boolean isMapPostGroups);
 	
 }
