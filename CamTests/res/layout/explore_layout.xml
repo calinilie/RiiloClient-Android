@@ -66,8 +66,8 @@
 		        android:id="@+id/err_more_zoom"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
-		        android:layout_centerVertical="true"
 		        android:layout_margin="16dp"
+		        android:padding="8dp"
 		        android:background="@drawable/card_background"
 		        android:visibility="gone" >
 		 	    
@@ -90,17 +90,27 @@
 		 	    
    	 	    <RelativeLayout
 		        android:id="@+id/err_no_posts"
-		        android:layout_width="match_parent"
+		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
-		        android:background="@drawable/border"
-		        android:gravity="bottom"
+		        android:layout_margin="16dp"
+		        android:padding="8dp"
+		        android:background="@drawable/card_background"
 		        android:visibility="gone" >
+		 	    
+     	        <ImageView
+	                android:id="@+id/err_no_posts_icon"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_margin="8dp"
+		            android:contentDescription="@string/content_description_tutorial_image"
+		            android:background="@drawable/riilo_logo_sad" />
 	
 		 	    <TextView
+		 	        android:layout_toRightOf="@+id/err_no_posts_icon"
 		 	        android:layout_width="wrap_content"
 		 	        android:layout_height="wrap_content"
 		 	        android:text="@string/error_no_posts"
-		 	        android:textAppearance="?android:attr/textAppearanceMedium"/>
+		 	        android:padding="8dp" />
 		 	    
 		 	</RelativeLayout>    
 	 	    

@@ -329,7 +329,6 @@ public class ExploreFragment
 	private void selectItem(Post currentPost, long index){
 		resetPreviouslySelectedItem();
 		currentSelectedItem = index;
-		postsCache.getExplore_onMapPosts().
 		currentPost.getMarker().setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker_riilo));
 	}
 	
