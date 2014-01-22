@@ -8,6 +8,7 @@ import com.riilo.interfaces.UIListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
+import android.util.Log;
 
 public class AtLocationPostsResultReceiver extends ResultReceiver{
 	
@@ -33,18 +34,21 @@ public class AtLocationPostsResultReceiver extends ResultReceiver{
 			List<Post> posts = postsListParcelable.getPostsList();
 			switch(resultCode){
 			case StringKeys.AT_LOCATION_POSTS_RESULT_RECEIVER_ADD_POST_GROUPS:
-				posts = (List<Post>) Helpers.mergeLists(postsCache.getExplore_onMapPosts() , posts) ;
-				posts = (List<Post>) Helpers.mergeLists(postsCache.getExplore_onMapPostGroups(), posts);
+				Helpers.mergeLists(postsCache.getExplore_onMapPosts() , posts) ;
+				Helpers.mergeLists(postsCache.getExplore_onMapPostGroups(), posts);
+				addMarkersToMap(posts);
 				uiListener.onLoadEnd(null, true);
 				break;
 			case StringKeys.AT_LOCATION_POSTS_RESULT_RECEIVER_ADD_POSTS:
-				//TODO add to adapter data here!!
-				uiListener.onLoadEnd(posts, false);
 				//existent posts on the map have to be removed from the collection
-				posts = (List<Post>) Helpers.mergeLists(postsCache.getExplore_onMapPosts(), posts);
+				List<Post> existentPosts = (List<Post>) Helpers.mergeLists(postsCache.getExplore_onMapPosts(), posts);
+				//add posts on map
+				addMarkersToMap(posts);
+				//retrieve all posts on map (in visible area only) and send the off to the UI
+				posts.addAll(existentPosts);
+				uiListener.onLoadEnd(posts, false);
 				break;
 			}
-			addMarkersToMap(posts);
 		}
 		
 	}
@@ -56,7 +60,6 @@ public class AtLocationPostsResultReceiver extends ResultReceiver{
 				@Override
 				public void run() {
 					Helpers.addPostsToMap(posts, map);
-					
 				}
 			});
 		}

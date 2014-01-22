@@ -48,8 +48,9 @@ public class Helpers {
 	    	}
 			source.removeAll(postsToRemove);
 		}
-		return source;
+		return postsToRemove;
 	}
+	
 	
 	
 	/*====================MAP=====================================================================================*/
@@ -79,7 +80,7 @@ public class Helpers {
 		for(Post p : posts){
 //			if (!h.isOnMap()){
 				//TODO create position property in Post type - just like LocationHistory
-				map.addMarker(new MarkerOptions().position(new LatLng(p.getLatitude(), p.getLongitude())).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_history)));
+				p.setMarker(map.addMarker(new MarkerOptions().position(new LatLng(p.getLatitude(), p.getLongitude())).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_history))));
 //				h.setIsOnMap(true);
 //			}
 		}

@@ -7,6 +7,8 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.android.gms.maps.model.Marker;
+
 import android.location.Location;
 import android.os.Bundle;
 
@@ -32,6 +34,7 @@ public class Post implements Comparable<Post>, Serializable{
 	private boolean userAtLocation;
 	private List<Integer> conversation;
 	private double distanceFromCurLoc = -1;
+	private Marker marker;
 	
 	public Post() {
 	}
@@ -327,6 +330,17 @@ public class Post implements Comparable<Post>, Serializable{
 	private double distanceFrom(double lat1, double lng1, double lat2, double lng2) {
 		return Helpers.distanceFrom(lat1, lng1, lat2, lng2);
 	}
+
+	public Marker getMarker() {
+		return marker;
+		
+	}
+
+	public void setMarker(Marker marker) {
+		this.marker = marker;
+	}
+	
+	
 	
 	
 }
