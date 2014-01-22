@@ -119,7 +119,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
         mIconGenerator.setTextAppearance(R.style.ClusterIcon_TextAppearance);
         mIconGenerator.setBackground(makeClusterBackground());
         mClusterManager = clusterManager;
-        icon = BitmapDescriptorFactory.fromResource(R.drawable.location_history);
+        icon = BitmapDescriptorFactory.fromResource(R.drawable.location_history_blue);
         lightRed = context.getResources().getColor(R.color.riilo_light_red);
         lighterRed = context.getResources().getColor(R.color.riilo_lighter_red);
         darkRed = context.getResources().getColor(R.color.riilo_dark_red);
