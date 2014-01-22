@@ -142,6 +142,7 @@ public class ExploreFragment
     public void onPause() {
         super.onPause();
         postsCache.clear_mapPosts();
+        map.clear();
         if (null != mapView)
         	mapView.onPause();
     }
@@ -329,12 +330,18 @@ public class ExploreFragment
 	private void selectItem(Post currentPost, long index){
 		resetPreviouslySelectedItem();
 		currentSelectedItem = index;
-		postsCache.getExplore_onMapPosts().
+		
+		Log.d(">>>>>>>>>>>>>>>>>>>>", currentPost.hashCode()+"");
+		
+		if (currentPost.getMarker()==null)
+			throw new RuntimeException("i am fucking null!!");
+		
 		currentPost.getMarker().setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker_riilo));
 	}
 	
 	private void resetPreviouslySelectedItem(){
 		if (currentSelectedItem>=0){
+			Log.d(TAG, "resetPreviouslySelectedItem");
 			Post previouslySelectedPost = adapterData.get((int) currentSelectedItem);
 			previouslySelectedPost.getMarker().setIcon(BitmapDescriptorFactory.fromResource(R.drawable.location_history));
 			currentSelectedItem = -1;

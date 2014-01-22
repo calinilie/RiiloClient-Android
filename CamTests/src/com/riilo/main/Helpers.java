@@ -35,11 +35,27 @@ public class Helpers {
 	 * @param source
 	 * @return source without items that are already in target
 	 */
-	public static Collection<Post> mergeLists(Collection<Post> target, Collection<Post> source){
+	/*public static Collection<Post> mergeLists(Collection<Post> target, Collection<Post> source){
 		List<Post> postsToRemove = new ArrayList<Post>();//posts from conversation already present, only one post per conversation in List
 		if (source!=null){
 			for (Post p:source){
 				if (target.contains(p)){
+					postsToRemove.add(p);
+				}
+				else{
+					target.add(p);
+				}
+	    	}
+			source.removeAll(postsToRemove);
+		}
+		return postsToRemove;
+	}*/
+	
+	public static Collection<Post> mergeLists(Collection<Post> target, Collection<Post> source){
+		List<Post> postsToRemove = new ArrayList<Post>();//posts from conversation already present, only one post per conversation in List
+		if (source!=null){
+			for (Post p:target){
+				if (source.contains(p)){
 					postsToRemove.add(p);
 				}
 				else{
