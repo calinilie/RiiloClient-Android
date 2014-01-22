@@ -14,7 +14,6 @@ import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -23,32 +22,21 @@ import com.riilo.interfaces.ILocationListener;
 import com.riilo.interfaces.UIListener;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
 import com.riilo.utils.ExpandAnimation;
-import com.riilo.utils.ResizeAnimation;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.LiveFolders;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
-import android.view.animation.ScaleAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 public class ExploreFragment 
 		extends Fragment
@@ -330,12 +318,6 @@ public class ExploreFragment
 	private void selectItem(Post currentPost, long index){
 		resetPreviouslySelectedItem();
 		currentSelectedItem = index;
-		
-		Log.d(">>>>>>>>>>>>>>>>>>>>", currentPost.hashCode()+"");
-		
-		if (currentPost.getMarker()==null)
-			throw new RuntimeException("i am fucking null!!");
-		
 		currentPost.getMarker().setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker_riilo));
 	}
 	
