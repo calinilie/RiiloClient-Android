@@ -174,7 +174,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
    		case R.id.button_cancel:
    			hideReplyToPostPannel();
    			break;
-   		case R.id.button_close_tutorial_marker:
+   		/*case R.id.button_close_tutorial_marker:
    			Animation slideOut = AnimationUtils.loadAnimation(activity.getApplicationContext(),
    	                R.anim.slide_out_bottom);
    	   	 
@@ -185,7 +185,7 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
 	   	   	 }
 	   	   	 
 	   	   	 Facade.getInstance(activity).updateTutorialMarkerRun();
-	   	   	 break;
+	   	   	 break;*/
    		}
    	}
     
@@ -310,13 +310,13 @@ public class ToLocationPostFragment extends Fragment implements OnMapClickListen
         cancelButton = ((ImageButton)view.findViewById(R.id.button_cancel));
         cancelButton.setOnClickListener(this);
         
-        if (!Facade.getInstance(activity).wasTutorialMarkerRun()){
+        /*if (!Facade.getInstance(activity).wasTutorialMarkerRun()){
 		    tutorialMarker = view.findViewById(R.id.tutorial_marker);
 		    if (tutorialMarker!=null)
 		    	tutorialMarker.setVisibility(View.VISIBLE);
 		    closeTutorialMarker = (ImageButton)view.findViewById(R.id.button_close_tutorial_marker);
 		    closeTutorialMarker.setOnClickListener(this);
-        }
+        }*/
         
         inputMessage = (EditText)view.findViewById(R.id.editor_message);
         panelCreatePosts = view.findViewById(R.id.create_post_pannel);

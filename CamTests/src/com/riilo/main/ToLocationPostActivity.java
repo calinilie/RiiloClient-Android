@@ -1,5 +1,7 @@
 package com.riilo.main;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -19,6 +21,7 @@ import com.google.maps.android.clustering.ClusterManager.OnClusterClickListener;
 import com.google.maps.android.clustering.ClusterManager.OnClusterItemClickListener;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
+import com.riilo.utils.TutorialFactory;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +31,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
@@ -43,8 +47,9 @@ public class ToLocationPostActivity extends BaseActivity implements OnClusterCli
 	private ImageButton cancelButton;
 	private EditText inputMessage;
 	private View panelCreatePosts;
-	private View tutorialMarker;
-	private ImageButton closeTutorialMarker;
+//	private View tutorialMarker;
+//	private ImageButton closeTutorialMarker;
+	private TutorialFactory tutorial;
 	
 	private GoogleMap map;
 	private ClusterManager<LocationHistory> clusterManager;
@@ -64,6 +69,14 @@ public class ToLocationPostActivity extends BaseActivity implements OnClusterCli
 	public void onStart(){
 		super.onStart();
 		setupWidgetsViewElements();
+		
+		if (findViewById(R.id.write_post_layout)==null){
+			throw new RuntimeException("wtf?!");
+		}
+		if (tutorial==null)
+			tutorial = new TutorialFactory(this, (ViewGroup) findViewById(R.id.write_post_layout), Arrays.asList(R.layout.tutorial_location_history_dialog));
+		tutorial.startTutorial(true);
+		
 		setUpMapIfNeeded();
 		newPostIfNeeded();
 		LocationHistoryManager.getInstance(this).getRemoteLocationHistory(clusterManager, map);
@@ -140,7 +153,7 @@ public class ToLocationPostActivity extends BaseActivity implements OnClusterCli
    		case R.id.button_cancel:
    			hideReplyToPostPannel();
    			break;
-   		case R.id.button_close_tutorial_marker:
+   		/*case R.id.button_close_tutorial_marker:
    			Animation slideOut = AnimationUtils.loadAnimation(this,
    	                R.anim.slide_out_bottom);
    	   	 
@@ -151,7 +164,7 @@ public class ToLocationPostActivity extends BaseActivity implements OnClusterCli
 	   	   	 }
 	   	   	 
 	   	   	 Facade.getInstance(this).updateTutorialMarkerRun();
-	   	   	 break;
+	   	   	 break;*/
    		}
    	}
 	
@@ -208,13 +221,13 @@ public class ToLocationPostActivity extends BaseActivity implements OnClusterCli
         cancelButton = ((ImageButton)findViewById(R.id.button_cancel));
         cancelButton.setOnClickListener(this);
         
-        if (!Facade.getInstance(this).wasTutorialMarkerRun()){
+        /*if (!Facade.getInstance(this).wasTutorialMarkerRun()){
 		    tutorialMarker = findViewById(R.id.tutorial_marker);
 		    if (tutorialMarker!=null)
 		    	tutorialMarker.setVisibility(View.VISIBLE);
 		    closeTutorialMarker = (ImageButton)findViewById(R.id.button_close_tutorial_marker);
 		    closeTutorialMarker.setOnClickListener(this);
-        }
+        }*/
         
         inputMessage = (EditText)findViewById(R.id.editor_message);
         panelCreatePosts = findViewById(R.id.create_post_pannel);
@@ -242,7 +255,6 @@ public class ToLocationPostActivity extends BaseActivity implements OnClusterCli
 		}
 		
 	}
-
 	
 	private void hideReplyToPostPannel(){
 	   	 InputMethodManager inputManager = (InputMethodManager)

@@ -1,6 +1,7 @@
 package com.riilo.main;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
@@ -11,6 +12,7 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import com.riilo.main.R;
 import com.riilo.interfaces.ILocationListener;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
+import com.riilo.utils.TutorialFactory;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,24 +20,17 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class PostsLatestFragment 
 		extends Fragment 
-		implements OnItemClickListener, ILocationListener, OnRefreshListener, OnClickListener, AnimationListener{
+		implements OnItemClickListener, ILocationListener, OnRefreshListener, AnimationListener{
 	
     private MainActivity activity;
     private View view;
@@ -45,12 +40,9 @@ public class PostsLatestFragment
  	List<Post> adapterData = new ArrayList<Post>();
  	ListView postsListView;
  	
- 	View tutorialSwipe;
- 	View tutorialSwipeContainer;
- 	ImageButton buttonCloseTutorialSwipe;
- 	
- 	
  	private PullToRefreshLayout pullToRefreshLayout;
+ 	
+ 	private TutorialFactory tutorial;
 
  	public void onAttach(Activity activity){
  		this.activity = (MainActivity)activity;
@@ -90,6 +82,12 @@ public class PostsLatestFragment
 	public void onStart(){
 		super.onStart();
 		
+		if (tutorial==null){
+			tutorial = new TutorialFactory(activity, (ViewGroup) view, Arrays.asList(R.layout.tutorial_swipe_dialog, R.layout.tutorial_location_history_dialog));
+		}
+    	tutorial.startTutorial();
+    	tutorial.showTutorialDialog(R.layout.tutorial_swipe_dialog);
+		
 		if (adapter==null){
 			adapter = new PostListItemAdapter(activity, R.layout.post_list_view_item_layout, adapterData, activity.deviceId, true);
 		}
@@ -105,7 +103,7 @@ public class PostsLatestFragment
 		postsListView = (ListView)view.findViewById(R.id.posts_listView);
 		postsListView.setOnItemClickListener(this);
 		
-		if (Facade.getInstance(activity).wasTutorialSwipeRun()==false){
+		/*if (Facade.getInstance(activity).wasTutorialSwipeRun()==false){
 			tutorialSwipeContainer = view.findViewById(R.id.tutorial_swipe_container);
 			tutorialSwipeContainer.setVisibility(View.VISIBLE);
 			
@@ -113,7 +111,7 @@ public class PostsLatestFragment
 			
 			buttonCloseTutorialSwipe = (ImageButton)view.findViewById(R.id.button_close_tutorial_swipe);
 			buttonCloseTutorialSwipe.setOnClickListener(this);
-		}
+		}*/
 	}
  	
  	@Override
@@ -127,9 +125,11 @@ public class PostsLatestFragment
 		startActivity(postViewIntent);
 	}
  	
- 	@Override
+ 	/*@Override
    	public void onClick(View v) {
- 		if (v.getId() == R.id.button_close_tutorial_swipe){ 
+ 		if (v.getId() == R.id.button_close_tutorial_dialog){ 
+// 			tutorial.closeCurrentDialog();
+ 			
  			//dialog slideOut
  			Animation slideOut = AnimationUtils.loadAnimation(activity.getApplicationContext(),
 	                R.anim.slide_out_bottom);
@@ -142,7 +142,7 @@ public class PostsLatestFragment
  			
  			Facade.getInstance(activity).updateTutorialSwipeRun();
  		}
- 	}
+ 	}*/
  	
  	@Override
 	public void onLocationChanged(Location location) {
@@ -174,11 +174,11 @@ public class PostsLatestFragment
 	@Override
 	public void onAnimationEnd(Animation animation) {
 		//fade out
-		Animation fadeOut = AnimationUtils.loadAnimation(activity.getApplicationContext(),
+		/*Animation fadeOut = AnimationUtils.loadAnimation(activity.getApplicationContext(),
                 R.anim.fade_out);
 		tutorialSwipeContainer.startAnimation(fadeOut);
 		tutorialSwipeContainer.requestLayout();	   	   		 
-		tutorialSwipeContainer.setVisibility(View.GONE);
+		tutorialSwipeContainer.setVisibility(View.GONE);*/
 	}
 
 	@Override

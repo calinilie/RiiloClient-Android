@@ -21,7 +21,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.riilo.interfaces.ILocationListener;
 import com.riilo.interfaces.UIListener;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
+import com.riilo.tutorial.TutorialActivity;
 import com.riilo.utils.ExpandAnimation;
+import com.riilo.utils.TutorialFactory;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -102,7 +104,7 @@ public class ExploreFragment
 	
 	@Override
     public void onStart() {
-    	super.onStart();
+    	super.onStart();  	
     	setUpMapIfNeeded();
     	setupWidgetsViewElements();
     }
