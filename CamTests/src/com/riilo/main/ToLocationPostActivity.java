@@ -7,6 +7,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -34,7 +35,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class ToLocationPostActivity extends BaseActivity implements OnClusterClickListener<LocationHistory>, OnClusterItemClickListener<LocationHistory>, OnClickListener{
+public class ToLocationPostActivity extends BaseActivity implements OnClusterClickListener<LocationHistory>, OnClusterItemClickListener<LocationHistory>, OnClickListener, OnMapClickListener{
 
 	private static final String TAG = "ToLocationPostActivity>>>>>>>>>>>>>>>>>>>>>>>>>>>";
 	
@@ -86,6 +87,7 @@ public class ToLocationPostActivity extends BaseActivity implements OnClusterCli
 	    		
 	    		clusterManager.setOnClusterClickListener(this);
 	    		clusterManager.setOnClusterItemClickListener(this);
+	    		map.setOnMapClickListener(this);
 	    		
 	        	map.setMyLocationEnabled(true);
 	        	//==============================
@@ -259,5 +261,11 @@ public class ToLocationPostActivity extends BaseActivity implements OnClusterCli
 	   		 panelCreatePosts.setVisibility(View.GONE);
    	 	}
     }
+
+	@Override
+	public void onMapClick(LatLng position) {
+		analytics.recordEvent_WritePost_MapClick();
+		createPost(position);
+	}
 	
 }

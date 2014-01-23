@@ -366,7 +366,6 @@ public class PostsCache {
 			GoogleMap map, 
 			Handler handler,
 			UIListener uiListener){
-		Log.d(TAG, "startService_getAtLocationPosts");
 		Intent intent =  new Intent(context, WorkerService.class);
 		intent.putExtra(StringKeys.AT_LOCATION_POSTS_LATITUDE, latitude);
 		intent.putExtra(StringKeys.AT_LOCATION_POSTS_LONGITUDE, longitude);

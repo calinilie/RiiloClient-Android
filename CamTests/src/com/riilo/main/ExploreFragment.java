@@ -324,7 +324,6 @@ public class ExploreFragment
 	
 	private void resetPreviouslySelectedItem(){
 		if (currentSelectedItem>=0){
-			Log.d(TAG, "resetPreviouslySelectedItem");
 			Post previouslySelectedPost = adapterData.get((int) currentSelectedItem);
 			previouslySelectedPost.getMarker().setIcon(BitmapDescriptorFactory.fromResource(R.drawable.location_history));
 			currentSelectedItem = -1;
