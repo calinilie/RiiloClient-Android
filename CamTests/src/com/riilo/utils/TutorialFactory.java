@@ -8,6 +8,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
 
 public class TutorialFactory implements OnClickListener{
@@ -40,14 +42,15 @@ public class TutorialFactory implements OnClickListener{
 	public void startTutorial(boolean auto){
 		if (show){
 			darkBackground = inflater.inflate(R.layout.tutorial_dark_bg, masterView, false);
-			darkBackground.setVisibility(View.VISIBLE);
 			masterView.addView(darkBackground);
+			showView(darkBackground);
 			if (auto)
 				showTutorialDialog(resources.get(0));
 		}
 	}
 	
 	public void endTutorial(){
+		hideView(darkBackground);
 		masterView.removeView(darkBackground);
 	}
 	
@@ -56,13 +59,18 @@ public class TutorialFactory implements OnClickListener{
 			currentView = inflater.inflate(resource, masterView, false);
 			currentView.findViewById(R.id.button_close_tutorial_dialog).setOnClickListener(this);
 			currentResource = resource;
-			currentView.setVisibility(View.VISIBLE);
 			masterView.addView(currentView);
+			showView(currentView);
 		}
 	}
 	
+	@Override
+	public void onClick(View arg0) {
+		closeCurrentDialog();
+	}
+	
 	private void closeCurrentDialog(){
-//		currentView.setVisibility(View.GONE);
+		hideView(currentView);
 		masterView.removeView(currentView);
 		
 		int currentResourceIndex = resources.indexOf(currentResource);
@@ -74,8 +82,24 @@ public class TutorialFactory implements OnClickListener{
 		}
 	}
 
-	@Override
-	public void onClick(View arg0) {
-		closeCurrentDialog();
+		
+	//animation helper methods
+	private void showView(View view){
+		startAnimation(view, R.anim.fade_in);
+		view.setVisibility(View.VISIBLE);
+	}
+	
+	private void hideView(View view){
+		startAnimation(view, R.anim.fade_out);
+		view.setVisibility(View.GONE);
+	}
+	
+	
+	private void startAnimation(View view, int resourceId){
+		Animation animation = AnimationUtils.loadAnimation(context.getApplicationContext(),
+	                resourceId);
+		view.startAnimation(animation);
+		view.requestLayout();
+		
 	}
 }
