@@ -2,6 +2,7 @@ package com.riilo.utils;
 
 import java.util.List;
 
+import com.riilo.main.Facade;
 import com.riilo.main.R;
 
 import android.content.Context;
@@ -21,13 +22,15 @@ public class TutorialFactory implements OnClickListener{
 	private View currentView;
 	private View darkBackground;
 	
-	private int currentResource;
+	private int currentResourceId;
 	private List<Integer> resources;
+	private Facade facade;
 	
 	private TutorialFactory(Context context, ViewGroup masterView){
 		this.context = context;
 		this.masterView = masterView;
 		this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.facade = Facade.getInstance(context);
 	}
 	
 	public TutorialFactory(Context context, ViewGroup masterView, List<Integer> dialogResource){
@@ -40,6 +43,7 @@ public class TutorialFactory implements OnClickListener{
 	}
 	
 	public void startTutorial(boolean auto){
+		show = !facade.wereTutorialsRun(resources);
 		if (show){
 			darkBackground = inflater.inflate(R.layout.tutorial_dark_bg, masterView, false);
 			masterView.addView(darkBackground);
@@ -58,7 +62,7 @@ public class TutorialFactory implements OnClickListener{
 		if (show){
 			currentView = inflater.inflate(resource, masterView, false);
 			currentView.findViewById(R.id.button_close_tutorial_dialog).setOnClickListener(this);
-			currentResource = resource;
+			currentResourceId = resource;
 			masterView.addView(currentView);
 			showView(currentView);
 		}
@@ -70,10 +74,11 @@ public class TutorialFactory implements OnClickListener{
 	}
 	
 	private void closeCurrentDialog(){
+		facade.updateTutorialRun(currentResourceId);
 		hideView(currentView);
 		masterView.removeView(currentView);
 		
-		int currentResourceIndex = resources.indexOf(currentResource);
+		int currentResourceIndex = resources.indexOf(currentResourceId);
 		if (currentResourceIndex < resources.size()-1){
 			showTutorialDialog(resources.get(currentResourceIndex+1));
 		}

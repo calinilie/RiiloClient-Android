@@ -1,15 +1,20 @@
 package com.riilo.main;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+
+import com.google.android.gms.internal.ek;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
+import android.util.SparseArray;
 
 public class Facade {
 
@@ -50,6 +55,7 @@ public class Facade {
 	private Facade(Context context) {
 		dataAdapter = new Adapter(context);
 		values = new ContentValues();
+		initTutorialsMap();
 	}
 	
 	public static Facade getInstance(Context context){
@@ -258,6 +264,147 @@ public class Facade {
 		return false;
 	}
 	
+	public synchronized void updateLastLocationSent(){
+		open();
+		values.clear();
+		values.put(Adapter.LOCATION_HISTORY_IS_SENT, 1);
+		database.update(Adapter.LOCATION_HISTORY_TABLE, values, null, null);
+		close();
+	}
+	
+	//========APP STORAGE HELPER METHODS=================================================================================
+	
+	private synchronized boolean doesAppStorageKeyExist(String keyName){
+		boolean retVal = false;
+		Cursor cursor = null;
+		try{
+			cursor = database.query(
+					Adapter.APP_STORAGE_TABLE, 
+					appStorageColumns, 
+					Adapter.APP_STORAGE_KEY_COLUMN+" = ?",
+					new String[] {keyName},
+					null, null, null);
+			if (cursor.moveToFirst())
+				retVal = true;
+		}
+		catch(Exception e){
+		
+		}
+		finally{
+			if (cursor!=null)
+				cursor.close();
+		}
+		return retVal;
+	}
+	
+	private synchronized boolean getAppStorageValue(String keyName){
+		boolean retVal = false;
+		Cursor cursor = null;
+		try{
+			cursor = database.query(
+					Adapter.APP_STORAGE_TABLE, 
+					appStorageColumns, 
+					Adapter.APP_STORAGE_KEY_COLUMN+" = ?", 
+					new String[]{keyName}, 
+					null, null, null);
+			if (cursor.moveToFirst())
+				retVal = cursor.getInt(1) == 1;
+		}
+		catch (Exception e){
+			
+		}
+		finally{
+			if (cursor!=null)
+				cursor.close();
+		}
+		return retVal;
+	}
+	
+	private synchronized void insertAppStorageKey(String keyName){
+		this.insertAppStorageKeyValuePair(keyName, "0");
+	}
+	
+	private synchronized void insertAppStorageKeyValuePair(String keyName, String value){
+		values.clear();
+		values.put(Adapter.APP_STORAGE_KEY_COLUMN, keyName);
+		values.put(Adapter.APP_STORAGE_VALUE_COLUMN, value);
+		database.insert(Adapter.APP_STORAGE_TABLE, null, values);
+	}
+	
+	private synchronized void updateAppStorageValue(String keyName, String value){
+		values.clear();
+		values.put(Adapter.APP_STORAGE_VALUE_COLUMN, value);
+		database.update(
+				Adapter.APP_STORAGE_TABLE, values, 
+				Adapter.APP_STORAGE_KEY_COLUMN +" = ?", 
+				new String[] {keyName});
+	}
+	
+	private String getTutorialKeyName(int resourceId){
+		if (this.tutorials.get(resourceId)==null)
+			throw new RuntimeException("tutorial resource id: " + resourceId + " is not mapped to an appStorageKey. Please add your resource in the TUTORIALS sparse array");
+		return tutorials.get(resourceId);
+	}
+	
+	//========END APP STORAGE HELPER METHODS=================================================================================
+	
+	//========TUTORIAL METHODS=================================================================================
+
+	private SparseArray<String> tutorials;
+	
+	private void initTutorialsMap(){
+		tutorials = new SparseArray<String>();
+		tutorials.put(R.layout.tutorial_swipe_dialog, "tutorial_swipe");
+		tutorials.put(R.layout.tutorial_location_history_dialog, "tutorial_history_location");
+		tutorials.put(R.layout.tutorial_start_dialog, "tutorial_start");
+		tutorials.put(R.layout.tutorial_how_to_write_a_post_dialog, "tuttorial_how_to_write_a_post");
+	}
+	
+	public synchronized boolean wasTutorialRun(int resourceId){
+		return this.wereTutorialsRun(Arrays.asList(resourceId));
+	}
+	
+	public synchronized boolean wereTutorialsRun(List<Integer> tutorialDialogResources){
+		boolean retVal = true;
+		open();
+		try{
+			for(Integer i: tutorialDialogResources){
+				retVal &= this.getAppStorageValue(getTutorialKeyName(i)); 
+			}
+		}
+		catch(Exception e){
+			
+		}
+		finally{
+			close();
+		}
+		return retVal;
+	}
+	
+	public synchronized void updateTutorialRun(int resourceId){
+		open();
+		String tutorialKeyName = getTutorialKeyName(resourceId);
+		try{
+			if (this.doesAppStorageKeyExist(tutorialKeyName)){
+				this.updateAppStorageValue(tutorialKeyName, "1");
+			}
+			else{
+				this.insertAppStorageKeyValuePair(tutorialKeyName, "1");
+			}
+		}
+		catch(Exception e){
+			
+		}
+		finally{
+			close();
+		}
+	}
+	
+	//========END TUTORIAL METHODS=================================================================================	
+	
+	//==========================================================================================
+	
+	@Deprecated
 	public synchronized boolean wasTutorialRun(){
 		open();
 		boolean retVal = false;
@@ -280,6 +427,7 @@ public class Facade {
 		return retVal;
 	}
 	
+	@Deprecated
 	public synchronized void updateTutorialRun(){
 		open();
 		try{
@@ -295,7 +443,8 @@ public class Facade {
 			close();
 		}
 	}
-	
+
+	@Deprecated
 	public synchronized boolean wasTutorialMarkerRun(){
 		open();
 		boolean retVal = false;
@@ -317,6 +466,7 @@ public class Facade {
 		return retVal;
 	}
 	
+	@Deprecated
 	public synchronized void updateTutorialMarkerRun(){
 		open();
 		try{
@@ -333,6 +483,7 @@ public class Facade {
 		}
 	}
 	
+	@Deprecated
 	public synchronized boolean wasTutorialSwipeRun(){
 		open();
 		boolean retVal = false;
@@ -354,6 +505,7 @@ public class Facade {
 		return retVal;
 	}
 	
+	@Deprecated
 	public synchronized void updateTutorialSwipeRun(){
 		open();
 		try{
@@ -368,14 +520,6 @@ public class Facade {
 		finally{
 			close();
 		}
-	}
-	
-	public synchronized void updateLastLocationSent(){
-		open();
-		values.clear();
-		values.put(Adapter.LOCATION_HISTORY_IS_SENT, 1);
-		database.update(Adapter.LOCATION_HISTORY_TABLE, values, null, null);
-		close();
 	}
 	
 	/*public List<Post> getOwnPosts(String deviceId){

@@ -83,7 +83,7 @@ public class PostsLatestFragment
 		super.onStart();
 		
 		if (tutorial==null){
-			tutorial = new TutorialFactory(activity, (ViewGroup) view, Arrays.asList(R.layout.tutorial_swipe_dialog, R.layout.tutorial_location_history_dialog));
+			tutorial = new TutorialFactory(activity, (ViewGroup) view, Arrays.asList(R.layout.tutorial_swipe_dialog));
 		}
     	tutorial.startTutorial();
     	tutorial.showTutorialDialog(R.layout.tutorial_swipe_dialog);

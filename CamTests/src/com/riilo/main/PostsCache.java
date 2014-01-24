@@ -196,7 +196,7 @@ public class PostsCache {
 		return this.nearbyPosts;
 	}
 	
-	public synchronized void getAtLocationPosts(
+	public synchronized void getPostsOnMap(
 			double latitude, 
 			double longitude,
 			double distance,
@@ -206,7 +206,7 @@ public class PostsCache {
 		startService_getPostsOnMap(latitude, longitude, distance, map, handler, uiListener);
 	}
 	
-	public synchronized void getPostsOnMap(GoogleMap map, Handler handler, UIListener uiListener){
+	public synchronized void getPostGroupsOnMap(GoogleMap map, Handler handler, UIListener uiListener){
 		startService_getPostGroupsOnMap(map, handler, uiListener);
 	}
 	

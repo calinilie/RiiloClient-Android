@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
         actionBar.setDisplayShowTitleEnabled(false);
         
         wasTutorialRunThisSession = savedInstanceState!=null && savedInstanceState.getBoolean(StringKeys.WAS_TUTORIAL_RUN);
-        boolean showTutorial = !Facade.getInstance(this).wasTutorialRun() && !wasTutorialRunThisSession;
+        boolean showTutorial = false;//!Facade.getInstance(this).wasTutorialRun() && !wasTutorialRunThisSession;
         if (showTutorial){
         	wasTutorialRunThisSession = true;
         	Intent intent = new Intent(this, TutorialActivity.class);
@@ -88,7 +88,9 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 				spinnerAdapter.getItem(3), 
 				pullToRefreshLayout, 
 				false,
-				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);        
+				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);      
+		
+		LocationHistoryManager.getInstance(this).getLocationHistory(null, null);
     }
     
     @Override

@@ -1,6 +1,7 @@
 package com.riilo.main;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -61,15 +62,12 @@ public class ExploreFragment
 	private LinearLayout mapWrapper;
 	private View errorNoPosts;
 	private View errorMoreZoom;
-	
-	
-	
-	
+		
 	private PostListItemAdapter adapter;
 	private List<Post> adapterData;
 	private long currentSelectedItem=-1;
 	
-	
+	private TutorialFactory tutorial;
 	
 	@Override
 	public void onAttach(Activity activity){
@@ -105,16 +103,20 @@ public class ExploreFragment
 	@Override
     public void onStart() {
     	super.onStart();  	
+    	if (tutorial==null){
+    		tutorial = new TutorialFactory(activity, (ViewGroup) view, Arrays.asList(R.layout.tutorial_start_dialog, R.layout.tutorial_how_to_write_a_post_dialog));
+    	}
+    	tutorial.startTutorial(true);
+    	
     	setUpMapIfNeeded();
     	setupWidgetsViewElements();
+    	PostsCache.getInstance(activity).getPostGroupsOnMap(map, new Handler(), this);
     }
 	
 	@Override
 	public void onLocationChanged(Location location) {
 		if (!mapCameraAnimationRun){
 			animateMapCamera(new LatLng(location.getLatitude(), location.getLongitude()), 7.5f);
-//			double[] latLng = Helpers.setReqFrom_Latitude_and_Longitude(location, null);
-			PostsCache.getInstance(activity).getPostsOnMap(map, new Handler(), this);//getAtLocationPosts(latLng[0], latLng[1], map, new Handler());
 		}		
 	}
 	
@@ -218,7 +220,7 @@ public class ExploreFragment
 						public void run() {
 							LatLng farLeftVisibleEdge = map.getProjection().getVisibleRegion().farLeft;
 							final double distance = Helpers.distanceFrom(camPos.target.latitude, camPos.target.longitude, farLeftVisibleEdge.latitude, farLeftVisibleEdge.longitude)*0.7;
-							PostsCache.getInstance(activity).getAtLocationPosts(camPos.target.latitude, camPos.target.longitude, distance, map, handler, ExploreFragment.this);
+							PostsCache.getInstance(activity).getPostsOnMap(camPos.target.latitude, camPos.target.longitude, distance, map, handler, ExploreFragment.this);
 						}
 					});
 			}}, 1000);

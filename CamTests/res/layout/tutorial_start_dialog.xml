@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/tutorial_start_dialog"
+   	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:layout_centerVertical="true"
+	android:background="@drawable/card_background"
+	android:layout_margin="16dp"
+	android:visibility="gone">
+	    
+		<ImageButton
+            android:id="@+id/button_close_tutorial_dialog"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_alignParentRight="true"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:background="@drawable/selector"
+            android:contentDescription="@string/content_description_cancel_action" />
+	    
+   	    <TextView 
+	        android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/button_close_tutorial_dialog"
+            android:layout_centerHorizontal="true"
+            android:text="Hello, I will show you some things around here first."
+            android:padding="8dp" />
+	    
+</RelativeLayout>
