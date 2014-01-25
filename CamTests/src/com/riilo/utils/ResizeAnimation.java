@@ -31,36 +31,3 @@ public class ResizeAnimation extends Animation {
         mView.requestLayout();
     }
 }
-
-
-/*public class ResizeAnimation extends Animation {
-	View view;
-	int startH;
-	int endH;
-	int diff;
-
-	public ResizeAnimation(View v) {
-		view = v;
-		startH = v.getLayoutParams().height;
-		endH = startH*2;
-		diff = endH - startH;
-		setDuration(500);
-	}
-
-	@Override
-	protected void applyTransformation(float interpolatedTime, Transformation t) {
-		view.getLayoutParams().height = startH + (int) (diff * interpolatedTime);
-		view.requestLayout();
-	}
-
-	@Override
-	public void initialize(int width, int height, int parentWidth,
-			int parentHeight) {
-		super.initialize(width, height, parentWidth, parentHeight);
-	}
-
-	@Override
-	public boolean willChangeBounds() {
-		return true;
-	}
-}*/
