@@ -6,6 +6,8 @@
     <drawable name="screen_background_dark">#ff000000</drawable>
     <drawable name="screen_background_holo_light_old">#fff3f3f3</drawable>
     
+    <color name="pressed_riilo">#CCE23627</color>
+    
 	<color name="orange">#FF9912</color>
     <color name="mediumGps">#F2FF00</color>
     <color name="goodGps">#00FF00</color>
