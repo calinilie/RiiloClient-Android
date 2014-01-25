@@ -53,7 +53,7 @@ public class Helpers {
 	
 	public static Collection<Post> mergeLists(Collection<Post> target, Collection<Post> source){
 		List<Post> postsToRemove = new ArrayList<Post>();//posts from conversation already present, only one post per conversation in List
-		if (source!=null){
+		if (source!=null && target!=null){
 			for (Post p:target){
 				if (source.contains(p)){
 					postsToRemove.add(p);
