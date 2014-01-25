@@ -34,8 +34,6 @@ public class AtLocationPostsResultReceiver extends ResultReceiver{
 			List<Post> posts = postsListParcelable.getPostsList();
 			switch(resultCode){
 			case StringKeys.AT_LOCATION_POSTS_RESULT_RECEIVER_ADD_POST_GROUPS:
-				Helpers.mergeLists(postsCache.getExplore_onMapPosts() , posts) ;
-				Helpers.mergeLists(postsCache.getExplore_onMapPostGroups(), posts);
 				addMarkersToMap(posts);
 				uiListener.onLoadEnd(null, true);
 				break;

@@ -210,7 +210,7 @@ public class Facade {
 		return retVal;
 	}
 	
-	public synchronized void insertOutsideLocationHistory(List<LocationHistory> list){
+	/*public synchronized void insertOutsideLocationHistory(List<LocationHistory> list){
 		open();
 		for(LocationHistory l:list){
 			if (!doesLocationHistoryExist(l.getLocationHistoryId())){
@@ -223,7 +223,7 @@ public class Facade {
 			}
 		}
 		close();
-	}
+	}*/
 	
 	public synchronized List<LocationHistory> getLocationHistory(){
 		List<LocationHistory> retVal = new ArrayList<LocationHistory>();

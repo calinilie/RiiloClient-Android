@@ -30,10 +30,10 @@ public class Helpers {
 	private static final String TAG = "HELPERS";
 	
 	/**
-	 * adds all items that are not existent in source into target, and removes all items from source that are in target
+	 * adds all items (that are not existent in source) into target, and removes all items from source that are in target
 	 * @param target
 	 * @param source
-	 * @return source without items that are already in target
+	 * @return  list of items that are already in target and not in source
 	 */
 	/*public static Collection<Post> mergeLists(Collection<Post> target, Collection<Post> source){
 		List<Post> postsToRemove = new ArrayList<Post>();//posts from conversation already present, only one post per conversation in List

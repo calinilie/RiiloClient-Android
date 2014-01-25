@@ -90,7 +90,7 @@ public class WorkerService extends IntentService{
 			break;
 		case StringKeys.WS_INTENT_GET_LATEST_POSTS:
 			resultReceiver = intent.getParcelableExtra(StringKeys.POST_LIST_RESULT_RECEIVER);
-			List<Post> latestPosts = getLatestPosts(0, 200);
+			List<Post> latestPosts = getLatestPosts(0, 50);
 			resultReceiverType = intent.getIntExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
 			if (latestPosts!=null){
 				resultData = new Bundle();
@@ -172,6 +172,8 @@ public class WorkerService extends IntentService{
 			List<Post> onMapPostGroups = getPostsOnMap();
 			if (resultReceiver!=null){
 				resultData = new Bundle();
+				Helpers.mergeLists(postsCache.getExplore_onMapPosts() , onMapPostGroups) ;
+				Helpers.mergeLists(postsCache.getExplore_onMapPostGroups(), onMapPostGroups);
 				resultData.putParcelable(StringKeys.POST_LIST_PARCELABLE, new PostsListParcelable(onMapPostGroups));
 				resultReceiver.send(StringKeys.AT_LOCATION_POSTS_RESULT_RECEIVER_ADD_POST_GROUPS, resultData);
 			}
@@ -185,13 +187,13 @@ public class WorkerService extends IntentService{
 		case StringKeys.WS_INTENT_GET_LOCATION_HISTORY:
 			List<LocationHistory> list = getLocationHistory(); 
 			resultReceiver = intent.getParcelableExtra(StringKeys.LOCATION_HISTORY_RESULT_RECEIVER);
-//			if (list!=null && !list.isEmpty()){
-//				LocationHistoryWriter asyncWriter = new LocationHistoryWriter();
-//				asyncWriter.execute(list);
-//				resultData = new Bundle();
-//				resultData.putParcelable(StringKeys.LOCATION_HISTORY_PARCELABLE, new LocationHistoryParcelable(locationHistoryManager.getLocationHistory()));
-//				resultReceiver.send(123, resultData);
-//			}
+			if (list!=null && !list.isEmpty()){
+				locationHistoryManager.mergeLocationhistories(list);
+//				Facade.getInstance(WorkerService.this).insertOutsideLocationHistory(list);
+				resultData = new Bundle();
+				resultData.putParcelable(StringKeys.LOCATION_HISTORY_PARCELABLE, new LocationHistoryParcelable(locationHistoryManager.getLocationHistory()));
+				resultReceiver.send(123, resultData);
+			}
 			break;
 		}
 	}
@@ -297,7 +299,6 @@ public class WorkerService extends IntentService{
 	    retVal = postsCache.getLatestPosts();
 	    return retVal;
 	}
-	
 	
 	/*private List<Post> getNearbyPosts(double latitude, double longitude){
 		return getNearbyPosts(latitude, longitude, 0);
@@ -507,17 +508,7 @@ public class WorkerService extends IntentService{
 		}
 		return true;
 	}
-	
-	private class LocationHistoryWriter extends AsyncTask<List<LocationHistory>, Void, Void>{
 
-		@Override
-		protected Void doInBackground(List<LocationHistory>... params) {
-			locationHistoryManager.mergeLocationhistories(params[0]);
-
-			Facade.getInstance(WorkerService.this).insertOutsideLocationHistory(params[0]);
-			return null;
-		}
-	}
 }
 
 
