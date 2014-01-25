@@ -353,11 +353,24 @@ public class Facade {
 	private SparseArray<String> tutorials;
 	
 	private void initTutorialsMap(){
+		//NOTE!!!!!
+		//NEVER, NEVER change the value (the stirng on the right of each key/value pair); 
+		//the layout resource name can be changed without a problem
 		tutorials = new SparseArray<String>();
 		tutorials.put(R.layout.tutorial_swipe_dialog, "tutorial_swipe");
-		tutorials.put(R.layout.tutorial_location_history_dialog, "tutorial_history_location");
-		tutorials.put(R.layout.tutorial_start_dialog, "tutorial_start");
-		tutorials.put(R.layout.tutorial_how_to_write_a_post_dialog, "tuttorial_how_to_write_a_post");
+		tutorials.put(R.layout.tutorial_location_history_dialog, "tutorial_location_history");
+		tutorials.put(R.layout.tutorial_welcome_dialog, "tutorial_welcome");
+		tutorials.put(R.layout.tutorial_navigate_to_write_post_dialog, "tutorial_navigate_to_write_post");
+		tutorials.put(R.layout.tutorial_click_post_to_see_location_dialog, "tutorial_click_post_to_see_location");
+		tutorials.put(R.layout.tutorial_conversation_dialog, "tutorial_conversation");
+		tutorials.put(R.layout.tutorial_explore_dialog, "tutorial_explore");
+		tutorials.put(R.layout.tutorial_first_post_congrats_dialog, "tutorial_first_post_congrats");
+		tutorials.put(R.layout.tutorial_how_to_write_a_post_dialog, "tutorial_how_to_write_a_post");
+		tutorials.put(R.layout.tutorial_latest_dialog, "tutorial_latest");
+		tutorials.put(R.layout.tutorial_nearby_dialog, "tutorial_nearby");
+		tutorials.put(R.layout.tutorial_notifications_dialog, "tutorial_notifications");
+		
+		
 	}
 	
 	public synchronized boolean wasTutorialRun(int resourceId){

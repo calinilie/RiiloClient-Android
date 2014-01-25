@@ -62,6 +62,7 @@ public class ToLocationPostActivity extends BaseActivity implements OnClusterCli
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.write_post_layout);
+		setupTutorials();
 		initLocationClient(LocationRequest.PRIORITY_LOW_POWER, 2000, 1000);
 	}
 	
@@ -69,13 +70,6 @@ public class ToLocationPostActivity extends BaseActivity implements OnClusterCli
 	public void onStart(){
 		super.onStart();
 		setupWidgetsViewElements();
-		
-		if (findViewById(R.id.write_post_layout)==null){
-			throw new RuntimeException("wtf?!");
-		}
-		if (tutorial==null)
-			tutorial = new TutorialFactory(this, (ViewGroup) findViewById(R.id.write_post_layout), Arrays.asList(R.layout.tutorial_location_history_dialog));
-		tutorial.startTutorial(true);
 		
 		setUpMapIfNeeded();
 		newPostIfNeeded();
@@ -278,6 +272,19 @@ public class ToLocationPostActivity extends BaseActivity implements OnClusterCli
 	public void onMapClick(LatLng position) {
 		analytics.recordEvent_WritePost_MapClick();
 		createPost(position);
+	}
+	
+	private void setupTutorials(){
+		List<Integer> firstTutorial = Arrays.asList(R.layout.tutorial_how_to_write_a_post_dialog);
+		List<Integer> secondTutorial = Arrays.asList(R.layout.tutorial_location_history_dialog);
+		if (!Facade.getInstance(this).wereTutorialsRun(firstTutorial)){
+			tutorial = new TutorialFactory(this, (ViewGroup) findViewById(R.id.write_post_layout), firstTutorial);
+			tutorial.startTutorial(true);
+		}
+		else{
+			tutorial = new TutorialFactory(this, (ViewGroup) findViewById(R.id.write_post_layout), secondTutorial);
+			tutorial.startTutorial(true);
+		}
 	}
 	
 }

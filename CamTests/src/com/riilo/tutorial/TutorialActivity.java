@@ -41,7 +41,7 @@ public class TutorialActivity extends FragmentActivity{
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
-        setContentView(R.layout.tutorial_activity_layout);
+        setContentView(R.layout.z_dep_tutorial_activity_layout);
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager_tutorial);

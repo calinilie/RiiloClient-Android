@@ -68,6 +68,7 @@ public class ExploreFragment
 	private long currentSelectedItem=-1;
 	
 	private TutorialFactory tutorial;
+	boolean showItemClickTutorial;
 	
 	@Override
 	public void onAttach(Activity activity){
@@ -97,17 +98,14 @@ public class ExploreFragment
             e.printStackTrace();
         }
     	
+    	setupTutorials();
+    	
     	return view;
     }
 	
 	@Override
     public void onStart() {
     	super.onStart();  	
-    	if (tutorial==null){
-    		tutorial = new TutorialFactory(activity, (ViewGroup) view, Arrays.asList(R.layout.tutorial_start_dialog, R.layout.tutorial_how_to_write_a_post_dialog));
-    	}
-    	tutorial.startTutorial(true);
-    	
     	setUpMapIfNeeded();
     	setupWidgetsViewElements();
     	PostsCache.getInstance(activity).getPostGroupsOnMap(map, new Handler(), this);
@@ -256,6 +254,8 @@ public class ExploreFragment
 			
 			listView.setVisibility(View.VISIBLE);
 			shrinkMap();
+			
+			setupTutorialsOnLoadEnd();
 		}
 		else{
 			if (!isMapPostGroups){
@@ -334,4 +334,25 @@ public class ExploreFragment
 		}
 	}
 
+	private void setupTutorials(){
+		List<Integer> firstTutorial = Arrays.asList(R.layout.tutorial_welcome_dialog, R.layout.tutorial_navigate_to_write_post_dialog);
+		List<Integer> secondTutorial = Arrays.asList(R.layout.tutorial_explore_dialog);
+		if (!Facade.getInstance(activity).wereTutorialsRun(firstTutorial)){
+			tutorial = new TutorialFactory(activity, (ViewGroup) view, firstTutorial);
+			tutorial.startTutorial(true);
+		}
+		else{
+			tutorial = new TutorialFactory(activity, (ViewGroup) view, secondTutorial);
+			tutorial.startTutorial(true);
+		}
+	}
+	
+	private void setupTutorialsOnLoadEnd(){
+		List<Integer> dependencies = Arrays.asList(R.layout.tutorial_welcome_dialog, R.layout.tutorial_navigate_to_write_post_dialog, R.layout.tutorial_explore_dialog);
+		List<Integer> clickItemTutorial = Arrays.asList(R.layout.tutorial_click_post_to_see_location_dialog);
+		if (Facade.getInstance(activity).wereTutorialsRun(dependencies)){
+			tutorial = new TutorialFactory(activity, (ViewGroup) view, clickItemTutorial);
+			tutorial.startTutorial(true);
+		}
+	}
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/tutorial_how_to_write_a_post_dialog"
+	android:id="@+id/tutorial_latest_dialog"
    	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
 	android:layout_centerVertical="true"
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/button_close_tutorial_dialog"
             android:layout_centerHorizontal="true"
-            android:text="Just tap the anywhere on the map, and write your post."
+            android:text="Here you will see the LATEST posts from all over the world. Fell free to explore in real time what others are saying."
             android:padding="8dp" />
 	    
 </RelativeLayout>

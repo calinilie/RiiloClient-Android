@@ -31,6 +31,7 @@ import com.riilo.main.R;
 import android.app.IntentService;
 import android.app.Service;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.provider.Settings.Secure;
@@ -184,13 +185,13 @@ public class WorkerService extends IntentService{
 		case StringKeys.WS_INTENT_GET_LOCATION_HISTORY:
 			List<LocationHistory> list = getLocationHistory(); 
 			resultReceiver = intent.getParcelableExtra(StringKeys.LOCATION_HISTORY_RESULT_RECEIVER);
-			if (list!=null && !list.isEmpty()){
-				Facade.getInstance(this).insertOutsideLocationHistory(list);
-				locationHistoryManager.mergeLocationhistories(list);
-				resultData = new Bundle();
-				resultData.putParcelable(StringKeys.LOCATION_HISTORY_PARCELABLE, new LocationHistoryParcelable(locationHistoryManager.getLocationHistory()));
-				resultReceiver.send(123, resultData);
-			}
+//			if (list!=null && !list.isEmpty()){
+//				LocationHistoryWriter asyncWriter = new LocationHistoryWriter();
+//				asyncWriter.execute(list);
+//				resultData = new Bundle();
+//				resultData.putParcelable(StringKeys.LOCATION_HISTORY_PARCELABLE, new LocationHistoryParcelable(locationHistoryManager.getLocationHistory()));
+//				resultReceiver.send(123, resultData);
+//			}
 			break;
 		}
 	}
@@ -506,4 +507,17 @@ public class WorkerService extends IntentService{
 		}
 		return true;
 	}
+	
+	private class LocationHistoryWriter extends AsyncTask<List<LocationHistory>, Void, Void>{
+
+		@Override
+		protected Void doInBackground(List<LocationHistory>... params) {
+			locationHistoryManager.mergeLocationhistories(params[0]);
+
+			Facade.getInstance(WorkerService.this).insertOutsideLocationHistory(params[0]);
+			return null;
+		}
+	}
 }
+
+

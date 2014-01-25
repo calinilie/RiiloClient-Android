@@ -30,7 +30,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class PostsLatestFragment 
 		extends Fragment 
-		implements OnItemClickListener, ILocationListener, OnRefreshListener, AnimationListener{
+		implements OnItemClickListener, ILocationListener, OnRefreshListener{
 	
     private MainActivity activity;
     private View view;
@@ -75,18 +75,14 @@ public class PostsLatestFragment
  			.listener(this)
  			.setup(pullToRefreshLayout);
  		
+ 		setupTutorials();
+ 		
  		return view;
  	}
  	
  	@Override
 	public void onStart(){
 		super.onStart();
-		
-		if (tutorial==null){
-			tutorial = new TutorialFactory(activity, (ViewGroup) view, Arrays.asList(R.layout.tutorial_swipe_dialog));
-		}
-    	tutorial.startTutorial();
-    	tutorial.showTutorialDialog(R.layout.tutorial_swipe_dialog);
 		
 		if (adapter==null){
 			adapter = new PostListItemAdapter(activity, R.layout.post_list_view_item_layout, adapterData, activity.deviceId, true);
@@ -102,16 +98,6 @@ public class PostsLatestFragment
  	protected void setupWidgetsViewElements() {
 		postsListView = (ListView)view.findViewById(R.id.posts_listView);
 		postsListView.setOnItemClickListener(this);
-		
-		/*if (Facade.getInstance(activity).wasTutorialSwipeRun()==false){
-			tutorialSwipeContainer = view.findViewById(R.id.tutorial_swipe_container);
-			tutorialSwipeContainer.setVisibility(View.VISIBLE);
-			
-			tutorialSwipe = view.findViewById(R.id.tutorial_swipe);
-			
-			buttonCloseTutorialSwipe = (ImageButton)view.findViewById(R.id.button_close_tutorial_swipe);
-			buttonCloseTutorialSwipe.setOnClickListener(this);
-		}*/
 	}
  	
  	@Override
@@ -124,25 +110,6 @@ public class PostsLatestFragment
 		postViewIntent.putExtra(StringKeys.POST_BUNDLE, post.toBundle());
 		startActivity(postViewIntent);
 	}
- 	
- 	/*@Override
-   	public void onClick(View v) {
- 		if (v.getId() == R.id.button_close_tutorial_dialog){ 
-// 			tutorial.closeCurrentDialog();
- 			
- 			//dialog slideOut
- 			Animation slideOut = AnimationUtils.loadAnimation(activity.getApplicationContext(),
-	                R.anim.slide_out_bottom);
- 			slideOut.setAnimationListener(this);
- 			if (tutorialSwipeContainer.getVisibility()==View.VISIBLE){
-				tutorialSwipe.startAnimation(slideOut);
-				tutorialSwipe.requestLayout();
-				tutorialSwipe.setVisibility(View.GONE);
-	   	   	 }
- 			
- 			Facade.getInstance(activity).updateTutorialSwipeRun();
- 		}
- 	}*/
  	
  	@Override
 	public void onLocationChanged(Location location) {
@@ -170,27 +137,18 @@ public class PostsLatestFragment
 				this.pullToRefreshLayout, 
 				true);
 	}
-
-	@Override
-	public void onAnimationEnd(Animation animation) {
-		//fade out
-		/*Animation fadeOut = AnimationUtils.loadAnimation(activity.getApplicationContext(),
-                R.anim.fade_out);
-		tutorialSwipeContainer.startAnimation(fadeOut);
-		tutorialSwipeContainer.requestLayout();	   	   		 
-		tutorialSwipeContainer.setVisibility(View.GONE);*/
-	}
-
-	@Override
-	public void onAnimationRepeat(Animation animation) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onAnimationStart(Animation animation) {
-		// TODO Auto-generated method stub
-		
+	
+	private void setupTutorials(){
+		List<Integer> firstTutorial = Arrays.asList(R.layout.tutorial_swipe_dialog);
+		List<Integer> secondTutorial = Arrays.asList(R.layout.tutorial_latest_dialog);
+		if (!Facade.getInstance(activity).wereTutorialsRun(firstTutorial)){
+			tutorial = new TutorialFactory(activity, (ViewGroup) view, firstTutorial);
+			tutorial.startTutorial(true);
+		}
+		else{
+			tutorial = new TutorialFactory(activity, (ViewGroup) view, secondTutorial);
+			tutorial.startTutorial(true);
+		}
 	}
 
 }

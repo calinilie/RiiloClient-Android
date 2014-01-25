@@ -1,6 +1,7 @@
 package com.riilo.main;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
@@ -12,6 +13,7 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import com.riilo.main.R;
 import com.riilo.interfaces.ILocationListener;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
+import com.riilo.utils.TutorialFactory;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -52,6 +54,8 @@ public class PostsNearbyFragment
  	
  	private PullToRefreshLayout pullToRefreshLayout;
  	
+ 	private TutorialFactory tutorial;
+ 	
  	public void onAttach(Activity activity){
  		this.activity = (MainActivity)activity;
  		super.onAttach(activity);
@@ -68,6 +72,8 @@ public class PostsNearbyFragment
  			.allChildrenArePullable()
  			.listener(this)
  			.setup(pullToRefreshLayout);
+ 		
+ 		setupTutorials();
  		
  		return view;
  	}
@@ -213,6 +219,12 @@ public class PostsNearbyFragment
 			
 			break;
 		}
+	}
+	
+	private void setupTutorials(){
+		List<Integer> firstTutorial = Arrays.asList(R.layout.tutorial_nearby_dialog);
+		tutorial = new TutorialFactory(activity, (ViewGroup) view, firstTutorial);
+		tutorial.startTutorial(true);
 	}
 
 }

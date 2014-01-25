@@ -1,6 +1,7 @@
 package com.riilo.main;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
@@ -13,6 +14,7 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 import com.riilo.main.R;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
+import com.riilo.utils.TutorialFactory;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -41,6 +43,8 @@ public class PostsNotificationsFragment
  	private MainActivity activity;
  	
  	private PullToRefreshLayout pullToRefreshLayout;
+ 	
+ 	private TutorialFactory tutorial;
  	
  	public void onAttach(Activity activity){
  		this.activity = (MainActivity)activity;
@@ -73,6 +77,8 @@ public class PostsNotificationsFragment
  			.listener(this)
  			.setup(pullToRefreshLayout);
         
+ 		setupTutorials();
+ 		
  		return view;
  	}
  	
@@ -146,6 +152,12 @@ public class PostsNotificationsFragment
 				pullToRefreshLayout, 
 				true,
 				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
+	}
+	
+	private void setupTutorials(){
+		List<Integer> firstTutorial = Arrays.asList(R.layout.tutorial_notifications_dialog);
+		tutorial = new TutorialFactory(activity, (ViewGroup) view, firstTutorial);
+		tutorial.startTutorial(true);
 	}
 
 }

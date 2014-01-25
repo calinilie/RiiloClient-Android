@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/tutorial_start_dialog"
+	android:id="@+id/tutorial_notifications_dialog"
    	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
 	android:layout_centerVertical="true"
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/button_close_tutorial_dialog"
             android:layout_centerHorizontal="true"
-            android:text="Hello, I will show you some things around here first."
+            android:text="Once somebody replies to one of your posts, you will see that reply here; in the NOTIFICATIONS page."
             android:padding="8dp" />
 	    
 </RelativeLayout>

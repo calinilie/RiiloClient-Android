@@ -46,22 +46,22 @@ public class TutorialFragment extends Fragment implements OnClickListener, Anima
 		int resourceId = 0;
 		switch (this.position){
 		case 0:
-			resourceId = R.layout.tutorial_fragment_layout_0;
+			resourceId = R.layout.z_dep_tutorial_fragment_layout_0;
 			break;
 		case 1:
-			resourceId = R.layout.tutorial_fragment_layout_1;
+			resourceId = R.layout.z_dep_tutorial_fragment_layout_1;
 			break;
 		case 2:
-			resourceId = R.layout.tutorial_fragment_layout_2;
+			resourceId = R.layout.z_dep_tutorial_fragment_layout_2;
 			break;
 		case 3:
-			resourceId = R.layout.tutorial_fragment_layout_3;
+			resourceId = R.layout.z_dep_tutorial_fragment_layout_3;
 			break;
 		case 4:
-			resourceId = R.layout.tutorial_fragment_layout_4;
+			resourceId = R.layout.z_dep_tutorial_fragment_layout_4;
 			break;
 		case 5:
-			resourceId = R.layout.tutorial_fragment_layout_5;
+			resourceId = R.layout.z_dep_tutorial_fragment_layout_5;
 			break;
 		}
 		

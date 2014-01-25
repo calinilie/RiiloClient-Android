@@ -1,6 +1,7 @@
 package com.riilo.main;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
@@ -32,6 +34,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
+import com.riilo.utils.TutorialFactory;
 
 public class PostViewActivity extends BaseActivity
 	implements android.view.View.OnClickListener,
@@ -47,7 +50,9 @@ public class PostViewActivity extends BaseActivity
  	
  	ImageButton cancelButton;
  	ImageButton postButton;
- 	EditText inputText; 	
+ 	EditText inputText;
+ 	
+ 	private TutorialFactory tutorial;
  	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,8 @@ public class PostViewActivity extends BaseActivity
         Bundle bundle = getIntent().getBundleExtra(StringKeys.POST_BUNDLE);        
         currentPost = new Post(bundle);
         adapterData.add(currentPost);
+        
+        setupTutorials();
     }
 	
 	@Override
@@ -255,5 +262,11 @@ public class PostViewActivity extends BaseActivity
 			showInfoDialog(getString(R.string.user_at_location_dialog_message));
 		}
 		
+	}
+	
+	private void setupTutorials(){
+		List<Integer> firstTutorial = Arrays.asList(R.layout.tutorial_conversation_dialog);
+		tutorial = new TutorialFactory(this, (ViewGroup) findViewById(R.id.post_layout), firstTutorial);
+		tutorial.startTutorial(true);
 	}
 }
