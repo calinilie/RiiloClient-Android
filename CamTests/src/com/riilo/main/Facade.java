@@ -74,35 +74,53 @@ public class Facade {
 	
 	public synchronized void insertPost(Post post){
 		open();
-		if (!doesPostExist(post.getId())){
-			inserPost(post);
+		try{
+			if (!doesPostExist(post.getId())){
+				inserPost(post);
+			}
 		}
-		close();
+		catch(Exception e){
+			
+		}
+		finally{
+			close();
+		}
 	}
 	
 	public synchronized List<Post> getAllPosts(){
 		open();
+		Cursor cursor = null;
 		List<Post> retVal = new ArrayList<Post>();
-		String orderBy = Adapter.POSTS_POST_ID+" desc";
-		Cursor cursor = database.query(Adapter.POSTS_TABLE, postsTableCols, null, null, null, null, orderBy, null);
-		while (cursor.moveToNext()){
-			Post post = new Post();
-			post.setId(cursor.getInt(0));
-			post.setRepliesToPostId(cursor.getInt(1));
-			post.setInAdditionToPostId(cursor.getInt(2));
-			post.setUserId(cursor.getString(3));
-			post.setUri(cursor.getString(4));
-			post.setLatitude(cursor.getDouble(5));
-			post.setLongitude(cursor.getDouble(6));
-			post.setAccuracy(cursor.getFloat(7));
-			post.setDateCreated(new Date(cursor.getLong(8)));
-			post.setMessage(cursor.getString(9));
-			post.setUserAtLocation(cursor.getInt(10)==1 ? true : false);
-			post.setConversationId(cursor.getInt(11));
-			retVal.add(post);
+		try{
+			String orderBy = Adapter.POSTS_POST_ID+" desc";
+			cursor = database.query(Adapter.POSTS_TABLE, postsTableCols, null, null, null, null, orderBy, null);
+			while (cursor.moveToNext()){
+				Post post = new Post();
+				post.setId(cursor.getInt(0));
+				post.setRepliesToPostId(cursor.getInt(1));
+				post.setInAdditionToPostId(cursor.getInt(2));
+				post.setUserId(cursor.getString(3));
+				post.setUri(cursor.getString(4));
+				post.setLatitude(cursor.getDouble(5));
+				post.setLongitude(cursor.getDouble(6));
+				post.setAccuracy(cursor.getFloat(7));
+				post.setDateCreated(new Date(cursor.getLong(8)));
+				post.setMessage(cursor.getString(9));
+				post.setUserAtLocation(cursor.getInt(10)==1 ? true : false);
+				post.setConversationId(cursor.getInt(11));
+				retVal.add(post);
+			}
+			deleteOldPosts(retVal.size());
 		}
-		deleteOldPosts(retVal.size());
-		close();
+		catch(Exception e){
+			
+		}
+		finally{
+			if (cursor!=null)
+				cursor.close();
+			close();
+		}
+		
 		return retVal;
 	}
 	
@@ -176,24 +194,32 @@ public class Facade {
 	
 	private synchronized void insertLocationToHistory(Location location){
 		open();
-		if (location!=null){
-			values.clear();
-			values.put(Adapter.LOCATION_HISTORY_LATITUDE, location.getLatitude());
-			values.put(Adapter.LOCATION_HISTORY_LONGITUDE, location.getLongitude());
-			values.put(Adapter.LOCATION_HISTORY_ACCURACY, location.getAccuracy());
-			values.put(Adapter.LOCATION_HISTORY_DATE, Calendar.getInstance().getTimeInMillis());
-			database.insert(Adapter.LOCATION_HISTORY_TABLE, null, values);
+		try{
+			if (location!=null){
+				values.clear();
+				values.put(Adapter.LOCATION_HISTORY_LATITUDE, location.getLatitude());
+				values.put(Adapter.LOCATION_HISTORY_LONGITUDE, location.getLongitude());
+				values.put(Adapter.LOCATION_HISTORY_ACCURACY, location.getAccuracy());
+				values.put(Adapter.LOCATION_HISTORY_DATE, Calendar.getInstance().getTimeInMillis());
+				database.insert(Adapter.LOCATION_HISTORY_TABLE, null, values);
+			}
 		}
-		close();
+		catch(Exception e){
+			
+		}
+		finally{
+			close();
+		}
 	}
 	
 	public synchronized LocationHistory getLastKnownLocation(){
 		LocationHistory retVal = new LocationHistory();
+		Cursor cursor = null;
 		try{
 			open();
 			String orderBy = Adapter.LOCATION_HISTORY_DATE+" desc";
 			String limit = "1";
-			Cursor cursor = database.query(Adapter.LOCATION_HISTORY_TABLE, locationHistoryColumns, null, null, null, null, orderBy, limit);
+			cursor = database.query(Adapter.LOCATION_HISTORY_TABLE, locationHistoryColumns, null, null, null, null, orderBy, limit);
 			while (cursor.moveToNext()){
 				retVal.setLatitude(cursor.getDouble(0));
 				retVal.setLongitude(cursor.getDouble(1));
@@ -205,6 +231,8 @@ public class Facade {
 		catch(Exception e){
 		}
 		finally{
+			if (cursor!=null)
+				cursor.close();
 			close();
 		}
 		return retVal;
@@ -227,9 +255,10 @@ public class Facade {
 	
 	public synchronized List<LocationHistory> getLocationHistory(){
 		List<LocationHistory> retVal = new ArrayList<LocationHistory>();
+		Cursor cursor = null;
 		try{
 			open();
-			Cursor cursor = database.query(Adapter.OUTSIDE_LOCATION_HISTORY_TABLE, outsideLocationColumns, null, null, null, null, null, "3000");
+			cursor = database.query(Adapter.OUTSIDE_LOCATION_HISTORY_TABLE, outsideLocationColumns, null, null, null, null, null, "3000");
 			while (cursor.moveToNext()){
 				double latitude = cursor.getDouble(1);
 				double longitude = cursor.getDouble(2);
@@ -240,6 +269,8 @@ public class Facade {
 		}
 		catch(Exception e){}
 		finally{
+			if (cursor!=null)
+				cursor.close();
 			close();
 		}
 		return retVal;
@@ -259,17 +290,25 @@ public class Facade {
 		}
 		catch(Exception e){}
 		finally{
-			cursor.close();
+			if (cursor!=null)
+				cursor.close();
 		}
 		return false;
 	}
 	
 	public synchronized void updateLastLocationSent(){
 		open();
-		values.clear();
-		values.put(Adapter.LOCATION_HISTORY_IS_SENT, 1);
-		database.update(Adapter.LOCATION_HISTORY_TABLE, values, null, null);
-		close();
+		try{
+			values.clear();
+			values.put(Adapter.LOCATION_HISTORY_IS_SENT, 1);
+			database.update(Adapter.LOCATION_HISTORY_TABLE, values, null, null);
+		}
+		catch(Exception e){
+			
+		}
+		finally{
+			close();
+		}
 	}
 	
 	//========APP STORAGE HELPER METHODS=================================================================================
@@ -414,126 +453,6 @@ public class Facade {
 	}
 	
 	//========END TUTORIAL METHODS=================================================================================	
-	
-	//==========================================================================================
-	
-	@Deprecated
-	public synchronized boolean wasTutorialRun(){
-		open();
-		boolean retVal = false;
-		try{
-			String selection = String.format("%s = ?", Adapter.APP_STORAGE_KEY_COLUMN);
-			String[] selectionArgs = {Adapter.APP_STORAGE_KEY_TUTORIAL_RUN}; 
-			Cursor cursor = database.query(Adapter.APP_STORAGE_TABLE, appStorageColumns, selection, selectionArgs, null, null, null);
-			if (cursor.moveToNext()){
-				int value = cursor.getInt(1);
-				retVal = value == 1;
-			}
-		}
-		catch(Exception e)
-		{
-			//TODO add ga tracking
-		}
-		finally{
-			close();
-		}
-		return retVal;
-	}
-	
-	@Deprecated
-	public synchronized void updateTutorialRun(){
-		open();
-		try{
-			values.clear();
-			values.put(Adapter.APP_STORAGE_VALUE_COLUMN, 1);
-			String[] whereArgs = {Adapter.APP_STORAGE_KEY_TUTORIAL_RUN};
-			database.update(Adapter.APP_STORAGE_TABLE, values, Adapter.APP_STORAGE_KEY_COLUMN+" = ?", whereArgs);
-		}
-		catch(Exception e){
-			//TODO add ga tracking
-		}
-		finally{
-			close();
-		}
-	}
-
-	@Deprecated
-	public synchronized boolean wasTutorialMarkerRun(){
-		open();
-		boolean retVal = false;
-		try{
-			String selection = String.format("%s = ?", Adapter.APP_STORAGE_KEY_COLUMN);
-			String[] selectionArgs = {Adapter.APP_STORAGE_KEY_TUTORIAL_MARKER_RUN}; 
-			Cursor cursor = database.query(Adapter.APP_STORAGE_TABLE, appStorageColumns, selection, selectionArgs, null, null, null);
-			if (cursor.moveToNext()){
-				int value = cursor.getInt(1);
-				retVal = value == 1;
-			}
-		}
-		catch(Exception e){
-			//TODO add ga tracking
-		}
-		finally{
-			close();
-		}
-		return retVal;
-	}
-	
-	@Deprecated
-	public synchronized void updateTutorialMarkerRun(){
-		open();
-		try{
-			values.clear();
-			values.put(Adapter.APP_STORAGE_VALUE_COLUMN, 1);
-			String[] whereArgs = {Adapter.APP_STORAGE_KEY_TUTORIAL_MARKER_RUN};
-			database.update(Adapter.APP_STORAGE_TABLE, values, Adapter.APP_STORAGE_KEY_COLUMN+" = ?", whereArgs);
-		}
-		catch(Exception e){
-			//TODO add ga tracking
-		}
-		finally{
-			close();
-		}
-	}
-	
-	@Deprecated
-	public synchronized boolean wasTutorialSwipeRun(){
-		open();
-		boolean retVal = false;
-		try{
-			String selection = String.format("%s = ?", Adapter.APP_STORAGE_KEY_COLUMN);
-			String[] selectionArgs = {Adapter.APP_STORAGE_KEY_TUTORIAL_SWIPE_RUN}; 
-			Cursor cursor = database.query(Adapter.APP_STORAGE_TABLE, appStorageColumns, selection, selectionArgs, null, null, null);
-			if (cursor.moveToNext()){
-				int value = cursor.getInt(1);
-				retVal = value == 1;
-			}
-		}
-		catch(Exception e){
-			//TODO add ga tracking
-		}
-		finally{
-			close();
-		}
-		return retVal;
-	}
-	
-	@Deprecated
-	public synchronized void updateTutorialSwipeRun(){
-		open();
-		try{
-			values.clear();
-			values.put(Adapter.APP_STORAGE_VALUE_COLUMN, 1);
-			String[] whereArgs = {Adapter.APP_STORAGE_KEY_TUTORIAL_SWIPE_RUN};
-			database.update(Adapter.APP_STORAGE_TABLE, values, Adapter.APP_STORAGE_KEY_COLUMN+" = ?", whereArgs);
-		}
-		catch(Exception e){
-			//TODO add ga tracking
-		}
-		finally{
-			close();
-		}
-	}
 	
 	/*public List<Post> getOwnPosts(String deviceId){
 		open();
