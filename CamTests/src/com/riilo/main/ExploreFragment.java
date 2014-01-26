@@ -22,7 +22,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.riilo.interfaces.ILocationListener;
 import com.riilo.interfaces.UIListener;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
-import com.riilo.tutorial.TutorialActivity;
 import com.riilo.utils.ExpandAnimation;
 import com.riilo.utils.TutorialFactory;
 
@@ -109,6 +108,7 @@ public class ExploreFragment
     	setUpMapIfNeeded();
     	setupWidgetsViewElements();
     	PostsCache.getInstance(activity).getPostGroupsOnMap(map, new Handler(), this);
+    	getPostsOnMap(map.getCameraPosition());
     }
 	
 	@Override
@@ -195,10 +195,23 @@ public class ExploreFragment
 		CameraUpdate update = CameraUpdateFactory.newCameraPosition(cPos);
 		map.animateCamera(update);
 		mapCameraAnimationRun = true;
+		activity.analytics.recordEvent_Explore_AutoCameraChange();
 	}
 
 	@Override
 	public void onCameraChange(CameraPosition position) {
+		activity.analytics.recordEvent_Explore_MapExplore();
+		getPostsOnMap(position);
+	}
+	
+	@Override
+	public boolean onMarkerClick(Marker marker) {
+		activity.analytics.recordEvent_Explore_PostClickExplore();
+		animateMapCamera(marker.getPosition(), 7.7f);
+		return true;
+	}
+
+	private void getPostsOnMap(CameraPosition position){
 		timer.cancel();
 		timer.purge();
 		timer = new Timer();
@@ -227,16 +240,8 @@ public class ExploreFragment
 			errorMoreZoom.setVisibility(View.VISIBLE);
 			resetList();
 		}
-	
 	}
-
 	
-	@Override
-	public boolean onMarkerClick(Marker marker) {
-		animateMapCamera(marker.getPosition(), 7.7f);
-		return true;
-	}
-
 	@Override
 	public void onLoadStart() {
 		progressBar.setVisibility(View.VISIBLE);
@@ -269,7 +274,7 @@ public class ExploreFragment
 	public void onItemClick(AdapterView<?> parentView, View view, int position, long index) {
 		Post post = adapterData.get((int) index);
 		if (currentSelectedItem==index){
-			activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_explore, post.getConversationId());
+			activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_explore);
 			Intent postViewIntent = new Intent(activity, PostViewActivity.class);
 			postViewIntent.putExtra(StringKeys.POST_BUNDLE, post.toBundle());
 			startActivity(postViewIntent);
@@ -323,14 +328,18 @@ public class ExploreFragment
 	private void selectItem(Post currentPost, long index){
 		resetPreviouslySelectedItem();
 		currentSelectedItem = index;
-		currentPost.getMarker().setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker_riilo));
+		if (currentPost!=null)
+			if (currentPost.getMarker()!=null)
+				currentPost.getMarker().setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker_riilo));
 	}
 	
 	private void resetPreviouslySelectedItem(){
 		if (currentSelectedItem>=0){
 			Post previouslySelectedPost = adapterData.get((int) currentSelectedItem);
-			previouslySelectedPost.getMarker().setIcon(BitmapDescriptorFactory.fromResource(R.drawable.location_history));
 			currentSelectedItem = -1;
+			if (previouslySelectedPost!=null)
+				if (previouslySelectedPost.getMarker()!=null)
+					previouslySelectedPost.getMarker().setIcon(BitmapDescriptorFactory.fromResource(R.drawable.location_history));
 		}
 	}
 

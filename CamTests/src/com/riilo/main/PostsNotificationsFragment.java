@@ -121,7 +121,7 @@ public class PostsNotificationsFragment
 	public void onItemClick(AdapterView<?> parentView, View view, int position, long index) {
 		Post post = adapterData.get((int) index);
 		
-		activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_notifications, post.getConversationId());
+		activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_notifications);
 		
 		PostsCache.getInstance(activity).removeNotification(post);
 		activity.getSpinnerAdapter().getItem(3).descreaseNotificationNumber();

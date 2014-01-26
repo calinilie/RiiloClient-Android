@@ -83,14 +83,12 @@ public class PostViewActivity extends BaseActivity
 		if (Helpers.renewList(adapterData, postsInConversation, false)){
 			adapter.notifyDataSetChanged();
 		}
-//		postsList.smoothScrollToPosition(adapterData.indexOf(currentPost));
 		postsList.setSelection(adapterData.indexOf(currentPost));
 		
 		cancelButton.setOnClickListener(this);
 		postButton.setOnClickListener(this);
 		
 		
-		analytics.recordScreenHit_Conversation();
 		mMap.setOnMapClickListener(this);
 		postsList.setOnItemClickListener(this);
 	}
