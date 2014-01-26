@@ -7,23 +7,29 @@
 	android:background="@drawable/card_background"
 	android:layout_margin="16dp"
 	android:visibility="gone">
-	    
-		<ImageButton
-            android:id="@+id/button_close_tutorial_dialog"
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:layout_alignParentRight="true"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"
-            android:background="@drawable/selector"
-            android:contentDescription="@string/content_description_cancel_action" />
-	    
+   	    
    	    <TextView 
-	        android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/button_close_tutorial_dialog"
-            android:layout_centerHorizontal="true"
+   	        android:id="@+id/text_view_above"
+   	        android:layout_width="fill_parent"
+   	        android:layout_height="wrap_content"
+   	        android:padding="16dp"
+   	        android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Just tap the anywhere on the map, and write your post."
-            android:padding="8dp" />
+            android:contentDescription="@string/content_description_cancel_action" />
+   	    
+   	    <View 
+   	        android:layout_height="1dp"
+		    android:layout_width="fill_parent"
+		    android:layout_above="@+id/button_close_tutorial_dialog"
+		    android:background="@color/lightGrey"/>
+   	    
+   		<Button
+		    android:id="@+id/button_close_tutorial_dialog"
+		    android:layout_width="fill_parent"
+		    android:layout_below="@+id/text_view_above"
+		    android:layout_height="wrap_content"
+		    android:background="@drawable/selector"
+		    android:contentDescription="@string/content_description_cancel_action"
+		    android:text="@string/tutorial_5_button" />
 	    
 </RelativeLayout>
