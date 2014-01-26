@@ -7,46 +7,49 @@
 	android:layout_margin="16dp"
 	android:background="@drawable/card_background"
 	android:visibility="visible" >
-
-    <ImageButton
-        android:id="@+id/button_close_tutorial_dialog"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/selector"
-        android:contentDescription="@string/content_description_cancel_action"
-        android:padding="8dp"
-        android:src="@android:drawable/ic_menu_close_clear_cancel" />
-
-    <ImageView
-        android:id="@+id/swipe_with_hand"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tutorial_swipe_title"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="8dp"
-        android:contentDescription="@string/content_description_tutorial_image"
-        android:background="@drawable/tutorial_swipe_with_hand" />
-
-    <TextView
-        android:id="@+id/tutorial_swipe_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/button_close_tutorial_swipe"
-        android:padding="8dp"
-        android:text="@string/tutorial_swipe_text"
-        android:visibility="visible" />
-
+	
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button_close_tutorial_swipe"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/button_close_tutorial_swipe"
         android:padding="8dp"
         android:text="@string/info_dialog_heading"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <TextView 
+   	        android:id="@+id/text_view_above"
+   	        android:layout_width="fill_parent"
+   	        android:layout_height="wrap_content"
+   	        android:layout_below="@+id/textView2"
+			android:padding="16dp"
+   	        android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/tutorial_swipe_text"
+        	android:contentDescription="@string/content_description_cancel_action" />
+    
+    <ImageView
+        android:id="@+id/swipe_with_hand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_above"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="8dp"
+        android:contentDescription="@string/content_description_tutorial_image"
+        android:background="@drawable/image_slide_with_hand" />
+   	    
+    <View 
+		android:layout_height="1dp"
+		android:layout_width="fill_parent"
+		android:layout_above="@+id/button_close_tutorial_dialog"
+		android:background="@color/lightGrey"/>
+    
+	<Button
+		android:id="@+id/button_close_tutorial_dialog"
+		android:layout_width="fill_parent"
+		android:layout_below="@+id/swipe_with_hand"
+		android:layout_height="wrap_content"
+		android:background="@drawable/selector"
+		android:contentDescription="@string/content_description_cancel_action"
+		android:text="@string/tutorial_5_button" />
 
 </RelativeLayout>
