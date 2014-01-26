@@ -7,11 +7,21 @@
 	android:background="@drawable/card_background"
 	android:layout_margin="16dp"
 	android:visibility="gone">
+	
+		<ImageView
+	        android:id="@+id/image_reply_to_post"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerHorizontal="true"
+	        android:contentDescription="Riilo logo"
+	        android:layout_marginTop="8dp"
+	        android:background="@drawable/ic_menu_compose" />
    	    
    	    <TextView 
    	        android:id="@+id/text_view_above"
    	        android:layout_width="fill_parent"
    	        android:layout_height="wrap_content"
+   	        android:layout_below="@+id/image_reply_to_post"
    	        android:padding="16dp"
    	        android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Lets get started: to write a post press the button in the top right corner. C'mon don't be shy!"

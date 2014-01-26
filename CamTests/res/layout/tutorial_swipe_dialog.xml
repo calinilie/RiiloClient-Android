@@ -6,7 +6,7 @@
 	android:layout_centerVertical="true"
 	android:layout_margin="16dp"
 	android:background="@drawable/card_background"
-	android:visibility="visible" >
+	android:visibility="gone" >
 	
     <TextView
         android:id="@+id/textView2"
