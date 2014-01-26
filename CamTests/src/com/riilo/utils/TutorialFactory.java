@@ -61,6 +61,9 @@ public class TutorialFactory implements OnClickListener{
 	public void showTutorialDialog(int resource){
 		if (show){
 			currentView = inflater.inflate(resource, masterView, false);
+			if (currentView==null)
+				throw new RuntimeException("currentView is null");
+			
 			currentView.findViewById(R.id.button_close_tutorial_dialog).setOnClickListener(this);
 			currentResourceId = resource;
 			masterView.addView(currentView);

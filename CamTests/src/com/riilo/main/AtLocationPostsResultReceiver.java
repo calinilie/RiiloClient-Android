@@ -35,7 +35,8 @@ public class AtLocationPostsResultReceiver extends ResultReceiver{
 			switch(resultCode){
 			case StringKeys.AT_LOCATION_POSTS_RESULT_RECEIVER_ADD_POST_GROUPS:
 				addMarkersToMap(posts);
-				uiListener.onLoadEnd(null, true);
+				if (uiListener!=null)
+					uiListener.onLoadEnd(null, true);
 				break;
 			case StringKeys.AT_LOCATION_POSTS_RESULT_RECEIVER_ADD_POSTS:
 				//existent posts on the map have to be removed from the collection
@@ -43,8 +44,10 @@ public class AtLocationPostsResultReceiver extends ResultReceiver{
 				//add posts on map
 				addMarkersToMap(posts);
 				//retrieve all posts on map (in visible area only) and send the off to the UI
-				posts.addAll(existentPosts);
-				uiListener.onLoadEnd(posts, false);
+				if (existentPosts!=null)
+					posts.addAll(existentPosts);
+				if (uiListener!=null)
+					uiListener.onLoadEnd(posts, false);
 				break;
 			}
 		}
