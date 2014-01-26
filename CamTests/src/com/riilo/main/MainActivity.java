@@ -11,7 +11,6 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import com.google.android.gms.location.LocationRequest;
 import com.riilo.main.R;
 import com.riilo.interfaces.IBackButtonListener;
-import com.riilo.tutorial.TutorialActivity;
 
 import android.app.ActionBar;
 import android.app.ActionBar.OnNavigationListener;
@@ -33,7 +32,6 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
     ViewPager viewPager;
     SpinnerSectionItemAdapter spinnerAdapter;
     
-    private boolean wasTutorialRunThisSession = false;
     private IBackButtonListener backButtonListener;
     
     private PullToRefreshLayout pullToRefreshLayout;
@@ -48,14 +46,6 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
         actionBar.setHomeButtonEnabled(false);
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(false);
-        
-        wasTutorialRunThisSession = savedInstanceState!=null && savedInstanceState.getBoolean(StringKeys.WAS_TUTORIAL_RUN);
-        boolean showTutorial = false;//!Facade.getInstance(this).wasTutorialRun() && !wasTutorialRunThisSession;
-        if (showTutorial){
-        	wasTutorialRunThisSession = true;
-        	Intent intent = new Intent(this, TutorialActivity.class);
-        	startActivity(intent);
-        }
         
         setContentView(R.layout.activity_main_layout);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
@@ -109,12 +99,6 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 				null,
 				false,
 				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);
-    }
-    
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-    	savedInstanceState.putBoolean(StringKeys.WAS_TUTORIAL_RUN, wasTutorialRunThisSession);
-        super.onSaveInstanceState(savedInstanceState);
     }
     
     @Override

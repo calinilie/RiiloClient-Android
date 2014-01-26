@@ -22,7 +22,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.riilo.interfaces.ILocationListener;
 import com.riilo.interfaces.UIListener;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
-import com.riilo.tutorial.TutorialActivity;
 import com.riilo.utils.ExpandAnimation;
 import com.riilo.utils.TutorialFactory;
 
@@ -109,6 +108,7 @@ public class ExploreFragment
     	setUpMapIfNeeded();
     	setupWidgetsViewElements();
     	PostsCache.getInstance(activity).getPostGroupsOnMap(map, new Handler(), this);
+    	getPostsOnMap(map.getCameraPosition());
     }
 	
 	@Override
@@ -199,6 +199,16 @@ public class ExploreFragment
 
 	@Override
 	public void onCameraChange(CameraPosition position) {
+		getPostsOnMap(position);
+	}
+	
+	@Override
+	public boolean onMarkerClick(Marker marker) {
+		animateMapCamera(marker.getPosition(), 7.7f);
+		return true;
+	}
+
+	private void getPostsOnMap(CameraPosition position){
 		timer.cancel();
 		timer.purge();
 		timer = new Timer();
@@ -227,16 +237,8 @@ public class ExploreFragment
 			errorMoreZoom.setVisibility(View.VISIBLE);
 			resetList();
 		}
-	
 	}
-
 	
-	@Override
-	public boolean onMarkerClick(Marker marker) {
-		animateMapCamera(marker.getPosition(), 7.7f);
-		return true;
-	}
-
 	@Override
 	public void onLoadStart() {
 		progressBar.setVisibility(View.VISIBLE);
