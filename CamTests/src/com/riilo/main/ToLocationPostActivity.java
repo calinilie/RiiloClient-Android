@@ -1,6 +1,5 @@
 package com.riilo.main;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -41,6 +40,7 @@ import android.widget.Toast;
 
 public class ToLocationPostActivity extends BaseActivity implements OnClusterClickListener<LocationHistory>, OnClusterItemClickListener<LocationHistory>, OnClickListener, OnMapClickListener{
 
+	@SuppressWarnings("unused")
 	private static final String TAG = "ToLocationPostActivity>>>>>>>>>>>>>>>>>>>>>>>>>>>";
 	
 	private ImageButton buttonPost;
@@ -145,20 +145,9 @@ public class ToLocationPostActivity extends BaseActivity implements OnClusterCli
    			}
    			break;
    		case R.id.button_cancel:
+   			analytics.recordEvent_WritePost_ButtonClick(EventLabel.button_cancel);
    			hideReplyToPostPannel();
    			break;
-   		/*case R.id.button_close_tutorial_marker:
-   			Animation slideOut = AnimationUtils.loadAnimation(this,
-   	                R.anim.slide_out_bottom);
-   	   	 
-	   	   	 if (tutorialMarker.getVisibility()==View.VISIBLE){
-	   	   		 tutorialMarker.startAnimation(slideOut);
-	   	   		 tutorialMarker.requestLayout();
-	   	   		 tutorialMarker.setVisibility(View.GONE);
-	   	   	 }
-	   	   	 
-	   	   	 Facade.getInstance(this).updateTutorialMarkerRun();
-	   	   	 break;*/
    		}
    	}
 	
@@ -196,6 +185,7 @@ public class ToLocationPostActivity extends BaseActivity implements OnClusterCli
 
 	@Override
 	public boolean onClusterClick(Cluster<LocationHistory> cluster) {
+		analytics.recordEvent_WritePost_MapCLusterClick();
 		animateMapCamera(cluster.getPosition(), map.getCameraPosition().zoom+2);
 		return true;
 	}

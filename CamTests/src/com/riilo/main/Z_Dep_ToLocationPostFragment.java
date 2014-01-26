@@ -40,7 +40,7 @@ import com.riilo.interfaces.IBackButtonListener;
 import com.riilo.interfaces.ILocationListener;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
 
-public class ToLocationPostFragment extends Fragment implements OnMapClickListener, OnClickListener, ILocationListener, IBackButtonListener, ClusterManager.OnClusterItemClickListener<LocationHistory>, ClusterManager.OnClusterClickListener<LocationHistory>{
+public class Z_Dep_ToLocationPostFragment extends Fragment implements OnMapClickListener, OnClickListener, ILocationListener, IBackButtonListener, ClusterManager.OnClusterItemClickListener<LocationHistory>, ClusterManager.OnClusterClickListener<LocationHistory>{
 	
 	private GoogleMap map;
 	private ClusterManager<LocationHistory> mapClusterManager;

@@ -10,9 +10,9 @@ import com.google.analytics.tracking.android.MapBuilder;
 
 public class AnalyticsWrapper {
 
-	private enum ScreenName { Write_Post, Latest_Posts, Nearby_Posts, Notifications, Conversation};
-	private enum EventCategory {use_write_post, use_conversation, use_general, use_tutorial};
-	private enum EventAction {map_click, button_click, post_item_click, pull_to_refresh, tab_click, viewpager_swipe, map_marker_click};
+	private enum ScreenName { Write_Post, Latest_Posts, Nearby_Posts, Notifications, Conversation, Explore};
+	private enum EventCategory {use_write_post, use_conversation, use_general, use_tutorial, use_explore};
+	private enum EventAction {map_click, button_click, post_item_click, pull_to_refresh, tab_click, viewpager_swipe, map_marker_click, map_cluster_click, map_explore, auto_camera_change, postGroup_click_explore};
 	public enum EventLabel{button_post, button_cancel, map, map_myLocation, reply_button, tab_latest, tab_nearby, tab_notifications, button_end_tutorial, tab_explore};
 	
 	private EasyTracker tracker;
@@ -42,24 +42,8 @@ public class AnalyticsWrapper {
 	}
 	
 	/*====RECORD SCREEN HITS=======================================================================================================*/
-	public void recordScreenHit_TabSelect(int position){
-        switch(position){
-    	case 0:
-    		recordScreenHit_WritePost();
-    		break;
-    	case 1:
-    		recordScreenHit_LatestPosts();
-    		break;
-    	case 2:
-    		recordScreenHit_NearbyPosts();
-    		break;
-    	case 3:
-    		recordScreenHit_Notifications();
-    		break;
-        }
-	}
 	
-	public void recordScreenHit_WritePost(){
+	/*public void recordScreenHit_WritePost(){
 		recordScreenHit(ScreenName.Write_Post);
 	}
 	
@@ -88,7 +72,7 @@ public class AnalyticsWrapper {
 				    .build()
 				);
 		}
-	}
+	}*/
 	
 	/*=====RECORD EVENTS======================================================================================================*/
 	public void recordEvent_WritePost_MapClick(){
@@ -103,6 +87,10 @@ public class AnalyticsWrapper {
 		recordEvent(EventCategory.use_write_post, EventAction.map_marker_click);
 	}
 	
+	public void recordEvent_WritePost_MapCLusterClick(){
+		recordEvent(EventCategory.use_write_post, EventAction.map_cluster_click);
+	}
+	
 	public void recordEvent_Conversation_MapClick(EventLabel label){
 		recordEvent(EventCategory.use_conversation, EventAction.map_click, label);
 	}
@@ -115,8 +103,8 @@ public class AnalyticsWrapper {
 		recordEvent(EventCategory.use_conversation, EventAction.post_item_click, null, value);
 	}
 	
-	public void recordEvent_General_ItemClick(EventLabel label, Long value){
-		recordEvent(EventCategory.use_general, EventAction.post_item_click, label, value);
+	public void recordEvent_General_ItemClick(EventLabel label){
+		recordEvent(EventCategory.use_general, EventAction.post_item_click, label);
 	}
 	
 	public void recordEvent_General_ReplyButtonClicked(){
@@ -139,6 +127,26 @@ public class AnalyticsWrapper {
 		recordEvent(EventCategory.use_tutorial, EventAction.button_click, EventLabel.button_end_tutorial);
 	}
 	
+	/**
+	 * fired when user deliberately drags the map 
+	 */
+	public void recordEvent_Explore_MapExplore(){
+		recordEvent(EventCategory.use_explore, EventAction.map_explore);
+	}
+	
+	/**
+	 * contains both EventAction.map_explore and EventAction.post_click_explore
+	 */
+	public void recordEvent_Explore_AutoCameraChange(){
+		recordEvent(EventCategory.use_explore, EventAction.auto_camera_change);
+	}
+	
+	/**
+	 * fired when user clicks on post group
+	 */
+	public void recordEvent_Explore_PostClickExplore(){
+		recordEvent(EventCategory.use_explore, EventAction.postGroup_click_explore);
+	}
 	
 	private void recordEvent(EventCategory category, EventAction action){
 		recordEvent(category, action, null, null);
