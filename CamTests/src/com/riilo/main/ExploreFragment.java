@@ -328,14 +328,18 @@ public class ExploreFragment
 	private void selectItem(Post currentPost, long index){
 		resetPreviouslySelectedItem();
 		currentSelectedItem = index;
-		currentPost.getMarker().setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker_riilo));
+		if (currentPost!=null)
+			if (currentPost.getMarker()!=null)
+				currentPost.getMarker().setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker_riilo));
 	}
 	
 	private void resetPreviouslySelectedItem(){
 		if (currentSelectedItem>=0){
 			Post previouslySelectedPost = adapterData.get((int) currentSelectedItem);
-			previouslySelectedPost.getMarker().setIcon(BitmapDescriptorFactory.fromResource(R.drawable.location_history));
 			currentSelectedItem = -1;
+			if (previouslySelectedPost!=null)
+				if (previouslySelectedPost.getMarker()!=null)
+					previouslySelectedPost.getMarker().setIcon(BitmapDescriptorFactory.fromResource(R.drawable.location_history));
 		}
 	}
 
