@@ -195,15 +195,18 @@ public class ExploreFragment
 		CameraUpdate update = CameraUpdateFactory.newCameraPosition(cPos);
 		map.animateCamera(update);
 		mapCameraAnimationRun = true;
+		activity.analytics.recordEvent_Explore_AutoCameraChange();
 	}
 
 	@Override
 	public void onCameraChange(CameraPosition position) {
+		activity.analytics.recordEvent_Explore_MapExplore();
 		getPostsOnMap(position);
 	}
 	
 	@Override
 	public boolean onMarkerClick(Marker marker) {
+		activity.analytics.recordEvent_Explore_PostClickExplore();
 		animateMapCamera(marker.getPosition(), 7.7f);
 		return true;
 	}
@@ -271,7 +274,7 @@ public class ExploreFragment
 	public void onItemClick(AdapterView<?> parentView, View view, int position, long index) {
 		Post post = adapterData.get((int) index);
 		if (currentSelectedItem==index){
-			activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_explore, post.getConversationId());
+			activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_explore);
 			Intent postViewIntent = new Intent(activity, PostViewActivity.class);
 			postViewIntent.putExtra(StringKeys.POST_BUNDLE, post.toBundle());
 			startActivity(postViewIntent);
