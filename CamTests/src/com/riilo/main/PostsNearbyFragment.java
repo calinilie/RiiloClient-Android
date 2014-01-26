@@ -124,7 +124,7 @@ public class PostsNearbyFragment
 	public void onItemClick(AdapterView<?> parentView, View view, int position, long index) {
 		Post post = adapterData.get((int) index);
 				
-		activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_nearby, post.getConversationId());
+		activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_nearby);
 		
 		Intent postViewIntent = new Intent(activity, PostViewActivity.class);
 		postViewIntent.putExtra(StringKeys.POST_BUNDLE, post.toBundle());
