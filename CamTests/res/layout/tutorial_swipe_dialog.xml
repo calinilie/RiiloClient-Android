@@ -7,21 +7,11 @@
 	android:layout_margin="16dp"
 	android:background="@drawable/card_background"
 	android:visibility="gone" >
-	
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:padding="8dp"
-        android:text="@string/info_dialog_heading"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
     
     <TextView 
    	        android:id="@+id/text_view_above"
    	        android:layout_width="fill_parent"
    	        android:layout_height="wrap_content"
-   	        android:layout_below="@+id/textView2"
 			android:padding="16dp"
    	        android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/tutorial_swipe_text"

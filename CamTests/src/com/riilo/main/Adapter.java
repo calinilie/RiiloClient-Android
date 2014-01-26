@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Adapter extends SQLiteOpenHelper{
 
-	private static final String DB_NAME="riilo3.db";
+	private static final String DB_NAME="riilo4.db";
 	private static final int DB_VERSION=2;
 
 	public static final String POSTS_TABLE = "CamTestsPosts";

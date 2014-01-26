@@ -9,5 +9,5 @@
 	<!--Enable automatic exception tracking-->
 	<bool name="ga_reportUncaughtExceptions">true</bool>
 	
-	<string name="ga_appVersion">1.2.3</string>
+	<string name="ga_appVersion">1.2.4</string>
 </resources>

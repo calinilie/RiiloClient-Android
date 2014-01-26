@@ -14,7 +14,7 @@
    	        android:layout_height="wrap_content"
    	        android:padding="16dp"
    	        android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Just tap the anywhere on the map, and write your post."
+            android:text="Just tap the anywhere on the map, and write your post. It's as simple as that."
             android:contentDescription="@string/content_description_cancel_action" />
    	    
    	    <View 

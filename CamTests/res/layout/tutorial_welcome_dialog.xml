@@ -24,7 +24,7 @@
    	        android:layout_below="@+id/image_riilo_logo"
 			android:padding="16dp"
    	        android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Hello, I am Riilo. With me, you can post any message to any location in the world, and people from that location will see your message. Let me show you how it works."
+            android:text="Hello, I am Riilo. With me, you can post any message to any location in the world. People from that location will see your message. Let me show you how it works!"
             android:contentDescription="@string/content_description_cancel_action" />
    	    
    	    <View 

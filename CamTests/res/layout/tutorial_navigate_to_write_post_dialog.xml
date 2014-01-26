@@ -24,7 +24,7 @@
    	        android:layout_below="@+id/image_reply_to_post"
    	        android:padding="16dp"
    	        android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Lets get started: to write a post press the button in the top right corner. C'mon don't be shy!"
+            android:text="Lets get started: to write a post press the button in the top right corner. Don't think about it, just do it!"
             android:contentDescription="@string/content_description_cancel_action" />
    	    
    	    <View 
