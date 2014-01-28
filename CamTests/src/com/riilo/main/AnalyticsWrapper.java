@@ -11,8 +11,8 @@ import com.google.analytics.tracking.android.MapBuilder;
 public class AnalyticsWrapper {
 
 	private enum ScreenName { Write_Post, Latest_Posts, Nearby_Posts, Notifications, Conversation, Explore};
-	private enum EventCategory {use_write_post, use_conversation, use_general, use_tutorial, use_explore};
-	private enum EventAction {map_click, button_click, post_item_click, pull_to_refresh, tab_click, viewpager_swipe, map_marker_click, map_cluster_click, map_explore, auto_camera_change, postGroup_click_explore};
+	private enum EventCategory {use_write_post, use_conversation, use_general, use_tutorial, use_explore, exception};
+	private enum EventAction {map_click, button_click, post_item_click, pull_to_refresh, tab_click, viewpager_swipe, map_marker_click, map_cluster_click, map_explore, auto_camera_change, postGroup_click_explore, at_location_posts_resultReceiver};
 	public enum EventLabel{button_post, button_cancel, map, map_myLocation, reply_button, tab_latest, tab_nearby, tab_notifications, button_end_tutorial, tab_explore};
 	
 	private EasyTracker tracker;
@@ -125,6 +125,11 @@ public class AnalyticsWrapper {
 
 	public void recordEvent_Tutorial_EndButtonClick(){
 		recordEvent(EventCategory.use_tutorial, EventAction.button_click, EventLabel.button_end_tutorial);
+	}
+	
+	//never used
+	public void recordEvent_Exception_AtLocationResultReceiver_Caught(){
+		recordEvent(EventCategory.exception, EventAction.at_location_posts_resultReceiver);
 	}
 	
 	/**

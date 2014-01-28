@@ -29,29 +29,33 @@ public class AtLocationPostsResultReceiver extends ResultReceiver{
 	
 	@Override 
 	protected void onReceiveResult(int resultCode, Bundle resultDate){
-		PostsListParcelable postsListParcelable = resultDate.getParcelable(StringKeys.POST_LIST_PARCELABLE);
-		if (postsListParcelable!=null){
-			List<Post> posts = postsListParcelable.getPostsList();
-			switch(resultCode){
-			case StringKeys.AT_LOCATION_POSTS_RESULT_RECEIVER_ADD_POST_GROUPS:
-				addMarkersToMap(posts);
-				if (uiListener!=null)
-					uiListener.onLoadEnd(null, true);
-				break;
-			case StringKeys.AT_LOCATION_POSTS_RESULT_RECEIVER_ADD_POSTS:
-				//existent posts on the map have to be removed from the collection
-				List<Post> existentPosts = (List<Post>) Helpers.mergeLists(postsCache.getExplore_onMapPosts(), posts);
-				//add posts on map
-				addMarkersToMap(posts);
-				//retrieve all posts on map (in visible area only) and send the off to the UI
-				if (existentPosts!=null)
-					posts.addAll(existentPosts);
-				if (uiListener!=null)
-					uiListener.onLoadEnd(posts, false);
-				break;
+		try{
+			PostsListParcelable postsListParcelable = resultDate.getParcelable(StringKeys.POST_LIST_PARCELABLE);
+			if (postsListParcelable!=null){
+				List<Post> posts = postsListParcelable.getPostsList();
+				switch(resultCode){
+				case StringKeys.AT_LOCATION_POSTS_RESULT_RECEIVER_ADD_POST_GROUPS:
+					addMarkersToMap(posts);
+					if (uiListener!=null)
+						uiListener.onLoadEnd(null, true);
+					break;
+				case StringKeys.AT_LOCATION_POSTS_RESULT_RECEIVER_ADD_POSTS:
+					//existent posts on the map have to be removed from the collection
+					List<Post> existentPosts = (List<Post>) Helpers.mergeLists(postsCache.getExplore_onMapPosts(), posts);
+					//add posts on map
+					addMarkersToMap(posts);
+					//retrieve all posts on map (in visible area only) and send the off to the UI
+					if (existentPosts!=null)
+						posts.addAll(existentPosts);
+					if (uiListener!=null)
+						uiListener.onLoadEnd(posts, false);
+					break;
+				}
 			}
 		}
-		
+		catch(NullPointerException e){
+			
+		}
 	}
 	
 	private void addMarkersToMap(final List<Post> posts){
