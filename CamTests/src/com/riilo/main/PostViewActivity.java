@@ -75,7 +75,7 @@ public class PostViewActivity extends BaseActivity
 		setUpMapIfNeeded();
 		setupWidgetsViewElements();
 		if (adapter==null){
-			adapter = new PostListItemAdapter(this, R.layout.post_list_view_item_layout, adapterData, deviceId, false);
+			adapter = new PostListItemAdapter(this, R.layout.post_item_layout, adapterData, deviceId, false);
 		}
 		postsList.setAdapter(adapter);
 		

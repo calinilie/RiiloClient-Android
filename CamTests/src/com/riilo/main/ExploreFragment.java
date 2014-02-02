@@ -168,7 +168,7 @@ public class ExploreFragment
 		progressBar = view.findViewById(R.id.progressBar);
 		listView = (ListView) view.findViewById(R.id.posts_list_view);
 		adapterData = new ArrayList<Post>();
-		adapter = new PostListItemAdapter(activity, R.layout.post_list_view_item_layout, adapterData, activity.deviceId, false);
+		adapter = new PostListItemAdapter(activity, R.layout.post_item_layout, adapterData, activity.deviceId, false);
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(this);
 		

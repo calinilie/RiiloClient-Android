@@ -87,7 +87,7 @@ public class PostsNotificationsFragment
 		super.onStart();
 		
 		if (adapter==null){
-			adapter = new PostListItemAdapter(activity, R.layout.post_list_view_item_layout, adapterData, activity.deviceId, false);
+			adapter = new PostListItemAdapter(activity, R.layout.post_item_layout, adapterData, activity.deviceId, false);
 		}		
 		postsListView.setAdapter(adapter);
 		

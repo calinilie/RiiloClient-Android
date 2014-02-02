@@ -54,7 +54,13 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 			String inflater = Context.LAYOUT_INFLATER_SERVICE;
 			LayoutInflater li;
 			li = (LayoutInflater)getContext().getSystemService(inflater);
-			li.inflate(layoutId, postView, true);
+			double random = Math.random() * 3;
+			if (position % 3 == 0)
+				li.inflate(R.layout.announcement_item_layout, postView, true);
+			if (position % 3 == 1)
+				li.inflate(R.layout.achievement_item_layout, postView, true);
+			if (position % 3 == 2)
+				li.inflate(R.layout.post_item_layout, postView, true);
 //	    } else {
 //	    	postView = (LinearLayout) convertView;
 //	    }

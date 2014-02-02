@@ -98,7 +98,7 @@ public class PostsNearbyFragment
 		super.onStart();
 		
 		if (adapter==null){
-			adapter = new PostListItemAdapter(activity, R.layout.post_list_view_item_layout, adapterData, activity.deviceId, true);
+			adapter = new PostListItemAdapter(activity, R.layout.post_item_layout, adapterData, activity.deviceId, true);
 		}		
 		postsListView.setAdapter(adapter);
 		
