@@ -35,6 +35,10 @@ public class Post implements Comparable<Post>, Serializable{
 	private List<Integer> conversation;
 	private double distanceFromCurLoc = -1;
 	private Marker marker;
+	private int priority;
+	private int achievementId;
+	private boolean isAnouncement;
+	private String alias;
 	
 	public Post() {
 	}
@@ -67,6 +71,10 @@ public class Post implements Comparable<Post>, Serializable{
 		this.conversationId = bundle.getLong(StringKeys.POST_CONVERSATION_ID);
 		this.originLatitude = bundle.getDouble(StringKeys.POST_ORIGIN_LATITUDE);
 		this.originLongitude = bundle.getDouble(StringKeys.POST_ORIGIN_LONGITUDE);
+		this.priority = bundle.getInt(StringKeys.POST_PRIORITY);
+    	this.achievementId = bundle.getInt(StringKeys.POST_ACHIEVEMENT);
+    	this.isAnouncement = bundle.getBoolean(StringKeys.POST_ISANOUNCEMENT);
+    	this.alias = bundle.getString(StringKeys.POST_ALIAS);
 	}
 	
 	public Post (JSONObject jsonObject) throws JSONException{
@@ -82,6 +90,10 @@ public class Post implements Comparable<Post>, Serializable{
 		this.repliesToPostId = jsonObject.getInt("repliesToPostId");
 		this.inAdditionToPostId = jsonObject.getInt("inAdditionToPostId");
 		this.conversationId = jsonObject.getLong("conversationId");
+		this.priority = jsonObject.getInt("priority");
+		this.achievementId = jsonObject.getInt("achievementId");
+		this.alias = jsonObject.getString("alias");
+		this.isAnouncement = jsonObject.getBoolean("anouncement");
 	}
 	
 	public Bundle toBundle(){
@@ -99,6 +111,10 @@ public class Post implements Comparable<Post>, Serializable{
     	bundle.putLong(StringKeys.POST_ID, id);
     	bundle.putLong(StringKeys.POST_REPLIES_TO_POSTID, repliesToPostId);
     	bundle.putLong(StringKeys.POST_CONVERSATION_ID, this.conversationId);
+    	bundle.putInt(StringKeys.POST_PRIORITY, this.priority);
+    	bundle.putInt(StringKeys.POST_ACHIEVEMENT, this.achievementId);
+    	bundle.putBoolean(StringKeys.POST_ISANOUNCEMENT, this.isAnouncement);
+    	bundle.putString(StringKeys.POST_ALIAS, this.alias);
     	return bundle;
 	}
 
@@ -338,6 +354,38 @@ public class Post implements Comparable<Post>, Serializable{
 
 	public void setMarker(Marker marker) {
 		this.marker = marker;
+	}
+
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+
+	public int getAchievementId() {
+		return achievementId;
+	}
+
+	public void setAchievementId(int achievementId) {
+		this.achievementId = achievementId;
+	}
+
+	public boolean isAnouncement() {
+		return isAnouncement;
+	}
+
+	public void setAnouncement(boolean isAnouncement) {
+		this.isAnouncement = isAnouncement;
+	}
+
+	public String getAlias() {
+		return alias;
+	}
+
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 	
 	

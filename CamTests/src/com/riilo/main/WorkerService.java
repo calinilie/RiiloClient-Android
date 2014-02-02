@@ -288,8 +288,7 @@ public class WorkerService extends IntentService{
 //	    List<Post> toRemove = new ArrayList<Post>();
 	    if (retVal!=null){
 	    	for (Post p:retVal){
-//				Facade.getInstance(this).insertForeignPost(p, deviceId);
-	    		savePostLocally(p);//TODO uncoment the one above!
+	    		savePostLocally(p);
 				if (!postsCache.addPostToLatestPosts(p)){
 //					toRemove.add(p);
 				}

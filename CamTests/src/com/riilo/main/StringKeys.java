@@ -40,6 +40,10 @@ public class StringKeys {
 	public static final String POST_CONVERSATION_ID = "com.riilo.main.StringKeys.POST_CONVERSATION_ID";
 	public static final String POST_ORIGIN_LATITUDE = "com.riilo.main.StringKeys.POST_ORIGIN_LATITUDE";
 	public static final String POST_ORIGIN_LONGITUDE = "com.riilo.main.StringKeys.POST_ORIGIN_LONGITUDE";
+	public static final String POST_PRIORITY = "com.riilo.main.StringKeys.POST_PRIORITY";
+	public static final String POST_ACHIEVEMENT = "com.riilo.main.StringKeys.POST_ACHIEVEMENT";
+	public static final String POST_ISANOUNCEMENT = "com.riilo.main.StringKeys.POST_ISANOUNCEMENT";
+	public static final String POST_ALIAS = "com.riilo.main.StringKeys.POST_ALIAS";
 	
 	public static final String LOCATION_HISTORY_PARCELABLE = "com.riilo.main.StringKeys.LOCATION_HISTORY_PARCELABLE";
 	public static final String LOCATION_HISTORY_RESULT_RECEIVER = "com.riilo.main.StringKeys.LOCATION_HISTORY_RESULT_RECEIVER";
