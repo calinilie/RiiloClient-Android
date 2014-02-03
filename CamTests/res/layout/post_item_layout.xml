@@ -41,7 +41,7 @@
             	android:src="@drawable/ic_achievement_riilo_small"
             	android:layout_width="16dp"
             	android:layout_height="16dp"
-            	android:visibility="visible"
+            	android:visibility="gone"
             	android:layout_gravity="center_vertical"
    	            android:layout_marginRight="4dp"
    	            />

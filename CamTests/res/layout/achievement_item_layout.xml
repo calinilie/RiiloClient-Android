@@ -35,8 +35,7 @@
    	    <TextView
 	        android:id="@+id/achievement_message"
 	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:text=" dolor sit amet lorem ipsum dolor sit amet ighuru aptaredere sintreghijima" />
+	        android:layout_height="wrap_content" />
 
 	</LinearLayout>
 	

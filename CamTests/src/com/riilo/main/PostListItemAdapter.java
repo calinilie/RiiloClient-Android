@@ -17,7 +17,8 @@ import android.widget.TextView;
 
 public class PostListItemAdapter extends ArrayAdapter<Post>{
 
-	private int layoutId;
+	private static final String TAG = "<<<<<<<<PostListItemAdapter>>>>>>>>>";
+	
 	private List<Post> items;
 	DecimalFormat decimalFormat10, decimalFormat1;
 	private String currentUserId;
@@ -29,7 +30,6 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 	public PostListItemAdapter(Context context, int layoutId, List<Post> items, String currentUserId, boolean showDistance) {
 		super(context, layoutId, items);
 		this.context = context;
-		this.layoutId = layoutId;
 		this.items = items;
 		decimalFormat10 = new DecimalFormat("#.#");
 		decimalFormat1 = new DecimalFormat("#.##");
@@ -83,7 +83,7 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 		TextView date_textView = (TextView) view.findViewById(R.id.announcement_date);
 		
 		message_textView.setText(post.getMessage());
-		date_textView.setText(post.getDateAsString());
+		date_textView.setText(this.context.getString(R.string.post_adapter_posted_on)+" "+post.getDateAsString());
 	}
 	
 	private void setupPostView(Post post, View view){
@@ -92,9 +92,19 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 		TextView distanceAndDate_textView = (TextView) view.findViewById(R.id.postListItem_distance_date);
 		TextView message_textView = (TextView) view.findViewById(R.id.postListItem_message);
 		ImageView userAtLocation_ImageView = (ImageView)view.findViewById(R.id.postListItem_userAtLocation);
+		ImageView badge_imageView = (ImageView)view.findViewById(R.id.badgeRiiloFirst);
+		
+		String alias = post.getAlias();
+		boolean hasAlias = alias != null && !alias.isEmpty();
 		
 		if (post.getUserId().equalsIgnoreCase(this.currentUserId)){
-			userId_textView.setText(this.context.getString(R.string.post_adapter_you));
+			if (hasAlias){
+				userId_textView.setText(String.format("%s, %s, ", this.context.getString(R.string.post_adapter_you), alias));
+			}
+			else{
+				userId_textView.setText(this.context.getString(R.string.post_adapter_you));
+			}
+			
 			if (post.getRepliesToPostId() == 0){
 				userAction_textView.setText(this.context.getString(R.string.post_adapter_posted_1st));
 			}
@@ -103,7 +113,12 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 			}
 		}
 		else{
-			userId_textView.setText(this.context.getString(R.string.post_adapter_somebody));
+			if (hasAlias){
+				userId_textView.setText(alias);
+			}
+			else{
+				userId_textView.setText(this.context.getString(R.string.post_adapter_somebody));
+			}
 			if (post.getRepliesToPostId() == 0){
 				userAction_textView.setText(this.context.getString(R.string.post_adapter_posted_3rd));
 			}
@@ -147,6 +162,9 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 		message_textView.setText(post.getMessage());
 		if (!post.isUserAtLocation()){
 			userAtLocation_ImageView.setVisibility(View.GONE);
+		}
+		if (hasAlias){
+			badge_imageView.setVisibility(View.VISIBLE);
 		}
 	}
 }

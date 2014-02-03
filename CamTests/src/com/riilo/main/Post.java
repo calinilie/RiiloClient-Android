@@ -12,9 +12,12 @@ import com.google.android.gms.maps.model.Marker;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 
 public class Post implements Comparable<Post>, Serializable{
 
+	private final static String TAG = "<<<<<<<Post>>>>>>>";
+	
 	/**
 	 * 
 	 */
@@ -93,8 +96,9 @@ public class Post implements Comparable<Post>, Serializable{
 		this.conversationId = jsonObject.getLong("conversationId");
 		this.priority = jsonObject.getInt("priority");
 		this.achievementId = jsonObject.getInt("achievementId");
-		this.alias = jsonObject.getString("alias");
 		this.isAnouncement = jsonObject.getBoolean("anouncement");
+		if (!jsonObject.isNull("alias"))
+			this.alias = jsonObject.getString("alias");
 	}
 	
 	public Bundle toBundle(){
