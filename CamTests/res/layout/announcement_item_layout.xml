@@ -11,7 +11,7 @@
 		android:layout_marginRight="16dp"
 		android:layout_marginTop="4dp"
 		android:layout_marginBottom="4dp"
-		android:background="@drawable/card_background"
+		android:background="@drawable/card_background_announcement"
 		android:paddingTop="16dp"
 		android:paddingBottom="16dp">
 
@@ -62,7 +62,7 @@
 	    <View
 		    android:layout_width="fill_parent"
 		    android:layout_height="1dp"
-		    android:background="@color/lightGrey"
+		    android:background="@color/riilo_dark_red"
 		    android:layout_marginBottom="8dp"
 		    android:layout_marginTop="8dp"/>
 	        
@@ -87,16 +87,4 @@
 	
    	</FrameLayout>
    
-	<ImageView
-		android:id="@+id/postListItem_userAtLocation"
-		android:layout_width="32dp"
-		android:layout_height="32dp"
-		   android:layout_marginLeft="16dp"
-		   android:layout_marginRight="16dp"
-		   android:layout_marginTop="4dp"
-		android:src="@drawable/ic_user_at_location"
-		android:background="@drawable/screen_background_holo_light_old"
-		android:contentDescription="@string/content_description_user_at_location"
-		android:visibility="visible"/>
-
 </FrameLayout>
