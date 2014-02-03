@@ -176,7 +176,8 @@ public class AnalyticsWrapper {
 	private static final String[] excludedDevices = {"7841715974043649", //Calin 
 														"639832f623d58f2", //Mihai
 														"7871b4c06d1c3fe2", //Galaxy Note
-														"24a2e7d3ed700fc5"}; //Galaxy S2
+														"24a2e7d3ed700fc5", //Galaxy S2
+														"dff238070c0034ca"}; //genymotion galaxy nexus 4.3
 	
 	private static boolean isNotEmployeeDevice(){
 		for(String s : excludedDevices){
