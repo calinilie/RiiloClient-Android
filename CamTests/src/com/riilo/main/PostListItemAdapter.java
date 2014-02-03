@@ -54,23 +54,44 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 			String inflater = Context.LAYOUT_INFLATER_SERVICE;
 			LayoutInflater li;
 			li = (LayoutInflater)getContext().getSystemService(inflater);
-			double random = Math.random() * 3;
-			if (position % 3 == 0)
+			
+			if (position % 3 == 0){//post.isAnouncement()
 				li.inflate(R.layout.announcement_item_layout, postView, true);
-			if (position % 3 == 1)
+				setupAnnouncementView(post, postView);
+			}
+			else if (position % 3 == 1){//post.getAchievementId() == 1
 				li.inflate(R.layout.achievement_item_layout, postView, true);
-			if (position % 3 == 2)
+				setupAchievementView(post, postView);
+			}else {
 				li.inflate(R.layout.post_item_layout, postView, true);
+				setupPostView(post, postView);
+			}
 //	    } else {
-//	    	postView = (LinearLayout) convertView;
-//	    }
+//    	postView = (LinearLayout) convertView;
+//    }
 		
-		TextView userId_textView = (TextView) postView.findViewById(R.id.postListItem_userId);
-		TextView userAction_textView = (TextView) postView.findViewById(R.id.postListItem_userAction);
-		TextView distanceAndDate_textView = (TextView) postView.findViewById(R.id.postListItem_distance_date);
-		TextView message_textView = (TextView) postView.findViewById(R.id.postListItem_message);
-//		TextView postId_textView = (TextView) postView.findViewById(R.id.postListItem_postId);
-		ImageView userAtLocation_ImageView = (ImageView)postView.findViewById(R.id.postListItem_userAtLocation);
+		return postView;
+	}
+	
+	private void setupAchievementView(Post post, View view){
+		TextView message_textView = (TextView) view.findViewById(R.id.achievement_message);
+		message_textView.setText(post.getMessage());
+	}
+	
+	private void setupAnnouncementView(Post post, View view){
+		TextView message_textView = (TextView) view.findViewById(R.id.announcement_message);
+		TextView date_textView = (TextView) view.findViewById(R.id.announcement_date);
+		
+		message_textView.setText(post.getMessage());
+		date_textView.setText(post.getDateAsString());
+	}
+	
+	private void setupPostView(Post post, View view){
+		TextView userId_textView = (TextView) view.findViewById(R.id.postListItem_userId);
+		TextView userAction_textView = (TextView) view.findViewById(R.id.postListItem_userAction);
+		TextView distanceAndDate_textView = (TextView) view.findViewById(R.id.postListItem_distance_date);
+		TextView message_textView = (TextView) view.findViewById(R.id.postListItem_message);
+		ImageView userAtLocation_ImageView = (ImageView)view.findViewById(R.id.postListItem_userAtLocation);
 		
 		if (post.getUserId().equalsIgnoreCase(this.currentUserId)){
 			userId_textView.setText(this.context.getString(R.string.post_adapter_you));
@@ -90,8 +111,8 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 				userAction_textView.setText(this.context.getString(R.string.post_adapter_replied_3rd));
 			}
 		}
-		String postedOnDistance = "";
 		
+		String postedOnDistance = "";
 		if (showDistance){
 			if (post.getDistanceFromCurLoc()==-1){
 				postedOnDistance = String.format("%s %s %s",
@@ -124,12 +145,8 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 		}
 		distanceAndDate_textView.setText(postedOnDistance);
 		message_textView.setText(post.getMessage());
-//		postId_textView.setText("Post "+post.getId() + " " + post.getConversationId());
-//		postId_textView.setVisibility(View.GONE);
 		if (!post.isUserAtLocation()){
 			userAtLocation_ImageView.setVisibility(View.GONE);
 		}
-		
-		return postView;
 	}
 }

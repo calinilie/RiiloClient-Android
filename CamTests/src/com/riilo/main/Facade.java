@@ -73,17 +73,18 @@ public class Facade {
 	}
 	
 	public synchronized void insertPost(Post post){
-		open();
-		try{
-			if (!doesPostExist(post.getId())){
-				inserPost(post);
+		if (post.getPriority() <= 0){
+			open();
+			try{
+				if (!doesPostExist(post.getId())){
+					inserPost(post);
+				}
 			}
-		}
-		catch(Exception e){
-			
-		}
-		finally{
-			close();
+			catch(Exception e){
+			}
+			finally{
+				close();
+			}
 		}
 	}
 	

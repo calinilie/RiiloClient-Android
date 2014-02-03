@@ -23,7 +23,7 @@
 	    android:orientation="vertical">
 		
 	    <TextView
-	        android:id="@+id/postListItem_distance_date"
+	        android:id="@+id/announcement_date"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
     	    android:layout_marginLeft="32dp"
@@ -67,7 +67,7 @@
 		    android:layout_marginTop="8dp"/>
 	        
 		    <TextView
-		        android:id="@+id/postListItem_message"
+		        android:id="@+id/announcement_message"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:paddingRight="16dp"

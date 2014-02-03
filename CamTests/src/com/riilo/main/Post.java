@@ -268,6 +268,11 @@ public class Post implements Comparable<Post>, Serializable{
 
 	@Override
 	public int compareTo(Post another) {
+		if (this.priority > another.priority)
+			return 1;
+		else if (this.priority < another.priority)
+			return -1;
+		
 		return this.id > another.getId() ? 1 : this.id<another.getId() ? -1 : 0;
 	}
 	
