@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -172,7 +173,7 @@ public class Helpers {
         return targetCalendar.getTime();
     }
     
-	/*=========================================================================================================*/
+	/*=============LIST SPECIFIC HELPERS============================================================================================*/
     public static boolean hasPostFromConversation(List<Post> targetList, Post post){
     	boolean found = false;
     	for(Post p : targetList){
@@ -183,7 +184,6 @@ public class Helpers {
     	}
     	return found;
     }
-    
     
     /**
      * adds all items from source into target. Note, only items that are NOT in target already will be added. Sorts desc by ID by default
@@ -215,7 +215,7 @@ public class Helpers {
 	    		Collections.sort(target, Collections.reverseOrder());
 	    	}
 	    	else{
-	    		Collections.sort(target);
+	    		Collections.sort(target, Post.PostIdComparator);
 	    	}
     	}
     	return newItemsAdded;
@@ -238,7 +238,9 @@ public class Helpers {
 		
 		return retVal;
 	}
-    
+
+	
+	/*=====PHOTO CAMERA HELPERS - NOT USED====================================================================================================*/
     public static String uriToFilePath(Uri uri){
     	return uriToFilePath(uri.toString());
     }

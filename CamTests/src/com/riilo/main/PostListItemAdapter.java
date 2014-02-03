@@ -55,11 +55,11 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 			LayoutInflater li;
 			li = (LayoutInflater)getContext().getSystemService(inflater);
 			
-			if (position % 3 == 0){//post.isAnouncement()
+			if (post.isAnouncement()){//post.isAnouncement()
 				li.inflate(R.layout.announcement_item_layout, postView, true);
 				setupAnnouncementView(post, postView);
 			}
-			else if (position % 3 == 1){//post.getAchievementId() == 1
+			else if (post.getAchievementId() == 1){//post.getAchievementId() == 1
 				li.inflate(R.layout.achievement_item_layout, postView, true);
 				setupAchievementView(post, postView);
 			}else {

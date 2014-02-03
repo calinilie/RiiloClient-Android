@@ -1,6 +1,7 @@
 package com.riilo.main;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -394,6 +395,12 @@ public class Post implements Comparable<Post>, Serializable{
 	}
 	
 	
-	
+	public static Comparator<Post> PostIdComparator = new Comparator<Post>() {
+		
+		@Override
+		public int compare(Post lhs, Post rhs) {
+			return lhs.id > rhs.id ? 1 : lhs.id<rhs.id ? -1 : 0;
+		}
+	};
 	
 }

@@ -99,6 +99,8 @@ public class ExploreFragment
     	
     	setupTutorials();
     	
+    	Log.d(TAG, "onCreateView");
+    	
     	return view;
     }
 	
@@ -140,6 +142,7 @@ public class ExploreFragment
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putBoolean("mapCameraAnimationRun", mapCameraAnimationRun);
         if (null != mapView)
         	mapView.onSaveInstanceState(outState);
     }
