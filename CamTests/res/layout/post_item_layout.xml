@@ -34,9 +34,17 @@
    	    <LinearLayout
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:orientation="horizontal"
 	        android:layout_marginLeft="32dp">
 	
+   	        <ImageView
+   	            android:id="@+id/badgeRiiloFirst"
+            	android:src="@drawable/ic_achievement_riilo_small"
+            	android:layout_width="16dp"
+            	android:layout_height="16dp"
+            	android:visibility="visible"
+            	android:layout_gravity="center_vertical"
+   	            android:layout_marginRight="4dp"
+   	            />
 	        <TextView
 	            android:id="@+id/postListItem_userId"
 	            android:layout_width="wrap_content"
