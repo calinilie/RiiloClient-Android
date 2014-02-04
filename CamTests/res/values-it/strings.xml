@@ -30,6 +30,11 @@
 	<string name="say_anything_anywhere_hint">Di qualsiasi cosa, ovunque&#8230;</string>
 	<string name="say_anything_hint">Di qualsiasi cosa&#8230;</string>
 	
+	
+	<string name="tutorial_location_history">Questo significa che qualcuno è/era in quella zona. Tocca sull\'icona per lasciare un messaggio, la gente in zona lo vedrà.</string>
+	<string name="tutorial_swipe_text">Puoi anche fare uno swipe per navigare facilmente tra le sezioni dell\'app.</string>
+	
+	<!-- <string name="tutorial_tutorial_swipe_text">Puoi semplicemente fare swype per navigare da una sezione all\'altra del tutorial.</string>
 	<string name="tutorial_0">Naviga in qualsiasi luogo e tocca la mappa per scrivere il tuo messaggio.</string>
 	<string name="tutorial_1">Scrivi un messaggio, invia e lascia che i piccioni viaggiatori facciano il resto.</string>
 	<string name="tutorial_2">Chiunque si trovi vicino alla Tour Eiffel vedrà il tuo messaggio.</string>
@@ -37,10 +42,7 @@
 	<string name="tutorial_4">Puoi visualizzare e rispondere a tutti i messaggi relativi ad un particolare luogo.</string>
 	<string name="tutorial_5">Questo è solo l\'inizio, è probabile che per ora ci siano pochi post vicino a te, ma possiamo diffondere la parola! Più siamo, più opportunità abbiamo.</string>
 	<string name="tutorial_5_title">Grazie!</string>
-	<string name="tutorial_5_button">OK</string>
-	<string name="tutorial_marker">Questo significa che qualcuno è/era in quella zona. Tocca sull\'icona per lasciare un messaggio, la gente in zona lo vedrà.</string>
-	<string name="tutorial_swipe_text">Puoi anche fare uno swipe per navigare facilmente tra le sezioni dell\'app.</string>
-	<string name="tutorial_tutorial_swipe_text">Puoi semplicemente fare swype per navigare da una sezione all\'altra del tutorial.</string>
+	<string name="tutorial_5_button">OK</string> -->
 	
 	<string name="section_post">Scrivi qualcosa</string>
     <string name="section_latest">Novità</string>

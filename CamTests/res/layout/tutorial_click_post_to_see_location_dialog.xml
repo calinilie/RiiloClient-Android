@@ -14,7 +14,7 @@
    	        android:layout_height="wrap_content"
    	        android:padding="16dp"
    	        android:textAppearance="?android:attr/textAppearanceMedium"
-   	        android:text="Once the posts are loaded, you can tap a post in the list, to see its location on the map."
+   	        android:text="@string/tutorial_click_post_to_see_location"
    	        android:contentDescription="@string/content_description_cancel_action" />
 
    	    <View 
@@ -30,6 +30,6 @@
 		    android:layout_height="wrap_content"
 		    android:background="@drawable/selector"
 		    android:contentDescription="@string/content_description_cancel_action"
-		    android:text="@string/tutorial_5_button" />
+		    android:text="@string/tutorial_ok" />
 
 </RelativeLayout>

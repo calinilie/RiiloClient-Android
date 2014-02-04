@@ -14,7 +14,7 @@
    	        android:layout_height="wrap_content"
    	        android:padding="16dp"
    	        android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Congratulations! You have posted your first message on Riilo. People at that location will see your post and they might reply."
+            android:text="@string/tutorial_first_post_congrats"
             android:contentDescription="@string/content_description_cancel_action" />
    	    
    	    <View 
@@ -30,6 +30,6 @@
 		    android:layout_height="wrap_content"
 		    android:background="@drawable/selector"
 		    android:contentDescription="@string/content_description_cancel_action"
-		    android:text="@string/tutorial_5_button" />
+		    android:text="@string/tutorial_ok" />
 	    
 </RelativeLayout>

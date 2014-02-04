@@ -24,7 +24,7 @@
    	        android:layout_below="@+id/image_reply_to_post"
    	        android:padding="16dp"
    	        android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Lets get started: to write a post press the button in the top right corner. Don't think about it, just do it!"
+            android:text="@string/tutorial_navigate_to_write_post"
             android:contentDescription="@string/content_description_cancel_action" />
    	    
    	    <View 
@@ -40,6 +40,6 @@
 		    android:layout_height="wrap_content"
 		    android:background="@drawable/selector"
 		    android:contentDescription="@string/content_description_cancel_action"
-		    android:text="@string/tutorial_5_button" />
+		    android:text="@string/tutorial_ok" />
 	    
 </RelativeLayout>

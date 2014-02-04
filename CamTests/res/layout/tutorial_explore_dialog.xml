@@ -14,7 +14,7 @@
    	        android:layout_height="wrap_content"
    	        android:padding="16dp"
    	        android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="This is EXPLORE. By dragging the map, you can navigate to any place you wish, and messages will show up on the map. For instance, you can navigate to New York, to see what people are talking about in New York."
+            android:text="@string/tutorial_explore"
             android:contentDescription="@string/content_description_cancel_action" />
    	    
    	    <View 
@@ -30,6 +30,6 @@
 		    android:layout_height="wrap_content"
 		    android:background="@drawable/selector"
 		    android:contentDescription="@string/content_description_cancel_action"
-		    android:text="@string/tutorial_5_button" />
+		    android:text="@string/tutorial_ok" />
 	    
 </RelativeLayout>

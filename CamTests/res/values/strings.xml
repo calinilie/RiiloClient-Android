@@ -52,24 +52,26 @@
     <string name="error_upload_post">On its way to the server your post was kidnapped by some dragons. Please try again.</string>
     <string name="error_post_empty">The dwarves working on the server don\'t fancy empty posts, please write something so they don\'t go on strike.</string>
     <string name="error_no_google_maps">Ouch, something went terribly wrong. Please keep calm and try again; if you still get this error your phone might not support Google Maps, and this app relies heavily on Google Maps.</string>
-    <string name="error_more_zoom">You have to zoom in a little more my friend.</string>
+    <string name="error_more_zoom">Please press one of the red dots, or zoom in to see posts on the map.</string>
     <string name="error_no_posts">There are no posts in this area of the world. You can post one yourself, you know&#8230;</string>
     
     <string name="user_at_location_dialog_message">The user who posted this message was nearby the location shown on the map.</string>
     <string name="say_anything_anywhere_hint">Say anything, anywhere&#8230;</string>
     <string name="say_anything_hint">Say anything&#8230;</string>
     
-    <string name="tutorial_0">Navigate to any place and tap the map to write your message</string>
-    <string name="tutorial_1">Write a message, press post and the pigeons will handle the rest</string>
-    <string name="tutorial_2">Everybody next to Eiffel Tower will see your message</string>
-    <string name="tutorial_3">Navigate to the Nearby section to see posts in your vicinity</string>
-    <string name="tutorial_4">You can view and reply to all messages related to a particular location.</string>
-    <string name="tutorial_5">This is the very beginning, so it will be quite empty around, but you can spread the word. The more we are, the more opportunities we have. </string>
-    <string name="tutorial_5_title">Thank You!</string>
-    <string name="tutorial_5_button">OK</string>
-    <string name="tutorial_marker">The red dot shows that somebody is/was in that area. Tap on the marker to leave them a message, and people in area will see you post.</string>
+    <string name="tutorial_ok">OK</string>
+    <string name="tutorial_location_history">The red dot shows that somebody is/was in that area. Tap on the marker to leave them a message, and people in area will see you post.</string>
     <string name="tutorial_swipe_text">You can just swipe to easily navigate between app sections.</string>
-    <string name="tutorial_tutorial_swipe_text">You can just swipe to navigate between tutorial sections.</string>
+    <string name="tutorial_click_post_to_see_location">Once the posts are loaded, you can tap a post in the list, to see its location on the map.</string>
+    <string name="tutorial_conversation">This is a CONVERSATION. Here you can see the location of the post, and all messages and replies to that post.</string>
+    <string name="tutorial_explore">This is EXPLORE. By dragging the map, you can navigate to any place you wish, and messages will show up on the map. For instance, you can navigate to New York, to see what people are talking about in New York.</string>
+    <string name="tutorial_first_post_congrats">Congratulations! You have posted your first message on Riilo. People at that location will see your post and they might reply.</string>
+    <string name="tutorial_how_to_write_a_post">Just tap the anywhere on the map, and write your post. It\'s as simple as that.</string>
+    <string name="tutorial_latest">Here you will see the LATEST posts from all over the world. Fell free to explore in real time what others are saying.</string>
+    <string name="tutorial_navigate_to_write_post">Let\'s get started: to write a post press the button in the top right corner. Don\'t think about it, just do it!</string>
+    <string name="tutorial_nearby">This will show you the posts NEARBY your current location. All posts within 20 km or about 12.5 miles will be shown here.</string>
+    <string name="tutorial_notifications">Once somebody replies to one of your posts, you will see that reply here; in the NOTIFICATIONS page.</string>
+    <string name="tutorial_welcome">Hello, I am Riilo. With me, you can post any message to any location in the world. People from that location will see your message. Let me show you how it works!</string>
     
     <string name="section_post">Post Something</string>
     <string name="section_latest">Latest</string>

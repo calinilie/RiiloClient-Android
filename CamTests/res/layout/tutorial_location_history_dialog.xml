@@ -23,7 +23,7 @@
    	        android:layout_height="wrap_content"
    	        android:padding="16dp"
    	        android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/tutorial_marker"
+            android:text="@string/tutorial_location_history"
             android:contentDescription="@string/content_description_cancel_action" />
    	    
    	    <View 
@@ -39,6 +39,6 @@
 		    android:layout_height="wrap_content"
 		    android:background="@drawable/selector"
 		    android:contentDescription="@string/content_description_cancel_action"
-		    android:text="@string/tutorial_5_button" />
+		    android:text="@string/tutorial_ok" />
 	    
 </RelativeLayout>
