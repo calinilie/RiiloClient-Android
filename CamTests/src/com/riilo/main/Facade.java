@@ -33,7 +33,9 @@ public class Facade {
 									Adapter.POSTS_DATE_CREATED,
 									Adapter.POSTS_MESSAGE,
 									Adapter.POSTS_USER_AT_LOCATION,
-									Adapter.POSTS_CONVERSATION_ID
+									Adapter.POSTS_CONVERSATION_ID,
+									Adapter.POSTS_ALIAS,
+									Adapter.POSTS_ACHIEVEMENT_ID
 								};
 	
 	private static final String[] locationHistoryColumns = {
@@ -109,6 +111,8 @@ public class Facade {
 				post.setMessage(cursor.getString(9));
 				post.setUserAtLocation(cursor.getInt(10)==1 ? true : false);
 				post.setConversationId(cursor.getInt(11));
+				post.setAlias(cursor.getString(12));
+				post.setAchievementId(cursor.getInt(13));
 				retVal.add(post);
 			}
 			deleteOldPosts(retVal.size());
@@ -171,6 +175,8 @@ public class Facade {
 		int userAtLocation = post.isUserAtLocation() ? 1 : 0;
 		values.put(Adapter.POSTS_USER_AT_LOCATION, userAtLocation);
 		values.put(Adapter.POSTS_CONVERSATION_ID, post.getConversationId());
+		values.put(Adapter.POSTS_ALIAS, post.getAlias());
+		values.put(Adapter.POSTS_ACHIEVEMENT_ID, post.getAchievementId());
 		database.insert(Adapter.POSTS_TABLE, null, values);
 	}
 	

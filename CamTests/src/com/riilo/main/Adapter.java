@@ -6,8 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Adapter extends SQLiteOpenHelper{
 
-	private static final String DB_NAME="riilo4.db";
-	private static final int DB_VERSION=2;
+	private static final String DB_NAME="riilo5.db";
+	private static final int DB_VERSION=1;
 
 	public static final String POSTS_TABLE = "CamTestsPosts";
 	public static final String POSTS_MESSAGE = "Message";
@@ -22,9 +22,11 @@ public class Adapter extends SQLiteOpenHelper{
 	public static final String POSTS_CONVERSATION_ID = "ConversationId";
 	public static final String POSTS_INADDITIONTO_POST_ID = "InAdditionToPostId";
 	public static final String POSTS_USER_ID = "UserId";
+	public static final String POSTS_ALIAS = "Alias";
+	public static final String POSTS_ACHIEVEMENT_ID = "AchievementId";
 	
 	private static final String CREATE_POSTS_TABLE = String.format(
-									"CREATE TABLE %s (%s INTEGER, %s INTEGER, %s INTEGER, %s INTEGER, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s REAL, %s REAL, %s INTEGER, %s REAL)",
+									"CREATE TABLE %s (%s INTEGER, %s INTEGER, %s INTEGER, %s INTEGER, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s REAL, %s REAL, %s INTEGER, %s REAL, %s TEXT, %s INTEGER)",
 									POSTS_TABLE,
 									POSTS_POST_ID,
 									POSTS_REPLYTO_POST_ID,
@@ -37,7 +39,9 @@ public class Adapter extends SQLiteOpenHelper{
 									POSTS_LONGITUDE,
 									POSTS_LATITUDE,
 									POSTS_USER_AT_LOCATION,
-									POSTS_LOCATION_ACCURACY);
+									POSTS_LOCATION_ACCURACY,
+									POSTS_ALIAS,
+									POSTS_ACHIEVEMENT_ID);
 	
 	public static final String APP_STORAGE_TABLE = "AppStorage";
 	public static final String APP_STORAGE_KEY_COLUMN = "Key";

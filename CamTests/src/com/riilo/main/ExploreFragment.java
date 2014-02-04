@@ -116,7 +116,7 @@ public class ExploreFragment
 	@Override
 	public void onLocationChanged(Location location) {
 		if (!mapCameraAnimationRun){
-			animateMapCamera(new LatLng(location.getLatitude(), location.getLongitude()), 7.5f);
+			animateMapCamera(new LatLng(location.getLatitude(), location.getLongitude()), 4.5f);
 		}		
 	}
 	
@@ -142,7 +142,6 @@ public class ExploreFragment
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean("mapCameraAnimationRun", mapCameraAnimationRun);
         if (null != mapView)
         	mapView.onSaveInstanceState(outState);
     }
@@ -164,7 +163,6 @@ public class ExploreFragment
     //=========================================================================================================================================================
     
 	private void setupWidgetsViewElements() {
-		mapCameraAnimationRun = false;
 		if (timer==null)
 			timer = new Timer();
 		
