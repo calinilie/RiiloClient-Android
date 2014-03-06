@@ -99,7 +99,7 @@ public class PostListItemAdapter extends ArrayAdapter<Post>{
 		
 		if (post.getUserId().equalsIgnoreCase(this.currentUserId)){
 			if (hasAlias){
-				userId_textView.setText(String.format("%s, %s, ", this.context.getString(R.string.post_adapter_you), alias));
+				userId_textView.setText(String.format("%s, %s,", this.context.getString(R.string.post_adapter_you), alias));
 			}
 			else{
 				userId_textView.setText(this.context.getString(R.string.post_adapter_you));
