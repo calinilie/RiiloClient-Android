@@ -61,7 +61,9 @@ public class StringKeys {
 	public static final int WS_INTENT_GET_LOCATION_HISTORY = 9;
 	public static final int WS_INTENT_GET_AT_LOCATION_POSTS = 10;
 	public static final int WS_INTENT_GET_POST_GROUPS_ON_MAP = 11;
-	
+	public static final int WS_INTENT_REGISTER_FOR_GCM = 12; 
+	public static final int WS_INTENT_PROCESS_GCM_MESSAGE = 13;
+			
 	public static final String TAKE_PICTURE_INTENT_START_DATETIME = "com.riilo.main.StringKeys.dateCameraIntentStarted";
 	public static final String TAKE_PICTURE_FILE_NAME_AND_PATH= "com.riilo.main.StringKeys.FILE_NAME_AND_PATH";
 	public static final String TAKE_PICTURE_PIC_URI = "com.riilo.main.StringKeys.CAMERA_PIC_URI_STATE";

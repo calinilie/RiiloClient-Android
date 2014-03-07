@@ -7,6 +7,7 @@ import com.riilo.main.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
@@ -15,14 +16,18 @@ import com.riilo.interfaces.ILocationListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.location.Location;
 import android.os.Bundle;
 import android.provider.Settings.Secure;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 public abstract class BaseActivity extends FragmentActivity
@@ -52,7 +57,7 @@ public abstract class BaseActivity extends FragmentActivity
     
     protected PostsCache postsCache;
     protected AnalyticsWrapper analytics;
-    
+    protected Facade facade;
     
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +71,9 @@ public abstract class BaseActivity extends FragmentActivity
         
         postsCache = PostsCache.getInstance(this);
         analytics = AnalyticsWrapper.getInstance(this);
+        facade = Facade.getInstance(this);
+        
+        registerForGcmIfNeeded();
     }
 	
 	@Override
@@ -135,143 +143,8 @@ public abstract class BaseActivity extends FragmentActivity
         }
     }
     
-    //====================================Take photo============================================== 
-	/*protected void startCameraIntent() {
-	    try {
-	        dateCameraIntentStarted = new Date();
-	        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-	        //NOTE: Do NOT SET: intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraPicUri) on Samsung Galaxy S2/S3/.. for the following reasons:
-	        // 1.) it will break the correct picture orientation
-	        // 2.) the photo will be stored in two locations (the given path and additionally in the MediaStore)
-	
-	        String envPath = Environment.getExternalStorageDirectory().getPath();
-	        if (!envPath.endsWith("/")){
-	        	envPath+="/";
-	        }
-	        envPath += "Prototype/";
-	        File directory = new File(envPath);
-	        if (!directory.exists())
-	        	directory.mkdir();
-	        File file = new File(envPath+"Camtests_"+System.currentTimeMillis()+".jpg");
-	        
-	        fileName = file.getAbsolutePath();
-	        Uri fileUri = Uri.fromFile(file);
-	//	            if(!(manufacturer.contains("samsung")) && !(manufacturer.contains("sony")) && !(manufacturer.contains("htc") ) ) {
-	//	                ContentValues values = new ContentValues();
-	//	                values.put(MediaStore.Images.Media.TITLE, fileUri.toString());
-	//	                cameraPicUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-	//	                intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraPicUri);
-	//	            }
-	//	            if (manufacturer.contains("samsung") && model.contains("nexus")){
-	//	                 intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-	//	            }
-		            //Log.d("#########################", fileName);
-	        if( !manufacturer.contains("samsung") && !manufacturer.contains("google") )
-	        	intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-	        else if (model.contains("nexus")){
-	        	intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-	        }
-	        
-	        startActivityForResult(intent, StringKeys.TAKE_PICTURE_REQUEST_CODE);
-	     } catch (ActivityNotFoundException e) {
-	         showWarningDialog(getString(R.string.error_could_not_take_photo));
-	     }      
-	}*/
-	 
-	/*protected Uri onTakePhotoActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (resultCode == RESULT_OK) {
-            if (cameraPicUri == null){
-            	File f = new File(fileName);
-            	if (f.exists()){
-	            	cameraPicUri = Uri.parse(fileName);
-	            	//Log.d("<<<<<<<<#####<<<<<<<<<", "From Activity Field: " + fileName);
-            	}
-            }
-        	
-        	if (cameraPicUri == null){
-	            Cursor myCursor = null;
-	            Date dateOfPicture = null;
-	            try {
-	                // Create a Cursor to obtain the file Path for the large image
-	                String[] largeFileProjection = {MediaStore.Images.ImageColumns._ID,
-	                                                MediaStore.Images.ImageColumns.DATA,
-	                                                MediaStore.Images.ImageColumns.ORIENTATION,
-	                                                MediaStore.Images.ImageColumns.DATE_TAKEN};
-	                String largeFileSort = MediaStore.Images.ImageColumns._ID + " DESC";
-	                myCursor = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-	                                                    largeFileProjection, null, null, largeFileSort);
-	                myCursor.moveToFirst();
-	                // This will actually give you the file path location of the image.
-	                String largeImagePath = myCursor.getString(myCursor.getColumnIndexOrThrow(MediaStore.Images.ImageColumns.DATA));
-	                Uri tempCameraPicUri = Uri.fromFile(new File(largeImagePath));
-	                //Log.d("<<<<<<<<#####<<<<<<<<<", "From Media Store" + largeImagePath);
-	                if (tempCameraPicUri != null) {
-	                    dateOfPicture = new Date(myCursor.getLong(myCursor.getColumnIndexOrThrow(MediaStore.Images.ImageColumns.DATE_TAKEN)));
-	                    if (dateOfPicture != null && dateOfPicture.after(dateCameraIntentStarted)) {
-	                        cameraPicUri = tempCameraPicUri;
-	                    }
-	                }
-	            } catch (Exception e) {
-	              Log.w("TAG", "Exception - optaining the picture's uri failed: " + e.toString());
-	            } finally {
-	                if (myCursor != null) {
-	                    myCursor.close();
-	                }
-	            }
-        	}
-            
-            if (cameraPicUri == null) {
-                try {
-                    cameraPicUri = intent.getData();
-                    //Log.d("<<<<<<<<#####<<<<<<<<<", "From Intent.getData()" + cameraPicUri.toString());
-                } catch (Exception e){                  
-                    showWarningDialog(getString(R.string.error_could_not_take_photo));
-                }
-            }
-            
-            if (cameraPicUri!=null){
-            	File file = new File(Helpers.uriToFilePath(cameraPicUri));
-            	if (!file.exists()){
-            		showWarningDialog(getString(R.string.error_could_not_take_photo));
-            		//TODO exception handling in analytics
-            	}
-            	Uri retval = Uri.parse(cameraPicUri.toString());
-            	cameraPicUri = null;
-            	return retval;//BitmapHelper.resizeAndSaveImage(this, cameraPicUri);
-            	
-//            	if (add){
-//	            	Post post= new Post();
-//	            	post.setUri(cameraPicUri.toString());
-//	            	post.setDateCreated(Calendar.getInstance().getTime());
-//	            	post.setLatitude(mCurrentLocation.getLatitude());
-//	            	post.setLongitude(mCurrentLocation.getLongitude());
-//	            	post.setAccuracy(mCurrentLocation.getAccuracy());
-//	            	post.setUserAtLocation(true);
-//	            	
-//            		Intent intentPost= new Intent(this, WorkerService.class);
-//            		intentPost.putExtra(StringKeys.WORKER_SERVICE_INTENT_TYPE, StringKeys.WS_INTENT_POST);
-//            		intentPost.putExtra(StringKeys.POST_INTENT_BUNDLE, post.toBundle());
-//	            	startService(intentPost);
-//            }
-//            else{
-//            	showWarningDialog(getString(R.string.error_could_not_take_photo));
-//            }
-              
-        } else if (resultCode == RESULT_CANCELED) {
-        	//on HTC One X, if user cancels activity, the condition above is not satisfied !!!!
-        	//Log.d("onTakePhotoActivityResult<<<<<<<<<<<<<<<", "RESULT_CANCELED");
-        }
-        } else {
-//        	showWarningDialog(getString(R.string.error_could_not_take_photo));
-    		//TODO exception handling in analytics
-        }
-//        showWarningDialog(getString(R.string.error_could_not_take_photo));
-		//TODO exception handling in analytics
-        //Log.d("onTakePhotoActivityResult<<<<<<<<<<<<<<<", "SHOULD Have showWarningDialog");
-        return null;
-    }*/
-	
 	//===================================location and play services===============================
+    
 	@Override
 	public void onLocationChanged(Location location) {
 		this.location = location;
@@ -280,8 +153,8 @@ public abstract class BaseActivity extends FragmentActivity
 				listener.onLocationChanged(location);
 			}
 		}
-		LocationHistory lastKnownLocation = Facade.getInstance(this).getLastKnownLocation();
-		Facade.getInstance(this).insertLocationToHistoryIfNeeded(location, lastKnownLocation);
+		LocationHistory lastKnownLocation = facade.getLastKnownLocation();
+		facade.insertLocationToHistoryIfNeeded(location, lastKnownLocation);
 		//TODO change logic in method above
 	}
 	
@@ -347,7 +220,62 @@ public abstract class BaseActivity extends FragmentActivity
 		return location;
 	}
 
+	private boolean checkPlayServices() {
+	    int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+	    if (resultCode != ConnectionResult.SUCCESS) {
+	        if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+	            GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+	                    StringKeys.CONNECTION_FAILURE_RESOLUTION_REQUEST).show();
+	        } else {
+	            showWarningDialog("This device is not supported.");
+	        }
+	        return false;
+	    }
+	    return true;
+	}
+	
+	private void registerForGcmIfNeeded(){
+		if (checkPlayServices()) {
+            String regid = getRegistrationId();
+            
+            if (regid.isEmpty()) {
+            	Intent intent = new Intent(this, WorkerService.class);
+        		intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_REGISTER_FOR_GCM);
+        		startService(intent);
+            }
+        } else {
+            Log.e(TAG, "No valid Google Play Services APK found.");
+        }
+	}
+	
+	private String getRegistrationId() {
+	    String registrationId = facade.getGCMRegistrationId();
+	    if (registrationId==null || registrationId.isEmpty()) {
+	        return "";
+	    }
+	    
+	    int registeredVersion = facade.getRegisteredAppVersion();
+	    int currentVersion = getCurrentAppVersion(getApplicationContext());
+	    if (registeredVersion != currentVersion) {
+	    	facade.upsertAppVersion(currentVersion);
+	        return "";
+	    }
+	    return registrationId;
+	}
+	
+	private static int getCurrentAppVersion(Context context) {
+	    try {
+	        PackageInfo packageInfo = context.getPackageManager()
+	                .getPackageInfo(context.getPackageName(), 0);
+	        return packageInfo.versionCode;
+	    } catch (NameNotFoundException e) {
+	        // should never happen
+	        throw new RuntimeException("Could not get package name: " + e);
+	    }
+	}
+	
 	//===================================helper/utility methods and classes=======================
+	
 	protected abstract void setupWidgetsViewElements();
 	
 	/**

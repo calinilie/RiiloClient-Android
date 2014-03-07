@@ -14,6 +14,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
+import android.util.Log;
 import android.util.SparseArray;
 
 public class Facade {
@@ -318,6 +319,65 @@ public class Facade {
 		}
 	}
 	
+	public synchronized void upsertGCMRegistrationId(String registrationId){
+		open();
+		try{
+			if (doesAppStorageKeyExist(Adapter.APP_STORAGE_KEY_GCM_REG_ID)){
+				this.updateAppStorageValue(Adapter.APP_STORAGE_KEY_GCM_REG_ID, registrationId);
+				
+			}
+			else{
+				this.insertAppStorageKeyValuePair(Adapter.APP_STORAGE_KEY_GCM_REG_ID, registrationId);
+			}
+		}
+		catch(Exception e){
+		
+		}
+		finally{
+			close();
+		}
+	}
+	
+	public synchronized void upsertAppVersion(int appVersion){
+		open();
+		try{
+			if (this.doesAppStorageKeyExist(Adapter.APP_STORAGE_KEY_APP_VERSION)){
+				this.updateAppStorageValue(Adapter.APP_STORAGE_KEY_APP_VERSION, appVersion+"");
+			}
+			else {
+				this.insertAppStorageKeyValuePair(Adapter.APP_STORAGE_KEY_APP_VERSION, appVersion+"");
+			}
+		}
+		catch(Exception e){
+			
+		}
+		finally{
+			close();
+		}
+	}
+	
+ 	public synchronized String getGCMRegistrationId(){
+ 		String retVal="";
+ 		open();
+ 		try{
+	 		retVal = this.getStringAppStorageValue(Adapter.APP_STORAGE_KEY_GCM_REG_ID);
+	 		Log.d(TAG, retVal);
+ 		}
+ 		catch(Exception e){}
+ 		finally{close();}
+		return retVal;
+	}
+
+	public synchronized int getRegisteredAppVersion(){
+		open();
+		try{
+			return this.getIntAppStorageValue(Adapter.APP_STORAGE_KEY_APP_VERSION);
+		}
+		catch (Exception e) {}
+		finally { close(); }
+		return 0;
+	}
+	
 	//========APP STORAGE HELPER METHODS=================================================================================
 	
 	private synchronized boolean doesAppStorageKeyExist(String keyName){
@@ -343,7 +403,7 @@ public class Facade {
 		return retVal;
 	}
 	
-	private synchronized boolean getAppStorageValue(String keyName){
+	private synchronized boolean getBooleanAppStorageValue(String keyName){
 		boolean retVal = false;
 		Cursor cursor = null;
 		try{
@@ -366,6 +426,51 @@ public class Facade {
 		return retVal;
 	}
 	
+	private synchronized String getStringAppStorageValue(String keyName){
+		Cursor cursor = null;
+		try{
+			cursor = database.query(
+					Adapter.APP_STORAGE_TABLE, 
+					appStorageColumns, 
+					Adapter.APP_STORAGE_KEY_COLUMN+" = ?", 
+					new String[]{keyName}, 
+					null, null, null);
+			if (cursor.moveToFirst()){
+				return cursor.getString(1);
+			}
+		}
+		catch (Exception e){
+			
+		}
+		finally{
+			if (cursor!=null)
+				cursor.close();
+		}
+		return null;
+	}
+	
+	private synchronized int getIntAppStorageValue(String keyName){
+		Cursor cursor = null;
+		try{
+			cursor = database.query(
+					Adapter.APP_STORAGE_TABLE, 
+					appStorageColumns, 
+					Adapter.APP_STORAGE_KEY_COLUMN+" = ?", 
+					new String[]{keyName}, 
+					null, null, null);
+			if (cursor.moveToFirst())
+				return cursor.getInt(1);
+		}
+		catch (Exception e){
+			
+		}
+		finally{
+			if (cursor!=null)
+				cursor.close();
+		}
+		return 0;
+	}
+	
 	private synchronized void insertAppStorageKey(String keyName){
 		this.insertAppStorageKeyValuePair(keyName, "0");
 	}
@@ -380,10 +485,11 @@ public class Facade {
 	private synchronized void updateAppStorageValue(String keyName, String value){
 		values.clear();
 		values.put(Adapter.APP_STORAGE_VALUE_COLUMN, value);
-		database.update(
+		int count = database.update(
 				Adapter.APP_STORAGE_TABLE, values, 
 				Adapter.APP_STORAGE_KEY_COLUMN +" = ?", 
 				new String[] {keyName});
+		Log.d(TAG, count+"");
 	}
 	
 	private String getTutorialKeyName(int resourceId){
@@ -428,7 +534,7 @@ public class Facade {
 		open();
 		try{
 			for(Integer i: tutorialDialogResources){
-				retVal &= this.getAppStorageValue(getTutorialKeyName(i)); 
+				retVal &= this.getBooleanAppStorageValue(getTutorialKeyName(i)); 
 			}
 		}
 		catch(Exception e){

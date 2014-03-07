@@ -99,8 +99,6 @@ public class ExploreFragment
     	
     	setupTutorials();
     	
-    	Log.d(TAG, "onCreateView");
-    	
     	return view;
     }
 	

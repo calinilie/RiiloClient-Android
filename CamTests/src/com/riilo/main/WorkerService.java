@@ -26,15 +26,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.riilo.main.R;
 
 import android.app.IntentService;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.provider.Settings.Secure;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -45,6 +51,8 @@ public class WorkerService extends IntentService{
 	private PostsCache postsCache; 
 	private LocationHistoryManager locationHistoryManager;
 	private static final String TAG = "<<<<<<<<<WORKER SERVICE>>>>>>>>>"; 
+	
+	private Facade facade;
 	
 	public WorkerService() {
 		super("WorkerIntentService");
@@ -57,6 +65,7 @@ public class WorkerService extends IntentService{
             Secure.ANDROID_ID);
 		postsCache = PostsCache.getInstance(this);
 		locationHistoryManager = LocationHistoryManager.getInstance(this);
+		facade = Facade.getInstance(this);
 	}
 	
 	@Override
@@ -75,6 +84,7 @@ public class WorkerService extends IntentService{
 		int intentType = intent.getIntExtra(StringKeys.WS_INTENT_TYPE, -1);
 		double latitude = 0;
 		double longitude = 0;
+		GoogleCloudMessaging gcm = null;
 		switch (intentType){
 		case StringKeys.WS_INTENT_POST:
 			Post post = new Post(intent.getBundleExtra(StringKeys.POST_BUNDLE));
@@ -180,7 +190,7 @@ public class WorkerService extends IntentService{
 			break;
 			
 		case StringKeys.WS_INTENT_INSERT_LOCATION_HISTORY:
-			LocationHistory location = Facade.getInstance(this).getLastKnownLocation();
+			LocationHistory location = facade.getLastKnownLocation();
 			location.setUserId(deviceId);
 			postLocationHistory(location);
 			break;
@@ -195,11 +205,48 @@ public class WorkerService extends IntentService{
 				resultReceiver.send(123, resultData);
 			}
 			break;
+		case StringKeys.WS_INTENT_REGISTER_FOR_GCM:
+			gcm = GoogleCloudMessaging.getInstance(this);
+			String regId = "";
+			try {
+				regId = gcm.register("271980103838");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			if (!regId.isEmpty()){
+				facade.upsertGCMRegistrationId(regId);
+				Log.d(TAG, "just upsertGCMRegistrationId "+regId);
+			}
+			break;
+		case StringKeys.WS_INTENT_PROCESS_GCM_MESSAGE:
+			Bundle extras = intent.getExtras();
+	        gcm = GoogleCloudMessaging.getInstance(this);
+	        String messageType = gcm.getMessageType(intent);
+
+	        if (!extras.isEmpty()) {  // has effect of unparcelling Bundle
+	            if (GoogleCloudMessaging.
+	                    MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
+//	                sendNotification("Send error: " + extras.toString());
+	            	Log.e(TAG, "Send error: " + extras.toString());
+	            } else if (GoogleCloudMessaging.
+	                    MESSAGE_TYPE_DELETED.equals(messageType)) {
+//	                sendNotification("Deleted messages on server: " + extras.toString());
+	            	Log.e(TAG, "Send error: " + extras.toString());
+	            // If it's a regular GCM message, do some work.
+	            } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
+	                // Post notification of received message.
+	                sendNotification("Received: " + extras.toString());
+	                Log.d(TAG, "Received: " + extras.toString());
+	            }
+	        }
+	        // Release the wake lock provided by the WakefulBroadcastReceiver.
+	        GcmBroadcastReceiver.completeWakefulIntent(intent);
+			break;
 		}
 	}
 	
 	private void savePostLocally(Post post){
-		Facade.getInstance(this).insertPost(post);
+		facade.insertPost(post);
 	}
 	
 	private PostInsertedDTO uploadPost(Post model){
@@ -222,7 +269,7 @@ public class WorkerService extends IntentService{
 					String json = locationHistory.toJson().toString();
 					String endpoint = getString(R.string.endpoint_post_location);
 					tryPostWithRetry(endpoint, json);
-					Facade.getInstance(this).updateLastLocationSent();
+					facade.updateLastLocationSent();
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -507,7 +554,27 @@ public class WorkerService extends IntentService{
 		}
 		return true;
 	}
+	
+	private void sendNotification(String msg) {
+		NotificationManager mNotificationManager = (NotificationManager)
+                this.getSystemService(Context.NOTIFICATION_SERVICE);
 
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                new Intent(this, MainActivity.class), 0);
+
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+        .setSmallIcon(R.drawable.ic_map_marker_riilo)
+        .setDefaults(Notification.DEFAULT_SOUND)
+        .setContentTitle("GCM Notification")
+        .setStyle(new NotificationCompat.BigTextStyle()
+        .bigText(msg))
+        .setContentText(msg);
+
+        mBuilder.setContentIntent(contentIntent);
+        mNotificationManager.notify(1, mBuilder.build());
+    }
 }
+
 
 

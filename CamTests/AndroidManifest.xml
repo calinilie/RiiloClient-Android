@@ -16,7 +16,17 @@
 	
 	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+	<uses-permission android:name="android.permission.WAKE_LOCK"/>
+	<uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+	
 	<uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"></uses-permission>
+	
+	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+	<uses-permission android:name="com.riilo.main.permission.C2D_MESSAGE"/>
+	
+	<uses-permission android:name=""/>
+	<uses-permission android:name=""/>
+	
 	
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
     
@@ -76,6 +86,17 @@
         <service android:enabled="true"
             	android:name="com.riilo.main.WorkerService">
         </service>
+        
+        <!-- GCM -->
+        <receiver
+            android:name="com.riilo.main.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.riilo.main" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".GcmIntentService" />
         
         <!-- Used for Google Play Store Campaign Measurement-->;
 		<service android:name="com.google.analytics.tracking.android.CampaignTrackingService" />
