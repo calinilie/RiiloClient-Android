@@ -62,6 +62,14 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
             }
         });
         
+        //=================================================
+        boolean showNotifications = getIntent().getBooleanExtra(StringKeys.SHOW_NOTIFICATIONS_TAB_FIRST, false);
+        
+        showWarningDialog(showNotifications+"");
+        if (showNotifications)
+        	actionBar.setSelectedNavigationItem(3);
+        //=================================================
+        
         pullToRefreshLayout =  (PullToRefreshLayout) findViewById(R.id.ptr_layout);
         
  		setupWizard = ActionBarPullToRefresh.from(this)

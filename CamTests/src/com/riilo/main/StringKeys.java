@@ -73,6 +73,7 @@ public class StringKeys {
 	public static final String CONNECTION_TIMEDOUT = "com.riilo.main.StringKeys.CONNECTION_TIMEDOUT";
 //	public static final int CONNECTION_TIMEDOUT_AS_INT = 412;
 	public static final String POST_REQUEST_FAILED = "com.riilo.main.StringKeys.POST_REQUEST_FAILED";
+	public static final String SHOW_NOTIFICATIONS_TAB_FIRST = "com.riilo.main.StringKeys.SHOW_NOTIFICATIONS_TAB_FIRST";
 
 	
 	

@@ -585,8 +585,9 @@ public class WorkerService extends IntentService{
 		NotificationManager mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), 0);
+		Intent startRiiloIntent = new Intent(this, MainActivity.class);
+		startRiiloIntent.putExtra(StringKeys.SHOW_NOTIFICATIONS_TAB_FIRST, true);
+        PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0, startRiiloIntent, 0);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
