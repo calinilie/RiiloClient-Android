@@ -46,9 +46,10 @@ public class Adapter extends SQLiteOpenHelper{
 	public static final String APP_STORAGE_TABLE = "AppStorage";
 	public static final String APP_STORAGE_KEY_COLUMN = "Key";
 	public static final String APP_STORAGE_VALUE_COLUMN = "Value";
-	public static final String APP_STORAGE_KEY_GCM_REG_ID = "GCMRegId";
-	public static final String APP_STORAGE_KEY_APP_VERSION = "AppVersion";
 	
+	public static final String APP_STORAGE_KEY_GCM_REG_ID = "GCMRegId";
+	public static final String APP_STORAGE_KEY_GCM_REG_ID_SAVED = "GCMRegIdSaved";
+	public static final String APP_STORAGE_KEY_APP_VERSION = "AppVersion";
 	
 	private static final String CREATE_APP_STORAGE_TABLE = String.format("CREATE TABLE %s (%s TEXT, %s TEXT)", APP_STORAGE_TABLE, APP_STORAGE_KEY_COLUMN, APP_STORAGE_VALUE_COLUMN);
 	

@@ -237,7 +237,7 @@ public abstract class BaseActivity extends FragmentActivity
 	private void registerForGcmIfNeeded(){
 		if (checkPlayServices()) {
             String regid = getRegistrationId();
-            
+            Log.d(TAG, "regid: "+regid);
             if (regid.isEmpty()) {
             	Intent intent = new Intent(this, WorkerService.class);
         		intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_REGISTER_FOR_GCM);
@@ -250,16 +250,25 @@ public abstract class BaseActivity extends FragmentActivity
 	
 	private String getRegistrationId() {
 	    String registrationId = facade.getGCMRegistrationId();
+	    
+	    int currentVersion = getCurrentAppVersion(getApplicationContext());
 	    if (registrationId==null || registrationId.isEmpty()) {
+	    	//set the current version, to avoid double request
+	    	facade.upsert_AppStorage_AppVersion(currentVersion);
 	        return "";
 	    }
 	    
 	    int registeredVersion = facade.getRegisteredAppVersion();
-	    int currentVersion = getCurrentAppVersion(getApplicationContext());
 	    if (registeredVersion != currentVersion) {
-	    	facade.upsertAppVersion(currentVersion);
+	    	facade.upsert_AppStorage_AppVersion(currentVersion);
 	        return "";
 	    }
+	    
+	    //check if it was saved to server - done everytime the app starts
+	    if (!facade.was_appStorage_RegIdSaved()){
+	    	
+	    }
+	    
 	    return registrationId;
 	}
 	

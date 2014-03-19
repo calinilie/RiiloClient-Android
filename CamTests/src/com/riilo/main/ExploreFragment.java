@@ -187,6 +187,7 @@ public class ExploreFragment
 			map.setOnMapClickListener(this);
 			Helpers.addPostsToMap(postsCache.getExplore_onMapPostGroups(), map);
 		}
+		else activity.showWarningDialog(getString(R.string.error_no_google_maps));
 	}
 	
 	private void animateMapCamera(LatLng location, float zoom){

@@ -319,14 +319,17 @@ public class Facade {
 		}
 	}
 	
-	public synchronized void upsertGCMRegistrationId(String registrationId){
+	//========APP STORAGE METHODS=================================================================================
+	
+	public synchronized void upsert_AppStorage_GCMRegistrationId(String registrationId){
 		open();
 		try{
 			if (doesAppStorageKeyExist(Adapter.APP_STORAGE_KEY_GCM_REG_ID)){
+				Log.d(TAG, "key exists - being updated!" + registrationId);
 				this.updateAppStorageValue(Adapter.APP_STORAGE_KEY_GCM_REG_ID, registrationId);
-				
 			}
 			else{
+				Log.d(TAG, "key NOT exists - being inserted!" + registrationId);
 				this.insertAppStorageKeyValuePair(Adapter.APP_STORAGE_KEY_GCM_REG_ID, registrationId);
 			}
 		}
@@ -335,10 +338,11 @@ public class Facade {
 		}
 		finally{
 			close();
+			this.appStorage_RegIdChanged();
 		}
 	}
 	
-	public synchronized void upsertAppVersion(int appVersion){
+	public synchronized void upsert_AppStorage_AppVersion(int appVersion){
 		open();
 		try{
 			if (this.doesAppStorageKeyExist(Adapter.APP_STORAGE_KEY_APP_VERSION)){
@@ -376,6 +380,39 @@ public class Facade {
 		catch (Exception e) {}
 		finally { close(); }
 		return 0;
+	}
+	
+	public synchronized boolean was_appStorage_RegIdSaved(){
+		open();
+		try{
+			return this.getBooleanAppStorageValue(Adapter.APP_STORAGE_KEY_GCM_REG_ID_SAVED);
+		}
+		catch(Exception e){}
+		finally{close();}
+		return false;
+	}
+	
+	public synchronized void appStorage_RegIdChanged(){
+		this.upsert_AppStorage_wasRegIdSaved(false);
+	}
+	
+	public synchronized void appStorage_RegIdSaved(){
+		this.upsert_AppStorage_wasRegIdSaved(true);
+	}
+	
+	private void upsert_AppStorage_wasRegIdSaved(boolean wasSaved){
+		open();
+		String value = wasSaved ? "1" : "0";
+		try{
+			if (this.doesAppStorageKeyExist(Adapter.APP_STORAGE_KEY_GCM_REG_ID_SAVED)){
+				this.updateAppStorageValue(Adapter.APP_STORAGE_KEY_GCM_REG_ID_SAVED, value);
+			}
+			else{
+				this.insertAppStorageKeyValuePair(Adapter.APP_STORAGE_KEY_GCM_REG_ID_SAVED, value);
+			}
+		}
+		catch(Exception e){}
+		finally {close();}
 	}
 	
 	//========APP STORAGE HELPER METHODS=================================================================================
@@ -489,7 +526,6 @@ public class Facade {
 				Adapter.APP_STORAGE_TABLE, values, 
 				Adapter.APP_STORAGE_KEY_COLUMN +" = ?", 
 				new String[] {keyName});
-		Log.d(TAG, count+"");
 	}
 	
 	private String getTutorialKeyName(int resourceId){
