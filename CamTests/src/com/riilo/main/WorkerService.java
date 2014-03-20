@@ -206,7 +206,6 @@ public class WorkerService extends IntentService{
 			}
 			break;
 		case StringKeys.WS_INTENT_REGISTER_FOR_GCM:
-			Log.d(TAG, "registering device");
 			gcm = GoogleCloudMessaging.getInstance(this);
 			String regId = "";
 			try {
@@ -215,7 +214,6 @@ public class WorkerService extends IntentService{
 				e.printStackTrace();
 			}
 			if (!regId.isEmpty()){
-				Log.d(TAG, regId);
 				facade.upsert_AppStorage_GCMRegistrationId(regId);
 				postDeviceSNSRegId(regId);
 			}
@@ -254,7 +252,7 @@ public class WorkerService extends IntentService{
 	}
 	
 	private PostInsertedDTO uploadPost(Post model){
-		String postEndpoint = getResources().getString(R.string.local_test_posts_upload);
+		String postEndpoint = getResources().getString(R.string.endpoint_posts_upload);
 		try{
 			String jsonString = tryPostWithRetry(postEndpoint, model.toJson().toString());
 			PostInsertedDTO retVal = jsonToPostInsertedDTO(jsonString);
@@ -271,7 +269,7 @@ public class WorkerService extends IntentService{
 			if (locationHistory.getLatitude()!= 0 || locationHistory.getLatitude()!=0){
 				try {
 					String json = locationHistory.toJson().toString();
-					String endpoint = getString(R.string.local_test_post_location);
+					String endpoint = getString(R.string.endpoint_post_location);
 					tryPostWithRetry(endpoint, json);
 					facade.updateLastLocationSent();
 				} catch (JSONException e) {
@@ -289,7 +287,7 @@ public class WorkerService extends IntentService{
 				jsonObject.put("regId", registrationId);
 				jsonObject.put("platform", "android");
 				String json = jsonObject.toString(); 
-				String endpoint = getString(R.string.local_test_device_insert);
+				String endpoint = getString(R.string.endpoint_device_insert);
 				String result = tryPostWithRetry(endpoint, json);
 				if (result.equals("true")){
 					facade.appStorage_RegIdSaved();
@@ -305,7 +303,7 @@ public class WorkerService extends IntentService{
 	
 	private List<LocationHistory> getLocationHistory(){
 		List<LocationHistory> retVal = new ArrayList<LocationHistory>();
-		String endpoint = getString(R.string.local_test_location_history);
+		String endpoint = getString(R.string.endpoint_location_history);
 		//get json with retry
 		String json = getJson(endpoint);
 		if (!isValidJsonResponse(json)){
@@ -328,7 +326,7 @@ public class WorkerService extends IntentService{
 	}
 	
 	private String silenceNotifications(List<Long> postIds, String userId){
-		String endpoint = getResources().getString(R.string.local_test_silence_notifications);
+		String endpoint = getResources().getString(R.string.endpoint_silence_notifications);
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("userId", userId);
@@ -344,7 +342,7 @@ public class WorkerService extends IntentService{
 	}
 	
 	private List<Post> getPostsOnMap(){
-		String endpoint = getString(R.string.local_test_posts_on_map);
+		String endpoint = getString(R.string.endpoint_posts_on_map);
 		List<Post> retVal = getPostsWithRetry(endpoint);
 		if (retVal!=null){
 			//TODO add to cache
@@ -354,7 +352,7 @@ public class WorkerService extends IntentService{
 	
 	private List<Post> getLatestPosts(int start, int limit){
 		//build endpoint
-		String endpoint = getString(R.string.local_test_latest_posts);
+		String endpoint = getString(R.string.endpoint_latest_posts);
 	    endpoint += String.format("%s/%s/", start, limit);
 		
 	    List<Post> retVal = getPostsWithRetry(endpoint);
@@ -377,7 +375,7 @@ public class WorkerService extends IntentService{
 	}*/
 	
 	private List<Post> getNearbyPosts(double latitude, double longitude){
-		String endpoint = getString(R.string.local_test_nearby_posts);
+		String endpoint = getString(R.string.endpoint_nearby_posts);
 		int distance = 20;
 		endpoint = String.format("%s%s/%s/%s/", endpoint, latitude+"", longitude+"", distance+"");
 		List<Post> retVal = getPostsWithRetry(endpoint);
@@ -394,14 +392,14 @@ public class WorkerService extends IntentService{
 	}
 	
 	private List<Post> getAtLocationPosts(double latitude, double longitude, double distance){
-		String endpoint = getString(R.string.local_test_nearby_posts);
+		String endpoint = getString(R.string.endpoint_nearby_posts);
 		endpoint = String.format("%s%s/%s/%s/", endpoint, latitude+"", longitude+"", distance+"");
 		List<Post> retVal = getPostsWithRetry(endpoint);
 		return retVal;
 	}
 	
 	private List<Post> getConverstionByConversationId(long conversationId){
-		String endpoint = getString(R.string.local_test_conversation);
+		String endpoint = getString(R.string.endpoint_conversation);
 		endpoint += conversationId;
 		
 		List<Post> retVal = getPostsWithRetry(endpoint);
@@ -416,7 +414,7 @@ public class WorkerService extends IntentService{
 	
 	private List<Post> getNotificationsForUser(String userId){
 		List<Post> retVal = null;
-		String endpoint = getString(R.string.local_test_notifications);
+		String endpoint = getString(R.string.endpoint_notifications);
 		endpoint += userId;
 		
 		retVal = getPostsWithRetry(endpoint);

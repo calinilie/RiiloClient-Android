@@ -237,7 +237,6 @@ public abstract class BaseActivity extends FragmentActivity
 	private void registerForGcmIfNeeded(){
 		if (checkPlayServices()) {
             String regid = getRegistrationId();
-            Log.d(TAG, "regid: "+regid);
             if (regid.isEmpty()) {
             	Intent intent = new Intent(this, WorkerService.class);
         		intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_REGISTER_FOR_GCM);
@@ -266,7 +265,7 @@ public abstract class BaseActivity extends FragmentActivity
 	    
 	    //check if it was saved to server - done everytime the app starts
 	    if (!facade.was_appStorage_RegIdSaved()){
-	    	
+	    	return "";
 	    }
 	    
 	    return registrationId;

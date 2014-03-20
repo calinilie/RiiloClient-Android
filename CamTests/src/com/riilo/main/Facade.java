@@ -325,11 +325,9 @@ public class Facade {
 		open();
 		try{
 			if (doesAppStorageKeyExist(Adapter.APP_STORAGE_KEY_GCM_REG_ID)){
-				Log.d(TAG, "key exists - being updated!" + registrationId);
 				this.updateAppStorageValue(Adapter.APP_STORAGE_KEY_GCM_REG_ID, registrationId);
 			}
 			else{
-				Log.d(TAG, "key NOT exists - being inserted!" + registrationId);
 				this.insertAppStorageKeyValuePair(Adapter.APP_STORAGE_KEY_GCM_REG_ID, registrationId);
 			}
 		}
@@ -365,7 +363,6 @@ public class Facade {
  		open();
  		try{
 	 		retVal = this.getStringAppStorageValue(Adapter.APP_STORAGE_KEY_GCM_REG_ID);
-	 		Log.d(TAG, retVal);
  		}
  		catch(Exception e){}
  		finally{close();}
