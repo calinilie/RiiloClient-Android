@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.riilo.interfaces.ILatestPostsListener;
 import com.riilo.interfaces.UIListener;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
@@ -39,7 +40,6 @@ public class PostsCache {
 		explore_onMapPostGroups = new HashSet<Post>();
 		explore_onMapPosts = new HashSet<Post>();
 		
-		this.addPosts(Facade.getInstance(context).getAllPosts());
 		this.context = context;
 		
 		this.timestamp_PostsCall = new RequestTimestamp();
@@ -71,41 +71,28 @@ public class PostsCache {
 		return retVal;
 	}
 	
-	public synchronized boolean addPostToLatestPosts(Post currentPost){
-		addPost(currentPost);
-		boolean conversationFound = false;
-		for(Post p : latestPosts){
-			if(currentPost.getConversationId()==p.getConversationId()){
-				conversationFound = true;
-				if (currentPost.isNewer(p)){
-					latestPosts.add(currentPost);
-					latestPosts.remove(p);
-					return true;
-				}
-			}
-		}
-		if (!conversationFound)latestPosts.add(currentPost);
-		return false;
-	}
-	
 	public synchronized List<Post> getLatestPosts(){
 		return this.latestPosts;
 	}
-	
- 	public synchronized List<Post> getLatestPosts(
- 				PostListItemAdapter adapter, 
- 				List<Post> adapterData, 
- 				PullToRefreshLayout pullToRefreshLayout){
-		return this.getLatestPosts(adapter, adapterData, pullToRefreshLayout, false);
-	}
-	
+
+ 	public synchronized List<Post> addNewPostsToLatest(List<Post> newPosts){
+ 		List<Post> retVal = new ArrayList<Post>();
+ 		if (newPosts != null){
+	 		for(Post p : newPosts){
+	 			if (!this.latestPosts.contains(p)){
+	 				this.latestPosts.add(p);
+	 				retVal.add(p);
+	 			}
+	 		}
+ 		}
+ 		return retVal;
+ 	}
+ 	
  	//TODO
 	public synchronized List<Post> getLatestPosts(
-			PostListItemAdapter adapter, 
-			List<Post> adapterData, 
-			PullToRefreshLayout pullToRefreshLayout, 
+			ILatestPostsListener latestPostsListener,
 			boolean forcedUpdate){
-		startService_getLatest(adapter, adapterData, pullToRefreshLayout, forcedUpdate);
+		startService_getLatest(latestPostsListener, forcedUpdate);
 		return latestPosts;
 	}
 	
@@ -389,25 +376,19 @@ public class PostsCache {
 	}
 	
 	private void startService_getLatest(
-			PostListItemAdapter adapter, 
-			List<Post> adapterData, 
-			PullToRefreshLayout pullToRefreshLayout, 
+			ILatestPostsListener listener, 
 			boolean forcedUpdate){
 		if (isRequestAllowed(this.timestamp_PostsCall, forcedUpdate)){
 			
 			Intent intent = new Intent(context, WorkerService.class);
 	        intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_LATEST_POSTS);
 	        
-	        intent.putExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC);
+	        /*intent.putExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, StringKeys.POST_RESULT_RECEIVER_CODE_LATEST_POSTS);*/
 	        Handler handler = new Handler();
 	        PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);
-	        resultReceiver.setAdapter(adapter);
-	        resultReceiver.setAdapterData(adapterData);
-	        resultReceiver.setPullToRefreshAttacher(pullToRefreshLayout);
+	        resultReceiver.setLatestPostsListener(listener);
 	        intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
 	        context.startService(intent);
-	        
-	        startRereshAniamtion(handler, pullToRefreshLayout);
 		}
 	}
 	

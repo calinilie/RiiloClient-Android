@@ -75,112 +75,6 @@ public class Facade {
 		dataAdapter.close();
 	}
 	
-	public synchronized void insertPost(Post post){
-		if (post.getPriority() <= 0){
-			open();
-			try{
-				if (!doesPostExist(post.getId())){
-					inserPost(post);
-				}
-			}
-			catch(Exception e){
-			}
-			finally{
-				close();
-			}
-		}
-	}
-	
-	public synchronized List<Post> getAllPosts(){
-		open();
-		Cursor cursor = null;
-		List<Post> retVal = new ArrayList<Post>();
-		try{
-			String orderBy = Adapter.POSTS_POST_ID+" desc";
-			cursor = database.query(Adapter.POSTS_TABLE, postsTableCols, null, null, null, null, orderBy, null);
-			while (cursor.moveToNext()){
-				Post post = new Post();
-				post.setId(cursor.getInt(0));
-				post.setRepliesToPostId(cursor.getInt(1));
-				post.setInAdditionToPostId(cursor.getInt(2));
-				post.setUserId(cursor.getString(3));
-				post.setUri(cursor.getString(4));
-				post.setLatitude(cursor.getDouble(5));
-				post.setLongitude(cursor.getDouble(6));
-				post.setAccuracy(cursor.getFloat(7));
-				post.setDateCreated(new Date(cursor.getLong(8)));
-				post.setMessage(cursor.getString(9));
-				post.setUserAtLocation(cursor.getInt(10)==1 ? true : false);
-				post.setConversationId(cursor.getInt(11));
-				post.setAlias(cursor.getString(12));
-				post.setAchievementId(cursor.getInt(13));
-				retVal.add(post);
-			}
-			deleteOldPosts(retVal.size());
-		}
-		catch(Exception e){
-			
-		}
-		finally{
-			if (cursor!=null)
-				cursor.close();
-			close();
-		}
-		
-		return retVal;
-	}
-	
-	private synchronized boolean doesPostExist(long id){
-		String selection = String.format("%s = ?", Adapter.POSTS_POST_ID);
-		String[] selectionArgs = {id+""}; 
-		Cursor cursor = database.query(Adapter.POSTS_TABLE, postsTableCols, selection, selectionArgs, null, null, null, null);
-		if (cursor.moveToNext())
-			return true;
-		return false;
-	}
-	
-	private void deleteOldPosts(int totalCount){
-		int oldPostsCount = totalCount - 300;
-		if (oldPostsCount>0){
-			String whereClause = String.format(" %s in (select %s from %s order by %s limit %s)", Adapter.POSTS_POST_ID, Adapter.POSTS_POST_ID, Adapter.POSTS_TABLE, Adapter.POSTS_POST_ID, oldPostsCount+"");
-			database.delete(Adapter.POSTS_TABLE, whereClause, null);
-		}
-	}
-	
-	@Deprecated
-	public synchronized void insertForeignPost(Post post, String deviceId){
-		open();
-		if (!deviceId.equalsIgnoreCase(post.getUserId())){
-			if (!doesPostExist(post.getId())){
-				insertPost(post);
-			}
-		}
-		close();
-	}
-	
-	private void inserPost(Post post){
-		values.clear();
-		if (post.getId()!=0)
-			values.put(Adapter.POSTS_POST_ID, post.getId());
-		if (post.getRepliesToPostId()!=0)
-			values.put(Adapter.POSTS_REPLYTO_POST_ID, post.getRepliesToPostId());
-		if (post.getInAdditionToPostId()!=0)
-			values.put(Adapter.POSTS_INADDITIONTO_POST_ID, post.getInAdditionToPostId());
-		values.put(Adapter.POSTS_USER_ID, post.getUserId());
-		values.put(Adapter.POSTS_URI, post.getUri());
-		values.put(Adapter.POSTS_DATE_CREATED, post.getDateCreated().getTime());
-		values.put(Adapter.POSTS_LONGITUDE, post.getLongitude());
-		values.put(Adapter.POSTS_LATITUDE, post.getLatitude());
-		values.put(Adapter.POSTS_LOCATION_ACCURACY, post.getAccuracy());
-		values.put(Adapter.POSTS_MESSAGE, post.getMessage());
-		int userAtLocation = post.isUserAtLocation() ? 1 : 0;
-		values.put(Adapter.POSTS_USER_AT_LOCATION, userAtLocation);
-		values.put(Adapter.POSTS_CONVERSATION_ID, post.getConversationId());
-		values.put(Adapter.POSTS_ALIAS, post.getAlias());
-		values.put(Adapter.POSTS_ACHIEVEMENT_ID, post.getAchievementId());
-		database.insert(Adapter.POSTS_TABLE, null, values);
-	}
-	
 	public synchronized boolean insertLocationToHistoryIfNeeded(Location location, LocationHistory lastKnownLocation){
 		if (location!=null && lastKnownLocation!=null){
 				double distanceBetweenlocations = Helpers.distanceInKmFrom(location.getLatitude(), 
@@ -245,22 +139,7 @@ public class Facade {
 		}
 		return retVal;
 	}
-	
-	/*public synchronized void insertOutsideLocationHistory(List<LocationHistory> list){
-		open();
-		for(LocationHistory l:list){
-			if (!doesLocationHistoryExist(l.getLocationHistoryId())){
-				values.clear();
-				values.put(Adapter.OUTSIDE_LOCATION_HISTORY_ID, l.getLocationHistoryId());
-				values.put(Adapter.OUTSIDE_LOCATION_HISTORY_LATITUDE, l.getLatitude());
-				values.put(Adapter.OUTSIDE_LOCATION_HISTORY_LONGITUDE, l.getLongitude());
-				values.put(Adapter.OUTSIDE_LOCATION_HISTORY_DATE, Helpers.dateToString(l.getDate()));
-				database.insert(Adapter.OUTSIDE_LOCATION_HISTORY_TABLE, null, values);
-			}
-		}
-		close();
-	}*/
-	
+
 	public synchronized List<LocationHistory> getLocationHistory(){
 		List<LocationHistory> retVal = new ArrayList<LocationHistory>();
 		Cursor cursor = null;

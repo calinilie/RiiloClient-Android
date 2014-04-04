@@ -12,16 +12,16 @@
     <string name="endpoint_posts_on_map">http://d19vwjdwjmit8v.cloudfront.net/posts/onmap/</string>
     <string name="endpoint_device_insert">http://riilo-prod.elasticbeanstalk.com/device/insert/</string>
     
-    <string name="local_test_posts_upload">http://192.168.1.62:8080/web/posts/upload/</string>
-    <string name="local_test_latest_posts">http://192.168.1.62:8080/web/posts/latest/</string>
-    <string name="local_test_conversation">http://192.168.1.62:8080/web/posts/conversation/</string>
-    <string name="local_test_notifications">http://192.168.1.62:8080/web/posts/new/</string>
-    <string name="local_test_silence_notifications">http://192.168.1.62:8080/web/posts/silence/</string>
-    <string name="local_test_nearby_posts">http://192.168.1.62:8080/web/posts/nearby/</string>
-    <string name="local_test_post_location">http://192.168.1.62:8080/web/location/insert/</string>
-    <string name="local_test_location_history">http://192.168.1.62:8080/web/location/history/</string>
-    <string name="local_test_posts_on_map">http://192.168.1.62:8080/web/posts/onmap/</string>
-    <string name="local_test_device_insert">http://192.168.1.62:8080/web/device/insert/</string>
+    <string name="local_test_posts_upload">http://192.168.0.197:8080/web/posts/upload/</string>
+    <string name="local_test_latest_posts">http://192.168.0.197:8080/web/posts/latest/</string>
+    <string name="local_test_conversation">http://192.168.0.197:8080/web/posts/conversation/</string>
+    <string name="local_test_notifications">http://192.168.0.197:8080/web/posts/new/</string>
+    <string name="local_test_silence_notifications">http://192.168.0.197:8080/web/posts/silence/</string>
+    <string name="local_test_nearby_posts">http://192.168.0.197:8080/web/posts/nearby/</string>
+    <string name="local_test_post_location">http://192.168.0.197:8080/web/location/insert/</string>
+    <string name="local_test_location_history">http://192.168.0.197:8080/web/location/history/</string>
+    <string name="local_test_posts_on_map">http://192.168.0.197:8080/web/posts/onmap/</string>
+    <string name="local_test_device_insert">http://192.168.0.197:8080/web/device/insert/</string>
     
     <string name="content_description_tutorial_image">Tutorial Illustration</string>
     <string name="content_description_user_at_location">User at location</string>

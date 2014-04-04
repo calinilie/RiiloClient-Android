@@ -2,6 +2,8 @@ package com.riilo.main;
 
 import java.util.List;
 
+import com.riilo.interfaces.ILatestPostsListener;
+
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 
 import android.os.Bundle;
@@ -13,6 +15,8 @@ import android.widget.Button;
 
 public class PostsResultReceiver extends ResultReceiver{
 
+	private ILatestPostsListener latestPostsListener;
+	
 	private PostListItemAdapter adapter;
 	private List<Post> adapterData;
 	private SpinnerSectionItemAdapter spinnerAdapter;
@@ -25,6 +29,10 @@ public class PostsResultReceiver extends ResultReceiver{
 	public PostsResultReceiver(Handler handler){
 		super(handler);
 		this.handler = handler;
+	}
+	
+	public void setLatestPostsListener(ILatestPostsListener latestPostsListener) {
+		this.latestPostsListener = latestPostsListener;
 	}
 	
 	public void setAdapter(PostListItemAdapter adapter) {
@@ -64,6 +72,13 @@ public class PostsResultReceiver extends ResultReceiver{
 			postsListParcelable.getPostsList();*/
 		
 		switch (resultCode){
+			case StringKeys.POST_RESULT_RECEIVER_CODE_LATEST_POSTS:
+				postsListParcelable =  resultData.getParcelable(StringKeys.POST_LIST_PARCELABLE);
+				posts = postsListParcelable.getPostsList();
+				if (posts!=null && posts.size()>=1)
+					Log.d("result receviver", posts.get(0).toString());
+				latestPostsListener.retrievedLatestPosts(posts);
+				break;
 			case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW:
 				notifications = resultData.getInt(StringKeys.POST_RESULT_RECEIVER_NOTIFICATION_NUMBER, 0);
 				if (spinnerAdapter==null)

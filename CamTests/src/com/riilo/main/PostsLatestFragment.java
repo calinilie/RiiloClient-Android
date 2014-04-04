@@ -2,6 +2,8 @@ package com.riilo.main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
@@ -10,6 +12,7 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 import com.riilo.main.R;
+import com.riilo.interfaces.ILatestPostsListener;
 import com.riilo.interfaces.ILocationListener;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
 import com.riilo.utils.TutorialFactory;
@@ -30,7 +33,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class PostsLatestFragment 
 		extends Fragment 
-		implements OnItemClickListener, ILocationListener, OnRefreshListener{
+		implements OnItemClickListener, ILocationListener, OnRefreshListener, ILatestPostsListener{
 	
     private MainActivity activity;
     private View view;
@@ -89,7 +92,7 @@ public class PostsLatestFragment
 		}
 		postsListView.setAdapter(adapter);
 		
-		List<Post> latestPosts = PostsCache.getInstance(activity).getLatestPosts(adapter, adapterData, this.pullToRefreshLayout);
+		List<Post> latestPosts = PostsCache.getInstance(activity).getLatestPosts(this, false);
 		if (Helpers.renewList(adapterData, latestPosts)){
 			adapter.notifyDataSetChanged();
 		}
@@ -132,9 +135,7 @@ public class PostsLatestFragment
 		activity.analytics.recordEvent_General_PullToRefresh(EventLabel.tab_latest);
 		PostsCache.getInstance(getActivity())
 			.getLatestPosts(
-				adapter, 
-				adapterData, 
-				this.pullToRefreshLayout, 
+				this,
 				true);
 	}
 	
@@ -149,6 +150,14 @@ public class PostsLatestFragment
 			tutorial = new TutorialFactory(activity, (ViewGroup) view, secondTutorial);
 			tutorial.startTutorial(true);
 		}
+	}
+
+	@Override
+	public void retrievedLatestPosts(List<Post> newPosts) {
+		this.adapterData.addAll(newPosts);
+		Collections.sort(this.adapterData, Collections.reverseOrder());
+		this.adapter.notifyDataSetChanged();
+		this.pullToRefreshLayout.setRefreshComplete();
 	}
 
 }
