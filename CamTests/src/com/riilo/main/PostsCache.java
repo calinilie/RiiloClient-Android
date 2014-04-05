@@ -10,6 +10,7 @@ import java.util.Set;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.riilo.interfaces.ILatestPostsListener;
+import com.riilo.interfaces.INearbyPostsListener;
 import com.riilo.interfaces.UIListener;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
@@ -35,8 +36,8 @@ public class PostsCache {
 	private PostsCache(Context context){
 		posts = new SparseArray<Post>();
 		notifications = new ArrayList<Post>();
-		nearbyPosts = new ArrayList<Post>();
-		latestPosts = new ArrayList<Post>();
+		nearbyPostsCacheList = new ArrayList<Post>();
+		latestPostsCacheList = new ArrayList<Post>();
 		explore_onMapPostGroups = new HashSet<Post>();
 		explore_onMapPosts = new HashSet<Post>();
 		
@@ -55,8 +56,8 @@ public class PostsCache {
 	
 	private SparseArray<Post> posts;
 	private List<Post> notifications;
-	private List<Post> nearbyPosts;
-	private List<Post> latestPosts;
+	private List<Post> nearbyPostsCacheList;
+	private List<Post> latestPostsCacheList;
 	private Set<Post> explore_onMapPostGroups;
 	private Set<Post> explore_onMapPosts;
 	
@@ -72,28 +73,18 @@ public class PostsCache {
 	}
 	
 	public synchronized List<Post> getLatestPosts(){
-		return this.latestPosts;
+		return this.latestPostsCacheList;
 	}
 
  	public synchronized List<Post> addNewPostsToLatest(List<Post> newPosts){
- 		List<Post> retVal = new ArrayList<Post>();
- 		if (newPosts != null){
-	 		for(Post p : newPosts){
-	 			if (!this.latestPosts.contains(p)){
-	 				this.latestPosts.add(p);
-	 				retVal.add(p);
-	 			}
-	 		}
- 		}
- 		return retVal;
+ 		return this.addPostsListToCacheList(newPosts, latestPostsCacheList);
  	}
  	
- 	//TODO
 	public synchronized List<Post> getLatestPosts(
 			ILatestPostsListener latestPostsListener,
 			boolean forcedUpdate){
 		startService_getLatest(latestPostsListener, forcedUpdate);
-		return latestPosts;
+		return latestPostsCacheList;
 	}
 	
 	public synchronized List<Post> getPostsByConversationId(
@@ -163,24 +154,32 @@ public class PostsCache {
 		return false;
 	}
 	
-	//TODO
+	/**
+	 * This overload should be used to retrieve nearby posts (from server) and cache them ONLY, not present them on the UI
+	 * @param latitude
+	 * @param longitude
+	 * @return
+	 */
+	public synchronized List<Post> getNearbyPosts(
+			double latitude, 
+			double longitude){
+		return this.getNearbyPosts(latitude, longitude, null, false);
+	}
+	
 	public synchronized List<Post> getNearbyPosts(
 			double latitude, 
 			double longitude, 
-			PostListItemAdapter adapter, 
-			List<Post> adapterData, 
-			SpinnerSectionItemAdapter spinnerAdapter,
-			SpinnerSection section,
-			PullToRefreshLayout pullToRefreshLayout,
-			Button button,
-			boolean forcedUpdate, 
-			int postResultReceiverType){
-		startService_getNearby(latitude, longitude, adapter, adapterData, spinnerAdapter, section, pullToRefreshLayout, button, postResultReceiverType, forcedUpdate);
-		return nearbyPosts;
+			INearbyPostsListener listener, 
+			boolean forcedUpdate){
+		startService_getNearby(latitude, longitude, listener, forcedUpdate);
+		return nearbyPostsCacheList;
 	}
 	
-	public synchronized List<Post> getNearbyPosts(){
-		return this.nearbyPosts;
+	/**
+	 * @return all posts in cache
+	 */
+	public List<Post> getNearbyPosts() {
+		return nearbyPostsCacheList;
 	}
 	
 	public synchronized void getPostsOnMap(
@@ -209,19 +208,62 @@ public class PostsCache {
 	public Set<Post> getExplore_onMapPostGroups() {
 		return explore_onMapPostGroups;
 	}
-
-	public synchronized boolean addPostAsNearbyPost(Post p){
-		boolean addNearby = true;
-		addPost(p);
-		for (Post post : nearbyPosts){
-			if (p.getConversationId() == post.getConversationId()){
-				addNearby = false;
-				break;
+	
+	/**
+	 * Adds all new posts to cache, and returns only the new posts, which have to be passed to the UI
+	 * @param newPosts
+	 * @return
+	 */
+	public synchronized List<Post> addPostsToNearby(List<Post> newPosts){
+		return this.addPostsListToCacheList(newPosts, this.nearbyPostsCacheList);
+	}
+	
+	/**
+	 * 
+	 * @param newPosts
+	 * @param targetCacheList
+	 * @return
+	 */
+	private synchronized List<Post> addPostsListToCacheList(List<Post> newPosts, List<Post> targetCacheList){
+		List<Post> retVal = new ArrayList<Post>();
+		
+		if (newPosts == null)
+			return retVal;
+		
+		Collections.sort(nearbyPostsCacheList, Collections.reverseOrder());
+		Collections.sort(newPosts, Collections.reverseOrder());
+		
+		for(Post p : newPosts){
+			if (this.addPostToCacheList(p, targetCacheList)){
+				retVal.add(p);
 			}
 		}
-		if (addNearby){
-			nearbyPosts.add(p);
-			return true;
+		
+		return retVal;
+	}
+
+	/**
+	 * Adds a post to the to one of the cached lists posts nearby cache 
+	 * @param currentPost
+	 * @return
+	 */
+	private synchronized boolean addPostToCacheList(Post currentPost, List<Post> targetCacheList){
+		boolean addNearby = true;
+		addPost(currentPost);//add to global posts cache
+		
+		//if we already have the currentPost in list, then skip it
+		if (!targetCacheList.contains(currentPost)){
+			for (Post post : targetCacheList){
+				//only add the currentPost from a particular conversation if it is newer the what the conversation already has 
+				if (currentPost.getConversationId() == post.getConversationId() && !currentPost.isNewer(post)){
+					addNearby = false;
+					break;
+				}
+			}
+			if (addNearby){
+				targetCacheList.add(currentPost);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -239,17 +281,6 @@ public class PostsCache {
 	
 	public synchronized Post getPost(int postId){
 		return posts.get(postId);
-	}
-	
-	public synchronized void addPosts(List<Post> posts){
-		int lenght = posts.size();
-		for(int i=lenght-1; i>=0; i--){
-			Post p = posts.get(i);
-			this.addPost(p);
-			if (!Helpers.hasPostFromConversation(latestPosts, p)){
-				latestPosts.add(p);
-			}
-		}
 	}
 	
 	public List<Post> renewPosts(List<Post> targetPosts){
@@ -315,13 +346,7 @@ public class PostsCache {
 	private void startService_getNearby(
 			double latitude, 
 			double longitude, 
-			PostListItemAdapter adapter, 
-			List<Post> adapterData, 
-			SpinnerSectionItemAdapter spinnerAdapter, 
-			SpinnerSection section,
-			PullToRefreshLayout pullToRefreshLayout,
-			Button button,
-			int postResultReceiverType,
+			INearbyPostsListener listener,
 			boolean forceUpdate){
 		if (isRequestAllowed(this.timestamp_Nearby, forceUpdate)){
 			Intent intent = new Intent(this.context, WorkerService.class);
@@ -330,19 +355,10 @@ public class PostsCache {
 			intent.putExtra(StringKeys.NEARBY_POSTS_LONGITUDE, longitude);
 			
 			Handler handler = new Handler();
-			intent.putExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, postResultReceiverType);
 			PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);
-			resultReceiver.setAdapter(adapter);
-			resultReceiver.setAdapterData(adapterData);
-			resultReceiver.setSpinnerAdapter(spinnerAdapter);
-			resultReceiver.setSpinnerSection(section);
-			resultReceiver.setPullToRefreshAttacher(pullToRefreshLayout);
-			resultReceiver.setButton(button);
+			resultReceiver.setNearbyPostsListener(listener);
 			intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
-			
 			this.context.startService(intent);
-			
-			startRereshAniamtion(handler, pullToRefreshLayout);
 		}
 	}
 	
@@ -445,4 +461,6 @@ public class PostsCache {
 			this.timeStamp = timeStamp;
 		}
 	}
+
+
 }

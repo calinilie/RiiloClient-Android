@@ -94,18 +94,7 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
     public void onLocationChanged(Location location){
     	super.onLocationChanged(location);
 		double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, null);
-		postsCache
-		.getNearbyPosts(
-				latLong[0],
-				latLong[1],
-				null,
-				null,
-				spinnerAdapter,
-				spinnerAdapter.getItem(2),
-				null,
-				null,
-				false,
-				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);
+//		postsCache.getNearbyPosts(latLong[0], latLong[1]);
     }
     
     @Override

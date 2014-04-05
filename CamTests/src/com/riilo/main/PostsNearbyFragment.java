@@ -12,6 +12,7 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 import com.riilo.main.R;
 import com.riilo.interfaces.ILocationListener;
+import com.riilo.interfaces.INearbyPostsListener;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
 import com.riilo.utils.TutorialFactory;
 
@@ -37,7 +38,8 @@ public class PostsNearbyFragment
 				implements OnItemClickListener, 
 							ILocationListener, 
 							OnRefreshListener,
-							OnClickListener{
+							OnClickListener,
+							INearbyPostsListener{
 	
 	private static final String TAG = "<<<<<<<<<<<<<<PostsNearbyFragment>>>>>>>>>>>>>>";
 	
@@ -83,14 +85,6 @@ public class PostsNearbyFragment
         super.onCreate(savedInstanceState);
         lastKnownLocation = Facade.getInstance(activity).getLastKnownLocation();
 //        activity.initLocationClient(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY, UPDATE_INTERVAL, FASTEST_INTERVAL);//TODO
-		
-		if (savedInstanceState!=null && savedInstanceState.containsKey(StringKeys.POST_LIST_PARCELABLE)){
-			PostsListParcelable parcelable = savedInstanceState.getParcelable(StringKeys.POST_LIST_PARCELABLE); 
-			if (adapter!=null && Helpers.renewList(adapterData, parcelable.getPostsList())){
-				adapter.notifyDataSetChanged();
-			}
-		}
-		
  	}
  	
  	@Override
@@ -134,34 +128,18 @@ public class PostsNearbyFragment
 	@Override
 	public void onLocationChanged(Location location) {
 		if (location!=null){
-//			TODO
-//			boolean refreshAdapter = false;
 			double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, null);
-			Helpers.renewList(adapterData,
-								PostsCache
-										.getInstance(activity)
-										.getNearbyPosts(
-												latLong[0],
-												latLong[1],
-												adapter,
-												adapterData,
-												activity.getSpinnerAdapter(),
-												activity.getSpinnerAdapter().getItem(2),
-												this.pullToRefreshLayout,
-												buttonRefresh,
-												false,
-												StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER));
+			PostsCache.getInstance(activity).getNearbyPosts(latLong[0], latLong[1], this, false);
+			
 			for(Post p : adapterData){
 				if (p.getDistanceFromCurLoc()==-1){
 					p.setDistanceFromCurLoc(location);
 				}
 			}
-//			TODO
-//			if (refreshAdapter){
-//				adapter.notifyDataSetChanged();
-//			}
+			
 			if (adapterData.size()>0)
 				buttonRefresh.setVisibility(View.GONE);
+			
 			adapter.notifyDataSetChanged();
 		}
 	}
@@ -172,20 +150,7 @@ public class PostsNearbyFragment
 		Location location = ((BaseActivity) getActivity()).getLocation();
 		if (location!=null){
 			double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, lastKnownLocation);
-			PostsCache
-					.getInstance(activity)
-					.getNearbyPosts(
-							latLong[0],
-							latLong[1],
-							adapter,
-							adapterData,
-							activity.getSpinnerAdapter(),
-							activity.getSpinnerAdapter().getItem(2),
-							this.pullToRefreshLayout,
-							buttonRefresh,
-							true,
-							StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
-			adapter.notifyDataSetChanged();
+			PostsCache.getInstance(activity).getNearbyPosts(latLong[0], latLong[1], this, true);
 		}
 		else{
 			this.pullToRefreshLayout.setRefreshComplete();
@@ -199,24 +164,7 @@ public class PostsNearbyFragment
 			buttonRefresh.setVisibility(View.GONE);
 			Location location = ((BaseActivity) getActivity()).getLocation();
 			double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, lastKnownLocation);
-			
-			Helpers.renewList(adapterData, 
-					PostsCache
-					.getInstance(activity)
-					.getNearbyPosts(
-							latLong[0],
-							latLong[1],
-							adapter,
-							adapterData,
-							activity.getSpinnerAdapter(),
-							activity.getSpinnerAdapter().getItem(2),
-							pullToRefreshLayout,
-							buttonRefresh,
-							true,
-							StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER));
-			
-			adapter.notifyDataSetChanged();
-			
+			PostsCache.getInstance(activity).getNearbyPosts(latLong[0],	latLong[1],	this, true);
 			break;
 		}
 	}
@@ -225,6 +173,14 @@ public class PostsNearbyFragment
 		List<Integer> firstTutorial = Arrays.asList(R.layout.tutorial_nearby_dialog);
 		tutorial = new TutorialFactory(activity, (ViewGroup) view, firstTutorial);
 		tutorial.startTutorial(true);
+	}
+
+	@Override
+	public void retrievedNearbyPosts(List<Post> newPosts) {
+		if (Helpers.renewList(adapterData, newPosts))
+			adapter.notifyDataSetChanged();
+		buttonRefresh.setVisibility(View.GONE);
+		pullToRefreshLayout.setRefreshComplete();
 	}
 
 }

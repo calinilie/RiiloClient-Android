@@ -154,6 +154,7 @@ public class PostsLatestFragment
 
 	@Override
 	public void retrievedLatestPosts(List<Post> newPosts) {
+		
 		this.adapterData.addAll(newPosts);
 		Collections.sort(this.adapterData, Collections.reverseOrder());
 		this.adapter.notifyDataSetChanged();

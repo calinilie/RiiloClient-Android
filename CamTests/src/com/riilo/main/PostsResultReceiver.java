@@ -3,6 +3,7 @@ package com.riilo.main;
 import java.util.List;
 
 import com.riilo.interfaces.ILatestPostsListener;
+import com.riilo.interfaces.INearbyPostsListener;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 
@@ -16,6 +17,7 @@ import android.widget.Button;
 public class PostsResultReceiver extends ResultReceiver{
 
 	private ILatestPostsListener latestPostsListener;
+	private INearbyPostsListener nearbyPostsListener;
 	
 	private PostListItemAdapter adapter;
 	private List<Post> adapterData;
@@ -29,6 +31,10 @@ public class PostsResultReceiver extends ResultReceiver{
 	public PostsResultReceiver(Handler handler){
 		super(handler);
 		this.handler = handler;
+	}
+	
+	public void setNearbyPostsListener(INearbyPostsListener nearbyPostsListener) {
+		this.nearbyPostsListener = nearbyPostsListener;
 	}
 	
 	public void setLatestPostsListener(ILatestPostsListener latestPostsListener) {
@@ -75,9 +81,14 @@ public class PostsResultReceiver extends ResultReceiver{
 			case StringKeys.POST_RESULT_RECEIVER_CODE_LATEST_POSTS:
 				postsListParcelable =  resultData.getParcelable(StringKeys.POST_LIST_PARCELABLE);
 				posts = postsListParcelable.getPostsList();
-				if (posts!=null && posts.size()>=1)
-					Log.d("result receviver", posts.get(0).toString());
 				latestPostsListener.retrievedLatestPosts(posts);
+				break;
+			case StringKeys.POST_RESULT_RECEIVER_CODE_NEARBY_POSYS:
+				postsListParcelable =  resultData.getParcelable(StringKeys.POST_LIST_PARCELABLE);
+				posts = postsListParcelable.getPostsList();
+				
+				if (nearbyPostsListener!=null)
+					nearbyPostsListener.retrievedNearbyPosts(posts);
 				break;
 			case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW:
 				notifications = resultData.getInt(StringKeys.POST_RESULT_RECEIVER_NOTIFICATION_NUMBER, 0);

@@ -10,6 +10,7 @@ public class StringKeys {
 	public static final String POST_RESULT_RECEIVER_NEARBY_POSTS_NUMBER = "com.riilo.main.StringKeys.POST_RESULT_RECEIVER_NEARBY_POSTS_NUMBER";
 	
 	public static final int POST_RESULT_RECEIVER_CODE_LATEST_POSTS = 300;
+	public static final int POST_RESULT_RECEIVER_CODE_NEARBY_POSYS = 301;
 	
 	public static final int POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_DESC = 123;
 	public static final int POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_ASC = 122;
