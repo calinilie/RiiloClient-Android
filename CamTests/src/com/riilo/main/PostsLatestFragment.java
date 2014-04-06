@@ -37,11 +37,6 @@ public class PostsLatestFragment
  	ListView postsListView; 	
  	
  	private TutorialFactory tutorial;
-
- 	public PostsLatestFragment(){
-		super();
-		Log.d("PostsLatestFragment", "PostsLatestFragment constructor");
-	}
  	
  	public void onAttach(Activity activity){
  		this.activity = (MainActivity)activity;

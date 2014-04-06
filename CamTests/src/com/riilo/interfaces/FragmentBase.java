@@ -36,7 +36,6 @@ public abstract class FragmentBase extends Fragment implements OnRefreshListener
 	}
 	
 	public void isSelected(boolean turnOnPullToRefresh){
-		Log.d(TAG, turnOnPullToRefresh +" " + isRequestInProgress);
 		if (turnOnPullToRefresh && isRequestInProgress)
 			pullToRefreshLayout.setRefreshing(true);
 	}

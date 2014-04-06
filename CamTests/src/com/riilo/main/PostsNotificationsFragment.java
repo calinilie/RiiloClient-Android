@@ -35,12 +35,6 @@ public class PostsNotificationsFragment
  	private TutorialFactory tutorial;
  	
  	
- 	public PostsNotificationsFragment(){
-		super();
-		Log.d("PostsNotificationsFragment", "PostsNotificationsFragment constructor");
-	}
- 	
- 	
  	public void onAttach(Activity activity){
  		this.activity = (MainActivity)activity;
  		super.onAttach(activity);

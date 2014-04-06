@@ -84,7 +84,6 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
     
     @Override
     public void onStart(){
-    	Log.d("<<<<<<<<<<main>>>>>>>>>>>", animationType+"");
     	super.onStart();
     	if (this.animationType == StringKeys.ANIMATION_TYPE_SLIDE_IN_RIGHT)
     		this.overridePendingTransition(R.anim.fade_in, R.anim.activity_slideout_to_right);
@@ -185,7 +184,6 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 			boolean retVal = false;
 			for(int i=0; i<fragments.length; i++){
 				if (i!=skipIndex && fragments[i] != null){
-					Log.d("<<<<<<<<<<<<<<main>>>>>", i +" " + fragments[i].isPTRRefreshing()+"");
 					retVal |= fragments[i].isPTRRefreshing();
 				}
 			}

@@ -48,10 +48,6 @@ public class PostsNearbyFragment
  	
  	private TutorialFactory tutorial;
  	
- 	public PostsNearbyFragment(){
-		super();
-		Log.d("PostsNearbyFragment", "PostsNearbyFragment constructor");
-	}
  	
  	public void onAttach(Activity activity){
  		this.activity = (MainActivity)activity;

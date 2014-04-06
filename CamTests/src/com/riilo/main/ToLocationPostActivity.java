@@ -43,6 +43,8 @@ public class ToLocationPostActivity extends BaseActivity implements OnClusterCli
 	@SuppressWarnings("unused")
 	private static final String TAG = "ToLocationPostActivity>>>>>>>>>>>>>>>>>>>>>>>>>>>";
 	
+	private boolean normalAnimation;
+	
 	private ImageButton buttonPost;
 	private ImageButton cancelButton;
 	private EditText inputMessage;
@@ -70,7 +72,8 @@ public class ToLocationPostActivity extends BaseActivity implements OnClusterCli
 	public void onStart(){
 		super.onStart();
 		
-		this.overridePendingTransition(R.anim.activity_slidein_from_bottom, R.anim.fade_out);
+		if (!normalAnimation)
+			this.overridePendingTransition(R.anim.activity_slidein_from_bottom, R.anim.fade_out);
 		
 		setupWidgetsViewElements();
 		
@@ -141,7 +144,7 @@ public class ToLocationPostActivity extends BaseActivity implements OnClusterCli
 	    		postViewIntent.putExtra(StringKeys.POST_BUNDLE, currentPost.toBundle());
 	    		postViewIntent.putExtra(StringKeys.ANIMATION_TYPE, StringKeys.ANIMATION_TYPE_NONE);
 	    		startActivity(postViewIntent);
-	    		
+	    		normalAnimation = true;
 	    		inputMessage.setText("");
    			}
    			else{

@@ -75,11 +75,6 @@ public class ExploreFragment
 	private TutorialFactory tutorial;
 	boolean showItemClickTutorial;
 	
-	public ExploreFragment(){
-		super();
-		Log.d(TAG, "explore fragment constructor");
-	}
-	
 	@Override
 	public void onAttach(Activity activity){
  		this.activity = (MainActivity)activity;
