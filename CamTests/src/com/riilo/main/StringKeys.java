@@ -79,7 +79,10 @@ public class StringKeys {
 //	public static final int CONNECTION_TIMEDOUT_AS_INT = 412;
 	public static final String POST_REQUEST_FAILED = "com.riilo.main.StringKeys.POST_REQUEST_FAILED";
 	public static final String SHOW_NOTIFICATIONS_TAB_FIRST = "com.riilo.main.StringKeys.SHOW_NOTIFICATIONS_TAB_FIRST";
-
 	
+	public static final String ANIMATION_TYPE = "com.riilo.main.StringKeys.ANIMATION_TYPE";
+	public static final int ANIMATION_TYPE_NONE = 0;
+	public static final int ANIMATION_TYPE_SLIDE_IN_RIGHT=1;
+	public static final int ANIMATION_TYPE_SLIDE_IN_BOTTOM=2;
 	
 }

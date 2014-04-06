@@ -1,18 +1,13 @@
 package com.riilo.main;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.Options;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
-import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
-//import uk.co.senyab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
-
-
-import com.riilo.interfaces.IPostsListener;
+import com.riilo.interfaces.FragmentBase;
 import com.riilo.main.R;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
 import com.riilo.utils.TutorialFactory;
@@ -20,10 +15,8 @@ import com.riilo.utils.TutorialFactory;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -31,22 +24,22 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class PostsNotificationsFragment 
-				extends Fragment 
-				implements OnItemClickListener,
-				OnRefreshListener, 
-				IPostsListener
-				{
+				extends FragmentBase 
+				implements OnItemClickListener{
 	
-	PostListItemAdapter adapter;
- 	List<Post> adapterData = new ArrayList<Post>();
  	ListView postsListView;
     
  	private View view;
  	private MainActivity activity;
  	
- 	private PullToRefreshLayout pullToRefreshLayout;
- 	
  	private TutorialFactory tutorial;
+ 	
+ 	
+ 	public PostsNotificationsFragment(){
+		super();
+		Log.d("PostsNotificationsFragment", "PostsNotificationsFragment constructor");
+	}
+ 	
  	
  	public void onAttach(Activity activity){
  		this.activity = (MainActivity)activity;
@@ -130,12 +123,13 @@ public class PostsNotificationsFragment
 		Intent postViewIntent = new Intent(activity, PostViewActivity.class);
 		postViewIntent.putExtra(StringKeys.POST_BUNDLE, post.toBundle());
 		startActivity(postViewIntent);
+		activity.setAnimationType(StringKeys.ANIMATION_TYPE_SLIDE_IN_RIGHT);
 	}
 
 	@Override
 	public void onRefreshStarted(View view) {
+		super.onRefreshStarted(view);
 		activity.analytics.recordEvent_General_PullToRefresh(EventLabel.tab_notifications);
-		
 		PostsCache.getInstance(activity).getNotifications(activity.deviceId, this, true);
 	}
 	
@@ -143,14 +137,6 @@ public class PostsNotificationsFragment
 		List<Integer> firstTutorial = Arrays.asList(R.layout.tutorial_notifications_dialog);
 		tutorial = new TutorialFactory(activity, (ViewGroup) view, firstTutorial);
 		tutorial.startTutorial(true);
-	}
-
-	@Override
-	public void retrievedPosts(List<Post> newPosts) {
-		if (Helpers.renewList(adapterData, newPosts)){
-			adapter.notifyDataSetChanged();
-		}
-		pullToRefreshLayout.setRefreshComplete();
 	}
 
 }

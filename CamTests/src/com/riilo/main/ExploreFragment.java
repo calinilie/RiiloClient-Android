@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.riilo.interfaces.FragmentBase;
 import com.riilo.interfaces.ILocationListener;
 import com.riilo.interfaces.UIListener;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
@@ -42,7 +43,12 @@ import android.widget.ListView;
 
 public class ExploreFragment 
 		extends Fragment
-		implements ILocationListener, OnCameraChangeListener, OnMarkerClickListener, UIListener, OnItemClickListener, OnMapClickListener{
+		implements ILocationListener, 
+				OnCameraChangeListener, 
+				OnMarkerClickListener, 
+				UIListener, 
+				OnItemClickListener, 
+				OnMapClickListener{
 
 	private static final String TAG = "<<<<<<<<ExploreFragment>>>>>>>>";
 	
@@ -68,6 +74,11 @@ public class ExploreFragment
 	
 	private TutorialFactory tutorial;
 	boolean showItemClickTutorial;
+	
+	public ExploreFragment(){
+		super();
+		Log.d(TAG, "explore fragment constructor");
+	}
 	
 	@Override
 	public void onAttach(Activity activity){
@@ -278,6 +289,7 @@ public class ExploreFragment
 			Intent postViewIntent = new Intent(activity, PostViewActivity.class);
 			postViewIntent.putExtra(StringKeys.POST_BUNDLE, post.toBundle());
 			startActivity(postViewIntent);
+			activity.setAnimationType(StringKeys.ANIMATION_TYPE_SLIDE_IN_RIGHT);
 		}
 		else{
 			selectItem(post, index);
@@ -364,4 +376,5 @@ public class ExploreFragment
 			tutorial.startTutorial(true);
 		}
 	}
+
 }

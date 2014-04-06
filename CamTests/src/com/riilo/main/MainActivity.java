@@ -10,6 +10,7 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 
 import com.google.android.gms.location.LocationRequest;
 import com.riilo.main.R;
+import com.riilo.interfaces.FragmentBase;
 import com.riilo.interfaces.IBackButtonListener;
 
 import android.app.ActionBar;
@@ -20,7 +21,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -33,6 +37,7 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
     SpinnerSectionItemAdapter spinnerAdapter;
     
     private IBackButtonListener backButtonListener;
+    private int animationType;
     
     private PullToRefreshLayout pullToRefreshLayout;
     private SetupWizard setupWizard;
@@ -40,7 +45,7 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
     private List<SpinnerSection> sections;
 
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    	super.onCreate(savedInstanceState);        
         setupSpinnerSections();
         final ActionBar actionBar = getActionBar();
         actionBar.setHomeButtonEnabled(false);
@@ -48,19 +53,16 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
         actionBar.setDisplayShowTitleEnabled(false);
         
         setContentView(R.layout.activity_main_layout);
+        
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         spinnerAdapter = new SpinnerSectionItemAdapter(this, R.layout.spinner_section_item_layout, sections);
         actionBar.setListNavigationCallbacks(spinnerAdapter, this);
 
         appSectionsPagerAdapter = new AppSectionsPagerAdapter(getSupportFragmentManager());
+        appSectionsPagerAdapter.setActionBar(actionBar);
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(appSectionsPagerAdapter);
-        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-            	actionBar.setSelectedNavigationItem(position);
-            }
-        });
+        viewPager.setOnPageChangeListener(appSectionsPagerAdapter);
         
         //=================================================
         boolean showNotifications = getIntent().getBooleanExtra(StringKeys.SHOW_NOTIFICATIONS_TAB_FIRST, false);
@@ -81,10 +83,14 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
     }
     
     @Override
-    public void onLocationChanged(Location location){
-    	super.onLocationChanged(location);
-		double[] latLong = Helpers.setReqFrom_Latitude_and_Longitude(location, null);
-//		postsCache.getNearbyPosts(latLong[0], latLong[1]);
+    public void onStart(){
+    	Log.d("<<<<<<<<<<main>>>>>>>>>>>", animationType+"");
+    	super.onStart();
+    	if (this.animationType == StringKeys.ANIMATION_TYPE_SLIDE_IN_RIGHT)
+    		this.overridePendingTransition(R.anim.fade_in, R.anim.activity_slideout_to_right);
+    	if (this.animationType == StringKeys.ANIMATION_TYPE_SLIDE_IN_BOTTOM)
+    		this.overridePendingTransition(R.anim.fade_in, R.anim.activity_slideout_to_bottom);
+    		
     }
     
     @Override
@@ -111,44 +117,80 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
     	return spinnerAdapter;
     }
 
-    public class AppSectionsPagerAdapter extends FragmentPagerAdapter {
+    public class AppSectionsPagerAdapter extends FragmentPagerAdapter implements OnPageChangeListener{
 
+    	private FragmentBase[] fragments;
+    	private ActionBar actionBar;
+    	
         public AppSectionsPagerAdapter(FragmentManager fm) {
             super(fm);
+            fragments = new FragmentBase[3];
         }
 
         @Override
         public Fragment getItem(int i) {
             switch (i) {
-//                case 0:
-//                	ToLocationPostFragment toLocationPostFragment = new ToLocationPostFragment();
-//                	addLocationListener(toLocationPostFragment);
-//                	backButtonListener = toLocationPostFragment;
-//                	return toLocationPostFragment;
             	case 0:
             		ExploreFragment exploreFragment = new ExploreFragment();
             		addLocationListener(exploreFragment);
             		return exploreFragment;
                 case 1:
-                	PostsLatestFragment latestPostsFragment = new PostsLatestFragment();
-                	addLocationListener(latestPostsFragment);
+                	FragmentBase latestPostsFragment = new PostsLatestFragment();
+                	addLocationListener((PostsLatestFragment)latestPostsFragment);
+                	fragments[0] = latestPostsFragment;
                 	return latestPostsFragment;
                 case 2:
-                	PostsNearbyFragment nearbyPostsFragment = new PostsNearbyFragment();
-                	addLocationListener(nearbyPostsFragment);
+                	FragmentBase nearbyPostsFragment = new PostsNearbyFragment();
+                	addLocationListener((PostsNearbyFragment)nearbyPostsFragment);
+                	fragments[1] = nearbyPostsFragment;
                     return nearbyPostsFragment;
                 case 3:
                 default:
-                	PostsNotificationsFragment notificationsPostsFragment = new PostsNotificationsFragment();
-//                	notificationsPostsFragment.setHasOptionsMenu(true);
+                	FragmentBase notificationsPostsFragment = new PostsNotificationsFragment();
+                	fragments[2] = notificationsPostsFragment;
                 	return notificationsPostsFragment;
             }
+        }
+        
+        public void setActionBar(ActionBar bar){
+        	this.actionBar = bar;
         }
 
         @Override
         public int getCount() {
             return 4;
         }
+
+		@Override
+		public void onPageScrollStateChanged(int arg0) {
+		}
+
+		@Override
+		public void onPageScrolled(int arg0, float arg1, int arg2) {
+		}
+
+		@Override
+		public void onPageSelected(int position) {
+			actionBar.setSelectedNavigationItem(position);
+			if (position==0)
+				return;
+			
+			position--;
+			boolean canSetRefreshing = !this.isPTRRefreshing(position);
+			
+			fragments[position].isSelected(canSetRefreshing);
+		}
+		
+		private boolean isPTRRefreshing(int skipIndex){
+			boolean retVal = false;
+			for(int i=0; i<fragments.length; i++){
+				if (i!=skipIndex && fragments[i] != null){
+					Log.d("<<<<<<<<<<<<<<main>>>>>", i +" " + fragments[i].isPTRRefreshing()+"");
+					retVal |= fragments[i].isPTRRefreshing();
+				}
+			}
+			return retVal;
+		}
     }
     
 	@Override
@@ -162,6 +204,7 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 			analytics.recordEvent_General_ReplyButtonClicked();
 			Intent intent = new Intent(this, ToLocationPostActivity.class);
 			startActivity(intent);
+			this.setAnimationType(StringKeys.ANIMATION_TYPE_SLIDE_IN_BOTTOM);
 			return true;
 		default:
             return super.onOptionsItemSelected(item);
@@ -185,5 +228,9 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 						new SpinnerSection(3, getString(R.string.section_notifications), R.drawable.ic_map_marker_human, true)
 					));
 		}
+	}
+	
+	protected void setAnimationType(int animationType){
+		this.animationType = animationType;
 	}
 }

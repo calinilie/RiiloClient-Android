@@ -42,7 +42,8 @@
         <activity
             android:name="com.riilo.main.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -53,7 +54,7 @@
 	      android:name="com.riilo.main.PostViewActivity"
 	      android:label="@string/post_view_activity_label"
 	      android:screenOrientation="portrait"
-	      android:parentActivityName="com.riilo.main.MainActivity">
+	      android:parentActivityName="com.riilo.main.MainActivity" >
             <meta-data
 	            android:name="android.support.PARENT_ACTIVITY"
 	            android:value="com.riilo.main.MainActivity" />

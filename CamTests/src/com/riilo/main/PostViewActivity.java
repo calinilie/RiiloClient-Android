@@ -8,6 +8,7 @@ import java.util.List;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -60,6 +61,11 @@ public class PostViewActivity extends BaseActivity
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.post_layout);
+        
+        int animationType = getIntent().getExtras().getInt(StringKeys.ANIMATION_TYPE, StringKeys.ANIMATION_TYPE_SLIDE_IN_RIGHT);
+        if (animationType != StringKeys.ANIMATION_TYPE_NONE)
+        	this.overridePendingTransition(R.anim.activity_slidein_from_right, R.anim.fade_out);
+        
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setDisplayUseLogoEnabled(true);
         initLocationClient(LocationRequest.PRIORITY_HIGH_ACCURACY, 2000, 1000);
@@ -149,6 +155,10 @@ public class PostViewActivity extends BaseActivity
 			analytics.recordEvent_Conversation_ButtonClick(EventLabel.reply_button);
 			showReplyToPostPannel();
 			return true;
+		case android.R.id.home:
+			onBackPressed();
+//			NavUtils.navigateUpFromSameTask(this);
+	        return true;
 		default:
             return super.onOptionsItemSelected(item);
 		}
@@ -275,5 +285,11 @@ public class PostViewActivity extends BaseActivity
 		if (Helpers.renewList(adapterData, newPosts, false)){
 			adapter.notifyDataSetChanged();
 		}		
+	}
+
+	@Override
+	public void startedRetrievingPosts() {
+		// TODO Auto-generated method stub
+		
 	}
 }

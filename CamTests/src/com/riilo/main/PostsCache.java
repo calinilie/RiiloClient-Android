@@ -12,8 +12,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.riilo.interfaces.IPostsListener;
 import com.riilo.interfaces.UIListener;
 
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -69,7 +67,7 @@ public class PostsCache {
 	 *conversation_only = will add a post to cache only (and if only) 
 	 * 						the cache does NOT contain a posts from the same conversation. 
 	 *						used in notifications cache
-	 *
+	 *<br /><br />
 	 *conversation_and_newer = will add a post to a cache which already contains a post from
 	 *							the same conversation, only (and if only) the post in question is newer 
 	 *							that the one in the cache, used in latest and nearby
@@ -300,17 +298,6 @@ public class PostsCache {
 		return posts.get(postId);
 	}
 	
-	public List<Post> renewPosts(List<Post> targetPosts){
-		int length = targetPosts.size();
-		for(int i=0; i<length; i++){
-			int key = this.posts.keyAt(i);
-			Post post = this.posts.get(key);
-			if (!targetPosts.contains(post))
-				targetPosts.add(post);
-		}
-		return targetPosts;
-	}
-	
 	private void startService_getConversationByPostId(
 			long conversationId, 
 			IPostsListener postsListener){
@@ -323,6 +310,8 @@ public class PostsCache {
         intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
         
         this.context.startService(intent);
+        
+        postsListener.startedRetrievingPosts();
 	}
 	
 	private void startService_getNotifications(
@@ -340,6 +329,8 @@ public class PostsCache {
 			intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
 	
 			this.context.startService(intent);
+			
+			postsListener.startedRetrievingPosts();
 		}
 	}
 	
@@ -359,6 +350,8 @@ public class PostsCache {
 			resultReceiver.setPostsListener(listener);
 			intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
 			this.context.startService(intent);
+			
+			listener.startedRetrievingPosts();
 		}
 	}
 	
@@ -399,12 +392,13 @@ public class PostsCache {
 			Intent intent = new Intent(context, WorkerService.class);
 	        intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_LATEST_POSTS);
 	        
-	        /*intent.putExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, StringKeys.POST_RESULT_RECEIVER_CODE_LATEST_POSTS);*/
 	        Handler handler = new Handler();
 	        PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);
 	        resultReceiver.setPostsListener(listener);
 	        intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
 	        context.startService(intent);
+	        
+	        listener.startedRetrievingPosts();
 		}
 	}
 	

@@ -1,6 +1,5 @@
 package com.riilo.main;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 
 import com.riilo.main.R;
+import com.riilo.interfaces.FragmentBase;
 import com.riilo.interfaces.ILocationListener;
 import com.riilo.interfaces.IPostsListener;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
@@ -20,11 +20,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -34,12 +31,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 public class PostsNearbyFragment 
-				extends Fragment 
+				extends FragmentBase 
 				implements OnItemClickListener, 
 							ILocationListener, 
-							OnRefreshListener,
-							OnClickListener,
-							IPostsListener{
+							OnClickListener{
 	
 	private static final String TAG = "<<<<<<<<<<<<<<PostsNearbyFragment>>>>>>>>>>>>>>";
 	
@@ -47,16 +42,16 @@ public class PostsNearbyFragment
     private View view;
     private Button buttonRefresh;
     
-    
-	PostListItemAdapter adapter;
- 	List<Post> adapterData = new ArrayList<Post>();
  	ListView postsListView;
  	
  	private LocationHistory lastKnownLocation;
  	
- 	private PullToRefreshLayout pullToRefreshLayout;
- 	
  	private TutorialFactory tutorial;
+ 	
+ 	public PostsNearbyFragment(){
+		super();
+		Log.d("PostsNearbyFragment", "PostsNearbyFragment constructor");
+	}
  	
  	public void onAttach(Activity activity){
  		this.activity = (MainActivity)activity;
@@ -123,6 +118,7 @@ public class PostsNearbyFragment
 		Intent postViewIntent = new Intent(activity, PostViewActivity.class);
 		postViewIntent.putExtra(StringKeys.POST_BUNDLE, post.toBundle());
 		startActivity(postViewIntent);
+		activity.setAnimationType(StringKeys.ANIMATION_TYPE_SLIDE_IN_RIGHT);
 	}
 	
 	@Override
@@ -146,6 +142,7 @@ public class PostsNearbyFragment
 
 	@Override
 	public void onRefreshStarted(View view) {
+		super.onRefreshStarted(view);
 		activity.analytics.recordEvent_General_PullToRefresh(EventLabel.tab_nearby);
 		Location location = ((BaseActivity) getActivity()).getLocation();
 		if (location!=null){
@@ -176,11 +173,8 @@ public class PostsNearbyFragment
 	}
 
 	@Override
-	public void retrievedPosts(List<Post> newPosts) {
-		if (Helpers.renewList(adapterData, newPosts))
-			adapter.notifyDataSetChanged();
+	public void retrievedPosts(List<Post> newPosts){
+		super.retrievedPosts(newPosts);
 		buttonRefresh.setVisibility(View.GONE);
-		pullToRefreshLayout.setRefreshComplete();
 	}
-
 }

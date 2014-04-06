@@ -69,6 +69,9 @@ public class ToLocationPostActivity extends BaseActivity implements OnClusterCli
 	@Override
 	public void onStart(){
 		super.onStart();
+		
+		this.overridePendingTransition(R.anim.activity_slidein_from_bottom, R.anim.fade_out);
+		
 		setupWidgetsViewElements();
 		
 		setUpMapIfNeeded();
@@ -136,6 +139,7 @@ public class ToLocationPostActivity extends BaseActivity implements OnClusterCli
 	           	
 	    		Intent postViewIntent = new Intent(this, PostViewActivity.class);
 	    		postViewIntent.putExtra(StringKeys.POST_BUNDLE, currentPost.toBundle());
+	    		postViewIntent.putExtra(StringKeys.ANIMATION_TYPE, StringKeys.ANIMATION_TYPE_NONE);
 	    		startActivity(postViewIntent);
 	    		
 	    		inputMessage.setText("");
