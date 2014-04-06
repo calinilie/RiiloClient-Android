@@ -12,6 +12,7 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 //import uk.co.senyab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 
+import com.riilo.interfaces.IPostsListener;
 import com.riilo.main.R;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
 import com.riilo.utils.TutorialFactory;
@@ -32,7 +33,8 @@ import android.widget.AdapterView.OnItemClickListener;
 public class PostsNotificationsFragment 
 				extends Fragment 
 				implements OnItemClickListener,
-				OnRefreshListener
+				OnRefreshListener, 
+				IPostsListener
 				{
 	
 	PostListItemAdapter adapter;
@@ -91,17 +93,7 @@ public class PostsNotificationsFragment
 		}		
 		postsListView.setAdapter(adapter);
 		
-		List<Post> newNotifications = PostsCache
-				.getInstance(activity)
-				.getNotifications(
-						activity.deviceId,
-						adapter,
-						adapterData,
-						activity.getSpinnerAdapter(),
-						activity.getSpinnerAdapter().getItem(3),
-						pullToRefreshLayout,
-						false,
-						StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
+		List<Post> newNotifications = PostsCache.getInstance(activity).getNotifications(activity.deviceId, this, true);
 		if (Helpers.renewList(adapterData, newNotifications)){
 			adapter.notifyDataSetChanged();
 		}
@@ -144,20 +136,21 @@ public class PostsNotificationsFragment
 	public void onRefreshStarted(View view) {
 		activity.analytics.recordEvent_General_PullToRefresh(EventLabel.tab_notifications);
 		
-		PostsCache.getInstance(activity).getNotifications(activity.deviceId,
-				adapter, 
-				adapterData, 
-				activity.getSpinnerAdapter(),
-				activity.getSpinnerAdapter().getItem(3),
-				pullToRefreshLayout, 
-				true,
-				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW_AND_ADAPTER);
+		PostsCache.getInstance(activity).getNotifications(activity.deviceId, this, true);
 	}
 	
 	private void setupTutorials(){
 		List<Integer> firstTutorial = Arrays.asList(R.layout.tutorial_notifications_dialog);
 		tutorial = new TutorialFactory(activity, (ViewGroup) view, firstTutorial);
 		tutorial.startTutorial(true);
+	}
+
+	@Override
+	public void retrievedPosts(List<Post> newPosts) {
+		if (Helpers.renewList(adapterData, newPosts)){
+			adapter.notifyDataSetChanged();
+		}
+		pullToRefreshLayout.setRefreshComplete();
 	}
 
 }

@@ -23,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.riilo.interfaces.IPostsListener;
 import com.riilo.main.R;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdate;
@@ -39,14 +40,15 @@ import com.riilo.utils.TutorialFactory;
 public class PostViewActivity extends BaseActivity
 	implements android.view.View.OnClickListener,
 	OnMapClickListener,
-	OnItemClickListener{
+	OnItemClickListener, 
+	IPostsListener{
 	
 	private GoogleMap mMap;
 	
 	Post currentPost = null;
 	PostListItemAdapter adapter;
  	List<Post> adapterData = new ArrayList<Post>();
- 	ListView postsList;
+ 	ListView posts_ListView;
  	
  	ImageButton cancelButton;
  	ImageButton postButton;
@@ -77,20 +79,20 @@ public class PostViewActivity extends BaseActivity
 		if (adapter==null){
 			adapter = new PostListItemAdapter(this, R.layout.post_item_layout, adapterData, deviceId, false);
 		}
-		postsList.setAdapter(adapter);
+		posts_ListView.setAdapter(adapter);
 		
-		List<Post> postsInConversation = PostsCache.getInstance(this).getPostsByConversationId(currentPost.getConversationId(), adapter, adapterData, null);
+		List<Post> postsInConversation = PostsCache.getInstance(this).getPostsByConversationId(currentPost.getConversationId(), this);
 		if (Helpers.renewList(adapterData, postsInConversation, false)){
 			adapter.notifyDataSetChanged();
 		}
-		postsList.setSelection(adapterData.indexOf(currentPost));
+		posts_ListView.setSelection(adapterData.indexOf(currentPost));
 		
 		cancelButton.setOnClickListener(this);
 		postButton.setOnClickListener(this);
 		
 		
 		mMap.setOnMapClickListener(this);
-		postsList.setOnItemClickListener(this);
+		posts_ListView.setOnItemClickListener(this);
 	}
 	
 	@Override
@@ -119,7 +121,7 @@ public class PostViewActivity extends BaseActivity
 	
 	@Override
 	protected void setupWidgetsViewElements() {
-		postsList = (ListView)findViewById(R.id.posts_list_view);
+		posts_ListView = (ListView)findViewById(R.id.posts_list_view);
 		cancelButton = (ImageButton)findViewById(R.id.button_cancel);
 		postButton = (ImageButton)findViewById(R.id.button_post);
 		inputText = (EditText)findViewById(R.id.editor_message);
@@ -266,5 +268,12 @@ public class PostViewActivity extends BaseActivity
 		List<Integer> firstTutorial = Arrays.asList(R.layout.tutorial_conversation_dialog);
 		tutorial = new TutorialFactory(this, (ViewGroup) findViewById(R.id.post_layout), firstTutorial);
 		tutorial.startTutorial(true);
+	}
+
+	@Override
+	public void retrievedPosts(List<Post> newPosts) {
+		if (Helpers.renewList(adapterData, newPosts, false)){
+			adapter.notifyDataSetChanged();
+		}		
 	}
 }

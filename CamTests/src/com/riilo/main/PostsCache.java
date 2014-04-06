@@ -59,6 +59,23 @@ public class PostsCache {
 	private Set<Post> explore_onMapPostGroups;
 	private Set<Post> explore_onMapPosts;
 	
+	
+	//conversation_only = will add a post to cache only (and if only) 
+	//					the cache does NOT contain a posts from the same conversation id. 
+	//					used in notifications cache
+	/**
+	 * 
+	 * @author calin
+	 *conversation_only = will add a post to cache only (and if only) 
+	 * 						the cache does NOT contain a posts from the same conversation. 
+	 *						used in notifications cache
+	 *
+	 *conversation_and_newer = will add a post to a cache which already contains a post from
+	 *							the same conversation, only (and if only) the post in question is newer 
+	 *							that the one in the cache, used in latest and nearby
+	 */
+	public static enum CacheMode {conversation_only, conversation_and_newer}; 
+	
 	public synchronized List<Post> getPostsAsList() {
 		List<Post> retVal = new ArrayList<Post>();
 		int length = this.posts.size();
@@ -70,12 +87,28 @@ public class PostsCache {
 		return retVal;
 	}
 	
+	public synchronized List<Post> addConversationPostsToCache(List<Post> newPosts, long conversationId){
+		List<Post> conversation = this.getPostsByConversationId(conversationId);
+		List<Post> retVal = new ArrayList<Post>();
+		
+		if (newPosts==null)
+			return retVal;
+		
+		for(Post p : newPosts){
+			addPost(p);
+			if (!conversation.contains(p))
+				retVal.add(p);
+		}
+		
+		return retVal;
+	}
+	
 	public synchronized List<Post> getLatestPosts(){
 		return this.latestPostsCacheList;
 	}
 
  	public synchronized List<Post> addNewPostsToLatest(List<Post> newPosts){
- 		return this.addPostsListToCacheList(newPosts, latestPostsCacheList);
+ 		return this.addPostsListToCacheList(newPosts, latestPostsCacheList, CacheMode.conversation_and_newer);
  	}
  	
 	public synchronized List<Post> getLatestPosts(
@@ -86,12 +119,10 @@ public class PostsCache {
 	}
 	
 	public synchronized List<Post> getPostsByConversationId(
-			long conversationId, 
-			PostListItemAdapter adapter, 
-			List<Post> adapterData, 
-			PullToRefreshLayout pullToRefreshLayout){
+			long conversationId,
+			IPostsListener postsListener){
 		List<Post> retVal = getPostsByConversationId(conversationId);
-		startService_getConversationByPostId(conversationId, adapter, adapterData, pullToRefreshLayout);
+		startService_getConversationByPostId(conversationId, postsListener);
 		return retVal;
 	}
 	
@@ -107,19 +138,11 @@ public class PostsCache {
 		return retVal;
 	}
 	
-	//TODO
 	public synchronized List<Post> getNotifications(
 			String userId, 
-			PostListItemAdapter adapter, 
-			List<Post> adapterData, 
-			SpinnerSectionItemAdapter spinnerAdapter, 
-			SpinnerSection section,
-			PullToRefreshLayout pullToRefreshLayout, 
-			boolean forcedUpdate, 
-			int postResultReceiverType){
-		if (isRequestAllowed(timestamp_NotificationsCall, forcedUpdate)){
-			startService_getNotifications(userId, adapter, adapterData, spinnerAdapter, section, pullToRefreshLayout, postResultReceiverType);
-		}
+			IPostsListener postsListener,
+			boolean forcedUpdate){
+			startService_getNotifications(userId, postsListener, forcedUpdate);
 		return this.notifications;
 	}
 	
@@ -131,25 +154,8 @@ public class PostsCache {
 		this.posts.put((int) p.getId(), p);
 	}
 	
-	/**
-	 * 
-	 * @param p
-	 * @return <li><b>false</b> means a Post from the same conversation is already in cache, <b>DO NOT ADD</b> in data adapter</li>
-	 */
-	public synchronized boolean addPostAsNotification(Post p){
-		boolean addNotification = true;
-		addPost(p);
-		for(Post post: notifications){
-			if (p.getConversationId() == post.getConversationId()){
-				addNotification=false;
-				break;
-			}
-		}
-		if (addNotification){
-			notifications.add(p);
-			return true;
-		}
-		return false;
+	public synchronized List<Post> addPostsToNotifications(List<Post> notifications){
+		return this.addPostsListToCacheList(notifications, this.notifications, CacheMode.conversation_only);
 	}
 	
 	/**
@@ -213,7 +219,7 @@ public class PostsCache {
 	 * @return
 	 */
 	public synchronized List<Post> addPostsToNearby(List<Post> newPosts){
-		return this.addPostsListToCacheList(newPosts, this.nearbyPostsCacheList);
+		return this.addPostsListToCacheList(newPosts, this.nearbyPostsCacheList, CacheMode.conversation_and_newer);
 	}
 	
 	/**
@@ -222,7 +228,7 @@ public class PostsCache {
 	 * @param targetCacheList
 	 * @return
 	 */
-	private synchronized List<Post> addPostsListToCacheList(List<Post> newPosts, List<Post> targetCacheList){
+	private synchronized List<Post> addPostsListToCacheList(List<Post> newPosts, List<Post> targetCacheList, CacheMode cacheMode){
 		List<Post> retVal = new ArrayList<Post>();
 		
 		if (newPosts == null)
@@ -232,7 +238,7 @@ public class PostsCache {
 		Collections.sort(newPosts, Collections.reverseOrder());
 		
 		for(Post p : newPosts){
-			if (this.addPostToCacheList(p, targetCacheList)){
+			if (this.addPostToCacheList(p, targetCacheList, cacheMode)){
 				retVal.add(p);
 			}
 		}
@@ -245,18 +251,31 @@ public class PostsCache {
 	 * @param currentPost
 	 * @return
 	 */
-	private synchronized boolean addPostToCacheList(Post currentPost, List<Post> targetCacheList){
+	private synchronized boolean addPostToCacheList(Post currentPost, List<Post> targetCacheList, CacheMode cacheMode){
 		boolean addNearby = true;
 		addPost(currentPost);//add to global posts cache
 		
 		//if we already have the currentPost in list, then skip it
 		if (!targetCacheList.contains(currentPost)){
+			
+			for_loop: 
 			for (Post post : targetCacheList){
-				//only add the currentPost from a particular conversation if it is newer the what the conversation already has 
-				if (currentPost.getConversationId() == post.getConversationId() && !currentPost.isNewer(post)){
-					addNearby = false;
+				
+				switch(cacheMode){
+				case conversation_only:
+					if (currentPost.getConversationId() == post.getConversationId()){
+						addNearby = false;
+						break for_loop;
+					}
+					break;
+				case conversation_and_newer:
+					if (currentPost.getConversationId() == post.getConversationId() && !currentPost.isNewer(post)){
+						addNearby = false;
+						break for_loop;
+					}
 					break;
 				}
+				
 			}
 			if (addNearby){
 				targetCacheList.add(currentPost);
@@ -294,51 +313,34 @@ public class PostsCache {
 	
 	private void startService_getConversationByPostId(
 			long conversationId, 
-			PostListItemAdapter adapter, 
-			List<Post> adapterData, 
-			PullToRefreshLayout pullToRefreshLayout){
+			IPostsListener postsListener){
 		Intent intent = new Intent(this.context, WorkerService.class);
-        intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID);
         intent.putExtra(StringKeys.CONVERSATION_FROM_CONVERSATION_ID, conversationId);
         
         Handler handler = new Handler();
-        intent.putExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER_ASC);
         PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);
-        resultReceiver.setAdapter(adapter);
-        resultReceiver.setAdapterData(adapterData);
-        resultReceiver.setPullToRefreshAttacher(pullToRefreshLayout);
+        resultReceiver.setPostsListener(postsListener);
         intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
         
         this.context.startService(intent);
-        
-        startRereshAniamtion(handler, pullToRefreshLayout);
 	}
 	
 	private void startService_getNotifications(
 			String userId, 
-			PostListItemAdapter adapter, 
-			List<Post> adapterData, 
-			SpinnerSectionItemAdapter spinnerAdapter, 
-			SpinnerSection section,
-			PullToRefreshLayout pullToRefreshLayout, 
-			int postResultReceiverType){
-		Intent intent = new Intent(this.context, WorkerService.class);
-		intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_NOTIFICATIONS);
-		intent.putExtra(StringKeys.NOTIFICATIONS_USER_ID, userId);
-		
-		Handler handler = new Handler();
-		intent.putExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, postResultReceiverType);
-		PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);
-		resultReceiver.setAdapter(adapter);
-		resultReceiver.setAdapterData(adapterData);
-		resultReceiver.setSpinnerAdapter(spinnerAdapter);
-		resultReceiver.setSpinnerSection(section);
-		resultReceiver.setPullToRefreshAttacher(pullToRefreshLayout);
-		intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
-
-		this.context.startService(intent);
-		
-		startRereshAniamtion(handler, pullToRefreshLayout);
+			IPostsListener postsListener,
+			boolean forcedUpdate){
+		if (isRequestAllowed(timestamp_NotificationsCall, forcedUpdate)){
+			Intent intent = new Intent(this.context, WorkerService.class);
+			intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_NOTIFICATIONS);
+			intent.putExtra(StringKeys.NOTIFICATIONS_USER_ID, userId);
+			
+			Handler handler = new Handler();
+			PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);
+			resultReceiver.setPostsListener(postsListener);
+			intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
+	
+			this.context.startService(intent);
+		}
 	}
 	
 	private void startService_getNearby(
@@ -354,7 +356,7 @@ public class PostsCache {
 			
 			Handler handler = new Handler();
 			PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);
-			resultReceiver.setLatestPostsListener(listener);
+			resultReceiver.setPostsListener(listener);
 			intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
 			this.context.startService(intent);
 		}
@@ -400,7 +402,7 @@ public class PostsCache {
 	        /*intent.putExtra(StringKeys.POST_RESULT_RECEIVER_TYPE, StringKeys.POST_RESULT_RECEIVER_CODE_LATEST_POSTS);*/
 	        Handler handler = new Handler();
 	        PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);
-	        resultReceiver.setLatestPostsListener(listener);
+	        resultReceiver.setPostsListener(listener);
 	        intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
 	        context.startService(intent);
 		}
@@ -425,18 +427,6 @@ public class PostsCache {
 			}
 		}
 		return false;
-	}
-	
-	private void startRereshAniamtion(Handler handler, final PullToRefreshLayout pullToRefreshLayout){
-		if (pullToRefreshLayout!=null && !pullToRefreshLayout.isRefreshing()){
-			handler.post(new Runnable() {
-				
-				@Override
-				public void run() {
-					pullToRefreshLayout.setRefreshing(true);
-				}
-			});
-		}
 	}
 	
 	public class RequestTimestamp{

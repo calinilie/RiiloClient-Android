@@ -77,16 +77,6 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
         
         initLocationClient(LocationRequest.PRIORITY_LOW_POWER, 2000, 1000);
         
-		postsCache.getNotifications(
-				this.deviceId, 
-				null, 
-				null, 
-				spinnerAdapter,
-				spinnerAdapter.getItem(3), 
-				pullToRefreshLayout, 
-				false,
-				StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW);      
-		
 		LocationHistoryManager.getInstance(this).getLocationHistory(null, null);
     }
     
