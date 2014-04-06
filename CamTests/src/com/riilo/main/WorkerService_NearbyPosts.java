@@ -1,6 +1,5 @@
 package com.riilo.main;
 
-import java.util.List;
 
 import android.app.IntentService;
 import android.content.Intent;

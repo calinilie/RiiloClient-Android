@@ -2,8 +2,7 @@ package com.riilo.main;
 
 import java.util.List;
 
-import com.riilo.interfaces.ILatestPostsListener;
-import com.riilo.interfaces.INearbyPostsListener;
+import com.riilo.interfaces.IPostsListener;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 
@@ -16,8 +15,7 @@ import android.widget.Button;
 
 public class PostsResultReceiver extends ResultReceiver{
 
-	private ILatestPostsListener latestPostsListener;
-	private INearbyPostsListener nearbyPostsListener;
+	private IPostsListener postsListener;
 	
 	private PostListItemAdapter adapter;
 	private List<Post> adapterData;
@@ -33,12 +31,8 @@ public class PostsResultReceiver extends ResultReceiver{
 		this.handler = handler;
 	}
 	
-	public void setNearbyPostsListener(INearbyPostsListener nearbyPostsListener) {
-		this.nearbyPostsListener = nearbyPostsListener;
-	}
-	
-	public void setLatestPostsListener(ILatestPostsListener latestPostsListener) {
-		this.latestPostsListener = latestPostsListener;
+	public void setLatestPostsListener(IPostsListener latestPostsListener) {
+		this.postsListener = latestPostsListener;
 	}
 	
 	public void setAdapter(PostListItemAdapter adapter) {
@@ -81,14 +75,14 @@ public class PostsResultReceiver extends ResultReceiver{
 			case StringKeys.POST_RESULT_RECEIVER_CODE_LATEST_POSTS:
 				postsListParcelable =  resultData.getParcelable(StringKeys.POST_LIST_PARCELABLE);
 				posts = postsListParcelable.getPostsList();
-				latestPostsListener.retrievedLatestPosts(posts);
+				postsListener.retrievedPosts(posts);
 				break;
 			case StringKeys.POST_RESULT_RECEIVER_CODE_NEARBY_POSYS:
 				postsListParcelable =  resultData.getParcelable(StringKeys.POST_LIST_PARCELABLE);
 				posts = postsListParcelable.getPostsList();
 				
-				if (nearbyPostsListener!=null)
-					nearbyPostsListener.retrievedNearbyPosts(posts);
+				if (postsListener!=null)
+					postsListener.retrievedPosts(posts);
 				break;
 			case StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_VIEW:
 				notifications = resultData.getInt(StringKeys.POST_RESULT_RECEIVER_NOTIFICATION_NUMBER, 0);

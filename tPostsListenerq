@@ -1,0 +1,1712 @@
+[33mcommit 55690ad2cbd4cea0cf11127c28db6d07faea877d[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Apr 5 18:55:27 2014 +0200
+
+    event driven, refac wip (3)
+
+[33mcommit 518ad82c2cd4e08ab199e260945f0d7b7d9fd608[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Fri Apr 4 21:18:42 2014 +0200
+
+    event driven, refac wip (1)
+
+[33mcommit 08dc825dc11355bfed1c9a3455f99ebb9da9e354[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Thu Mar 20 19:54:36 2014 +0100
+
+    removed Log.d, increased version number and name
+
+[33mcommit 88a430f27a92a5d5088f2528329a3ad11d8b4bb0[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Mar 19 20:54:44 2014 +0100
+
+    GCM wip (3)
+
+[33mcommit 5964f2d93b39c60a61e00a967861931520b0d217[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Mar 19 19:55:39 2014 +0100
+
+    GCM wip (2)
+
+[33mcommit 240dead92efcc76816e76abd58d0855ee6d951a3[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Fri Mar 7 02:00:10 2014 +0100
+
+    GCM wip ()1
+
+[33mcommit 3936cda5bff9ba42a498581f8885a24fa0f387e3[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Thu Mar 6 22:43:20 2014 +0100
+
+    minor change
+
+[33mcommit ab17ae986077d91cf4f8ec4bed76512e39358fdc[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Feb 4 20:03:55 2014 +0100
+
+    moved all tutorial texts in strings.xml, updated code version and code name
+
+[33mcommit 2d476f30166305bee32d584a70360767f260a843[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Feb 4 19:01:01 2014 +0100
+
+    achievementId and alias are saved to local db for each post
+
+[33mcommit 3e4e61736641f49e4745bf95b419ddfca5af228b[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Feb 3 20:27:33 2014 +0100
+
+    alias is shown instead of 'somebody'
+
+[33mcommit a75fbf3c7505292955f2857e9bcfbd83eff42a59[m
+Merge: 26a6258 c7074a8
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Feb 3 19:35:34 2014 +0100
+
+    Merge branch 'dev' of https://bitbucket.org/calinilie/prototypesandroid into dev
+
+[33mcommit 26a6258ed2385c167d0e89f42fe0e49b44b69c8a[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Feb 3 19:35:16 2014 +0100
+
+    implemented comparator that uses only the PostId
+
+[33mcommit c7074a8e6d1992a3496d2318bcf6b6ddbf04b66a[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Mon Feb 3 19:33:53 2014 +0100
+
+    small badge for achievements | added achievements badge beside the name
+
+[33mcommit 263e449b6787efd5468b4f4643c808026fd6091e[m
+Merge: b6ccee9 9e393d3
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Mon Feb 3 19:03:46 2014 +0100
+
+    Merge branch 'dev' of https://bitbucket.org/calinilie/prototypesandroid into dev
+
+[33mcommit b6ccee90d741cfc8c997b583577cc12eea128f91[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Mon Feb 3 19:03:38 2014 +0100
+
+    announcement | achievement style updates
+
+[33mcommit 9e393d39affa781b4c07a8f4548256cdb75a88f6[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Feb 3 18:59:55 2014 +0100
+
+    excluded genymotion device from analytics
+
+[33mcommit d7d4c77db5db3be0ce4a295dd43f558e5714ea79[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Feb 3 17:22:54 2014 +0100
+
+    post.compareTo, postListItemAdapter - views are setup based on post type
+
+[33mcommit f2aef006bbd80da35db2361e8ca2d5ddb37d70af[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Mon Feb 3 17:01:27 2014 +0100
+
+    announcement | achievement updates
+
+[33mcommit 84035b789c2308e088036ace1927814d0fdbe9df[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Feb 2 17:13:00 2014 +0100
+
+    achievement | announcement updates
+
+[33mcommit 71639affaffb6be328eca5faca2aa0867848e8bc[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Feb 2 12:24:36 2014 +0100
+
+    added achievement_item_layout
+
+[33mcommit d3bf92aae41ff455d41735c45ec6024d9f6e0292[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Feb 2 12:06:23 2014 +0100
+
+    added priority, achievementId and IsAnouncement to Post
+
+[33mcommit 91a1f9d0fb686f20063c1d652871cd3d11533297[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Jan 28 09:57:26 2014 +0100
+
+    added a try{}catch{} which will hopefully prevent some crashes
+
+[33mcommit 3cf38e01f842a7bb4525b35852261d6359828f4a[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Jan 27 00:09:35 2014 +0100
+
+    remoed unused assets
+
+[33mcommit efdd9ed4d45ee079819d229df0634389deb6944f[m
+Merge: 8c108d0 262b981
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 26 19:58:22 2014 +0100
+
+    merge conflict solved
+
+[33mcommit 262b981b72e879f75cdb484dbfcacf6af74ec4c1[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Jan 26 19:55:05 2014 +0100
+
+    what about now :D
+
+[33mcommit 0021a7ce8cbada4486c2a00fe9f42c6816684c8e[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Jan 26 19:51:30 2014 +0100
+
+    removed all the stuff from yesterday, I hope
+
+[33mcommit 48bce5f470f1d1a7cfd0b0265326934477a43486[m
+Merge: a84c660 309f94b
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Jan 26 19:37:36 2014 +0100
+
+    Merge branch 'dev' of https://bitbucket.org/calinilie/prototypesandroid into dev
+
+[33mcommit 8c108d0f26b98ee9a612148684fc3e8a8c4773af[m
+Merge: f6ee422 a1e6b44
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Jan 26 19:33:03 2014 +0100
+
+    Merge branch 'local_dev' of https://bitbucket.org/calinilie/prototypesandroid into local_dev
+
+[33mcommit f6ee422b5f8c1f9880e1aa6703ac5741a045e640[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Jan 26 19:32:54 2014 +0100
+
+    update tutorial layouts
+
+[33mcommit 309f94b25ad1433585172595c6262b575a81d3de[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 26 18:45:52 2014 +0100
+
+    removed most z_dep layouts
+
+[33mcommit 771fa3eb09ddcbdaa48608f2e7601de695584860[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 26 18:38:10 2014 +0100
+
+    fixed some more NULL pointer exceptions, hopefully
+
+[33mcommit a1e6b445b1edd647552da32e495df5d25997d598[m
+Merge: ece6f59 51c55bf
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 26 18:31:20 2014 +0100
+
+    Merge branch 'dev' into local_dev
+
+[33mcommit ece6f593ce587b1a20ef48ba4dd8465f4d88ac06[m
+Merge: 0a81a79 f264715
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Jan 26 15:38:03 2014 +0100
+
+    Merge branch 'local_dev' of https://bitbucket.org/calinilie/prototypesandroid into local_dev
+
+[33mcommit 0a81a7917584ea941ebd5edff185fc300742f816[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Jan 26 15:37:52 2014 +0100
+
+    update to the hand…
+
+[33mcommit 51c55bfb28f49df90327cc5d155935f9d68b9afb[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 26 13:55:50 2014 +0100
+
+    revised analytics to include toLocationPostActiviry and Explore feature
+
+[33mcommit f264715fe5f5e130fbfee3ce46a04f100824dc0d[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 26 13:25:39 2014 +0100
+
+    tracking some unexpected exceptions
+
+[33mcommit c7fb87518049962aaadf6351a9e651eeedb929f6[m
+Merge: f2ea052 099209a
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 26 12:35:12 2014 +0100
+
+    Merge branch 'dev' into local_dev
+
+[33mcommit f2ea05288ea4c8ce5b0ce856ad686e946bb69517[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Jan 26 12:34:27 2014 +0100
+
+    tutorial layout changed
+
+[33mcommit 099209a77ec7ba0926926a9ad3f9658b859e9ffd[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Jan 25 21:39:06 2014 +0100
+
+    fixed some NULL pointer exceptions, hopefully
+
+[33mcommit 5d24ab892ae3f034c378be58809261f449a58633[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Jan 25 21:33:22 2014 +0100
+
+    removed some unused code form resizedAnimation
+
+[33mcommit 22b0ec28cef00e7acca8e5adad7dfa26316d634b[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Jan 25 21:32:35 2014 +0100
+
+    removed old tutorial activity and fragment
+
+[33mcommit cc8bd4eb2f239ecfb2fcf80e47ffef03da4ef59a[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Jan 25 21:30:49 2014 +0100
+
+    closing all cursors in facade
+
+[33mcommit 53e5fe9981b7c3a7c491bc722d2c710a81ae7439[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Jan 25 20:54:28 2014 +0100
+
+    tutorial message boxes
+
+[33mcommit ccd547d0723deb05aa5dd5d9f3fc0d36b1bc0d99[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Jan 25 17:17:16 2014 +0100
+
+    fixed a bug which caused posts not to be loaded when returning to EXPLORE screen
+
+[33mcommit a84c6608ec7baeb8bfecb50dbf9340a696d1f594[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Jan 25 15:50:23 2014 +0100
+
+    added lots of assets for the riilo-theme
+
+[33mcommit 98955a6b2df3cd6ac1e1f529e6186fca88199573[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Jan 25 13:53:08 2014 +0100
+
+    location history is not saved to local db anymore - caused app to freeze
+
+[33mcommit c4feed853476ce472684249479a93e48226c509d[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Jan 25 12:34:11 2014 +0100
+
+    tutorial framework (4)
+
+[33mcommit fdef966e75f73566b156a97906858687dd38401d[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Fri Jan 24 19:05:01 2014 +0100
+
+    tutorial framework (3) tutorials' state is persisted on local db
+
+[33mcommit 472bb233c8d5cc0302434c8b7dd7a4c3380f7f29[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Fri Jan 24 17:05:10 2014 +0100
+
+    tutorial framework (2) fadeIn/Out animations
+
+[33mcommit a5252ec52d550d7c0eb1b48ea640f34408744c00[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Thu Jan 23 20:11:11 2014 +0100
+
+    tutorial framework (1)
+
+[33mcommit 5ffedfdec4b900b2c6499aeabd7fbe3e9c870a80[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Thu Jan 23 01:05:41 2014 +0100
+
+    removed Log.d, fixed bug which prevented users from posting freely on the map, increased code version
+
+[33mcommit 601017da6dfe44ce1b24a13890651f259d884d7e[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Wed Jan 22 23:02:18 2014 +0100
+
+    fixed: errorNoposts and errorMoreZoom are not show at the same time + notifications and nearby numbers are now fixed
+
+[33mcommit 1ce748df2e59109cb5a71cfc07d3b6db3ce3a21c[m
+Merge: b5d0186 bcab8f9
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Wed Jan 22 21:56:54 2014 +0100
+
+    merge conflict solved
+
+[33mcommit bcab8f97d739679b5e0b311993d9fb2e543c155d[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Wed Jan 22 21:45:58 2014 +0100
+
+    “no messages” and “zoom-more” notification style updated
+
+[33mcommit b5d01867d4b748da6bc1b13a741554c73e515241[m
+Merge: 80824ee b3196ad
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Wed Jan 22 21:44:12 2014 +0100
+
+    Merge branch 'dev' of https://bitbucket.org/calinilie/prototypesandroid into dev
+
+[33mcommit 80824eee5015d19789106385f85f1b64b15374d6[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Wed Jan 22 21:43:49 2014 +0100
+
+    explore wip(9)
+
+[33mcommit b3196adef988bf9a01c17c55299a81c617fb614a[m
+Merge: 2981bdc 99a7080
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Wed Jan 22 21:04:41 2014 +0100
+
+    Merge branch 'dev' of https://bitbucket.org/calinilie/prototypesandroid into dev
+
+[33mcommit 2981bdcdeb67113b9bb264b3e1fa6e2224a237ff[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Wed Jan 22 21:04:29 2014 +0100
+
+    updated “zoom more” message…+ resc added
+
+[33mcommit 99a70806258e2443e1e68df57b9216bd9ff7ecc4[m
+Merge: e78e9a7 9ad4b76
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Jan 22 20:54:24 2014 +0100
+
+    Merge branch 'dev' of https://bitbucket.org/calinilie/prototypesandroid into dev
+
+[33mcommit e78e9a776048a7c7bda23fcc62d843c199a6e7a0[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Jan 22 20:53:47 2014 +0100
+
+    explore wip(8) no more battery!!!
+
+[33mcommit 9ad4b76c13ea15ec235f0ecbdee825d59183a539[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Wed Jan 22 19:12:43 2014 +0100
+
+    location_history updated to red
+
+[33mcommit a1471b61575f78b6a907649d5297cd7a9298be04[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Jan 22 18:55:39 2014 +0100
+
+    explore wip(7)
+
+[33mcommit b63e18ce651b7b2ea088582ea1fd391bae737f69[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Jan 22 18:45:59 2014 +0100
+
+    explore wip(6)
+
+[33mcommit 1c6be2ba5b2720b58ee29dbc5cd22ad801a766e5[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Wed Jan 22 18:29:52 2014 +0100
+
+    added red location_history.png marker
+
+[33mcommit aa9af907fe209ec0638e9a533f09eac30dcb0d9a[m
+Merge: e95d330 b70d70a
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Jan 22 00:47:48 2014 +0100
+
+    Merge branch 'dev' of https://bitbucket.org/calinilie/prototypesandroid into dev
+
+[33mcommit e95d33070c4176464b7349452fcbf8f38395f50f[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Jan 22 00:47:31 2014 +0100
+
+    explore wip(5)
+
+[33mcommit b70d70a83290b4b1f736675af42b6a90f254440a[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Mon Jan 20 21:42:16 2014 +0100
+
+    resources added - multiple messages icon | single message icon | location_history (still testing) |
+
+[33mcommit 89e51ec9a1bb32a441b0a7a8372472779c157a51[m
+Merge: a57e87e f69443e
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Jan 19 23:19:13 2014 +0100
+
+    Merge branch 'dev' of https://bitbucket.org/calinilie/prototypesandroid into dev
+
+[33mcommit a57e87ed85dae58ba099e05b7117dfa2d1a19f9e[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Jan 19 23:19:06 2014 +0100
+
+    some other desc
+
+[33mcommit f69443ebdfe15f5a4056525991797c8e8d7bd343[m
+Merge: 798cee2 7bf8fda
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 19 23:09:56 2014 +0100
+
+    Merge branch 'dev' of https://bitbucket.org/calinilie/prototypesandroid into dev
+
+[33mcommit 798cee2aea24fe64661e28794756c5c09caf4571[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 19 23:08:55 2014 +0100
+
+    explore wip(4)
+
+[33mcommit 7bf8fda6bcd3ec65e74437dc2463c4180062a6c9[m
+Merge: 8cccda2 adc0989
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Jan 19 22:12:39 2014 +0100
+
+    Merge branch 'dev' of https://bitbucket.org/calinilie/prototypesandroid into dev
+
+[33mcommit 8cccda271070b9afecd954e0c84ad011fc9ec8ef[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Jan 19 22:12:31 2014 +0100
+
+    some resources added…testing
+
+[33mcommit adc09891475d99e761a0e3654f67f02df51c23ba[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 19 21:30:01 2014 +0100
+
+    explore wip(3)
+
+[33mcommit e11907976a80ff615d9c1ad882fc6e43b08a326d[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Jan 15 01:53:07 2014 +0100
+
+    explore wip(2)
+
+[33mcommit 838fba8b0f3f1530b2f193849139f82af893489a[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Jan 15 01:52:51 2014 +0100
+
+    explore wip(1)
+
+[33mcommit 4ced0daf209163018fb6373f6db41fd3822d045c[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Jan 14 18:38:54 2014 +0100
+
+    changed texts, increased version number
+
+[33mcommit 3be9a399ad58a191373009c2f062061396423989[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 12 16:44:07 2014 +0100
+
+    added map in activity
+
+[33mcommit 0385e7b76d69ea3b41367e412f9960f50e1758da[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 12 15:31:22 2014 +0100
+
+    added colors.xml
+
+[33mcommit 63013b3f3f87eb3a40c614bcf110c7d8c53f268c[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 12 15:24:11 2014 +0100
+
+    reversed changes in clusterRenderer
+
+[33mcommit c77274f08c13fa279ec8735cb9ee77bff55f732b[m
+Merge: fbccc32 e84923a
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 12 15:17:25 2014 +0100
+
+    Merge branch 'localdev' into dev
+
+[33mcommit fbccc32de2a40b6ede0af7e4cd607086ca9f6754[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 12 15:17:20 2014 +0100
+
+    updated to the new android-maps-utils
+
+[33mcommit e84923a96286dc848639ecaafd43005ba3df4685[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 12 15:03:41 2014 +0100
+
+    fixed all merging shit
+
+[33mcommit 4c0d9671e5638752a0b6919c19b7edfadbc3e3fe[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 12 14:45:00 2014 +0100
+
+    changed human marker with a square dot
+
+[33mcommit 5ed29b5e8ae46253fe62cd70a2bc48ba46cb81d4[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 12 14:41:16 2014 +0100
+
+    Revert "changed human marker with a square dot"
+    
+    This reverts commit 2cf467e718e643a1716a9dd64b9bdf961e1ccb62.
+
+[33mcommit 2cf467e718e643a1716a9dd64b9bdf961e1ccb62[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 12 14:40:38 2014 +0100
+
+    changed human marker with a square dot
+
+[33mcommit da5622c3c3e4a942108f2e8788ebbc75729f752d[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Jan 8 21:52:41 2014 +0100
+
+    corrected italian texts, increased code version number to 8
+
+[33mcommit 391fd37da326f3e0493ec28a7e3784745cc467b1[m
+Merge: e5519aa 2cddb51
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Wed Jan 8 21:02:23 2014 +0100
+
+    Merge branch 'dev' of https://bitbucket.org/calinilie/prototypesandroid into dev
+
+[33mcommit e5519aafb9ffa35d0cd05ef40137bbbf613190bc[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Wed Jan 8 21:02:12 2014 +0100
+
+    ok, got it - button changed
+    refresh - button changed
+
+[33mcommit 2cddb5127da590dd78ffbbc0f934e21a483da895[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Jan 8 20:57:59 2014 +0100
+
+    fixed italian texts for 1st and 3rd persons
+
+[33mcommit 4fbb4d8fe4d08f2811fc809c6689638b57a88579[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Jan 8 20:34:51 2014 +0100
+
+    fixed bug that caused clusterManager to leak and thus not work
+
+[33mcommit a7f3602e96a9e7d46cf42c55fa28f87d1d5af0fb[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Jan 8 02:51:43 2014 +0100
+
+    swipe tip in tutorial
+
+[33mcommit 08cd4d168f0ccb8db7e9ec95b838ae39c3c55591[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Jan 8 02:12:22 2014 +0100
+
+    added italian texts
+
+[33mcommit 887c0ea2ae43887a07cf1722939c4a36ba50235f[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Jan 8 01:00:47 2014 +0100
+
+    map markers culster wip (5)
+
+[33mcommit 53f59554b83b1bd2c1eb7a4d733dcfed6b1fc82d[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Jan 8 00:58:19 2014 +0100
+
+    map markers culster wip (4)
+
+[33mcommit 466da610d6055ede3b7515aec5efedf09caf0727[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Jan 7 22:46:16 2014 +0100
+
+    map markers culster wip (3)
+
+[33mcommit bfa6012033ccdbe3e66cd65304ca86e0a32cf485[m
+Merge: 3b33969 e6b0caf
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Jan 7 22:45:38 2014 +0100
+
+    merge conflict solved
+
+[33mcommit e6b0cafa51d3fd98225af7c9c1342f46fb511a58[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Jan 7 00:30:48 2014 +0100
+
+    added my location to the map
+
+[33mcommit 375e87ff53703ce4e5acd83fea78c1e97eb4c278[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Jan 6 21:20:15 2014 +0100
+
+    texts in strings.xml (2)
+
+[33mcommit 9af3272445a603ac2ca54de9785777045db58383[m
+Merge: 85dd5fa 7886c51
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Jan 6 20:51:33 2014 +0100
+
+    fixed merge conflict
+
+[33mcommit 85dd5fa1e4aca4036e5f4c88597d986dca578a09[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Jan 6 20:38:19 2014 +0100
+
+    texts in strings.xml (1)
+
+[33mcommit 7886c51cdd8df00de7383331d19bc1d6d4d5bd22[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Mon Jan 6 20:34:22 2014 +0100
+
+    gitignore - layout changes
+
+[33mcommit 3b339695ce94353fae5ed7dd677675b2fce11567[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 5 23:47:00 2014 +0100
+
+    map markers cluster wip (2)
+
+[33mcommit 4bcf5a85032f8c1d52df7431a1617d9d3a7cb976[m
+Merge: 0184b74 2bfdd5d
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 5 23:11:33 2014 +0100
+
+    Merge branch 'master' into dev
+
+[33mcommit 0184b74c527fbd06559d2b25a6bfd5f1b4dcc0a9[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 5 23:10:00 2014 +0100
+
+    added android-maps-utils library for marker clustering
+
+[33mcommit 2bfdd5d50de5c8f2535b5dfe51e1fb7c20fec2b5[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 5 18:11:53 2014 +0100
+
+    removed unused imports
+
+[33mcommit 02fdb6f69cce7cb1388f1cc345fd06adb11568e6[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Jan 5 10:48:13 2014 +0100
+
+    added swipe_tuttorial_with_hand.jpg, fixed a minuscule bug, removed Log.d, decreased pull to refresh dist to 33% of list's height
+
+[33mcommit c3e0807cab151340047c3f2c7e9ecea51f41e4bd[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Jan 4 20:06:17 2014 +0100
+
+    added swipe tutorial
+
+[33mcommit 4501a4d8aaaeeb86d2431298fc653a99b04db294[m
+Merge: 6c50e08 f0cb4ca
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Jan 4 19:23:12 2014 +0100
+
+    Merge branch 'dev'
+
+[33mcommit 6c50e08a4620969b3762dad7fff43c1f898a6f6b[m
+Merge: 1b0dd4f 1a9daa3
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Jan 4 19:23:03 2014 +0100
+
+    Merge branch 'redesign'
+
+[33mcommit 1a9daa385986df34353e45e77c629530fe9feded[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Jan 4 18:49:26 2014 +0100
+
+    tutorial updates
+
+[33mcommit f0cb4ca4d5cc12f05f7608bbf5b86038cc68bb0f[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Jan 4 12:19:31 2014 +0100
+
+    added CampaigntarckingService service to manifest
+
+[33mcommit 1b0dd4fe648fe6b8168719b105e65e251f830f31[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Jan 4 09:44:14 2014 +0100
+
+    removed some Log.d( lines
+
+[33mcommit f0987d0c9ee37af92c19a8331be4585a090950df[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Thu Jan 2 13:59:33 2014 +0100
+
+    fixed some bugs
+
+[33mcommit e7c10034876d4097864db94a74f1c712a0d6f6df[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Thu Jan 2 11:13:19 2014 +0100
+
+    removed some Log.d which caused some crashes
+
+[33mcommit fdf102696e7e01de8a16b5eb83850f188b02951b[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Dec 23 15:09:11 2013 +0200
+
+    updated to smooth PullToRefresh, fixed bug which caused Nearby posts NOT to be displayed - the later is still WIP
+
+[33mcommit 129de5efb8ea669f653254dcdfb7f8b9d46eca01[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Dec 23 14:45:11 2013 +0200
+
+    moved styles.xml to not-used folder
+
+[33mcommit b70dc5fc017e207c8375f9b540957c0206bfc265[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Thu Dec 19 11:59:39 2013 +0100
+
+    increased code version to 4, increased app version to 1.1.2
+
+[33mcommit aba53fc490c8fe2efcf341f81b25db83abe89ab6[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Thu Dec 19 11:57:44 2013 +0100
+
+    removed Log.d
+
+[33mcommit d2a28e1244cee6333f8f700b2a7cf0ccdb9fa289[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Thu Dec 19 11:46:44 2013 +0100
+
+    changed text input hints
+
+[33mcommit 9163320615c9b5516f7399d7a7edf6221e7c610f[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Mon Dec 16 22:43:04 2013 +0100
+
+    changed some accents color to red...
+    
+    Still a work in progress, but you get the idea of where is heading....
+
+[33mcommit e442c40c7f4f035bfe34b0f8686c556b91923869[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Mon Dec 16 22:09:45 2013 +0100
+
+    wip...
+
+[33mcommit 2cf5c471e1b9c744810390c1c842be578e0b4263[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Dec 15 18:00:05 2013 +0100
+
+    wip3
+
+[33mcommit e953082c8d0754bbeee2d60e29939181988aa7bd[m
+Merge: ca51e4c 1d270ca
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Dec 15 17:45:51 2013 +0100
+
+    Merge branch 'redesign' of https://bitbucket.org/calinilie/prototypesandroid into redesign
+
+[33mcommit ca51e4c7103615dda8cda7df9b6de8b740648567[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Dec 15 17:45:42 2013 +0100
+
+    wip2
+
+[33mcommit d1ebcdfca56816a394d45b76e80717e08dfc89ed[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Dec 15 17:44:19 2013 +0100
+
+    wip
+
+[33mcommit 1d270cae7b68a34620559fe85dce6cfc47274a23[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Dec 15 17:43:06 2013 +0100
+
+    ptr header text colo = white(2)
+
+[33mcommit 0cbe9827c1c83257ab234601b690aae9359d2996[m
+Merge: ab33fe2 97b57b5
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Dec 15 17:38:35 2013 +0100
+
+    Merge branch 'redesign' of https://bitbucket.org/calinilie/prototypesandroid into redesign
+
+[33mcommit ab33fe291d85a798e788c15cacf1e0295e782a6d[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Dec 15 17:36:05 2013 +0100
+
+    some resc added
+
+[33mcommit 97b57b5866787cd67c53330b691947ae5f56bde0[m
+Merge: e2c7286 06ce482
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Dec 15 17:35:38 2013 +0100
+
+    merge conflict solved
+
+[33mcommit e2c72869ba8695079d98575e3cbf3070688cbec4[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Dec 15 17:32:09 2013 +0100
+
+    ptr header text colo = white
+
+[33mcommit 5d493a1061eb1fff441d676af6e105161fd65b9e[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Dec 15 17:30:40 2013 +0100
+
+    ptr header background changed to red
+
+[33mcommit 06ce482e92bce80612bae6c860f0ab5dc8896f24[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Dec 15 17:28:20 2013 +0100
+
+    changed actionbar + dropdown color to white
+
+[33mcommit 2fdcb95ba61747a7a6fc0043b57ee81c7c5ba716[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Dec 15 17:11:27 2013 +0100
+
+    changed ptr loading bar to riilo_light_red
+
+[33mcommit 34ec7cc5f4c3dd7c2f917c6e6ac47dd2bfcc188e[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Dec 15 15:58:03 2013 +0100
+
+    resources added
+
+[33mcommit c0180f59fbabe1ff5d9c2350b8cc8c34907427cf[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Dec 15 15:24:35 2013 +0100
+
+    added selector.xml back
+
+[33mcommit 0c0add5dae29dd3d67fd65f36ed16012462016ec[m
+Merge: 195f8d6 e4ba38f
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Dec 15 15:17:30 2013 +0100
+
+    Merge branch 'redesign' of https://bitbucket.org/calinilie/prototypesandroid into redesign
+
+[33mcommit 195f8d68202405fcef52010a080f1f8648aadace[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Dec 15 15:16:11 2013 +0100
+
+    added some resources
+
+[33mcommit e4ba38fd94738624d2d4260361260d36b0cf01a8[m
+Merge: 9f45732 d96d2ab
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Dec 15 14:58:03 2013 +0100
+
+    merge conflict solved
+
+[33mcommit 9f4573201e4c4797524ecd76b70a81dcf7663f26[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Dec 15 14:54:22 2013 +0100
+
+    added reply button
+
+[33mcommit 3d6a4a46f00e46f08dbeb8e415a17fc4860f9175[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Dec 15 14:09:30 2013 +0100
+
+    notifications number is now decreased
+
+[33mcommit d96d2abecfc955f961dcd678308ec8a10b8518fb[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Dec 15 13:24:42 2013 +0100
+
+    added new icons for sections
+
+[33mcommit f750d55b00c6449090e3e121cbd2aae35cc69d56[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Dec 15 13:14:47 2013 +0100
+
+    notifications number is now shown in the spinner
+
+[33mcommit d9302d42f42b163184d5737a558c2e10647d18bd[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Dec 15 10:02:27 2013 +0100
+
+    test
+
+[33mcommit 64a30104230611eb4ea13156f36326a70415270f[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Dec 15 10:01:12 2013 +0100
+
+    custom SpinnerAdapter
+
+[33mcommit 5c445f267dd3c7578cca517a73d86e76252905df[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Thu Dec 12 21:19:48 2013 +0100
+
+    dropdown navigation + notifications textView in ActionBar
+
+[33mcommit 81db752f074d39a22538f4124dfd94d61ed82a30[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Dec 11 20:52:35 2013 +0100
+
+    increased code version
+
+[33mcommit 35dd8abdeb95ff06929cecb95c825a1eb74019dd[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Dec 9 22:57:21 2013 +0100
+
+    removed logging and double comment //   //
+
+[33mcommit 643a095c83be5939fe60289691b9cab8cf112a96[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Dec 7 00:45:31 2013 +0100
+
+    calin & mihai's phones will not be GA tracked
+
+[33mcommit ba1e794ac5049f4e4eb30d814d0518e0d9143489[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Dec 7 00:16:07 2013 +0100
+
+    persist if tutorial marker was run
+
+[33mcommit bf9026261e5e029880ed84ae23635a75c60fc80e[m
+Merge: 0b15d6a 0260842
+Author: Calin <calinilielaur@gmail.com>
+Date:   Fri Dec 6 17:57:16 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit 0b15d6a8ab18874b56e6a9ee8b1f5f93a6bd2427[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Fri Dec 6 17:57:01 2013 +0100
+
+    added try catch in some places which could gegenrate exceptions
+
+[33mcommit 02608428cbfd13a975b00dc5ef543bdc40a32bdc[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Wed Dec 4 19:09:55 2013 +0100
+
+    info about the humans on the map :)
+
+[33mcommit b13af6e6b6cb54a6dcf4b07bcdbbe3cc99d6d625[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Dec 4 18:04:56 2013 +0100
+
+    removed analytics
+
+[33mcommit 28253d086948c03f6e7491837493207f8c45e7f0[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Dec 3 08:44:18 2013 +0100
+
+    re-enabled analytics
+
+[33mcommit 43566a9d2ecda46bde026be742d9830cf5691b74[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Dec 3 08:42:25 2013 +0100
+
+    location client is now disconnected when activity becomes invisible
+
+[33mcommit a465f1ea8775512b97a9fc99ad26b3970103f28b[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Dec 2 23:23:59 2013 +0100
+
+    location history on map(4)
+
+[33mcommit 9d1e6745d6b88a81daa9c4afe8331ae6375325aa[m
+Merge: a167985 cb46907
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Dec 2 22:06:52 2013 +0100
+
+    merge conflict solved
+
+[33mcommit a16798572dfd1fef21d5a55838406fbf13ff48aa[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Dec 2 22:04:18 2013 +0100
+
+    location history on map(3)
+
+[33mcommit cb469075715ba215c5791af46343854c6843718e[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Mon Dec 2 21:48:13 2013 +0100
+
+    added custom map markers
+
+[33mcommit 3b88c8b60385d3e680fef2985e4360ff254158f3[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Dec 2 20:46:39 2013 +0100
+
+    location history on map(2)
+
+[33mcommit f29f656feefd33729ee8e4dd21471badfab9c223[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Dec 2 20:04:26 2013 +0100
+
+    location history on map
+
+[33mcommit 0a2b0ac7407d0b28f6160806469d4e30e1600055[m
+Merge: e763b4d efc404b
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Nov 27 23:25:56 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit efc404bb6fab8b16fbfc0388c1697e4e247f6f9c[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Wed Nov 27 23:24:23 2013 +0100
+
+    tutorial .1
+
+[33mcommit e763b4d93a34782e1fd99c5903408f9745ecbcc2[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Nov 27 23:13:03 2013 +0100
+
+    remved Logging and unused imports + variables
+
+[33mcommit ae0af44a2ba0a385e04561a61631d7bc2d7c3280[m
+Merge: cc89e7f 50bb577
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Nov 27 22:41:10 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit 50bb577215d2e8b7fbdd686cb537bb6c3e80fd28[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Wed Nov 27 22:39:13 2013 +0100
+
+    tutorial added
+
+[33mcommit cc89e7fd34e13ad640f4362cb7a2ebc90e1f23fb[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Nov 27 21:01:15 2013 +0100
+
+    renamed package name to com.riilo.main
+
+[33mcommit 148a40b7e3787823f0c65e13c3e803916f99ec49[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Wed Nov 27 01:11:52 2013 +0100
+
+    fixing Calin's madness
+
+[33mcommit 03fa018a453deb586d90f27e487fc37824650ec5[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Nov 27 01:08:11 2013 +0100
+
+    fixed a bug that caused tutorial to crash
+
+[33mcommit 6c210eaac9f3ac214991db3148c0518fbcd89cbc[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Nov 27 01:01:55 2013 +0100
+
+    tutorial is always shown
+
+[33mcommit 2d96807a6e4647dc0cf4dadad41d335ebecdb919[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Nov 27 01:00:06 2013 +0100
+
+    added tutorial layouts, again
+
+[33mcommit 76546be81f22df30e04e43f354d562b8c78acdec[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Wed Nov 27 00:54:16 2013 +0100
+
+    wip2
+
+[33mcommit edba78b7d559560df9df7d3a7db25dfe9db0d31f[m
+Merge: a78eb55 7732206
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Wed Nov 27 00:34:55 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit a78eb5597532994804f0bb052dcb7e58fd0a2f3c[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Wed Nov 27 00:34:42 2013 +0100
+
+    wip
+
+[33mcommit 773220656cba6f3615790f4a66844759cf127416[m
+Merge: 9209ce2 3ca41d3
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Nov 27 00:31:27 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit 9209ce26e2a6a0a7349dcaa23a6ff425e2e1fd2b[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Nov 27 00:31:12 2013 +0100
+
+    project is working on calin's machine
+
+[33mcommit 3ca41d3008c1e30e6409bf9b092a9a5d4a5ab1bb[m
+Merge: fc70b76 1f4eb35
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Nov 26 23:47:28 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit fc70b7617f3111e6b7c9781ac2ae61ffebf6cddd[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Nov 26 23:46:45 2013 +0100
+
+    Revert "renamed project to Riilo"
+    
+    This reverts commit c71cbfac808046e6aafabc49ee16a59842fa47ad.
+
+[33mcommit eb26dfb0cefbd0932fa6eb68d950d1088c09ebcf[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Tue Nov 26 23:42:19 2013 +0100
+
+    DNP
+
+[33mcommit 1f4eb355816b8279a24a1e5556ea07849ddd90d7[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Tue Nov 26 23:40:48 2013 +0100
+
+    DO NOT PULL
+
+[33mcommit c71cbfac808046e6aafabc49ee16a59842fa47ad[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Nov 26 23:18:53 2013 +0100
+
+    renamed project to Riilo
+
+[33mcommit e9e42002c373a516f6a227de24578eb9e477c455[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Nov 26 23:10:56 2013 +0100
+
+    added tutorial layouts
+
+[33mcommit 14c9a2b7b157326c02eb9fa9826507c6e31683f8[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Nov 26 20:33:09 2013 +0100
+
+    changed name to Riilo
+
+[33mcommit 168aba3aaab95c0e34c16e76337a07a52649b9e0[m
+Merge: f675846 178dd9e
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Nov 26 20:08:27 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit f675846e98b725c31b540ecccae4ba825ec0dec5[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Nov 26 20:07:33 2013 +0100
+
+    renamed stringKeys to com.riilo.main
+
+[33mcommit e5706090c9b4a38725b307fa2af69ccc35f02aca[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Nov 26 20:06:16 2013 +0100
+
+    renamed package to com.riilo.main
+
+[33mcommit 178dd9e3df60163701a3943c32d2e8cc96847b3a[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Tue Nov 26 20:06:10 2013 +0100
+
+    icon_riilo added
+
+[33mcommit 76ea7c00a2c7a0372253a95fcab32d033dd0382b[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Nov 26 09:11:52 2013 +0100
+
+    added analytics on tutorialActivity
+
+[33mcommit 72a09284f40b26aff6432f29b78bd1d93c6687aa[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Nov 25 21:33:43 2013 +0100
+
+    ToLocationPostLayout updated to the new fancy look
+
+[33mcommit 7d8845956ed7f512a98e81762336199feebd53a6[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Nov 25 20:40:00 2013 +0100
+
+    enabled myLocation on post map
+
+[33mcommit e024d93bcf79fc8fd248fef0382aa084f8a46a3c[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Nov 25 20:29:00 2013 +0100
+
+    origin location bug fixed, introduced performance hit
+
+[33mcommit 525981c4256d395d5ac4de64d0211747ed9764ed[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Nov 25 19:03:48 2013 +0100
+
+    origin location bug (1)
+
+[33mcommit 206ca78b0fa0bf96819352dd50c8e777e2c071b0[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Nov 25 18:28:26 2013 +0100
+
+    latest posts limit increased to 150
+
+[33mcommit 91d8ea97741629b157df16baa8d1d748cb18b740[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Nov 25 18:09:11 2013 +0100
+
+    user 12328328 replaced with somebody
+
+[33mcommit a806bfe66eb634fb5bf5ea90c96065bcb0770cad[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Nov 25 17:59:29 2013 +0100
+
+    fixed tutorial,  and back button pressed logic
+
+[33mcommit 5e9cabcb011d18235221a5e08e259a02f84f5cd4[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Nov 24 23:35:12 2013 +0100
+
+    layout updates
+
+[33mcommit e093e4605ba65d68af6187131393f82531099aa1[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Nov 24 23:08:17 2013 +0100
+
+    removed tutorial
+
+[33mcommit f3678fecfcad22a2ccf8f3811ab3f002644486f3[m
+Merge: a02b778 53bcaca
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Nov 24 22:30:28 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit a02b778b1f8184c5e133fcf3f42d1103db867b50[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Nov 24 22:29:45 2013 +0100
+
+    layout updates
+
+[33mcommit 53bcaca4dcd5fe6d75e4718fff5df44e7022aa03[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Nov 24 22:06:51 2013 +0100
+
+    added tutorial (1)
+
+[33mcommit 45bd21096a9623df89d136233d67b94636495c8d[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Nov 24 18:57:53 2013 +0100
+
+    added tutorial skeleton
+
+[33mcommit 2fc245d942262d486ca9ab7eeb8d1a0491b44d52[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Nov 24 16:47:35 2013 +0100
+
+    removing old posts from local db, refactored distance computation method
+
+[33mcommit 793724aaa62437e2c0200992096394c6f686be22[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Nov 24 14:44:33 2013 +0100
+
+    added refresh button on nearby Tab
+
+[33mcommit bfd4f89c2fd598c05048683f037570c05c7dd585[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Nov 24 13:09:39 2013 +0100
+
+    changed slide_in_bottom animations, so the input field becomes more obvious
+
+[33mcommit f39baf138bbf6e30bcfe4061833935148c27220d[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Nov 24 13:05:57 2013 +0100
+
+    added validation for empty message + input field is cleared after successful post
+
+[33mcommit 27e20634f42def2f4146b29c8043ed2b88a911ca[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Nov 24 12:52:20 2013 +0100
+
+    back button, now hides create_post_pannel / reply_to_post_pannel
+
+[33mcommit 7414ff7bc69ee3ce7dc8d04ab7dd9235d56efd95[m
+Merge: 027c30e e2c0413
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Nov 24 12:19:26 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit 027c30e946fc08762af5d5c4bcfba17db7606354[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Nov 24 12:11:17 2013 +0100
+
+    added up navigation to postViewActivity
+
+[33mcommit e2c04138dcebe522d624e0381257537c71adf468[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Nov 24 01:15:26 2013 +0100
+
+    layout changes + multiple resources
+
+[33mcommit 0741664c55d908d5c0635a1d5d5a8322f3834917[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Nov 23 21:52:23 2013 +0100
+
+    finished edittext area, minus orange color
+
+[33mcommit e2934473870b2318b922a7cb06e2e019ebc615b6[m
+Merge: 06465ce e21e214
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Nov 23 14:06:07 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit 06465ceb935f7eaf046276116c34b2c00671b2c4[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Nov 23 14:05:45 2013 +0100
+
+    layout updates
+
+[33mcommit e21e2149bacd4286c0cde792df9b08185c67f96c[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Nov 20 01:06:37 2013 +0100
+
+    posting origin lat and long
+
+[33mcommit f8fb59440ab08d12ba186705e0dc3b1055ed3d06[m
+Merge: 3541351 5bf68ad
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Nov 17 18:02:25 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit 35413516ac90393ec85e9932b9152f9e62469909[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sun Nov 17 18:02:03 2013 +0100
+
+    post_layout updates
+
+[33mcommit 5bf68ad1027b694ae8b18f63021ea9f3f29922b3[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 16 23:03:01 2013 +0100
+
+    will wipe local android DB
+
+[33mcommit ca4e608e44a582d20d82736602067bd1a66ed166[m
+Merge: 8e68d1e bef91fe
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 16 23:00:04 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit 8e68d1eb84a54dba775902c16d969ef6d2d03c8a[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 16 22:59:48 2013 +0100
+
+    uset_at_location info dailog
+
+[33mcommit bef91fe8d9f1b6f57608d3c621c63360e33a121d[m
+Merge: 254678e 13613e8
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Nov 16 20:33:47 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit 254678ece7c8ed3b86183a70e5d8967312dd6232[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Nov 16 20:33:34 2013 +0100
+
+    post_layout reply is in a deployable state
+
+[33mcommit 13613e8af11e9efebffe3652f4017244529faeae[m
+Merge: 023ed36 3402ac2
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 16 19:45:42 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit 023ed36006c8a519b8f984ff1ceb3bd3b7ea6abb[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 16 19:45:25 2013 +0100
+
+    fixed slide_out_bottom animation
+
+[33mcommit 3402ac23f0dffd94c6bda5f41bbd187c43f59b3a[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Nov 16 19:33:14 2013 +0100
+
+    post_layout small changes 2
+
+[33mcommit c900b82dce6dd7fa26c6d3578864c60c56fefce1[m
+Merge: 7a5efe6 0ad23c0
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Nov 16 18:58:49 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit 7a5efe627f42de95fb058b6669d8be6009356ee0[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Nov 16 18:58:37 2013 +0100
+
+    post_layout small changes
+
+[33mcommit 0ad23c0dc1e4d9d2583965f7d625f25e519550bd[m
+Merge: 71691e3 b0e6804
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 16 18:50:37 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit 71691e32639bbbb749ec77a5be1638bbb9478969[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 16 18:50:19 2013 +0100
+
+    light holo theme
+
+[33mcommit b0e6804af3a042481d609ff98b65c3eb9b73fe7d[m
+Merge: 5029c36 5eb7fc3
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Nov 16 18:49:51 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit 5029c364dfcae5c9094827494e1cc7df86e191ed[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Nov 16 18:49:39 2013 +0100
+
+    first icons :D
+
+[33mcommit 5eb7fc36076b05b28b5d3da906c7334224a05af9[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 16 18:27:17 2013 +0100
+
+    removed some debug toasts, written some cool error msgs
+
+[33mcommit 002739e10a91eca67f54210642251ede51e2c0da[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 16 18:20:04 2013 +0100
+
+    implemented analytics
+
+[33mcommit 9ac5c51b325ea9dd948ddda6c01a7bc103da7dfa[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Thu Nov 14 22:15:34 2013 +0100
+
+    added custom screen tracking
+
+[33mcommit 9ef245214e841c41e5a896147bf9e3e4f9830a52[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Nov 12 01:06:14 2013 +0100
+
+    added logging to GET requests in order to see cloudFront hit/miss reqests
+
+[33mcommit 3d307fbb721523c19e396dc4d1e1991588fe367d[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Nov 11 23:30:41 2013 +0100
+
+    fixed bug which prevented forcedUpdate on nearbyFragment
+
+[33mcommit addc040e9f3c73a27440953f5abb7b8cfb10c0c4[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Nov 11 23:15:35 2013 +0100
+
+    GA basic setup
+
+[33mcommit cd5d6d9509818b827832334efb07c8aa1af24cf6[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Nov 10 21:14:26 2013 +0100
+
+    replaced endpoints to EBS prod-env and cloudFront (where relevant)
+
+[33mcommit 5e282ac4ef8d2b56b755b18bee5cdc5fa2fd3bea[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Nov 9 23:00:34 2013 +0100
+
+    fixed reply text field
+
+[33mcommit 3fdb3efaf9cbaf436628fed4e6d155a8266570f7[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Nov 9 22:42:55 2013 +0100
+
+    sliding bottom animations
+
+[33mcommit 65537a8cce3d8b0894e8289921ad95af969a1587[m
+Merge: 7b15d02 5725786
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Nov 9 22:31:53 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit 7b15d02ab6b0d287be6fd6119dc3f1ae5ab4b840[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Nov 9 22:31:17 2013 +0100
+
+    post | reply - updates
+
+[33mcommit 572578699a048c6cf1aae7d4efc670d8360f3b06[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 9 22:29:27 2013 +0100
+
+    time is now shown converted from UTC to device default TimeZone (2)
+
+[33mcommit 5525e68f9875d0930acb3292ad56b3a9f7ac5554[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 9 19:36:00 2013 +0100
+
+    fixed 'bug' that caused distanceFromCurLoc not to be updated
+
+[33mcommit 2bece35cf3c1a8c369e81fcdd3e5a75cea9a9cb3[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 9 18:32:47 2013 +0100
+
+    AndroidManifest.XML added to gitIgnore
+
+[33mcommit 8b40190104650c64c91611e43594012d215a2e60[m
+Merge: 6916f90 1752b0f
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 9 18:25:09 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit 6916f903d0528cd8d4a2bba886e56b345250e826[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 9 18:24:04 2013 +0100
+
+    time is now shown converted from UTC to device default TimeZone
+
+[33mcommit 1752b0fba62e0e56b5bf84a9fc02a52f9679e1e0[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Nov 9 18:23:46 2013 +0100
+
+    post_layout type message area + other updates
+
+[33mcommit 8f8d1b771b95473dd7087c3d715e6e332f57e72c[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Fri Nov 8 00:21:17 2013 +0100
+
+    implement StringKeys.POST_RESULT_RECEIVER_CODE_UPDATE_ADAPTER
+
+[33mcommit 9febf82e20104d3d54e1f92dc482bda03b5d16f5[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Fri Nov 8 00:04:52 2013 +0100
+
+    distances can now be displayed in miles (currenly hard-Coded to miles for testing purposes)
+
+[33mcommit a33e97bc0212f333dbd2e07cd41fac565958957f[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Thu Nov 7 21:11:11 2013 +0100
+
+    changed endpoints to AWS test env
+
+[33mcommit 4d4c7a3021847b98f9ad577ba080f300f6c3ab97[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Thu Nov 7 21:09:23 2013 +0100
+
+    fixed silence notifications
+
+[33mcommit a993d443b845fe9e28d6caa3ebae31456a05d19f[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Nov 6 09:20:26 2013 +0100
+
+    distance to nearbyPosts is now shown
+
+[33mcommit b47624b76ad1a11f0b68508c9ec86a9daf69e01e[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Wed Nov 6 08:52:16 2013 +0100
+
+    number of nearby posts and notifications, shown in tab title
+
+[33mcommit 3e14cd4ddeabe065f0572a4fcd181e1ba3bab298[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Tue Nov 5 22:39:59 2013 +0100
+
+    post_layout small changes
+
+[33mcommit b6e6b8d964ae5270376de0c20284ed83062dbf43[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Tue Nov 5 17:15:51 2013 +0100
+
+    .gitignore ignored stuff ☺
+
+[33mcommit 03ff6e9ecc379f8edb35001d6fd35f908351d14b[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Nov 5 16:16:47 2013 +0100
+
+    map is on top, in post_layout.xml
+
+[33mcommit a29b0dc8692e9394722d395206e689d9dd3211b2[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Tue Nov 5 00:09:50 2013 +0100
+
+    pull to refresh wip (6) wrapUp
+
+[33mcommit 026d30a8bf466c2ba508a9db8a551665f1c191ac[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Mon Nov 4 23:43:33 2013 +0100
+
+    pull to refresh wip (5) fixed bug which caused refreshAttacher not to stop refreshing in some scenarios
+
+[33mcommit 73ec9f154ac527dd4b3b4043a2e45a88152e03d4[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Nov 3 20:42:59 2013 +0100
+
+    pull to refresh wip (4)
+
+[33mcommit adb601d595094a9cd9b83a790ba8bd126b0b6a2d[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Nov 3 20:42:16 2013 +0100
+
+    pull to refresh wip (3) + renamed postsFeedFragment to PostsNotificationFragment
+
+[33mcommit 86d1eddceb9143969314632562ed3e64d6ccf64e[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Nov 3 19:28:15 2013 +0100
+
+    pull to refresh wip (2) added in PostsLatestFragment.java
+
+[33mcommit cec1321a8c8671b009820fb9cef6724844988aeb[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Nov 3 17:58:29 2013 +0100
+
+    pull to refresh wip (1)
+
+[33mcommit d92321aaaead42c2ef7abf0454bf85b789be4482[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sun Nov 3 12:54:42 2013 +0100
+
+    added pull to refresh libreary, refactored layout names ('_layout' appended), marked unused classes with Z_Dep
+
+[33mcommit 0f5b4c22ed102162c07c6ffad30f3b03d28fdaa0[m
+Merge: 8c9b0d6 40351a5
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Nov 2 19:35:47 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit 8c9b0d6c491f7b8e79fecb52486ed8344b46cf32[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Nov 2 19:35:34 2013 +0100
+
+    deprecated layouts
+
+[33mcommit 40351a5e97f0c9c8d6ab6c8ac55fb93fc54a73c6[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 2 19:31:25 2013 +0100
+
+    changed endpoints to live
+
+[33mcommit 54951e943f30182f34f7f3e65a9a40ffa11a4974[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 2 18:45:15 2013 +0100
+
+    updated local_test_ endpoints
+
+[33mcommit 334da89c244f4bd1c0a899efa18ee63128764479[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 2 18:34:34 2013 +0100
+
+    increased targetSdkVersion to 19
+
+[33mcommit 289dee94b6235cf0cd51cb5a9f9ff392e255c85b[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 2 17:57:11 2013 +0100
+
+    removed .properties and .project from .gitignore
+
+[33mcommit c92150455f9a80e2d40043dff38c03f0ade45182[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 2 17:42:17 2013 +0100
+
+    updated gitignore .properties
+
+[33mcommit adb227ec06dd208b9a69af00448d35f65128f818[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 2 17:23:40 2013 +0100
+
+    stop tracking metadata
+
+[33mcommit 3fad54f3aed776a874b018761b1fb98d08a68330[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 2 15:54:57 2013 +0100
+
+    metadata ignore (2)
+
+[33mcommit 6c7cbbb99457572b706e00080cb20fde9a874638[m
+Merge: aeeb855 9d37893
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 2 15:52:40 2013 +0100
+
+    Merge branch 'master' of https://bitbucket.org/calinilie/prototypesandroid
+
+[33mcommit aeeb855c7d9c15340832afa8b819bc351fb25ac0[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 2 15:52:13 2013 +0100
+
+    .metadata ignore (1)
+
+[33mcommit 9d37893ff287a0d6c0cd980299222ce64b7ada9d[m
+Author: Mihai Moraru <tomihaimoraru@gmail.com>
+Date:   Sat Nov 2 15:48:01 2013 +0100
+
+    initial commit
+
+[33mcommit cbffdf0e70c924ec6eeb35825b41c650e7e7d9d4[m
+Author: Calin <calinilielaur@gmail.com>
+Date:   Sat Nov 2 15:23:52 2013 +0100
+
+    initial commit

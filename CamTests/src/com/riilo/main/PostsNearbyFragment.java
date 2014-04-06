@@ -12,7 +12,7 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 import com.riilo.main.R;
 import com.riilo.interfaces.ILocationListener;
-import com.riilo.interfaces.INearbyPostsListener;
+import com.riilo.interfaces.IPostsListener;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
 import com.riilo.utils.TutorialFactory;
 
@@ -39,7 +39,7 @@ public class PostsNearbyFragment
 							ILocationListener, 
 							OnRefreshListener,
 							OnClickListener,
-							INearbyPostsListener{
+							IPostsListener{
 	
 	private static final String TAG = "<<<<<<<<<<<<<<PostsNearbyFragment>>>>>>>>>>>>>>";
 	
@@ -176,7 +176,7 @@ public class PostsNearbyFragment
 	}
 
 	@Override
-	public void retrievedNearbyPosts(List<Post> newPosts) {
+	public void retrievedPosts(List<Post> newPosts) {
 		if (Helpers.renewList(adapterData, newPosts))
 			adapter.notifyDataSetChanged();
 		buttonRefresh.setVisibility(View.GONE);

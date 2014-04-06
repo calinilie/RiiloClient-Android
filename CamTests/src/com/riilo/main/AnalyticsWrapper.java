@@ -5,7 +5,6 @@ import android.provider.Settings.Secure;
 //import android.util.Log;
 
 import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.MapBuilder;
 
 public class AnalyticsWrapper {

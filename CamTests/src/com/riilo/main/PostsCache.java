@@ -9,8 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.riilo.interfaces.ILatestPostsListener;
-import com.riilo.interfaces.INearbyPostsListener;
+import com.riilo.interfaces.IPostsListener;
 import com.riilo.interfaces.UIListener;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
@@ -20,7 +19,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
 import android.util.SparseArray;
-import android.widget.Button;
 
 public class PostsCache {
 
@@ -81,7 +79,7 @@ public class PostsCache {
  	}
  	
 	public synchronized List<Post> getLatestPosts(
-			ILatestPostsListener latestPostsListener,
+			IPostsListener latestPostsListener,
 			boolean forcedUpdate){
 		startService_getLatest(latestPostsListener, forcedUpdate);
 		return latestPostsCacheList;
@@ -169,7 +167,7 @@ public class PostsCache {
 	public synchronized List<Post> getNearbyPosts(
 			double latitude, 
 			double longitude, 
-			INearbyPostsListener listener, 
+			IPostsListener listener, 
 			boolean forcedUpdate){
 		startService_getNearby(latitude, longitude, listener, forcedUpdate);
 		return nearbyPostsCacheList;
@@ -346,7 +344,7 @@ public class PostsCache {
 	private void startService_getNearby(
 			double latitude, 
 			double longitude, 
-			INearbyPostsListener listener,
+			IPostsListener listener,
 			boolean forceUpdate){
 		if (isRequestAllowed(this.timestamp_Nearby, forceUpdate)){
 			Intent intent = new Intent(this.context, WorkerService.class);
@@ -356,7 +354,7 @@ public class PostsCache {
 			
 			Handler handler = new Handler();
 			PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);
-			resultReceiver.setNearbyPostsListener(listener);
+			resultReceiver.setLatestPostsListener(listener);
 			intent.putExtra(StringKeys.POST_LIST_RESULT_RECEIVER, resultReceiver);
 			this.context.startService(intent);
 		}
@@ -392,7 +390,7 @@ public class PostsCache {
 	}
 	
 	private void startService_getLatest(
-			ILatestPostsListener listener, 
+			IPostsListener listener, 
 			boolean forcedUpdate){
 		if (isRequestAllowed(this.timestamp_PostsCall, forcedUpdate)){
 			

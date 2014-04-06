@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
-import com.google.android.gms.internal.ek;
 
 import android.content.ContentValues;
 import android.content.Context;

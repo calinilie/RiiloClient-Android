@@ -1,6 +1,5 @@
 package com.riilo.main;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.android.gms.maps.GoogleMap;

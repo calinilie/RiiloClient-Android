@@ -3,7 +3,6 @@ package com.riilo.main;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
@@ -12,7 +11,7 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 import com.riilo.main.R;
-import com.riilo.interfaces.ILatestPostsListener;
+import com.riilo.interfaces.IPostsListener;
 import com.riilo.interfaces.ILocationListener;
 import com.riilo.main.AnalyticsWrapper.EventLabel;
 import com.riilo.utils.TutorialFactory;
@@ -33,7 +32,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class PostsLatestFragment 
 		extends Fragment 
-		implements OnItemClickListener, ILocationListener, OnRefreshListener, ILatestPostsListener{
+		implements OnItemClickListener, ILocationListener, OnRefreshListener, IPostsListener{
 	
     private MainActivity activity;
     private View view;
@@ -153,7 +152,7 @@ public class PostsLatestFragment
 	}
 
 	@Override
-	public void retrievedLatestPosts(List<Post> newPosts) {
+	public void retrievedPosts(List<Post> newPosts) {
 		
 		this.adapterData.addAll(newPosts);
 		Collections.sort(this.adapterData, Collections.reverseOrder());
