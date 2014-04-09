@@ -373,11 +373,8 @@ public abstract class BaseActivity extends FragmentActivity
 		locationClient = new LocationClient(this, this, this);
         // Create the LocationRequest object
         locationRequest = LocationRequest.create();
-        // Use high accuracy
         locationRequest.setPriority(priority);
-        // Set the update interval to 1 seconds
         locationRequest.setInterval(updateInterval);
-        // Set the fastest update interval to 0.5 second
         locationRequest.setFastestInterval(fastedUpdateInterval);
 	}
 	

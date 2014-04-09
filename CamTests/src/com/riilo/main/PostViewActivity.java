@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -44,9 +45,12 @@ public class PostViewActivity extends BaseActivity
 	OnItemClickListener, 
 	IPostsListener{
 	
+	private static final String TAG = "<<<<<<<<<<<<<<PostViewActivity>>>>>>>>>>>>>>";
+	
 	private GoogleMap mMap;
 	
 	Post currentPost = null;
+	private long currentConversationId;
 	PostListItemAdapter adapter;
  	List<Post> adapterData = new ArrayList<Post>();
  	ListView posts_ListView;
@@ -68,11 +72,11 @@ public class PostViewActivity extends BaseActivity
         
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setDisplayUseLogoEnabled(true);
-        initLocationClient(LocationRequest.PRIORITY_HIGH_ACCURACY, 2000, 1000);
+        initLocationClient(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY, 6000, 3000);
         
-        Bundle bundle = getIntent().getBundleExtra(StringKeys.POST_BUNDLE);        
-        currentPost = new Post(bundle);
-        adapterData.add(currentPost);
+        currentConversationId = getIntent().getLongExtra(StringKeys.POST_CONVERSATION_ID, 0);
+        long currentPostId = getIntent().getLongExtra(StringKeys.POST_ID, 0);
+        currentPost = postsCache.getPost((int)currentPostId);
         
         setupTutorials();
     }
@@ -87,7 +91,7 @@ public class PostViewActivity extends BaseActivity
 		}
 		posts_ListView.setAdapter(adapter);
 		
-		List<Post> postsInConversation = PostsCache.getInstance(this).getPostsByConversationId(currentPost.getConversationId(), this);
+		List<Post> postsInConversation = PostsCache.getInstance(this).getPostsByConversationId(currentConversationId, this);
 		if (Helpers.renewList(adapterData, postsInConversation, false)){
 			adapter.notifyDataSetChanged();
 		}
@@ -179,9 +183,7 @@ public class PostViewActivity extends BaseActivity
     }
     
      private void setUpMap(){
-    	 for(Post p : adapterData){
-    		 mMap.addMarker(new MarkerOptions().position(new LatLng(p.getLatitude(), p.getLongitude())));
-    	 }
+    	 mMap.addMarker(new MarkerOptions().position(new LatLng(currentPost.getLatitude(), currentPost.getLongitude())));
     	 CameraPosition cPos = CameraPosition.fromLatLngZoom(new LatLng(currentPost.getLatitude(), currentPost.getLongitude()), 12);
     	 CameraUpdate update = CameraUpdateFactory.newCameraPosition(cPos);
     	 mMap.animateCamera(update);

@@ -84,5 +84,4 @@ public class StringKeys {
 	public static final int ANIMATION_TYPE_NONE = 0;
 	public static final int ANIMATION_TYPE_SLIDE_IN_RIGHT=1;
 	public static final int ANIMATION_TYPE_SLIDE_IN_BOTTOM=2;
-	
 }

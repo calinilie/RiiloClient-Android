@@ -141,35 +141,13 @@ public class Helpers {
     
     public static Date stringToDate(String string){
     	try {
-    		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH);
+    		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
     		df.setTimeZone(TimeZone.getTimeZone("UTC"));
 			return df.parse(string);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
     	return null;
-    }
-
-    @SuppressWarnings("unused")
-	private static Date shiftTimeZone(Date date, TimeZone targetTimeZone){
-    	return shiftTimeZone(date, TimeZone.getTimeZone("UTC"), targetTimeZone);
-    }
-    
-    private static Date shiftTimeZone(Date date, TimeZone sourceTimeZone, TimeZone targetTimeZone) {
-        Calendar sourceCalendar = Calendar.getInstance();
-        sourceCalendar.setTime(date);
-        sourceCalendar.setTimeZone(sourceTimeZone);
-
-        Calendar targetCalendar = Calendar.getInstance();
-        targetCalendar.setTimeZone(targetTimeZone);
-        for (int field : new int[] {Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, Calendar.HOUR, Calendar.MINUTE, Calendar.SECOND, Calendar.MILLISECOND}) {
-        	/*if (field == Calendar.HOUR)
-        		Log.d("source calendar hour field" , sourceCalendar.get(field)+"");*/
-            targetCalendar.set(field, sourceCalendar.get(field));
-        }
-        targetCalendar.setTimeZone(targetTimeZone);
-        
-        return targetCalendar.getTime();
     }
     
 	/*=============LIST SPECIFIC HELPERS============================================================================================*/

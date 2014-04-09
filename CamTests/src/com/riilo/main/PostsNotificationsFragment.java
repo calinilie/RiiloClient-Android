@@ -24,8 +24,7 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class PostsNotificationsFragment 
-				extends FragmentBase 
-				implements OnItemClickListener{
+				extends FragmentBase{
 	
  	ListView postsListView;
     
@@ -103,21 +102,18 @@ public class PostsNotificationsFragment
 		activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_notifications);
 		
 		PostsCache.getInstance(activity).removeNotification(post);
-		activity.getSpinnerAdapter().getItem(3).descreaseNotificationNumber();
 		adapterData.remove(post);
 		
 		long conversationId = post.getConversationId();
-		
 		Intent invalidateConversation = new Intent(activity, WorkerService.class);
 		invalidateConversation.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_NOTIFICATIONS_SILENCE);
 		invalidateConversation.putExtra(StringKeys.NOTIFICATION_SILENCE_CONVERSATION_ID, conversationId);
 		invalidateConversation.putExtra(StringKeys.NOTIFICATION_SILENCE_USER_ID, activity.deviceId);
 		activity.startService(invalidateConversation);
 		
-		Intent postViewIntent = new Intent(activity, PostViewActivity.class);
-		postViewIntent.putExtra(StringKeys.POST_BUNDLE, post.toBundle());
-		startActivity(postViewIntent);
 		activity.setAnimationType(StringKeys.ANIMATION_TYPE_SLIDE_IN_RIGHT);
+		
+		super.onItemClick(parentView, view, position, index);
 	}
 
 	@Override

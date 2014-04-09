@@ -98,7 +98,7 @@ public class WorkerService extends IntentService{
 		case StringKeys.WS_INTENT_GET_LATEST_POSTS:
 			resultReceiver = intent.getParcelableExtra(StringKeys.POST_LIST_RESULT_RECEIVER);
 			//fire HTTP request to get new Posts
-			List<Post> posts = getLatestPostsRequest(0, 50);
+			List<Post> posts = getLatestPostsRequest(0, 200);
 			
 			//add only new posts to cache (no reason to keep duplicates)
 			List<Post> newPosts = postsCache.addNewPostsToLatest(posts);
@@ -113,7 +113,6 @@ public class WorkerService extends IntentService{
 			conversationId = intent.getLongExtra(StringKeys.CONVERSATION_FROM_CONVERSATION_ID, 0);
 			
 			List<Post> postsInConversation = getConverstionByConversationId(conversationId);
-			
 			List<Post> newPostsInConversation = postsCache.addConversationPostsToCache(postsInConversation, conversationId);
 			
 			resultData = new Bundle();
@@ -250,6 +249,8 @@ public class WorkerService extends IntentService{
 	        // Release the wake lock provided by the WakefulBroadcastReceiver.
 	        GcmBroadcastReceiver.completeWakefulIntent(intent);
 			break;
+		default:
+			throw new RuntimeException("could not determine intentType:" + intentType);
 		}
 	}
 	

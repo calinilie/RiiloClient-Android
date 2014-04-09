@@ -228,7 +228,7 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 		}
 	}
 	
-	protected void setAnimationType(int animationType){
+	public void setAnimationType(int animationType){
 		this.animationType = animationType;
 	}
 }

@@ -303,6 +303,7 @@ public class PostsCache {
 			IPostsListener postsListener){
 		Intent intent = new Intent(this.context, WorkerService.class);
         intent.putExtra(StringKeys.CONVERSATION_FROM_CONVERSATION_ID, conversationId);
+        intent.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_GET_CONVERSATION_FROM_CONVERSATION_ID);
         
         Handler handler = new Handler();
         PostsResultReceiver resultReceiver = new PostsResultReceiver(handler);

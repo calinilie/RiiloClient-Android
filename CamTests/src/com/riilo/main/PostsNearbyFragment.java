@@ -32,13 +32,11 @@ import android.widget.ListView;
 
 public class PostsNearbyFragment 
 				extends FragmentBase 
-				implements OnItemClickListener, 
-							ILocationListener, 
+				implements ILocationListener, 
 							OnClickListener{
 	
 	private static final String TAG = "<<<<<<<<<<<<<<PostsNearbyFragment>>>>>>>>>>>>>>";
 	
-    private MainActivity activity;
     private View view;
     private Button buttonRefresh;
     
@@ -47,12 +45,6 @@ public class PostsNearbyFragment
  	private LocationHistory lastKnownLocation;
  	
  	private TutorialFactory tutorial;
- 	
- 	
- 	public void onAttach(Activity activity){
- 		this.activity = (MainActivity)activity;
- 		super.onAttach(activity);
- 	}
 	
  	@Override
  	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInsatnceState){
@@ -107,14 +99,8 @@ public class PostsNearbyFragment
 
 	@Override
 	public void onItemClick(AdapterView<?> parentView, View view, int position, long index) {
-		Post post = adapterData.get((int) index);
-				
 		activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_nearby);
-		
-		Intent postViewIntent = new Intent(activity, PostViewActivity.class);
-		postViewIntent.putExtra(StringKeys.POST_BUNDLE, post.toBundle());
-		startActivity(postViewIntent);
-		activity.setAnimationType(StringKeys.ANIMATION_TYPE_SLIDE_IN_RIGHT);
+		super.onItemClick(parentView, view, position, index);
 	}
 	
 	@Override

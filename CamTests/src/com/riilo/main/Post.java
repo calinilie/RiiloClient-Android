@@ -60,7 +60,7 @@ public class Post implements Comparable<Post>, Serializable{
 	
 	public Post(Bundle bundle){
 		if (bundle == null)
-			throw new RuntimeException();
+			throw new RuntimeException("bundle is null");
 		
 		this.message = bundle.getString(StringKeys.POST_MESSAGE);
 		this.uri = bundle.getString(StringKeys.POST_PIC_URI);

@@ -282,7 +282,9 @@ public class ExploreFragment
 		if (currentSelectedItem==index){
 			activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_explore);
 			Intent postViewIntent = new Intent(activity, PostViewActivity.class);
-			postViewIntent.putExtra(StringKeys.POST_BUNDLE, post.toBundle());
+			postViewIntent.putExtra(StringKeys.POST_CONVERSATION_ID, post.getConversationId());
+			postViewIntent.putExtra(StringKeys.POST_ID, post.getId());
+			postsCache.addPost(post);
 			startActivity(postViewIntent);
 			activity.setAnimationType(StringKeys.ANIMATION_TYPE_SLIDE_IN_RIGHT);
 		}

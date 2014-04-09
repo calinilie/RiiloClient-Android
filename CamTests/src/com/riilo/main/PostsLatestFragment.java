@@ -29,7 +29,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class PostsLatestFragment 
 		extends FragmentBase
-		implements OnItemClickListener, ILocationListener{
+		implements ILocationListener{
 	
     private MainActivity activity;
     private View view;
@@ -96,14 +96,8 @@ public class PostsLatestFragment
  	
  	@Override
 	public void onItemClick(AdapterView<?> parentView, View view, int position, long index) {
-		Post post = adapterData.get((int) index);
-		
-		activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_latest);
-		
-		Intent postViewIntent = new Intent(activity, PostViewActivity.class);
-		postViewIntent.putExtra(StringKeys.POST_BUNDLE, post.toBundle());
-		startActivity(postViewIntent);
-		activity.setAnimationType(StringKeys.ANIMATION_TYPE_SLIDE_IN_RIGHT);
+ 		activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_latest);
+		super.onItemClick(parentView, view, position, index);
 	}
  	
  	@Override
