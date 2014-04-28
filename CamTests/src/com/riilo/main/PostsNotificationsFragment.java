@@ -101,9 +101,6 @@ public class PostsNotificationsFragment
 		
 		activity.analytics.recordEvent_General_ItemClick(EventLabel.tab_notifications);
 		
-		PostsCache.getInstance(activity).removeNotification(post);
-		adapterData.remove(post);
-		
 		long conversationId = post.getConversationId();
 		Intent invalidateConversation = new Intent(activity, WorkerService.class);
 		invalidateConversation.putExtra(StringKeys.WS_INTENT_TYPE, StringKeys.WS_INTENT_NOTIFICATIONS_SILENCE);
@@ -114,6 +111,9 @@ public class PostsNotificationsFragment
 		activity.setAnimationType(StringKeys.ANIMATION_TYPE_SLIDE_IN_RIGHT);
 		
 		super.onItemClick(parentView, view, position, index);
+		
+		PostsCache.getInstance(activity).removeNotification(post);
+		adapterData.remove(post);
 	}
 
 	@Override
