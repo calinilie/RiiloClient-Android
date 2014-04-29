@@ -177,7 +177,12 @@ public class MainActivity extends BaseActivity implements OnNavigationListener{
 			position--;
 			boolean canSetRefreshing = !this.isPTRRefreshing(position);
 			
-			fragments[position].isSelected(canSetRefreshing);
+			try{
+				fragments[position].isSelected(canSetRefreshing);
+			}
+			catch(Exception e){
+				
+			}
 		}
 		
 		private boolean isPTRRefreshing(int skipIndex){

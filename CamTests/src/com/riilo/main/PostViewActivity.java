@@ -78,6 +78,13 @@ public class PostViewActivity extends BaseActivity
         long currentPostId = getIntent().getLongExtra(StringKeys.POST_ID, 0);
         currentPost = postsCache.getPost((int)currentPostId);
         
+        if (currentPost == null){
+        	currentPost = new Post(getIntent().getBundleExtra(StringKeys.POST_BUNDLE));
+        	adapterData.add(currentPost);
+        }
+        
+        Log.d(TAG, currentPostId+"");
+        
         setupTutorials();
     }
 	
@@ -125,7 +132,9 @@ public class PostViewActivity extends BaseActivity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.post_view_layout_menu, menu);
+		if (currentPost.getConversationId() != 0){
+			inflater.inflate(R.menu.post_view_layout_menu, menu);
+		}
 		return super.onCreateOptionsMenu(menu);
 	}
 	
